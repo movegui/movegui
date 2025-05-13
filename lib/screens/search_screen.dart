@@ -11,7 +11,6 @@ import 'package:movegui/widgets/menu.dart';
 import 'package:movegui/widgets/products/product_widget.dart';
 
 import '../services/assets_manager.dart';
-import '../widgets/title_text.dart';
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 
 class SearchScreen extends StatefulWidget {

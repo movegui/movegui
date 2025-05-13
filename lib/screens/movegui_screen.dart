@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:movegui/providers/theme_provider.dart';
 import 'package:movegui/screens/home_screen.dart';
-import 'package:movegui/screens/root_screen.dart';
 import 'package:movegui/services/assets_manager.dart';
 import 'package:movegui/services/title_manager.dart';
 import 'package:movegui/widgets/menu.dart';
 import 'package:movegui/widgets/title_text.dart';
-import 'package:provider/provider.dart';
 
 class MoveguiScreen extends StatelessWidget {
   const MoveguiScreen({super.key});
@@ -82,7 +79,7 @@ class MoveguiScreen extends StatelessWidget {
 class BodyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
+   // final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       body: Center(
         child: Column(

@@ -9,11 +9,9 @@ import 'package:movegui/screens/reservation_screen.dart';
 import 'package:movegui/screens/search_screen.dart';
 import 'package:movegui/services/assets_manager.dart';
 import 'package:movegui/widgets/app_image.dart';
-import 'package:movegui/widgets/app_name_text.dart';
 import 'package:movegui/widgets/auth/google_btn.dart';
 import 'package:movegui/widgets/menu.dart';
 import 'package:movegui/widgets/subtitle_text.dart';
-import 'package:movegui/widgets/title_text.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -215,7 +213,7 @@ class LoginPageState extends State<LoginPage>{
   }
 
     Future<void> _loginFct() async {
-    final isValid = _formkey.currentState!.validate();
+ //   final isValid = _formkey.currentState!.validate();
     FocusScope.of(context).unfocus();
   }
   @override

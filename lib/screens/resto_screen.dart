@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:movegui/screens/home_screen.dart';
-import 'package:movegui/screens/reservation_screen.dart';
 import 'package:movegui/screens/search_screen.dart';
 
 class RestoScreen extends StatelessWidget{
@@ -10,7 +9,7 @@ class RestoScreen extends StatelessWidget{
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => SearchScreen()));2
+                      builder: (context) => SearchScreen()));
   }
 
 
