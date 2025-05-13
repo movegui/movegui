@@ -1,8 +1,9 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
-import 'package:shopsmart_users_en/services/assets_manager.dart';
-import 'package:shopsmart_users_en/widgets/empty_bag.dart';
-import 'package:shopsmart_users_en/widgets/title_text.dart';
+import 'package:movegui/services/assets_manager.dart';
+import 'package:movegui/widgets/empty_bag.dart';
+import 'package:movegui/widgets/title_text.dart';
+
 
 import '../../widgets/products/product_widget.dart';
 
