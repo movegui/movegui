@@ -8,11 +8,11 @@ import 'package:movegui/screens/home_screen.dart';
 import 'package:movegui/screens/reservation_screen.dart';
 import 'package:movegui/screens/search_screen.dart';
 import 'package:movegui/services/assets_manager.dart';
-import 'package:movegui/widgets/app_image.dart';
+import 'package:movegui/widgets/app/app_image.dart';
 import 'package:movegui/widgets/auth/google_btn.dart';
-import 'package:movegui/widgets/menu.dart';
+import 'package:movegui/widgets/menu/menu.dart';
 import 'package:movegui/widgets/subtitle_text.dart';
-
+import 'package:movegui/widgets/util/toogle_buttons.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -22,164 +22,210 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
-
-  
   late List<Widget> screens;
-   int currentScreen = 0;
+  int currentScreen = 0;
   late PageController controller;
   late Widget _scaffoldBody;
+  int currentLoginScreen = 0;
+
+  bool showFirst = true;
 
   @override
   void initState() {
     super.initState();
-        screens = [
+    screens = [
       HomeScreen(title: 'Home'),
       ReservationScreen(title: 'Reservation'),
-      Commandscreen(title: 'Commande',),
-      DeveliveryScreen(title: 'Livraison',),
+      Commandscreen(title: 'Commande'),
+      DeveliveryScreen(title: 'Livraison'),
     ];
-      controller = PageController();
-    _scaffoldBody = LoginPage();
+    controller = PageController();
+    _scaffoldBody = LoginEmailPage();
   }
+
+  void updateState(int state){
+      setState(() {
+        currentLoginScreen = state;
+      });
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
+        setState(() {
+          print("je suis la dans ");
+        });
       },
       child: Scaffold(
-         appBar: AppBar(
-        title: Text(' '),
-        titleTextStyle: TextStyle(
-          color: Color(0xFFFFFFFF), // Set the title color
-          fontSize: 20,
-        ),
-        leading: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: Icon(Icons.menu),
+      
+        appBar: AppBar(
+          title: Text(' '),
+          titleTextStyle: TextStyle(
+            color: Color(0xFFFFFFFF), // Set the title color
+            fontSize: 20,
+          ),
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: Icon(Icons.menu),
+                color: Color(0xFFFFFFFF),
+                tooltip: 'Navigation menu',
+                onPressed: () {
+                  //  _showMenu(context);
+                  Scaffold.of(context).openDrawer();
+                },
+              );
+            },
+          ),
+          backgroundColor: Color(0xFF871A1C), // Customize color
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.search),
               color: Color(0xFFFFFFFF),
-              tooltip: 'Navigation menu',
               onPressed: () {
-                //  _showMenu(context);
-                Scaffold.of(context).openDrawer();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SearchScreen()),
+                );
               },
-            );
-          },
+            ),
+            IconButton(
+              icon: Icon(Icons.notifications),
+              color: Color(0xFFFFFFFF),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HomeScreen(title: 'Notification'),
+                  ),
+                );
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.person),
+              color: Color(0xFFFFFFFF),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                );
+              },
+            ),
+          ],
         ),
-        backgroundColor: Color(0xFF871A1C), // Customize color
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            color: Color(0xFFFFFFFF),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SearchScreen()));
-                       
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.notifications),
-            color: Color(0xFFFFFFFF),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => HomeScreen(title: 'Notification',)));
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.person),
-            color: Color(0xFFFFFFFF),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => LoginScreen()));
-            },
-          ),
-        ],
-      ),
         drawer: MoveGuiMenu(),
-        body: _scaffoldBody,
-              bottomNavigationBar: 
-      NavigationBarTheme(data: NavigationBarThemeData(
-    labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
-      if (states.contains(WidgetState.selected)) {
-        return const TextStyle(
-          color: AppColors.secondary,
-          fontWeight: FontWeight.bold,
-        );
-      }
-      return const TextStyle(
-        color: AppColors.white,
-        fontWeight: FontWeight.normal,
-      );
-    }),
-  ),
-       child: 
-      NavigationBar(
-        indicatorColor: Colors.transparent,
-        selectedIndex: currentScreen,
-         backgroundColor: Theme.of(context).primaryColor,
-        elevation: 10,
-        height: kBottomNavigationBarHeight,
-        onDestinationSelected: (index) {
-          setState(() {
-            currentScreen = index;
-            _scaffoldBody = PageView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: controller,
-        children: screens,
-      );
-          });
-          controller.jumpToPage(currentScreen);
-        },
-        destinations: const [
-          NavigationDestination(
-            selectedIcon: Icon(Icons.home, color: AppColors.secondary,),
-            icon: Icon(Icons.home, color: AppColors.white,),
-            label: "Home",
+
+        //     body: _scaffoldBody,
+        body: Padding(
+          padding: const EdgeInsets.all(0.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                AppImage(),
+                ToggleButtonExample(onStateChanged: updateState,),
+                 currentLoginScreen == 0 ? LoginPhoneNumberPage():LoginEmailPage()
+              //  LoginPhoneNumberPage(),
+              ],
+            ),
           ),
-          NavigationDestination(
-            selectedIcon: ImageIcon(AssetImage(AssetsManager.reservationIcon3), color: AppColors.secondary,),
-            icon: ImageIcon(AssetImage(AssetsManager.reservationIcon3), color: AppColors.white, size: 24, ),
-            label: "Reservation",
-           
+        ),
+        //      floatingActionButton: ToggleButtonExample(onStateChanged: updateState),
+ /*
+        bottomNavigationBar: NavigationBarTheme(
+          data: NavigationBarThemeData(
+            labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((
+              states,
+            ) {
+              if (states.contains(WidgetState.selected)) {
+                return const TextStyle(
+                  color: AppColors.selectionColor,
+                  fontWeight: FontWeight.bold,
+                );
+              }
+              return const TextStyle(
+                color: AppColors.textColor,
+                fontWeight: FontWeight.normal,
+              );
+            }),
           ),
-          NavigationDestination(
-            selectedIcon: ImageIcon(AssetImage(AssetsManager.commandeIcon3), color: AppColors.secondary, size: 24,),
-            icon: ImageIcon(AssetImage(AssetsManager.commandeIcon3), color: AppColors.white,),
-            label: "Commande",
+          child: NavigationBar(
+            indicatorColor: Colors.transparent,
+            selectedIndex: currentScreen,
+            backgroundColor: Theme.of(context).primaryColor,
+            elevation: 10,
+            height: kBottomNavigationBarHeight,
+            onDestinationSelected: (index) {
+              setState(() {
+                currentScreen = index;
+                _scaffoldBody = PageView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  controller: controller,
+                  children: screens,
+                );
+              });
+              controller.jumpToPage(currentScreen);
+            },
+            destinations: const [
+              NavigationDestination(
+                selectedIcon: Icon(Icons.home, color: AppColors.selectionColor),
+                icon: Icon(Icons.home, color: AppColors.textColor),
+                label: "Home",
+              ),
+              NavigationDestination(
+                selectedIcon: ImageIcon(
+                  AssetImage(AssetsManager.reservationIcon3),
+                  color: AppColors.selectionColor,
+                ),
+                icon: ImageIcon(
+                  AssetImage(AssetsManager.reservationIcon3),
+                  color: AppColors.textColor,
+                  size: 24,
+                ),
+                label: "Reservation",
+              ),
+              NavigationDestination(
+                selectedIcon: ImageIcon(
+                  AssetImage(AssetsManager.commandeIcon3),
+                  color: AppColors.selectionColor,
+                  size: 24,
+                ),
+                icon: ImageIcon(
+                  AssetImage(AssetsManager.commandeIcon3),
+                  color: AppColors.textColor,
+                ),
+                label: "Commande",
+              ),
+              NavigationDestination(
+                selectedIcon: ImageIcon(
+                  AssetImage(AssetsManager.livraisonIcon3),
+                  color: AppColors.selectionColor,
+                ),
+                icon: ImageIcon(
+                  AssetImage(AssetsManager.livraisonIcon3),
+                  color: AppColors.textColor,
+                ),
+                label: "Livraison",
+              ),
+            ],
           ),
-          NavigationDestination(
-            selectedIcon: ImageIcon(AssetImage(AssetsManager.livraisonIcon3), color: AppColors.secondary,),
-            icon: ImageIcon(AssetImage(AssetsManager.livraisonIcon3), color: AppColors.white,),
-            label: "Livraison",
-          ),
-        ],
-      ),
-    )
+        ),
+        */
       ),
     );
   }
 }
 
-class LoginPage extends StatefulWidget {
-
-  
+class LoginEmailPage extends StatefulWidget {
+  const LoginEmailPage({super.key});
   @override
-  State<StatefulWidget> createState() => LoginPageState();
-  
+  State<StatefulWidget> createState() => LoginEmailPageState();
 }
 
-class LoginPageState extends State<LoginPage>{
-
-    late final TextEditingController _emailController;
+class LoginEmailPageState extends State<LoginEmailPage> {
+  late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
 
   late final FocusNode _emailFocusNode;
@@ -190,7 +236,7 @@ class LoginPageState extends State<LoginPage>{
   bool _isHoveringForgetText = false;
   bool _isHoveringRegisterText = false;
 
-    @override
+  @override
   void initState() {
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
@@ -212,37 +258,26 @@ class LoginPageState extends State<LoginPage>{
     super.dispose();
   }
 
-    Future<void> _loginFct() async {
- //   final isValid = _formkey.currentState!.validate();
+  Future<void> _loginFct() async {
+    //   final isValid = _formkey.currentState!.validate();
     FocusScope.of(context).unfocus();
   }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
       },
+      /*
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.all(0.0),
           child: SingleChildScrollView(
+            */
             child: Column(
               children: [
-                /*
-                const AppNameTextWidget(
-                  fontSize: 40,
-                ),
-                */
-                AppImage(),
-
-                /*
-                const Align(
-                    alignment: Alignment.centerLeft,
-                    child: TitlesTextWidget(label: "Welcome back!")),
-                const SizedBox(
-                  height: 16,
-                ),
-                */
+              //  AppImage(),
                 Form(
                   key: _formkey,
                   child: Column(
@@ -255,21 +290,18 @@ class LoginPageState extends State<LoginPage>{
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
                           hintText: "Email address",
-                          prefixIcon: Icon(
-                            IconlyLight.message,
-                          ),
+                          prefixIcon: Icon(IconlyLight.message),
                         ),
                         onFieldSubmitted: (value) {
-                          FocusScope.of(context)
-                              .requestFocus(_passwordFocusNode);
+                          FocusScope.of(
+                            context,
+                          ).requestFocus(_passwordFocusNode);
                         },
                         validator: (value) {
                           return MyValidators.emailValidator(value);
                         },
                       ),
-                      const SizedBox(
-                        height: 16.0,
-                      ),
+                      const SizedBox(height: 16.0),
                       TextFormField(
                         obscureText: obscureText,
                         controller: _passwordController,
@@ -290,9 +322,7 @@ class LoginPageState extends State<LoginPage>{
                             ),
                           ),
                           hintText: "***********",
-                          prefixIcon: const Icon(
-                            IconlyLight.lock,
-                          ),
+                          prefixIcon: const Icon(IconlyLight.lock),
                         ),
                         onFieldSubmitted: (value) async {
                           await _loginFct();
@@ -301,110 +331,118 @@ class LoginPageState extends State<LoginPage>{
                           return MyValidators.passwordValidator(value);
                         },
                       ),
-                      const SizedBox(
-                        height: 16.0,
-                      ),
+                      const SizedBox(height: 16.0),
                       Align(
                         alignment: Alignment.centerRight,
                         child: MouseRegion(
-                          onEnter: (_) => setState(() => _isHoveringForgetText = true),
-                          onExit: (_) => setState(() => _isHoveringForgetText = false),
+                          onEnter:
+                              (_) =>
+                                  setState(() => _isHoveringForgetText = true),
+                          onExit:
+                              (_) =>
+                                  setState(() => _isHoveringForgetText = false),
                           child: TextButton(
                             onPressed: () {},
-                            child:  SubtitleTextWidget(
+                            child: SubtitleTextWidget(
                               label: "Mot de pass oublier?",
                               fontStyle: FontStyle.italic,
                               textDecoration: TextDecoration.underline,
-                              color:  _isHoveringForgetText ? AppColors.secondary : AppColors.primary,
-                              
+                              color:
+                                  _isHoveringForgetText
+                                      ? AppColors.selectionColor
+                                      : AppColors.backgroundColor,
                             ),
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 16.0,
-                      ),
+                      const SizedBox(height: 16.0),
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton.icon(
                           style: ElevatedButton.styleFrom(
                             padding: const EdgeInsets.all(6.0),
-                             backgroundColor: AppColors.primary,
-                  
+                            backgroundColor: AppColors.backgroundColor,
+
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                6.0,
-                              ),
+                              borderRadius: BorderRadius.circular(6.0),
                             ),
-                      
-   
                           ),
-                          icon: const Icon(Icons.login, color: AppColors.white),
-                          label: const Text("Login", style: TextStyle(color: AppColors.white, fontSize: 18),),
+                          icon: const Icon(Icons.login, color: AppColors.textColor),
+                          label: const Text(
+                            "Login",
+                            style: TextStyle(
+                              color: AppColors.textColor,
+                              fontSize: 18,
+                            ),
+                          ),
                           onPressed: () async {
                             await _loginFct();
                           },
-                          
                         ),
                       ),
-                      
-                      const SizedBox(
-                        height: 16.0,
-                      ),
-                      
+
+                      const SizedBox(height: 16.0),
+
                       SubtitleTextWidget(
                         label: "Or connect using".toUpperCase(),
                       ),
-                      const SizedBox(
-                        height: 4.0,
-                      ),
+                      const SizedBox(height: 4.0),
                       SizedBox(
-                   //     height: kBottomNavigationBarHeight + 10,
+                        //     height: kBottomNavigationBarHeight + 10,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-            
+
                           children: [
-                             Padding(
-                               padding: const EdgeInsets.all(8.0),
-                               child: FittedBox(
-                                    child: GoogleButton(),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: FittedBox(child: GoogleButton()),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  padding: const EdgeInsets.all(6.0),
+                                  backgroundColor: AppColors.backgroundColor,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12.0),
                                   ),
-                             ),
-                                 Padding(
-                                   padding: const EdgeInsets.all(8.0),
-                                   child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      padding: const EdgeInsets.all(6.0),
-                                       backgroundColor: AppColors.primary,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          12.0,
-                                        ),
-                                      ),
-                                    ),
-                                    child: const Text("Invite ?", style: TextStyle(color: AppColors.white, fontSize: 14),),
-                                    onPressed: () async {},
-                                                                   ),
-                                 )
+                                ),
+                                child: const Text(
+                                  "Invite ?",
+                                  style: TextStyle(
+                                    color: AppColors.textColor,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                onPressed: () async {},
+                              ),
+                            ),
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 16.0,
-                      ),
+                      const SizedBox(height: 16.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const SubtitleTextWidget(label: "Nouveau ?"),
                           MouseRegion(
-                            onEnter: (_) => setState(() => _isHoveringRegisterText = true),
-                            onExit: (_) => setState(() => _isHoveringRegisterText = false),
+                            onEnter:
+                                (_) => setState(
+                                  () => _isHoveringRegisterText = true,
+                                ),
+                            onExit:
+                                (_) => setState(
+                                  () => _isHoveringRegisterText = false,
+                                ),
                             child: TextButton(
-                              child:  SubtitleTextWidget(
+                              child: SubtitleTextWidget(
                                 label: "Enregistrement",
                                 fontStyle: FontStyle.italic,
                                 textDecoration: TextDecoration.underline,
-                                color: _isHoveringRegisterText ? AppColors.secondary : AppColors.primary,
+                                color:
+                                    _isHoveringRegisterText
+                                        ? AppColors.selectionColor
+                                        : AppColors.backgroundColor,
                               ),
                               onPressed: () {
                                 /*
@@ -415,15 +453,140 @@ class LoginPageState extends State<LoginPage>{
                             ),
                           ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
               ],
             ),
-          ),
+          );
+          /*
         ),
       ),
     );
+    */
+  }
+}
+
+class LoginPhoneNumberPage extends StatefulWidget {
+  const LoginPhoneNumberPage({super.key});
+
+  @override
+  State<LoginPhoneNumberPage> createState() => LoginPhoneNumberPageState();
+}
+
+class LoginPhoneNumberPageState extends State<LoginPhoneNumberPage> {
+  late final TextEditingController _phoneNumberController;
+  late final FocusNode _phoneNumberFocusNode;
+
+  final _formkey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    _phoneNumberController = TextEditingController();
+    // Focus Nodes
+    _phoneNumberFocusNode = FocusNode();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    if (mounted) {
+      _phoneNumberController.dispose();
+      // Focus Nodes
+      _phoneNumberFocusNode.dispose();
+    }
+    super.dispose();
+  }
+
+  Future<void> _loginFct() async {
+    //   final isValid = _formkey.currentState!.validate();
+    FocusScope.of(context).unfocus();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      /*
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(0.0),
+          child: SingleChildScrollView(
+            */
+      child: Column(
+        children: [
+          /*
+                const AppNameTextWidget(
+                  fontSize: 40,
+                ),
+                */
+          //  AppImage(),
+
+          /*
+                const Align(
+                    alignment: Alignment.centerLeft,
+                    child: TitlesTextWidget(label: "Welcome back!")),
+                const SizedBox(
+                  height: 16,
+                ),
+                */
+          Form(
+            key: _formkey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextFormField(
+                  controller: _phoneNumberController,
+                  focusNode: _phoneNumberFocusNode,
+                  textInputAction: TextInputAction.next,
+                  keyboardType: TextInputType.phone,
+                  decoration: const InputDecoration(
+                    hintText: "00224 68 214 ",
+                    prefixIcon: Icon(Icons.phone),
+                  ),
+                  onFieldSubmitted: (value) {
+                    FocusScope.of(context).requestFocus(_phoneNumberFocusNode);
+                  },
+                  validator: (value) {
+                    return MyValidators.phoneNumberValidator(value);
+                  },
+                ),
+                const SizedBox(height: 16.0),
+
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.all(6.0),
+                      backgroundColor: AppColors.backgroundColor,
+
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6.0),
+                      ),
+                    ),
+                    icon: const Icon(Icons.login, color: AppColors.textColor),
+                    label: const Text(
+                      "Login",
+                      style: TextStyle(color: AppColors.textColor, fontSize: 18),
+                    ),
+                    onPressed: () async {
+                      await _loginFct();
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+    /*
+        ),
+      ),
+    );
+  */
   }
 }

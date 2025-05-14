@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movegui/screens/home_screen.dart';
 import 'package:movegui/services/assets_manager.dart';
 import 'package:movegui/services/title_manager.dart';
-import 'package:movegui/widgets/menu.dart';
+import 'package:movegui/widgets/menu/menu.dart';
 import 'package:movegui/widgets/title_text.dart';
 
 class MoveguiScreen extends StatelessWidget {

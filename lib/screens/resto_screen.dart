@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movegui/screens/home_screen.dart';
 import 'package:movegui/screens/search_screen.dart';
+import 'package:movegui/services/assets_manager.dart';
 
 class RestoScreen extends StatelessWidget{
   const RestoScreen({super.key});
@@ -23,31 +24,31 @@ class RestoScreen extends StatelessWidget{
         children: [
               RestoItem(
                   title: 'Resto1',
-                  imagePath: "assets/icons/moveguiB.jpg",
+                  imagePath: AssetsManager.resto1Image,
                   action: _onPressedImage,
                   index: 0,
                 ),
                 RestoItem(
                   title: 'Resto2',
-                  imagePath: "assets/icons/moveguiB.jpg",
+                  imagePath: AssetsManager.resto2Image,
                   action: _onPressedImage,
                   index: 1,
                 ),
                 RestoItem(
                   title: 'Resto3',
-                  imagePath: "assets/icons/moveguiB.jpg",
+                  imagePath: AssetsManager.resto3Image,
                   action: _onPressedImage,
                   index: 2,
                 ),
                 RestoItem(
                   title: 'Resto4',
-                  imagePath: "assets/icons/moveguiB.jpg",
+                  imagePath: AssetsManager.resto4Image,
                   action: _onPressedImage,
                   index: 3,
                 ),
                 RestoItem(
                   title: 'Resto5',
-                  imagePath: "assets/icons/moveguiB.jpg",
+                  imagePath: AssetsManager.resto5Image,
                   action: _onPressedImage,
                   index: 4,
                 ),

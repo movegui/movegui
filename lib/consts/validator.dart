@@ -31,6 +31,19 @@ class MyValidators {
     return null;
   }
 
+  static String? phoneNumberValidator(String? value) {
+    if(value!.isEmpty){
+       return 'Please Enter Phone Number';
+    }
+
+     if (value.length < 8) {
+      return 'Phone Number muss be at least 8 characters long';
+    }
+    return null;
+
+     
+  }
+
   static String? repeatPasswordValidator({String? value, String? password}) {
     if (value != password) {
       return 'Passwords do not match';

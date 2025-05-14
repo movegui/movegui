@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movegui/services/title_manager.dart';
-import 'package:movegui/widgets/menuitem.dart';
+import 'package:movegui/widgets/menu/menuitem.dart';
 
 class MoveGuiMenu extends StatelessWidget {
   const MoveGuiMenu({super.key});

@@ -7,7 +7,7 @@ import 'package:movegui/screens/command_screen.dart';
 import 'package:movegui/screens/develivery_screen.dart';
 import 'package:movegui/screens/home_screen.dart';
 import 'package:movegui/screens/reservation_screen.dart';
-import 'package:movegui/widgets/menu.dart';
+import 'package:movegui/widgets/menu/menu.dart';
 import 'package:movegui/widgets/products/product_widget.dart';
 
 import '../services/assets_manager.dart';
@@ -169,17 +169,19 @@ class _SearchScreenState extends State<SearchScreen> {
             ],
           ),
         ),
+        /*
          bottomNavigationBar: 
-      NavigationBarTheme(data: NavigationBarThemeData(
+      NavigationBarTheme(
+        data: NavigationBarThemeData(
     labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
       if (states.contains(WidgetState.selected)) {
         return const TextStyle(
-          color: AppColors.secondary,
+          color: AppColors.selectionColor,
           fontWeight: FontWeight.bold,
         );
       }
       return const TextStyle(
-        color: AppColors.white,
+        color: AppColors.textColor,
         fontWeight: FontWeight.normal,
       );
     }),
@@ -199,29 +201,30 @@ class _SearchScreenState extends State<SearchScreen> {
         },
         destinations: const [
           NavigationDestination(
-            selectedIcon: Icon(Icons.home, color: AppColors.secondary,),
-            icon: Icon(Icons.home, color: AppColors.white,),
+            selectedIcon: Icon(Icons.home, color: AppColors.selectionColor,),
+            icon: Icon(Icons.home, color: AppColors.textColor,),
             label: "Home",
           ),
           NavigationDestination(
-            selectedIcon: ImageIcon(AssetImage(AssetsManager.reservationIcon3), color: AppColors.secondary,),
-            icon: ImageIcon(AssetImage(AssetsManager.reservationIcon3), color: AppColors.white, size: 24, ),
+            selectedIcon: ImageIcon(AssetImage(AssetsManager.reservationIcon3), color: AppColors.selectionColor,),
+            icon: ImageIcon(AssetImage(AssetsManager.reservationIcon3), color: AppColors.textColor, size: 24, ),
             label: "Reservation",
            
           ),
           NavigationDestination(
-            selectedIcon: ImageIcon(AssetImage(AssetsManager.commandeIcon3), color: AppColors.secondary, size: 24,),
-            icon: ImageIcon(AssetImage(AssetsManager.commandeIcon3), color: AppColors.white,),
+            selectedIcon: ImageIcon(AssetImage(AssetsManager.commandeIcon3), color: AppColors.selectionColor, size: 24,),
+            icon: ImageIcon(AssetImage(AssetsManager.commandeIcon3), color: AppColors.textColor,),
             label: "Commande",
           ),
           NavigationDestination(
-            selectedIcon: ImageIcon(AssetImage(AssetsManager.livraisonIcon3), color: AppColors.secondary,),
-            icon: ImageIcon(AssetImage(AssetsManager.livraisonIcon3), color: AppColors.white,),
+            selectedIcon: ImageIcon(AssetImage(AssetsManager.livraisonIcon3), color: AppColors.selectionColor,),
+            icon: ImageIcon(AssetImage(AssetsManager.livraisonIcon3), color: AppColors.textColor,),
             label: "Livraison",
           ),
         ],
       ),
     )
+    */
       ),
     );
   }

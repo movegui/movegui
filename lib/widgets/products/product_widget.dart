@@ -71,22 +71,22 @@ class _ProductWidgetState extends State<ProductWidget> {
                     child: SubtitleTextWidget(
                       label: "1550.00\$",
                       fontWeight: FontWeight.w600,
-                      color: AppColors.primary,
+                      color: AppColors.backgroundColor,
                     ),
                   ),
                   Flexible(
                     child: Material(
                       borderRadius: BorderRadius.circular(12.0),
-                      color: AppColors.primary,
+                      color: AppColors.backgroundColor,
                       child: InkWell(
                         borderRadius: BorderRadius.circular(12.0),
                         onTap: () {},
-                        splashColor: AppColors.secondary,
+                        splashColor: AppColors.selectionColor,
                         child: const Padding(
                           padding: EdgeInsets.all(6.0),
                           child: Icon(
                             Icons.add_shopping_cart_outlined,
-                            color: AppColors.white,
+                            color: AppColors.textColor,
                             size: 20,
                           ),
                         ),

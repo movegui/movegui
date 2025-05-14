@@ -11,7 +11,7 @@ class GoogleButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         elevation: 1,
         padding: const EdgeInsets.all(6.0),
-        backgroundColor: AppColors.primary,
+        backgroundColor: AppColors.backgroundColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(
             12.0,
@@ -20,11 +20,11 @@ class GoogleButton extends StatelessWidget {
       ),
       icon: const Icon(
         Ionicons.logo_google,
-        color: AppColors.white,
+        color: AppColors.textColor,
       ),
       label: const Text(
         "Sign in with google",
-        style: TextStyle(color: AppColors.white , fontSize: 14),
+        style: TextStyle(color: AppColors.textColor , fontSize: 14),
       ),
       onPressed: () async {},
     );

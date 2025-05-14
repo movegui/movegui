@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:movegui/widgets/title_text.dart';
 
 import '../../consts/app_constants.dart';
-import '../../widgets/app_name_text.dart';
+import '../../widgets/app/app_name_text.dart';
 import '../../widgets/products/heart_btn.dart';
 import '../../widgets/subtitle_text.dart';
 
