@@ -1,14 +1,27 @@
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:movegui/firebase_options.dart';
 import 'package:movegui/providers/theme_provider.dart';
 import 'package:movegui/screens/movegui_screen.dart';
 import 'package:movegui/screens/root_screen.dart';
 import 'package:movegui/services/title_manager.dart';
 import 'package:provider/provider.dart';
 import 'consts/theme_data.dart';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  FirebaseUIAuth.configureProviders([
+    EmailAuthProvider(),
+    
+    // ... other providers
+  ]);
+
   runApp(const MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -24,7 +37,7 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<ThemeProvider>(builder: (context, themeProvider, child) {
         return MaterialApp(
-          title: 'ShopSmart EN',
+          title: 'Movegui',
           theme: Styles.themeData(
               isDarkTheme: themeProvider.getIsDarkTheme, context: context),
                 routes: {

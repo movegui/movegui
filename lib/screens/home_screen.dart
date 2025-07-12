@@ -103,8 +103,8 @@ class HomeItemState extends State<HomeItem> {
                   index: 0,
                 ),
                 MoveguiWidgetImage(
-                  title: TitleManager.reservationTitle,
-                  imagePath: AssetsManager.reservationIcon,
+                  title: TitleManager.courseTitle,
+                  imagePath: AssetsManager.courseIcon,
                   action: _onPressedImage,
                   index: 1,
                 ),
@@ -181,7 +181,7 @@ class MoveguiWidgetImage extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              width: MediaQuery.of(context).size.width * 0.44,
+              width: MediaQuery.of(context).size.width * 0.42,
               margin: const EdgeInsets.all(0),
               padding: const EdgeInsets.all(0),
               height: 120,
@@ -203,7 +203,7 @@ class MoveguiWidgetImage extends StatelessWidget {
             Container(
               color: Color(0xFF871A1C),
               padding: EdgeInsets.only(top: 2),
-              width: MediaQuery.of(context).size.width * 0.44,
+              width: MediaQuery.of(context).size.width * 0.42,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

@@ -4,5 +4,6 @@ class TitleManager {
   static const String  livraisonTitle = "Livraison";
   static const String  moveguiTitle = "MoveGui";
   static const String  homeTitle = "Home";
+  static const String  courseTitle = "Course";
 
 }

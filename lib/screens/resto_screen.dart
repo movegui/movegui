@@ -1,123 +1,109 @@
-import 'package:flutter/material.dart';
-import 'package:movegui/screens/home_screen.dart';
-import 'package:movegui/screens/search_screen.dart';
-import 'package:movegui/services/assets_manager.dart';
+import 'dart:developer';
 
-class RestoScreen extends StatelessWidget{
+import 'package:flutter/material.dart';
+import 'package:movegui/screens/auth/login.dart';
+import 'package:movegui/screens/command_screen.dart';
+import 'package:movegui/screens/develivery_screen.dart';
+import 'package:movegui/screens/home_screen.dart';
+import 'package:movegui/screens/reservation_screen.dart';
+import 'package:movegui/screens/search_screen.dart';
+import 'package:movegui/widgets/category/category_widget.dart';
+import 'package:movegui/widgets/menu/menu.dart';
+import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
+import 'package:movegui/widgets/restos/resto_widget.dart';
+import 'package:movegui/widgets/title_text.dart';
+
+class RestoScreen extends StatefulWidget {
   const RestoScreen({super.key});
 
-  void _onPressedImage(BuildContext context, int index, String title) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SearchScreen()));
-  }
-
-
-
   @override
-  Widget build(BuildContext context) {
-     return Padding(
-      padding: EdgeInsets.all(6),
-      child: SingleChildScrollView(child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-              RestoItem(
-                  title: 'Resto1',
-                  imagePath: AssetsManager.resto1Image,
-                  action: _onPressedImage,
-                  index: 0,
-                ),
-                RestoItem(
-                  title: 'Resto2',
-                  imagePath: AssetsManager.resto2Image,
-                  action: _onPressedImage,
-                  index: 1,
-                ),
-                RestoItem(
-                  title: 'Resto3',
-                  imagePath: AssetsManager.resto3Image,
-                  action: _onPressedImage,
-                  index: 2,
-                ),
-                RestoItem(
-                  title: 'Resto4',
-                  imagePath: AssetsManager.resto4Image,
-                  action: _onPressedImage,
-                  index: 3,
-                ),
-                RestoItem(
-                  title: 'Resto5',
-                  imagePath: AssetsManager.resto5Image,
-                  action: _onPressedImage,
-                  index: 4,
-                ),
-        ],
-
-      ),)
-    );
-  }
-  
+  State<RestoScreen> createState() => _SearchScreenState();
 }
 
-class RestoItem extends MoveguiWidgetImage {
-  const RestoItem({super.key, required super.title, required super.imagePath, required super.action, required super.index});
+class _SearchScreenState extends State<RestoScreen> {
+  late TextEditingController searchTextController;
 
- 
+    
+  late List<Widget> screens;
+   int currentScreen = 0;
+  late PageController controller;
+
+  @override
+  void initState() {
+    searchTextController = TextEditingController();
+    super.initState();
+           screens = [
+      HomeScreen(title: 'Home',),
+      ReservationScreen(title: 'Reservation'),
+      Commandscreen(title: 'Commande',),
+      DeveliveryScreen(title: 'Livraison',)
+
+    ];
+    controller = PageController(initialPage: currentScreen);
+  }
+
+  @override
+  void dispose() {
+    searchTextController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-     return Padding(
-      padding: EdgeInsets.all(6),
-      child: ElevatedButton(
-          onPressed: () => action(context, index, title),
-          style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(),
-            padding: EdgeInsets.all(1),
-            backgroundColor: Color(0xFFFFFFFF),
-            //  backgroundColor: Color(0xFF871A1C)
-          ),
-          child: Column(children: [
-            Container(
-                width: MediaQuery.of(context).size.width ,
-                margin: const EdgeInsets.all(0),
-                padding: const EdgeInsets.all(0),
-                height: 200,
-                decoration: BoxDecoration(
-                  color: Color(0xFFFFFFFF),
-                  image: DecorationImage(
-                    image: AssetImage(imagePath), // or NetworkImage
-                    fit: BoxFit.fitHeight, // covers entire container
-                    /*
-                    colorFilter: ColorFilter.mode(
-                      Color(
-                          0xFF871A1C), // Change this to your desired color and opacity
-                      BlendMode.color, // Other modes: overlay, multiply, etc.
-                    ),
-                    */
-                  ),
-                )),
-            Container(
-              color: Color(0xFF871A1C),
-              padding: EdgeInsets.only(top: 2),
-              width: MediaQuery.of(context).size.width,
-              height: 50,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFFFFFFFF),
-                      //   backgroundColor: Colors.black)
-                    ),
-                  )
-                ],
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 15.0,
               ),
-            )
-          ])),
+              TextField(
+                controller: searchTextController,
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.search),
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      // setState(() {
+                      FocusScope.of(context).unfocus();
+                      searchTextController.clear();
+                      // });
+                    },
+                    child: const Icon(
+                      Icons.clear,
+                      color: Colors.red,
+                    ),
+                  ),
+                ),
+                onChanged: (value) {
+                  log("value of the text is $value");
+                },
+                onSubmitted: (value) {
+                  // log("value of the text is $value");
+                  // log("value of the controller text: ${searchTextController.text}");
+                },
+              ),
+              const SizedBox(
+                height: 15.0,
+              ),
+              Expanded(
+                child: DynamicHeightGridView(
+                    mainAxisSpacing: 12,
+                    crossAxisSpacing: 12,
+                    builder: (context, index) {
+                      return const RestoWidget();
+                    },
+                    itemCount: 3,
+                    crossAxisCount: 1),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
-  
 }

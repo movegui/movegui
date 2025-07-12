@@ -89,7 +89,7 @@ class _RootScreenState extends State<RootScreen> {
             icon: Icon(Icons.person),
             color: Color(0xFFFFFFFF),
             onPressed: () {
-              Navigator.push(
+              Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                       builder: (context) => LoginScreen()));

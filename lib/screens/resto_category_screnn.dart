@@ -6,37 +6,28 @@ import 'package:movegui/screens/command_screen.dart';
 import 'package:movegui/screens/develivery_screen.dart';
 import 'package:movegui/screens/home_screen.dart';
 import 'package:movegui/screens/reservation_screen.dart';
+import 'package:movegui/screens/search_screen.dart';
+import 'package:movegui/widgets/category/category_widget.dart';
 import 'package:movegui/widgets/menu/menu.dart';
-import 'package:movegui/widgets/products/product_widget.dart';
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
+import 'package:movegui/widgets/title_text.dart';
 
-class SearchScreen extends StatefulWidget {
-  const SearchScreen({super.key});
+class RestoCategoryScreen extends StatefulWidget {
+  const RestoCategoryScreen({super.key});
 
   @override
-  State<SearchScreen> createState() => _SearchScreenState();
+  State<RestoCategoryScreen> createState() => _SearchScreenState();
 }
 
-class _SearchScreenState extends State<SearchScreen> {
+class _SearchScreenState extends State<RestoCategoryScreen> {
   late TextEditingController searchTextController;
 
     
-  late List<Widget> screens;
-   int currentScreen = 0;
-  late PageController controller;
 
   @override
   void initState() {
     searchTextController = TextEditingController();
     super.initState();
-           screens = [
-      HomeScreen(title: 'Home',),
-      ReservationScreen(title: 'Reservation'),
-      Commandscreen(title: 'Commande',),
-      DeveliveryScreen(title: 'Livraison',)
-
-    ];
-    controller = PageController(initialPage: currentScreen);
   }
 
   @override
@@ -53,7 +44,7 @@ class _SearchScreenState extends State<SearchScreen> {
       },
       child: Scaffold(
              appBar: AppBar(
-        title: Text('Search products'),
+        title: Text('Search Category'),
         titleTextStyle: TextStyle(
           color: Color(0xFFFFFFFF), // Set the title color
           fontSize: 20,
@@ -147,14 +138,78 @@ class _SearchScreenState extends State<SearchScreen> {
                     mainAxisSpacing: 12,
                     crossAxisSpacing: 12,
                     builder: (context, index) {
-                      return const ProductWidget();
+                      return const CategoryWidget();
                     },
-                    itemCount: 200,
-                    crossAxisCount: 2),
+                    itemCount: 3,
+                    crossAxisCount: 1),
               ),
             ],
           ),
         ),
+              bottomNavigationBar: BottomAppBar(
+        height: 100,
+        color: Theme.of(context).primaryColor,
+        child: Padding(
+          padding: const EdgeInsets.all(0),
+          child: Row(
+             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: 130,
+                child: Column(
+                //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TitlesTextWidget(
+                      label: "Addresse:",
+                      color: Theme.of(context).secondaryHeaderColor,
+                      decoration: TextDecoration.underline,
+                    ),
+                    Text(
+                      'Kobaya commune de ratoma Conakry',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: 140,
+                child: Column(
+                  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TitlesTextWidget(
+                      label: "E-Mail:",
+                      color: Theme.of(context).secondaryHeaderColor,
+                      decoration: TextDecoration.underline,
+                    ),
+                    Text('movegui@gmail.com', 
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: 100,
+                child: Column(
+                  //              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                           TitlesTextWidget(
+                      label: "Telephone",
+                      color: Theme.of(context).secondaryHeaderColor,
+                      decoration: TextDecoration.underline,
+                    ),
+                    Text('623-259-584', 
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
         /*
          bottomNavigationBar: 
       NavigationBarTheme(

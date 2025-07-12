@@ -10,6 +10,7 @@ class AssetsManager {
   static const String livraisonIcon2 = "$assetsIconsPath/Livraison.png";
   static const String livraisonIcon3 = "$assetsIconsPath/fast-delivery.png";
   static const String moveguiIcon = "$assetsIconsPath/moveguiFB.png";
+  static const String courseIcon = "$assetsIconsPath/course.jpg";
 
 
     static String imagesPath = "assets/images";
@@ -62,4 +63,11 @@ class AssetsManager {
   static String resto3Image = "$restoImagesPath/resto_3.jpg";
   static String resto4Image = "$restoImagesPath/resto_4.jpg";
   static String resto5Image = "$restoImagesPath/resto_5.jpg";
+
+  static String category1Image = "$categoriesImagesPath/pizza.jpg";
+  static String category2Image = "$categoriesImagesPath/fast_food.jpg";
+  static String category3Image = "$categoriesImagesPath/sandwisch4.jpg";
+  static String category4Image = "$categoriesImagesPath/vegan.jpg";
+  static String category5Image = "$categoriesImagesPath/bbq.jpg";
+
 }
