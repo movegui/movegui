@@ -1,41 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:movegui/consts/app_colors.dart';
-import 'package:movegui/screens/auth/login.dart';
+import 'package:movegui/screens/auth/login_screen.dart';
+import 'package:movegui/screens/auth/user_menu_screen.dart';
 import 'package:movegui/screens/command_screen.dart';
 import 'package:movegui/screens/develivery_screen.dart';
 import 'package:movegui/screens/home_screen.dart';
 import 'package:movegui/screens/reservation_screen.dart';
 import 'package:movegui/screens/search_screen.dart';
+import 'package:movegui/screens/user_screen.dart';
 import 'package:movegui/services/assets_manager.dart';
 import 'package:movegui/widgets/menu/menu.dart';
-
+import 'package:movegui/widgets/menu/menuitem.dart';
 
 class RootScreen extends StatefulWidget {
-  const RootScreen({super.key, required this.currentScreen, required this.title});
+  const RootScreen({
+    super.key,
+    required this.currentScreen,
+    required this.title,
+  });
   final int currentScreen;
   final String title;
 
   @override
   // ignore: no_logic_in_create_state
-  State<RootScreen> createState() => _RootScreenState(currentScreen: currentScreen, title: title);
+  State<RootScreen> createState() =>
+      _RootScreenState(currentScreen: currentScreen, title: title);
 }
 
 class _RootScreenState extends State<RootScreen> {
-      _RootScreenState({required this.currentScreen, required this.title});
+  _RootScreenState({required this.currentScreen, required this.title});
 
   late List<Widget> screens;
-   int currentScreen;
-   String title;
+  int currentScreen;
+  String title;
   late PageController controller;
   @override
   void initState() {
     super.initState();
     screens = [
-      HomeScreen(title: title,),
+      HomeScreen(title: title),
       ReservationScreen(title: title),
-      Commandscreen(title: title,),
-      DeveliveryScreen(title: title,)
-
+      Commandscreen(title: title),
+      DeveliveryScreen(title: title),
     ];
     controller = PageController(initialPage: currentScreen);
   }
@@ -43,7 +49,7 @@ class _RootScreenState extends State<RootScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
+      appBar: AppBar(
         title: Text(title),
         titleTextStyle: TextStyle(
           color: Color(0xFFFFFFFF), // Set the title color
@@ -69,10 +75,9 @@ class _RootScreenState extends State<RootScreen> {
             color: Color(0xFFFFFFFF),
             onPressed: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SearchScreen()));
-                       
+                context,
+                MaterialPageRoute(builder: (context) => SearchScreen()),
+              );
             },
           ),
           IconButton(
@@ -80,84 +85,131 @@ class _RootScreenState extends State<RootScreen> {
             color: Color(0xFFFFFFFF),
             onPressed: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => HomeScreen(title: 'Notification',)));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomeScreen(title: 'Notification'),
+                ),
+              );
             },
           ),
-          IconButton(
-            icon: Icon(Icons.person),
-            color: Color(0xFFFFFFFF),
-            onPressed: () {
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => LoginScreen()));
-            },
-          ),
+          UserMenuScreen(),
         ],
       ),
-        drawer: MoveGuiMenu(),
+      drawer: MoveGuiMenu(),
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: controller,
         children: screens,
       ),
-       
-      bottomNavigationBar: 
-      NavigationBarTheme(data: NavigationBarThemeData(
-    labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
-      if (states.contains(WidgetState.selected)) {
-        return const TextStyle(
-          color: AppColors.textColor,
-          fontWeight: FontWeight.bold,
-        );
-      }
-      return const TextStyle(
-        color: AppColors.textColor,
-        fontWeight: FontWeight.normal,
-      );
-    }),
-  ),
-       child: 
-      NavigationBar(
-        indicatorColor: Colors.transparent,
-        selectedIndex: currentScreen,
-         backgroundColor: Theme.of(context).primaryColor,
-        elevation: 10,
-        height: kBottomNavigationBarHeight,
-        onDestinationSelected: (index) {
-          setState(() {
-            currentScreen = index;
-          });
-          controller.jumpToPage(currentScreen);
-        },
-        destinations: const [
-          NavigationDestination(
-            selectedIcon: Icon(Icons.home, color: AppColors.selectionColor,),
-            icon: Icon(Icons.home, color: AppColors.textColor,),
-            label: "Home",
-          ),
-          NavigationDestination(
-            selectedIcon: ImageIcon(AssetImage(AssetsManager.reservationIcon3), color: AppColors.selectionColor,),
-            icon: ImageIcon(AssetImage(AssetsManager.reservationIcon3), color: AppColors.textColor, size: 24, ),
-            label: "Reservation",
-           
-          ),
-          NavigationDestination(
-            selectedIcon: ImageIcon(AssetImage(AssetsManager.commandeIcon3), color: AppColors.selectionColor, size: 24,),
-            icon: ImageIcon(AssetImage(AssetsManager.commandeIcon3), color: AppColors.textColor,),
-            label: "Commande",
-          ),
-          NavigationDestination(
-            selectedIcon: ImageIcon(AssetImage(AssetsManager.livraisonIcon3), color: AppColors.selectionColor,),
-            icon: ImageIcon(AssetImage(AssetsManager.livraisonIcon3), color: AppColors.textColor,),
-            label: "Livraison",
-          ),
-        ],
+
+      bottomNavigationBar: NavigationBarTheme(
+        data: NavigationBarThemeData(
+          labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
+            if (states.contains(WidgetState.selected)) {
+              return const TextStyle(
+                color: AppColors.textColor,
+                fontWeight: FontWeight.bold,
+              );
+            }
+            return const TextStyle(
+              color: AppColors.textColor,
+              fontWeight: FontWeight.normal,
+            );
+          }),
+        ),
+        child: NavigationBar(
+          indicatorColor: Colors.transparent,
+          selectedIndex: currentScreen,
+          backgroundColor: Theme.of(context).primaryColor,
+          elevation: 10,
+          height: kBottomNavigationBarHeight,
+          onDestinationSelected: (index) {
+            setState(() {
+              currentScreen = index;
+            });
+            controller.jumpToPage(currentScreen);
+          },
+          destinations: const [
+            NavigationDestination(
+              selectedIcon: Icon(Icons.home, color: AppColors.selectionColor),
+              icon: Icon(Icons.home, color: AppColors.textColor),
+              label: "Home",
+            ),
+            NavigationDestination(
+              selectedIcon: ImageIcon(
+                AssetImage(AssetsManager.reservationIcon3),
+                color: AppColors.selectionColor,
+              ),
+              icon: ImageIcon(
+                AssetImage(AssetsManager.reservationIcon3),
+                color: AppColors.textColor,
+                size: 24,
+              ),
+              label: "Reservation",
+            ),
+            NavigationDestination(
+              selectedIcon: ImageIcon(
+                AssetImage(AssetsManager.commandeIcon3),
+                color: AppColors.selectionColor,
+                size: 24,
+              ),
+              icon: ImageIcon(
+                AssetImage(AssetsManager.commandeIcon3),
+                color: AppColors.textColor,
+              ),
+              label: "Commande",
+            ),
+            NavigationDestination(
+              selectedIcon: ImageIcon(
+                AssetImage(AssetsManager.livraisonIcon3),
+                color: AppColors.selectionColor,
+              ),
+              icon: ImageIcon(
+                AssetImage(AssetsManager.livraisonIcon3),
+                color: AppColors.textColor,
+              ),
+              label: "Livraison",
+            ),
+          ],
+        ),
       ),
-    )
+    );
+  }
+
+  showUserMenu(BuildContext context) async {
+    /*
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // return object of type Dialog
+          return UserScreen();
+        }
+      );
+      */
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Container(
+            padding: EdgeInsets.all(20),
+            height: 200,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text("Custom Dialog", style: TextStyle(fontSize: 18)),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text("Close"),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
-

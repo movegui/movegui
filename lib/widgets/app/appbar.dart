@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movegui/screens/home_screen.dart';
 
-class MoveguiAppBar extends StatelessWidget {
+class MoveguiAppBar extends StatelessWidget implements PreferredSizeWidget{
    const MoveguiAppBar({super.key, required this.title});
 
   final String title;
@@ -65,5 +65,9 @@ class MoveguiAppBar extends StatelessWidget {
         ],
       );
   }
+  
+  @override
+  // TODO: implement preferredSize
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
   
 }

@@ -3,8 +3,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:movegui/firebase_options.dart';
 import 'package:movegui/providers/theme_provider.dart';
+import 'package:movegui/screens/auth/login_screen.dart';
 import 'package:movegui/screens/movegui_screen.dart';
 import 'package:movegui/screens/root_screen.dart';
+import 'package:movegui/screens/user_screen.dart';
 import 'package:movegui/services/title_manager.dart';
 import 'package:provider/provider.dart';
 import 'consts/theme_data.dart';
@@ -46,6 +48,8 @@ class MyApp extends StatelessWidget {
         'commande': (context) => RootScreen(currentScreen:2, title: TitleManager.commandTitle,),
         'to_deliver': (context) => RootScreen(currentScreen:3, title: TitleManager.livraisonTitle,),
          'movegui': (context) => MoveguiScreen(),
+         'login': (context) => LoginScreen(),
+         'enregistrer': (context) => RegisterScreen()
       },
       
        //  home: const ToggleButtonExample(),

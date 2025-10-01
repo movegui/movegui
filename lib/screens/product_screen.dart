@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:movegui/screens/auth/login.dart';
+import 'package:movegui/screens/auth/login_screen.dart';
 import 'package:movegui/screens/home_screen.dart';
 import 'package:movegui/screens/search_screen.dart';
 import 'package:movegui/widgets/menu/menu.dart';

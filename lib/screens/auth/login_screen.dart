@@ -5,7 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/validator.dart';
 import 'package:movegui/screens/auth/forgot_password.dart';
-import 'package:movegui/screens/auth/register.dart';
+import 'package:movegui/screens/auth/register_screen.dart';
 import 'package:movegui/screens/command_screen.dart';
 import 'package:movegui/screens/develivery_screen.dart';
 import 'package:movegui/screens/home_screen.dart';

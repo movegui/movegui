@@ -10,10 +10,10 @@ class AssetsManager {
   static const String livraisonIcon2 = "$assetsIconsPath/Livraison.png";
   static const String livraisonIcon3 = "$assetsIconsPath/fast-delivery.png";
   static const String moveguiIcon = "$assetsIconsPath/moveguiFB.png";
-  static const String courseIcon = "$assetsIconsPath/course.jpg";
+  static const String courseIcon = "$assetsIconsPath/courseFB.png";
+  static const String courseIcon1 = "$assetsIconsPath/course.jpg";
 
-
-    static String imagesPath = "assets/images";
+  static String imagesPath = "assets/images";
   static String profileImagesPath = "assets/images/profile";
   static String bagImagesPath = "assets/images/bag";
   static String bannersImagesPath = "assets/images/banners";
