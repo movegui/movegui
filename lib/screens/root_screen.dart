@@ -7,8 +7,10 @@ import 'package:movegui/screens/develivery_screen.dart';
 import 'package:movegui/screens/home_screen.dart';
 import 'package:movegui/screens/reservation_screen.dart';
 import 'package:movegui/screens/search_screen.dart';
+import 'package:movegui/screens/shopping_screen.dart';
 import 'package:movegui/screens/user_screen.dart';
 import 'package:movegui/services/assets_manager.dart';
+import 'package:movegui/widgets/app/appbar.dart';
 import 'package:movegui/widgets/menu/menu.dart';
 import 'package:movegui/widgets/menu/menuitem.dart';
 
@@ -39,9 +41,10 @@ class _RootScreenState extends State<RootScreen> {
     super.initState();
     screens = [
       HomeScreen(title: title),
-      ReservationScreen(title: title),
+      // ReservationScreen(title: title),
       Commandscreen(title: title),
       DeveliveryScreen(title: title),
+      ShoppingScreen(title: title),
     ];
     controller = PageController(initialPage: currentScreen);
   }
@@ -49,52 +52,7 @@ class _RootScreenState extends State<RootScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-        titleTextStyle: TextStyle(
-          color: Color(0xFFFFFFFF), // Set the title color
-          fontSize: 20,
-        ),
-        leading: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: Icon(Icons.menu),
-              color: Color(0xFFFFFFFF),
-              tooltip: 'Navigation menu',
-              onPressed: () {
-                //  _showMenu(context);
-                Scaffold.of(context).openDrawer();
-              },
-            );
-          },
-        ),
-        backgroundColor: Color(0xFF871A1C), // Customize color
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            color: Color(0xFFFFFFFF),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SearchScreen()),
-              );
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.notifications),
-            color: Color(0xFFFFFFFF),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => HomeScreen(title: 'Notification'),
-                ),
-              );
-            },
-          ),
-          UserMenuScreen(),
-        ],
-      ),
+      appBar: MoveguiAppBar(title:  title),
       drawer: MoveGuiMenu(),
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
@@ -135,18 +93,7 @@ class _RootScreenState extends State<RootScreen> {
               icon: Icon(Icons.home, color: AppColors.textColor),
               label: "Home",
             ),
-            NavigationDestination(
-              selectedIcon: ImageIcon(
-                AssetImage(AssetsManager.reservationIcon3),
-                color: AppColors.selectionColor,
-              ),
-              icon: ImageIcon(
-                AssetImage(AssetsManager.reservationIcon3),
-                color: AppColors.textColor,
-                size: 24,
-              ),
-              label: "Reservation",
-            ),
+
             NavigationDestination(
               selectedIcon: ImageIcon(
                 AssetImage(AssetsManager.commandeIcon3),
@@ -159,6 +106,7 @@ class _RootScreenState extends State<RootScreen> {
               ),
               label: "Commande",
             ),
+      
             NavigationDestination(
               selectedIcon: ImageIcon(
                 AssetImage(AssetsManager.livraisonIcon3),
@@ -170,6 +118,19 @@ class _RootScreenState extends State<RootScreen> {
               ),
               label: "Livraison",
             ),
+            NavigationDestination(
+              selectedIcon: ImageIcon(
+                AssetImage(AssetsManager.reservationIcon3),
+                color: AppColors.selectionColor,
+              ),
+              icon: ImageIcon(
+                AssetImage(AssetsManager.reservationIcon3),
+                color: AppColors.textColor,
+                size: 24,
+              ),
+              label: "Courses",
+            ),
+
           ],
         ),
       ),

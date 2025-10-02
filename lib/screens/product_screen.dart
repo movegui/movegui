@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:movegui/screens/auth/login_screen.dart';
 import 'package:movegui/screens/home_screen.dart';
 import 'package:movegui/screens/search_screen.dart';
+import 'package:movegui/widgets/app/appbar.dart';
 import 'package:movegui/widgets/menu/menu.dart';
 import 'package:movegui/widgets/products/product_widget.dart';
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
@@ -38,60 +39,7 @@ class _SearchScreenState extends State<ProductScreen> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-             appBar: AppBar(
-        title: Text('Search products'),
-        titleTextStyle: TextStyle(
-          color: Color(0xFFFFFFFF), // Set the title color
-          fontSize: 20,
-        ),
-        leading: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: Icon(Icons.menu),
-              color: Color(0xFFFFFFFF),
-              tooltip: 'Navigation menu',
-              onPressed: () {
-                //  _showMenu(context);
-                Scaffold.of(context).openDrawer();
-              },
-            );
-          },
-        ),
-        backgroundColor: Color(0xFF871A1C), // Customize color
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            color: Color(0xFFFFFFFF),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SearchScreen()));
-                       
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.notifications),
-            color: Color(0xFFFFFFFF),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => HomeScreen(title: 'Notification',)));
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.person),
-            color: Color(0xFFFFFFFF),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => LoginScreen()));
-            },
-          ),
-        ],
-      ),
+             appBar: MoveguiAppBar(title: 'Search Products'),
         drawer: MoveGuiMenu(),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -205,62 +153,6 @@ class _SearchScreenState extends State<ProductScreen> {
           ),
         ),
       ),
-        /*
-         bottomNavigationBar: 
-      NavigationBarTheme(
-        data: NavigationBarThemeData(
-    labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
-      if (states.contains(WidgetState.selected)) {
-        return const TextStyle(
-          color: AppColors.selectionColor,
-          fontWeight: FontWeight.bold,
-        );
-      }
-      return const TextStyle(
-        color: AppColors.textColor,
-        fontWeight: FontWeight.normal,
-      );
-    }),
-  ),
-       child: 
-      NavigationBar(
-        indicatorColor: Colors.transparent,
-        selectedIndex: currentScreen,
-         backgroundColor: Theme.of(context).primaryColor,
-        elevation: 10,
-        height: kBottomNavigationBarHeight,
-        onDestinationSelected: (index) {
-          setState(() {
-            currentScreen = index;
-          });
-          controller.jumpToPage(currentScreen);
-        },
-        destinations: const [
-          NavigationDestination(
-            selectedIcon: Icon(Icons.home, color: AppColors.selectionColor,),
-            icon: Icon(Icons.home, color: AppColors.textColor,),
-            label: "Home",
-          ),
-          NavigationDestination(
-            selectedIcon: ImageIcon(AssetImage(AssetsManager.reservationIcon3), color: AppColors.selectionColor,),
-            icon: ImageIcon(AssetImage(AssetsManager.reservationIcon3), color: AppColors.textColor, size: 24, ),
-            label: "Reservation",
-           
-          ),
-          NavigationDestination(
-            selectedIcon: ImageIcon(AssetImage(AssetsManager.commandeIcon3), color: AppColors.selectionColor, size: 24,),
-            icon: ImageIcon(AssetImage(AssetsManager.commandeIcon3), color: AppColors.textColor,),
-            label: "Commande",
-          ),
-          NavigationDestination(
-            selectedIcon: ImageIcon(AssetImage(AssetsManager.livraisonIcon3), color: AppColors.selectionColor,),
-            icon: ImageIcon(AssetImage(AssetsManager.livraisonIcon3), color: AppColors.textColor,),
-            label: "Livraison",
-          ),
-        ],
-      ),
-    )
-    */
       ),
     );
   }

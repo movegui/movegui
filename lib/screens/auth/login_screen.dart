@@ -13,6 +13,7 @@ import 'package:movegui/screens/reservation_screen.dart';
 import 'package:movegui/screens/search_screen.dart';
 import 'package:movegui/services/my_app_functions.dart';
 import 'package:movegui/widgets/app/app_image.dart';
+import 'package:movegui/widgets/app/appbar.dart';
 import 'package:movegui/widgets/auth/google_btn.dart';
 import 'package:movegui/widgets/menu/menu.dart';
 import 'package:movegui/widgets/subtitle_text.dart';
@@ -63,61 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
         });
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('Login'),
-          titleTextStyle: TextStyle(
-            color: AppColors.textColor, // Set the title color
-            fontSize: 20,
-          ),
-          leading: Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                icon: Icon(Icons.menu),
-                color: AppColors.textColor,
-                tooltip: 'Navigation menu',
-                onPressed: () {
-                  //  _showMenu(context);
-                  Scaffold.of(context).openDrawer();
-                },
-              );
-            },
-          ),
-          backgroundColor: AppColors.backgroundColor, // Customize color
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.search),
-              color: AppColors.textColor,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SearchScreen()),
-                );
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.notifications),
-              color: AppColors.textColor,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HomeScreen(title: 'Notification'),
-                  ),
-                );
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.person),
-              color: AppColors.textColor,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                );
-              },
-            ),
-          ],
-        ),
+        appBar: MoveguiAppBar(title: 'Login'),
         drawer: MoveGuiMenu(),
 
         //     body: _scaffoldBody,
@@ -402,7 +349,7 @@ class LoginEmailPageState extends State<LoginEmailPage> {
                           context,
                           MaterialPageRoute(
                             builder:
-                                (context) => RegisterScreen()
+                                (context) => RegisterScreenMovgui()
                           ),
                         );
                       },

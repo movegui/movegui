@@ -102,9 +102,9 @@ class HomeItemState extends State<HomeItem> {
                   },
                   index: 0,
                 ),
-                MoveguiWidgetImage(
-                  title: TitleManager.courseTitle,
-                  imagePath: AssetsManager.courseIcon,
+                   MoveguiWidgetImage(
+                  title: TitleManager.commandTitle,
+                  imagePath: AssetsManager.commandeIcon,
                   action: _onPressedImage,
                   index: 1,
                 ),
@@ -113,15 +113,16 @@ class HomeItemState extends State<HomeItem> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                MoveguiWidgetImage(
-                  title: TitleManager.commandTitle,
-                  imagePath: AssetsManager.commandeIcon,
-                  action: _onPressedImage,
-                  index: 2,
-                ),
+             
                 MoveguiWidgetImage(
                   title: TitleManager.livraisonTitle,
                   imagePath: AssetsManager.livraisonIcon,
+                  action: _onPressedImage,
+                  index: 2,
+                ),
+                          MoveguiWidgetImage(
+                  title: TitleManager.courseTitle,
+                  imagePath: AssetsManager.courseIcon,
                   action: _onPressedImage,
                   index: 3,
                 ),

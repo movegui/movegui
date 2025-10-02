@@ -80,7 +80,9 @@ class _ProductWidgetState extends State<ProductWidget> {
                       color: AppColors.backgroundColor,
                       child: InkWell(
                         borderRadius: BorderRadius.circular(12.0),
-                        onTap: () {},
+                        onTap: () {
+                          print('click on the icon');
+                        },
                         splashColor: AppColors.selectionColor,
                         child: const Padding(
                           padding: EdgeInsets.all(6.0),

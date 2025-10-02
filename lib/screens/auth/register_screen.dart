@@ -12,19 +12,20 @@ import 'package:movegui/screens/home_screen.dart';
 import 'package:movegui/screens/reservation_screen.dart';
 import 'package:movegui/screens/search_screen.dart';
 import 'package:movegui/services/my_app_functions.dart';
+import 'package:movegui/widgets/app/appbar.dart';
 import 'package:movegui/widgets/auth/image_picker_widget.dart';
 import 'package:movegui/widgets/menu/menu.dart';
 
 
-class RegisterScreen extends StatefulWidget {
+class RegisterScreenMovgui extends StatefulWidget {
   static const routName = "register";
-  const RegisterScreen({super.key});
+  const RegisterScreenMovgui({super.key});
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  State<RegisterScreenMovgui> createState() => _RegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _RegisterScreenState extends State<RegisterScreenMovgui> {
   late List<Widget> screens;
   int currentScreen = 0;
   late PageController controller;
@@ -78,61 +79,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         });
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('Enregistrement'),
-          titleTextStyle: TextStyle(
-            color: AppColors.textColor, // Set the title color
-            fontSize: 20,
-          ),
-          leading: Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                icon: Icon(Icons.menu),
-                color: AppColors.textColor,
-                tooltip: 'Navigation menu',
-                onPressed: () {
-                  //  _showMenu(context);
-                  Scaffold.of(context).openDrawer();
-                },
-              );
-            },
-          ),
-          backgroundColor: AppColors.backgroundColor, // Customize color
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.search),
-              color: AppColors.textColor,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SearchScreen()),
-                );
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.notifications),
-              color: AppColors.textColor,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HomeScreen(title: 'Notification'),
-                  ),
-                );
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.person),
-              color: AppColors.textColor,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                );
-              },
-            ),
-          ],
-        ),
+        appBar: MoveguiAppBar(title: 'Enregistrement'),
         drawer: MoveGuiMenu(),
 
         //     body: _scaffoldBody,

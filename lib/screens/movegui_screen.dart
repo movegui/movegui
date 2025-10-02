@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:movegui/screens/auth/login_screen.dart';
+import 'package:movegui/screens/user_screen.dart';
 import 'package:movegui/services/assets_manager.dart';
 import 'package:movegui/widgets/app/appbar.dart';
+import 'package:movegui/widgets/app/contact_widget.dart';
+import 'package:movegui/widgets/app/reklamation_widget.dart';
 import 'package:movegui/widgets/menu/menu.dart';
 import 'package:movegui/widgets/title_text.dart';
 
 class MoveguiScreen extends StatelessWidget {
-  const MoveguiScreen({super.key});
+  const MoveguiScreen({super.key });
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +24,7 @@ class MoveguiScreen extends StatelessWidget {
 class BodyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-   // final themeProvider = Provider.of<ThemeProvider>(context);
+    // final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
@@ -49,84 +53,78 @@ class BodyWidget extends StatelessWidget {
                 ),
                 // child: Image.asset("assets/icons/movegui.jpg",),
               ),
-              SizedBox(width: 8,),
+              SizedBox(width: 8),
               Column(
                 children: [
+                  /*
                          TitlesTextWidget(
                         label: "Description",
                         color: Theme.of(context).primaryColor,
                         decoration: TextDecoration.underline,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Text('MoveGui est une société innovante de livraison de nourriture et de '+
-                             'transport à moto basée en Guinée. Notre objectif est de proposer des '+
-                             'services de livraison plus abordables que ceux actuellement disponibles '+
-                             'sur le marché, tout en établissant des partenariats stratégiques avec des '+
-                             'restaurants locaux pour offrir des services de livraison à moindre coût. '+
-                             'MoveGui se distingue par un tarif fixe pour les courses, quelle que soit la '+
-                             'distance, garantissant ainsi une transparence et une simplicité pour nos '+
-                             'clients.', 
-                        textAlign: TextAlign.justify,
-                        softWrap: true,
-                        style: TextStyle(fontSize: 14, ),
+                      */
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: const [
+                        Center(
+                          child: Text(
+                            'MoveGui – Livraison & Transport à Moto en Guinée',
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF871A1C),
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                      ),
-                      SizedBox(width: 8,),
+                        SizedBox(height: 24),
+                        Text(
+                          'MoveGui est une entreprise innovante spécialisée dans la livraison de nourriture et le transport à moto en Guinée. '
+                          'Notre mission est de rendre la livraison plus accessible, plus transparente et plus économique pour tous.',
+                          style: TextStyle(
+                            fontSize: 16,
+                            height: 1.6,
+                            color: Colors.black,
+                          ),
+                          textAlign: TextAlign.justify,
+                        ),
+                        SizedBox(height: 16),
+                        Text(
+                          'Nous proposons un tarif fixe pour chaque course, quelle que soit la distance, garantissant une transparence totale pour nos clients. '
+                          'Plus de surprises sur le prix, juste un service rapide, fiable et simple.',
+                          style: TextStyle(
+                            fontSize: 16,
+                            height: 1.6,
+                            color: Colors.black,
+                          ),
+                          textAlign: TextAlign.justify,
+                        ),
+                        SizedBox(height: 16),
+                        Text(
+                          'Grâce à nos partenariats avec des restaurants locaux, nous offrons des livraisons à moindre coût tout en soutenant l’économie locale. '
+                          'MoveGui, c’est la fusion parfaite entre technologie, accessibilité et efficacité.',
+                          style: TextStyle(
+                            fontSize: 16,
+                            height: 1.6,
+                            color: Colors.black,
+                          ),
+                          textAlign: TextAlign.justify,
+                        ),
+                      ],
+                    ),
+
+                  ),
+                  SizedBox(width: 8),
                 ],
               ),
-                Column(
+              Column(
                 children: [
-                         TitlesTextWidget(
-                        label: "Reklamation",
-                        color: Theme.of(context).primaryColor,
-                        decoration: TextDecoration.underline,
-                      ),
-                      Text('ici le text de reklamation ........................', 
-                      textAlign: TextAlign.center,
-                      ),
-                      Text('ici le text de reklamation ........................', 
-                      textAlign: TextAlign.center,
-                      ),
-                      Text('ici le text de reklamation ........................', 
-                      textAlign: TextAlign.center,
-                      ),
-                ],
-              ),
-                Column(
-                children: [
-                         TitlesTextWidget(
-                        label: "Suggestion",
-                        color: Theme.of(context).primaryColor,
-                        decoration: TextDecoration.underline,
-                      ),
-                      Text('ici le text de suggestion ........................', 
-                      textAlign: TextAlign.center,
-                      ),
-                      Text('ici le text de suggestion ........................', 
-                      textAlign: TextAlign.center,
-                      ),
-                      Text('ici le text de suggestion ........................', 
-                      textAlign: TextAlign.center,
-                      ),
-                ],
-              ),
-                  Column(
-                children: [
-                         TitlesTextWidget(
-                        label: "Contatct",
-                        color: Theme.of(context).primaryColor,
-                        decoration: TextDecoration.underline,
-                      ),
-                      Text('ici le text de contact ........................', 
-                      textAlign: TextAlign.center,
-                      ),
-                      Text('ici le text de contact ........................', 
-                      textAlign: TextAlign.center,
-                      ),
-                      Text('ici le text de contact ........................', 
-                      textAlign: TextAlign.center,
-                      ),
+                  Padding(
+                    padding: const EdgeInsets.all(6.0),
+                    child: ContactWidget(),
+                  ),
                 ],
               ),
             ],
@@ -139,12 +137,12 @@ class BodyWidget extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(0),
           child: Row(
-             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
                 width: 130,
                 child: Column(
-                //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TitlesTextWidget(
                       label: "Addresse:",
@@ -154,7 +152,9 @@ class BodyWidget extends StatelessWidget {
                     Text(
                       'Kobaya commune de ratoma Conakry',
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
+                      style: TextStyle(
+                        color: Theme.of(context).secondaryHeaderColor,
+                      ),
                     ),
                   ],
                 ),
@@ -169,9 +169,12 @@ class BodyWidget extends StatelessWidget {
                       color: Theme.of(context).secondaryHeaderColor,
                       decoration: TextDecoration.underline,
                     ),
-                    Text('movegui@gmail.com', 
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
+                    Text(
+                      'movegui@gmail.com',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Theme.of(context).secondaryHeaderColor,
+                      ),
                     ),
                   ],
                 ),
@@ -181,14 +184,17 @@ class BodyWidget extends StatelessWidget {
                 child: Column(
                   //              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                           TitlesTextWidget(
+                    TitlesTextWidget(
                       label: "Telephone",
                       color: Theme.of(context).secondaryHeaderColor,
                       decoration: TextDecoration.underline,
                     ),
-                    Text('623-259-584', 
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
+                    Text(
+                      '623-259-584',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Theme.of(context).secondaryHeaderColor,
+                      ),
                     ),
                   ],
                 ),

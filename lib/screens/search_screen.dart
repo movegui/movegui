@@ -6,6 +6,7 @@ import 'package:movegui/screens/command_screen.dart';
 import 'package:movegui/screens/develivery_screen.dart';
 import 'package:movegui/screens/home_screen.dart';
 import 'package:movegui/screens/reservation_screen.dart';
+import 'package:movegui/widgets/app/appbar.dart';
 import 'package:movegui/widgets/menu/menu.dart';
 import 'package:movegui/widgets/products/product_widget.dart';
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
@@ -52,60 +53,7 @@ class _SearchScreenState extends State<SearchScreen> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-             appBar: AppBar(
-        title: Text('Search products'),
-        titleTextStyle: TextStyle(
-          color: Color(0xFFFFFFFF), // Set the title color
-          fontSize: 20,
-        ),
-        leading: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: Icon(Icons.menu),
-              color: Color(0xFFFFFFFF),
-              tooltip: 'Navigation menu',
-              onPressed: () {
-                //  _showMenu(context);
-                Scaffold.of(context).openDrawer();
-              },
-            );
-          },
-        ),
-        backgroundColor: Color(0xFF871A1C), // Customize color
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            color: Color(0xFFFFFFFF),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SearchScreen()));
-                       
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.notifications),
-            color: Color(0xFFFFFFFF),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => HomeScreen(title: 'Notification',)));
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.person),
-            color: Color(0xFFFFFFFF),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => LoginScreen()));
-            },
-          ),
-        ],
-      ),
+             appBar: MoveguiAppBar(title: 'Search Products'),
         drawer: MoveGuiMenu(),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
