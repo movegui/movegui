@@ -10,7 +10,6 @@ import 'package:movegui/screens/command_screen.dart';
 import 'package:movegui/screens/develivery_screen.dart';
 import 'package:movegui/screens/home_screen.dart';
 import 'package:movegui/screens/reservation_screen.dart';
-import 'package:movegui/screens/search_screen.dart';
 import 'package:movegui/services/my_app_functions.dart';
 import 'package:movegui/widgets/app/app_image.dart';
 import 'package:movegui/widgets/app/appbar.dart';
@@ -30,7 +29,6 @@ class _LoginScreenState extends State<LoginScreen> {
   late List<Widget> screens;
   int currentScreen = 0;
   late PageController controller;
-  late Widget _scaffoldBody;
   int currentLoginScreen = 0;
 
   bool showFirst = true;
@@ -45,7 +43,6 @@ class _LoginScreenState extends State<LoginScreen> {
       DeveliveryScreen(title: 'Livraison'),
     ];
     controller = PageController();
-    _scaffoldBody = LoginEmailPage();
   }
 
   void updateState(int state) {

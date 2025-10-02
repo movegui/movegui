@@ -5,12 +5,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/validator.dart';
-import 'package:movegui/screens/auth/login_screen.dart';
 import 'package:movegui/screens/command_screen.dart';
 import 'package:movegui/screens/develivery_screen.dart';
 import 'package:movegui/screens/home_screen.dart';
 import 'package:movegui/screens/reservation_screen.dart';
-import 'package:movegui/screens/search_screen.dart';
 import 'package:movegui/services/my_app_functions.dart';
 import 'package:movegui/widgets/app/appbar.dart';
 import 'package:movegui/widgets/auth/image_picker_widget.dart';
@@ -29,7 +27,6 @@ class _RegisterScreenState extends State<RegisterScreenMovgui> {
   late List<Widget> screens;
   int currentScreen = 0;
   late PageController controller;
-  late Widget _scaffoldBody;
   int currentLoginScreen = 0;
 
   bool showFirst = true;
@@ -45,7 +42,6 @@ class _RegisterScreenState extends State<RegisterScreenMovgui> {
       DeveliveryScreen(title: 'Livraison'),
     ];
     controller = PageController();
-    _scaffoldBody = RegisterPage();
   }
 
   Future<void> localImagePicker() async {

@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:movegui/screens/auth/login_screen.dart';
-import 'package:movegui/screens/user_screen.dart';
 import 'package:movegui/services/assets_manager.dart';
 import 'package:movegui/widgets/app/appbar.dart';
 import 'package:movegui/widgets/app/contact_widget.dart';
-import 'package:movegui/widgets/app/reklamation_widget.dart';
 import 'package:movegui/widgets/menu/menu.dart';
 import 'package:movegui/widgets/title_text.dart';
 

@@ -175,7 +175,7 @@ class _ContactScreenState extends State<ContactScreen> {
                 prefixIcon: Icon(Icons.phone),
               ),
               onFieldSubmitted: (value) {
-                FocusScope.of(context).requestFocus(_emailFocusNode);
+                FocusScope.of(context).requestFocus(_reclamationFocusNode);
               },
               validator: (value) {
                 return MyValidators.displayNamevalidator(value);
