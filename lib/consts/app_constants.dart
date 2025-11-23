@@ -15,6 +15,8 @@ class AppConstants {
 
   // [url=https://ibb.co/JM0KMG0][img]https://i.ibb.co/JM0KMG0/riz-gras.jpg[/img][/url]
 
+  /*
+
   static List<CategoriesModel> categoriesList = [
     CategoriesModel(
       id: "Phones",
@@ -57,4 +59,5 @@ class AppConstants {
       name: "Cosmetics",
     ),
   ];
+  */
 }

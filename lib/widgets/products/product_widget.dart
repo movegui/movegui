@@ -1,9 +1,11 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movegui/consts/app_colors.dart';
+import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/screens/inner_screen/product_details.dart';
 import 'package:movegui/widgets/subtitle_text.dart';
 import 'package:movegui/widgets/title_text.dart';
+import 'package:provider/provider.dart';
 
 
 import '../../consts/app_constants.dart';
@@ -19,6 +21,7 @@ class ProductWidget extends StatefulWidget {
 class _ProductWidgetState extends State<ProductWidget> {
   @override
   Widget build(BuildContext context) {
+    final shoppingProvider = Provider.of<ShoppingProvider>(context);
     Size size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(0.0),
@@ -81,7 +84,9 @@ class _ProductWidgetState extends State<ProductWidget> {
                       child: InkWell(
                         borderRadius: BorderRadius.circular(12.0),
                         onTap: () {
-                          print('click on the icon');
+                          setState(() {
+                            shoppingProvider.addItem();
+                          });
                         },
                         splashColor: AppColors.selectionColor,
                         child: const Padding(

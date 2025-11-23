@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/screens/auth/user_menu_screen.dart';
 import 'package:movegui/screens/notification_screen.dart';
 import 'package:movegui/screens/search_screen.dart';
 import 'package:movegui/screens/shopping_cart_screen.dart';
 
 class MoveguiAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const MoveguiAppBar({super.key, required this.title});
+  const MoveguiAppBar({super.key, required this.title, required this.itemCount});
 
   final String title;
+  final int itemCount;
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +54,44 @@ class MoveguiAppBar extends StatelessWidget implements PreferredSizeWidget {
             );
           },
         ),
+        Stack(
+  children: [
+    IconButton(
+      icon: const Icon(Icons.add_shopping_cart_outlined),
+      color: const Color(0xFFFFFFFF),
+   //   iconSize: 18,
+      onPressed: () {
+        print('click on panier icon');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ShoppingCartScreen(),
+          ),
+        );
+      },
+    ),
+ //   if (itemCount > 0) // 👈 Afficher le badge seulement si le panier n'est pas vide
+      Positioned(
+        right: 6,
+        top: 6,
+        child: Container(
+          padding: const EdgeInsets.all(4),
+          decoration: BoxDecoration(
+            color: AppColors.selectionColor,
+            shape: BoxShape.circle,
+          ),
+          child: Text(
+            '$itemCount',
+            style: const TextStyle(
+              color: AppColors.backgroundColor,
+              fontSize: 10,
+            ),
+          ),
+        ),
+      ),
+  ],
+),
+        /*
         IconButton(
           icon: Icon(Icons.add_shopping_cart_outlined),
           color: Color(0xFFFFFFFF),
@@ -66,6 +106,7 @@ class MoveguiAppBar extends StatelessWidget implements PreferredSizeWidget {
               
           },
         ),
+        */
         UserMenuScreen(),
       ],
     );

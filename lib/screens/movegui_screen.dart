@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/services/assets_manager.dart';
 import 'package:movegui/widgets/app/appbar.dart';
 import 'package:movegui/widgets/app/contact_widget.dart';
 import 'package:movegui/widgets/menu/menu.dart';
 import 'package:movegui/widgets/title_text.dart';
+import 'package:provider/provider.dart';
 
 class MoveguiScreen extends StatelessWidget {
   const MoveguiScreen({super.key });
 
   @override
   Widget build(BuildContext context) {
+    final shoppingProvider = Provider.of<ShoppingProvider>(context);
     return Scaffold(
-      appBar: MoveguiAppBar(title: 'Movegui',),
+      appBar: MoveguiAppBar(title: 'Movegui', itemCount: shoppingProvider.itemCount,),
       drawer: MoveGuiMenu(),
       body: BodyWidget(),
     );

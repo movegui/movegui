@@ -1,10 +1,12 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/widgets/app/appbar.dart';
 import 'package:movegui/widgets/menu/menu.dart';
 import 'package:movegui/widgets/products/product_widget.dart';
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:movegui/widgets/title_text.dart';
+import 'package:provider/provider.dart';
 
 class ProductScreen extends StatefulWidget {
   const ProductScreen({super.key});
@@ -31,12 +33,14 @@ class _SearchScreenState extends State<ProductScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    final shoppingProvider = Provider.of<ShoppingProvider>(context);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-             appBar: MoveguiAppBar(title: 'Search Products'),
+             appBar: MoveguiAppBar(title: 'Search Products', itemCount: shoppingProvider.itemCount,),
         drawer: MoveGuiMenu(),
         body: Padding(
           padding: const EdgeInsets.all(8.0),

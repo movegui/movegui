@@ -75,7 +75,7 @@ class _RegisterScreenState extends State<RegisterScreenMovgui> {
         });
       },
       child: Scaffold(
-        appBar: MoveguiAppBar(title: 'Enregistrement'),
+        appBar: MoveguiAppBar(title: 'Enregistrement', itemCount: 0,),
         drawer: MoveGuiMenu(),
 
         //     body: _scaffoldBody,

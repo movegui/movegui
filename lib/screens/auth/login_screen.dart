@@ -61,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
         });
       },
       child: Scaffold(
-        appBar: MoveguiAppBar(title: 'Login'),
+        appBar: MoveguiAppBar(title: 'Login', itemCount: 0,),
         drawer: MoveGuiMenu(),
 
         //     body: _scaffoldBody,
