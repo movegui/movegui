@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:movegui/models/categories_model.dart';
+import 'package:movegui/services/interfaces/i_categories.dart';
 import 'package:movegui/services/model_service.dart';
 
 
-class CategoriesService extends ModelService<CategoriesModel> {
+class CategoriesService extends ModelService<CategoriesModel> implements ICategories {
 
 
   @override
@@ -38,6 +39,11 @@ Future<List<CategoriesModel>> allModels() async {
   return snapshot.docs
       .map((doc) => CategoriesModel.fromJson(doc.data()))
       .toList();
+  }
+  
+  @override
+  Future<List<CategoriesModel>> getAllCommandCategories() async {
+    return await CategoriesModel.getCommandCategories();
   }
 
   

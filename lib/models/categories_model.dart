@@ -1,11 +1,11 @@
 
 
+import 'package:movegui/consts/app_constants.dart';
+import 'package:movegui/models/model.dart';
 
- import 'package:movegui/models/model.dart';
-
-class CategoriesModel extends Model{
+ class CategoriesModel extends Model{
   CategoriesModel({  required super.id, required super.name, required super.createdAt,}) ;
-
+ 
   
 @override
   Map<String, dynamic> toJson() => {
@@ -24,6 +24,19 @@ factory CategoriesModel.fromJson(Map<String, dynamic> json)  {
 
 String toString(){
   return id+' '+name!+' '+createdAt!.toString();
+}
+
+static List<CategoriesModel> getCommandCategories(){
+   final restaurantConstants  = RestaurantConstants();
+   final patisserieConstants =  PatisserieConstants();
+   final superMarktConstants = SuperMarktConstants();
+   final supplierConstants = SupplierConstants();
+  return[
+    CategoriesModel(id: "001", name: restaurantConstants.getTitleName(), createdAt: DateTime.now()),
+    CategoriesModel(id: "002", name: patisserieConstants.getTitleName(), createdAt: DateTime.now()),
+    CategoriesModel(id: "003", name: superMarktConstants.getTitleName(), createdAt: DateTime.now()),
+    CategoriesModel(id: "004", name: supplierConstants.getTitleName(), createdAt: DateTime.now())
+  ];
 }
   
 }

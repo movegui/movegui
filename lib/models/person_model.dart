@@ -1,12 +1,12 @@
-
 import 'package:movegui/models/model.dart';
+import 'package:movegui/models/professionnel_model.dart';
 import 'package:uuid/uuid.dart';
 
 class PersonModel extends Model {
   final String firstName;
   final String lastName;
   final String? middleName;
-  final String profileImageUrl;
+  final String? profileImageUrl;
   final String email;
   final String phone;
   final String gender;

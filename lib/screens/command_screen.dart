@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:movegui/screens/categories/categories_screen.dart';
 import 'package:movegui/screens/resto_screen.dart';
 
 class Commandscreen extends StatelessWidget {
@@ -9,7 +10,8 @@ class Commandscreen extends StatelessWidget {
 
   @override
   Widget build(Object context) {
-    return RestoScreen();
+   // return RestoScreen();
+   return CategoriesScreen();
   }
   
 }

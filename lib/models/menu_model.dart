@@ -2,9 +2,6 @@
 
 
 
-import 'package:movegui/models/model.dart';
-import 'package:movegui/models/product_model.dart';
-
 class MenuModel extends Model {
   final String imageurl;
   final int restoId, categoryId;

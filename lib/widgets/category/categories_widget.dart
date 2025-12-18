@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:movegui/models/restaurant_model.dart';
-import 'package:movegui/screens/resto_category_screnn.dart';
-import 'package:movegui/services/assets_manager.dart';
+import 'package:movegui/models/categories_model.dart';
+import 'package:movegui/widgets/category/categories_item_widget.dart';
 import 'package:movegui/widgets/restos/resto_item_widget.dart';
 
-class RestoWidget extends StatelessWidget{
-  final RestaurantModel model;
-  const RestoWidget({super.key, required this.model});
+class CategoriesWidget extends StatelessWidget{
+  final CategoriesModel model;
+  const CategoriesWidget({super.key, required this.model});
+
+  /*
 
   void _onPressedImage(BuildContext context, int index, String title) {
                 Navigator.push(
@@ -14,6 +15,7 @@ class RestoWidget extends StatelessWidget{
                   MaterialPageRoute(
                       builder: (context) => RestoCategoryScreen()));
   }
+  */
 
 
 
@@ -24,7 +26,7 @@ class RestoWidget extends StatelessWidget{
       child: SingleChildScrollView(child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-              RestoItem(model: this.model,),
+              CategoriesItemWidget(model: this.model,),
                 /*
                 RestoItem(
                   title: 'Resto2',

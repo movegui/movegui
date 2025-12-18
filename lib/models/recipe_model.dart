@@ -1,6 +1,5 @@
 
 
-
 import 'package:movegui/models/categories_model.dart';
 import 'package:movegui/models/ingredient_model.dart';
 import 'package:movegui/models/model.dart';
@@ -15,12 +14,12 @@ class RecipeModel extends Model {
   RecipeModel({
     required super.id, 
     required super.name,
-    required super.createdAt,
     required this.description,
     required this.category,
     required this.ingredients,
+    required super.createdAt,
     required this.price
-    });
+    }) ;
 
     factory  RecipeModel.fromJson(Map<String, dynamic> json) {
       return RecipeModel(

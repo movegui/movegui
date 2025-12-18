@@ -11,7 +11,7 @@ class CleaningModel extends StoreModel {
     required super.email,
     required super.imageUrl,
     required super.telephon,
-  }) 
+  });
 
   @override
   Map<String, dynamic> toJson() => {...super.toJson()};
@@ -19,7 +19,7 @@ class CleaningModel extends StoreModel {
   factory CleaningModel.fromJson(Map<String, dynamic> json) => CleaningModel(
     id: json['id'],
     name: json['name'],
-    createdAt: json['createdAt'].toDate(),
+    createdAt: json['createdAt'],
     description: json['description'],
     imageUrl: json['imageUrl'],
     adresse: json['adresse'],

@@ -8,6 +8,7 @@ import 'package:movegui/screens/auth/login_screen.dart';
 import 'package:movegui/screens/auth/register_screen.dart';
 import 'package:movegui/screens/movegui_screen.dart';
 import 'package:movegui/screens/root_screen.dart';
+import 'package:movegui/services/register_services.dart';
 import 'package:movegui/services/title_manager.dart';
 import 'package:provider/provider.dart';
 import 'consts/theme_data.dart';
@@ -21,7 +22,7 @@ void main() async{
     
     // ... other providers
   ]);
-
+   initServices();
   runApp(const MyApp());
 }
 

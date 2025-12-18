@@ -1,50 +1,66 @@
 
 
+import 'package:movegui/models/model.dart';
+import 'package:movegui/models/open_hours_model.dart';
+import 'package:movegui/models/person_model.dart';
+import 'package:movegui/models/restaurant_model.dart';
+import 'package:movegui/models/store_model.dart';
 
-  import 'package:movegui/models/model.dart';
-
-class SupplierModel extends Model {
-  final String adresse, telephon, email, contact, company, type;
+  class SupplierModel extends StoreModel {
 
   SupplierModel({
     required super.id,
     required super.name,
     required super.createdAt,
-    required this.adresse,
-    required this.telephon,
-    required this.email,
-    required this.contact,
-    required this.company,
-    required this.type
+    required super.description,
+    required super.imageUrl,
+    required super.adresse,
+    required super.email,
+    required super.telephon,
+    required super.contacts,
+    required super.weeklyHours,
+    super.longitude,
+    super.latitude,
+    required super.storeType,
   });
 
+  @override
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'adresse': adresse,
-    'telephon': telephon,
-    'email': email,
-    'contact': contact,
-    'company': company,
-    'type': type
+    ...super.toJson()
   };
 
-    factory SupplierModel.fromJson(Map<String, dynamic> json) =>
+  factory SupplierModel.fromJson(Map<String, dynamic> json) =>
       SupplierModel(
         id: json['id'],
         name: json['name'],
+        description: json['description'],
+        imageUrl: json['imageUrl'],
         adresse: json['adresse'],
-        telephon: json['telephon'],
         email: json['email'],
-        contact: json['contact'],
-        company: json['company'],
-        type: json['type'],
-        createdAt: json['createdAt'] != null ? json['createdAt'].toDate() : DateTime.now()
+        telephon: json['telephon'],
+        contacts: (json['contacts'] as List? ?? [])
+            .map((e) => PersonModel.fromJson(e))
+            .toList(),
+        createdAt: json['createdAt'] != null
+            ? json['createdAt'].toDate()
+            : DateTime.now(),
+        storeType: RestaurantTypeModel.fromJson(json['storeType']),
+        longitude: json['longitude'],
+        latitude: json['latitude'],
+        weeklyHours: (json['weeklyHours'] as List? ?? [])
+            .map(
+              (e) => (e != null && e['openTime'] != null && e['closeTime'] != null && e['day'] != null)
+                  ? OpenHours.fromJson(e)
+                  : null,
+            )
+            .where((e) => e != null)
+            .cast<OpenHours>()
+            .toList(),
       );
 
 }
 
-
+/*
 class SupplierIngredients extends SupplierModel {
   SupplierIngredients({
     required super.id,
@@ -75,6 +91,7 @@ class SupplierIngredients extends SupplierModel {
     return super.toJson();
   }
 }
+*/
 
 
 

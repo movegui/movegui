@@ -1,12 +1,16 @@
 
 import 'package:flutter/material.dart';
+import 'package:movegui/consts/app_constants.dart';
+import 'package:movegui/models/categories_model.dart';
 import 'package:movegui/models/restaurant_model.dart';
 import 'package:movegui/screens/home_screen.dart';
+import 'package:movegui/screens/resto_screen.dart';
 
-class RestoItem extends StatelessWidget//extends MoveguiWidgetImage 
+class CategoriesItemWidget extends StatelessWidget//extends MoveguiWidgetImage 
 {
-  final RestaurantModel model;
-  const RestoItem({super.key, required this.model});
+  final CategoriesModel model;
+    CategoriesItemWidget({super.key, required this.model});
+  final restaurantConstants = RestaurantConstants();
 
 
 @override
@@ -14,7 +18,18 @@ Widget build(BuildContext context) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: ElevatedButton(
-      onPressed: () => {}, // Add your action here
+      onPressed: () => {
+       if (model.name == restaurantConstants.getTitleName()) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => RestoScreen(),
+        ),
+      ),
+      print('kdkd')
+    }
+
+      }, // Add your action here
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
@@ -27,6 +42,7 @@ Widget build(BuildContext context) {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Image Section
+          /*
           Container(
             height: 200,
             decoration: BoxDecoration(
@@ -37,6 +53,7 @@ Widget build(BuildContext context) {
               ),
             ),
           ),
+          */
 
           // Text Section
           Padding(
@@ -54,6 +71,8 @@ Widget build(BuildContext context) {
                   ),
                 ),
                 SizedBox(height: 6),
+
+                /*
 
                 // Description
                 Text(
@@ -121,6 +140,7 @@ Widget build(BuildContext context) {
                     ),
                   ],
                 ),
+                */
               ],
             ),
           ),
