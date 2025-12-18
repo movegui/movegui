@@ -7,6 +7,7 @@ import 'package:movegui/screens/home_screen.dart';
 import 'package:movegui/screens/courier_screen.dart';
 import 'package:movegui/services/assets_manager.dart';
 import 'package:movegui/widgets/app/appbar.dart';
+import 'package:movegui/widgets/app/root_bottom_navigation_bar.dart';
 import 'package:movegui/widgets/menu/menu.dart';
 import 'package:provider/provider.dart';
 
@@ -49,7 +50,10 @@ class _RootScreenState extends State<RootScreen> {
   Widget build(BuildContext context) {
     final shoppingProvider = Provider.of<ShoppingProvider>(context);
     return Scaffold(
-      appBar: MoveguiAppBar(title:  title, itemCount: shoppingProvider.itemCount,),
+      appBar: MoveguiAppBar(
+        title: title,
+        itemCount: shoppingProvider.itemCount,
+      ),
       drawer: MoveGuiMenu(),
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
@@ -57,7 +61,18 @@ class _RootScreenState extends State<RootScreen> {
         children: screens,
       ),
 
-      bottomNavigationBar: NavigationBarTheme(
+      bottomNavigationBar: RootBottomNavigationBar(
+        currentIndex: currentScreen,
+        onDestinationSelected: (index) {
+          setState(() {
+            currentScreen = index;
+          });
+          controller.jumpToPage(currentScreen);
+        },
+      ),
+
+      /*
+      NavigationBarTheme(
         data: NavigationBarThemeData(
           labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
             if (states.contains(WidgetState.selected)) {
@@ -131,6 +146,7 @@ class _RootScreenState extends State<RootScreen> {
           ],
         ),
       ),
+      */
     );
   }
 
