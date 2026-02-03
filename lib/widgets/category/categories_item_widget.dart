@@ -5,6 +5,7 @@ import 'package:movegui/models/categories_model.dart';
 import 'package:movegui/screens/categories/patisserie_screen.dart';
 import 'package:movegui/screens/categories/resto_screen.dart';
 import 'package:movegui/screens/categories/super_markt_screen.dart';
+import 'package:movegui/screens/categories/supplier_screen.dart';
 
 class CategoriesItemWidget extends StatelessWidget//extends MoveguiWidgetImage 
 {
@@ -13,6 +14,7 @@ class CategoriesItemWidget extends StatelessWidget//extends MoveguiWidgetImage
   final restaurantConstants = RestaurantConstants();
   final patisserieConstants = PatisserieConstants();
   final superMarktConstants = SuperMarktConstants();
+  final supplierConstants = SupplierConstants();
 
 
 @override
@@ -40,6 +42,13 @@ Widget build(BuildContext context) {
         context,
         MaterialPageRoute(
           builder: (context) => SuperMarktScreen(),
+        ),
+      ),
+    }else if(model.name == supplierConstants.getTitleName()){
+                  Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SupplierScreen(),
         ),
       ),
     }
