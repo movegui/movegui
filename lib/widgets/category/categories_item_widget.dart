@@ -4,6 +4,7 @@ import 'package:movegui/consts/app_constants.dart';
 import 'package:movegui/models/categories_model.dart';
 import 'package:movegui/screens/categories/patisserie_screen.dart';
 import 'package:movegui/screens/categories/resto_screen.dart';
+import 'package:movegui/screens/categories/super_markt_screen.dart';
 
 class CategoriesItemWidget extends StatelessWidget//extends MoveguiWidgetImage 
 {
@@ -11,6 +12,7 @@ class CategoriesItemWidget extends StatelessWidget//extends MoveguiWidgetImage
     CategoriesItemWidget({super.key, required this.model});
   final restaurantConstants = RestaurantConstants();
   final patisserieConstants = PatisserieConstants();
+  final superMarktConstants = SuperMarktConstants();
 
 
 @override
@@ -33,7 +35,14 @@ Widget build(BuildContext context) {
           builder: (context) => PatisserieScreen(),
         ),
       ),
-    } 
+    }else if(model.name == superMarktConstants.getTitleName()){
+                  Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SuperMarktScreen(),
+        ),
+      ),
+    }
 
       }, // Add your action here
       style: ElevatedButton.styleFrom(

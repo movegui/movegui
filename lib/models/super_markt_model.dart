@@ -40,8 +40,16 @@ class SuperMarktModel extends StoreModel {
         contacts: (json['contacts'] as List? ?? [])
             .map((e) => PersonModel.fromJson(e))
             .toList(),
-        weeklyHours: (json['weeklyHours'] as List? ?? []).map((e) => OpenHours.fromJson(e)).toList(),
+                        weeklyHours: (json['weeklyHours'] as List? ?? [])
+            .map(
+              (e) => (e != null && e['openTime'] != null && e['closeTime'] != null && e['day'] != null)
+                  ? OpenHours.fromJson(e)
+                  : null,
+            )
+            .where((e) => e != null)
+            .cast<OpenHours>()
+            .toList(),
          storeType: RestaurantTypeModel.fromJson(json['storeType']),
-          category: CategoriesModel.fromJson(json['category']),
+          category: json['category'] != null ? CategoriesModel.fromJson(json['category']) : CategoriesModel(id: '0', name: 'name', createdAt: DateTime.now()),
       );
 }
