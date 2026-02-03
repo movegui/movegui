@@ -1,18 +1,14 @@
-import 'dart:math';
 
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:movegui/models/categories_model.dart';
-import 'package:movegui/models/model.dart';
-import 'package:movegui/screens/command_screen.dart';
-import 'package:movegui/screens/develivery_screen.dart';
-import 'package:movegui/screens/home_screen.dart';
-import 'package:movegui/screens/reservation_screen.dart';
+import 'package:movegui/screens/main/command_screen.dart';
+import 'package:movegui/screens/main/develivery_screen.dart';
+import 'package:movegui/screens/main/home_screen.dart';
+import 'package:movegui/screens/main/reservation_screen.dart';
 import 'package:movegui/services/categories_service.dart';
-import 'package:movegui/services/model_service.dart';
 import 'package:movegui/services/register_services.dart';
 import 'package:movegui/widgets/category/categories_widget.dart';
-import 'package:movegui/widgets/restos/resto_widget.dart';
 
 
 

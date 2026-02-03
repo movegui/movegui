@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
-import 'package:movegui/screens/home_screen.dart';
+import 'package:movegui/screens/main/home_screen.dart';
 
-class RestoMenuItem extends MoveguiWidgetImage {
-  const RestoMenuItem({super.key, required super.title, required super.imagePath, required super.action, required super.index});
+class StoreMenuItem extends MoveguiWidgetImage {
+  const StoreMenuItem({super.key, required super.title, required super.imagePath, required super.action, required super.index});
 
  
   @override

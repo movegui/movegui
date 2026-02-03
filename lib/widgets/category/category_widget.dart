@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movegui/screens/product_screen.dart';
+import 'package:movegui/screens/inner_screen/product_screen.dart';
 import 'package:movegui/services/assets_manager.dart';
 import 'package:movegui/widgets/category/category_item_widget.dart';
 

@@ -1,20 +1,14 @@
 
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:movegui/consts/app_constants.dart';
 import 'package:movegui/models/restaurant_model.dart';
 import 'package:movegui/providers/shopping_provider.dart';
-import 'package:movegui/screens/command_screen.dart';
-import 'package:movegui/screens/develivery_screen.dart';
-import 'package:movegui/screens/home_screen.dart';
-import 'package:movegui/screens/reservation_screen.dart';
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:movegui/services/register_services.dart';
 import 'package:movegui/services/restaurants_service.dart';
 import 'package:movegui/widgets/app/appbar.dart';
-import 'package:movegui/widgets/app/root_bottom_navigation_bar.dart';
-import 'package:movegui/widgets/restos/resto_widget.dart';
+import 'package:movegui/widgets/store/store_widget.dart';
 import 'package:provider/provider.dart';
 
 
@@ -22,10 +16,10 @@ class RestoScreen extends StatefulWidget {
   const RestoScreen({super.key});
 
   @override
-  State<RestoScreen> createState() => _SearchScreenState();
+  State<RestoScreen> createState() => _RestoScreenState();
 }
 
-class _SearchScreenState extends State<RestoScreen> {
+class _RestoScreenState extends State<RestoScreen> {
   late TextEditingController searchTextController;
   List<RestaurantModel> restaurants = [];
   late RestaurantsService restaurantsService;
@@ -93,19 +87,21 @@ Widget build(BuildContext context) {
                   mainAxisSpacing: 12,
                   crossAxisSpacing: 12,
                   builder: (context, index) {
-                    return RestoWidget(model: restaurants[index]);
+                    return StoreWidget(model: restaurants[index]);
                   },
                 ),
               ),
             ],
           ),
         ),
+        /*
         bottomNavigationBar:RootBottomNavigationBar(
         currentIndex: 1,
         onDestinationSelected: (index) {
           Navigator.pop(context, index);
         },
       ),
+      */
       ),
     ),
   );

@@ -2,15 +2,15 @@
 import 'package:flutter/material.dart';
 import 'package:movegui/consts/app_constants.dart';
 import 'package:movegui/models/categories_model.dart';
-import 'package:movegui/models/restaurant_model.dart';
-import 'package:movegui/screens/home_screen.dart';
-import 'package:movegui/screens/resto_screen.dart';
+import 'package:movegui/screens/categories/patisserie_screen.dart';
+import 'package:movegui/screens/categories/resto_screen.dart';
 
 class CategoriesItemWidget extends StatelessWidget//extends MoveguiWidgetImage 
 {
   final CategoriesModel model;
     CategoriesItemWidget({super.key, required this.model});
   final restaurantConstants = RestaurantConstants();
+  final patisserieConstants = PatisserieConstants();
 
 
 @override
@@ -26,8 +26,14 @@ Widget build(BuildContext context) {
           builder: (context) => RestoScreen(),
         ),
       ),
-      print('kdkd')
-    }
+    } else if(model.name == patisserieConstants.getTitleName()){
+            Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => PatisserieScreen(),
+        ),
+      ),
+    } 
 
       }, // Add your action here
       style: ElevatedButton.styleFrom(

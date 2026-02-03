@@ -1,12 +1,13 @@
 
 import 'package:flutter/material.dart';
+import 'package:movegui/models/model.dart';
 import 'package:movegui/models/restaurant_model.dart';
-import 'package:movegui/screens/home_screen.dart';
+import 'package:movegui/models/store_model.dart';
 
-class RestoItem extends StatelessWidget//extends MoveguiWidgetImage 
+class StoreItem extends StatelessWidget//extends MoveguiWidgetImage 
 {
-  final RestaurantModel model;
-  const RestoItem({super.key, required this.model});
+  final StoreModel model;
+  const StoreItem({super.key, required this.model});
 
 
 @override

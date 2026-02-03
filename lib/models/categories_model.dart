@@ -23,7 +23,7 @@ factory CategoriesModel.fromJson(Map<String, dynamic> json)  {
 }
 
 String toString(){
-  return id+' '+name!+' '+createdAt!.toString();
+  return id+' '+name+' '+createdAt.toString();
 }
 
 static List<CategoriesModel> getCommandCategories(){

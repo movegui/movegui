@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movegui/models/categories_model.dart';
 import 'package:movegui/widgets/category/categories_item_widget.dart';
-import 'package:movegui/widgets/restos/resto_item_widget.dart';
 
 class CategoriesWidget extends StatelessWidget{
   final CategoriesModel model;

@@ -1,5 +1,4 @@
 import 'package:movegui/models/model.dart';
-import 'package:movegui/models/professionnel_model.dart';
 import 'package:uuid/uuid.dart';
 
 class PersonModel extends Model {

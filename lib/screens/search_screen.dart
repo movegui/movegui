@@ -2,10 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:movegui/providers/shopping_provider.dart';
-import 'package:movegui/screens/command_screen.dart';
-import 'package:movegui/screens/develivery_screen.dart';
-import 'package:movegui/screens/home_screen.dart';
-import 'package:movegui/screens/reservation_screen.dart';
+import 'package:movegui/screens/main/command_screen.dart';
+import 'package:movegui/screens/main/develivery_screen.dart';
+import 'package:movegui/screens/main/home_screen.dart';
+import 'package:movegui/screens/main/reservation_screen.dart';
 import 'package:movegui/widgets/app/appbar.dart';
 import 'package:movegui/widgets/menu/menu.dart';
 import 'package:movegui/widgets/products/product_widget.dart';

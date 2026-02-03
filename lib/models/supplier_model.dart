@@ -1,6 +1,5 @@
 
 
-import 'package:movegui/models/model.dart';
 import 'package:movegui/models/open_hours_model.dart';
 import 'package:movegui/models/person_model.dart';
 import 'package:movegui/models/restaurant_model.dart';

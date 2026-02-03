@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/screens/auth/user_menu_screen.dart';
-import 'package:movegui/screens/notification_screen.dart';
+import 'package:movegui/screens/inner_screen/notification_screen.dart';
 import 'package:movegui/screens/search_screen.dart';
 import 'package:movegui/screens/shopping_cart_screen.dart';
 

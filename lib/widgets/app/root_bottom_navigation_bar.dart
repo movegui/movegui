@@ -16,8 +16,8 @@ class RootBottomNavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return NavigationBarTheme(
       data: NavigationBarThemeData(
-        labelTextStyle: MaterialStateProperty.resolveWith<TextStyle>((states) {
-          if (states.contains(MaterialState.selected)) {
+        labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
+          if (states.contains(WidgetState.selected)) {
             return const TextStyle(
               color: AppColors.textColor,
               fontWeight: FontWeight.bold,

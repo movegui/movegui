@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movegui/providers/theme_provider.dart';
-import 'package:movegui/screens/movegui_screen.dart';
+import 'package:movegui/screens/main/movegui_screen.dart';
 import 'package:movegui/screens/root_screen.dart';
 import 'package:movegui/services/assets_manager.dart';
 import 'package:movegui/services/title_manager.dart';

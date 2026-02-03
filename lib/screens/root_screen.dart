@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/providers/shopping_provider.dart';
-import 'package:movegui/screens/command_screen.dart';
-import 'package:movegui/screens/develivery_screen.dart';
-import 'package:movegui/screens/home_screen.dart';
-import 'package:movegui/screens/courier_screen.dart';
-import 'package:movegui/services/assets_manager.dart';
+import 'package:movegui/screens/main/command_screen.dart';
+import 'package:movegui/screens/main/develivery_screen.dart';
+import 'package:movegui/screens/main/home_screen.dart';
+import 'package:movegui/screens/main/courier_screen.dart';
 import 'package:movegui/widgets/app/appbar.dart';
 import 'package:movegui/widgets/app/root_bottom_navigation_bar.dart';
 import 'package:movegui/widgets/menu/menu.dart';

@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:movegui/screens/home_screen.dart';
+import 'package:movegui/screens/main/home_screen.dart';
 
 class CategoryItem extends MoveguiWidgetImage {
   const CategoryItem({super.key, required super.title, required super.imagePath, required super.action, required super.index});

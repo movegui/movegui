@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:movegui/screens/resto_screen.dart';
+import 'package:movegui/screens/categories/resto_screen.dart';
 
 class DeveliveryScreen extends StatelessWidget{
   const DeveliveryScreen({super.key, required this.title});

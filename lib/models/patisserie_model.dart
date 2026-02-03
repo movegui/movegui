@@ -43,7 +43,15 @@ class PatisserieModel extends StoreModel {
             .toList(),
         category: CategoriesModel.fromJson(json['category']),
         createdAt: json['createdAt'] != null ? json['createdAt'].toDate() : DateTime.now(),
-        weeklyHours: (json['weeklyHours'] as List? ?? []).map((e) => OpenHours.fromJson(e)).toList(),
+                weeklyHours: (json['weeklyHours'] as List? ?? [])
+            .map(
+              (e) => (e != null && e['openTime'] != null && e['closeTime'] != null && e['day'] != null)
+                  ? OpenHours.fromJson(e)
+                  : null,
+            )
+            .where((e) => e != null)
+            .cast<OpenHours>()
+            .toList(),
          storeType: RestaurantTypeModel.fromJson(json['storeType']),
       );
 }
