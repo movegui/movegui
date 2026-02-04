@@ -38,6 +38,20 @@ static List<CategoriesModel> getCommandCategories(){
     CategoriesModel(id: "004", name: supplierConstants.getTitleName(), createdAt: DateTime.now())
   ];
 }
+
+static List<CategoriesModel> getCourseCategories(){
+   final pressingConstants  = PressingConstants();
+   final gazMarktConstants =  GazMarktConstants();
+   final miniMarktConstants = MiniMarktConstants();
+
+  return[
+    CategoriesModel(id: "001", name: pressingConstants.getTitleName(), createdAt: DateTime.now()),
+    CategoriesModel(id: "002", name: gazMarktConstants.getTitleName(), createdAt: DateTime.now()),
+    CategoriesModel(id: "003", name: miniMarktConstants.getTitleName(), createdAt: DateTime.now()),
+   // CategoriesModel(id: "004", name: supplierConstants.getTitleName(), createdAt: DateTime.now())
+  ];
+}
+  
   
 }
 

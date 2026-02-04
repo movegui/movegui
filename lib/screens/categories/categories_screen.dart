@@ -15,7 +15,8 @@ import 'package:movegui/widgets/category/categories_widget.dart';
 
 class CategoriesScreen extends StatefulWidget{
 
-  CategoriesScreen({super.key});
+  final int categoryType;
+  CategoriesScreen({super.key, required this.categoryType});
   
   @override
   State<StatefulWidget> createState() => CategoriesScreenState();
@@ -53,7 +54,16 @@ class CategoriesScreenState extends State<CategoriesScreen>{
   }
 
     Future<void> initList() async {
-    final allModels = await service.getAllCommandCategories();
+      late List<CategoriesModel> allModels ;
+      switch(widget.categoryType){
+        case 0: 
+         allModels = await service.getAllCommandCategories();
+         break;
+        case 1: 
+        allModels = await service.getCourseCategories();
+         break;
+      }
+    
     setState(() {
       models = allModels;
     });

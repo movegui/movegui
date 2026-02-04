@@ -45,6 +45,11 @@ Future<List<CategoriesModel>> allModels() async {
   Future<List<CategoriesModel>> getAllCommandCategories() async {
     return await CategoriesModel.getCommandCategories();
   }
+  
+  @override
+  Future<List<CategoriesModel>> getCourseCategories() async {
+     return await CategoriesModel.getCourseCategories();
+  }
 
   
 

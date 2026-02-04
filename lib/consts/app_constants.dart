@@ -20,7 +20,12 @@ class AppConstants {
     "Samdei",
     "Dimanche",
   ];
+
+  static int COMMANDCATEGORY = 0;
+  static int COURSESCATEGORY = 1;
 }
+
+
 
 abstract class StoreConstants extends ImageConstatnt {
   String getNameLabelText();
@@ -37,6 +42,10 @@ abstract class StoreConstants extends ImageConstatnt {
   String getTypeStoreText();
   String getMenuTitleText();
   String getTitleName();
+}
+
+abstract class CoursesConstants {
+    String getTitleName();
 }
 
 class ImageConstatnt {
@@ -515,3 +524,24 @@ class StoreCategoriesConstants extends CategoriesConstants {
     return "Novelle Categorie Ajouter avec succes!";
   }
 }
+
+class MiniMarktConstants extends CoursesConstants {
+
+  @override
+  String getTitleName() {
+   return "Marchés";
+  }
+  
+}
+
+class GazMarktConstants extends CoursesConstants {
+
+  @override
+  String getTitleName() {
+    return "Gaz";
+  }
+  
+
+}
+
+

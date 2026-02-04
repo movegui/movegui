@@ -17,29 +17,40 @@ class PressingModel extends StoreModel {
     required super.weeklyHours,
     required super.storeType,
     super.longitude,
-    super.latitude
+    super.latitude,
   });
 
-    @override
-  Map<String, dynamic> toJson() => {
-    ...super.toJson(),
-  };
+  @override
+  Map<String, dynamic> toJson() => {...super.toJson()};
 
-  factory PressingModel.fromJson(Map<String, dynamic> json) =>
-      PressingModel(
-        id: json['id'],
-        name: json['name'],
-        description: json['description'],
-        imageUrl: json['imageUrl'],
-        adresse: json['adresse'],
-        email: json['email'],
-        telephon: json['telephon'],
-        contacts: (json['contacts'] as List? ?? [])
+  factory PressingModel.fromJson(Map<String, dynamic> json) => PressingModel(
+    id: json['id'],
+    name: json['name'],
+    description: json['description'],
+    imageUrl: json['imageUrl'],
+    adresse: json['adresse'],
+    email: json['email'],
+    telephon: json['telephon'],
+    contacts:
+        (json['contacts'] as List? ?? [])
             .map((e) => PersonModel.fromJson(e))
             .toList(),
-        createdAt: json['createdAt'] != null ? json['createdAt'].toDate() : DateTime.now(),
-        weeklyHours: (json['weeklyHours'] as List? ?? []).map((e) => OpenHours.fromJson(e)).toList(),
-         storeType: RestaurantTypeModel.fromJson(json['storeType']),
-      );
-
+    createdAt:
+        json['createdAt'] != null ? json['createdAt'].toDate() : DateTime.now(),
+    weeklyHours:
+        (json['weeklyHours'] as List? ?? [])
+            .map(
+              (e) =>
+                  (e != null &&
+                          e['openTime'] != null &&
+                          e['closeTime'] != null &&
+                          e['day'] != null)
+                      ? OpenHours.fromJson(e)
+                      : null,
+            )
+            .where((e) => e != null)
+            .cast<OpenHours>()
+            .toList(),
+    storeType: RestaurantTypeModel.fromJson(json['storeType']),
+  );
 }
