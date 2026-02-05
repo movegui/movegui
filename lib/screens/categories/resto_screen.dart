@@ -8,6 +8,7 @@ import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:movegui/services/register_services.dart';
 import 'package:movegui/services/restaurants_service.dart';
 import 'package:movegui/widgets/app/appbar.dart';
+import 'package:movegui/widgets/menu/menu.dart';
 import 'package:movegui/widgets/store/store_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -58,6 +59,7 @@ Widget build(BuildContext context) {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: MoveguiAppBar(title: restaurantConstants.getTitleName(), itemCount: shoppingProvider.itemCount),
+        drawer: MoveGuiMenu(),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(

@@ -13,12 +13,21 @@ class AssetsManager {
   static const String courseIcon = "$assetsIconsPath/courseFB.png";
   static const String courseIcon1 = "$assetsIconsPath/course.jpg";
 
+  // payment
+    static const String orangeIcon = "$assetsIconsPath/orange_money.png";
+    static const String paypalIcon = "$assetsIconsPath/paypal.png";
+    static const String masterCardIcon = "$assetsIconsPath/master_card.png";
+    static const String ymoIcon = "$assetsIconsPath/ymo.png";
+    static const String cashIcon = "$assetsIconsPath/cash.png";
+
+
   static String imagesPath = "assets/images";
   static String profileImagesPath = "assets/images/profile";
   static String bagImagesPath = "assets/images/bag";
   static String bannersImagesPath = "assets/images/banners";
   static String categoriesImagesPath = "assets/images/categories";
   static String restoImagesPath = "assets/images/resto";
+  static String pressingImagesPath = "assets/images/pressing";
 
 // general images
   static String forgotPassword = "$imagesPath/forgot_password.jpg";
@@ -69,5 +78,10 @@ class AssetsManager {
   static String category3Image = "$categoriesImagesPath/sandwisch4.jpg";
   static String category4Image = "$categoriesImagesPath/vegan.jpg";
   static String category5Image = "$categoriesImagesPath/bbq.jpg";
+
+  // Pressing 
+  static String pressing1Image = "$pressingImagesPath/pressing.jpg";
+   static String pressing2Image = "$pressingImagesPath/pressing1.jpg";
+    static String pressing3Image = "$pressingImagesPath/pressing2.jpeg";
 
 }

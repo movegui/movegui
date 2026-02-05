@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/app_constants.dart';
 import 'package:movegui/models/model.dart';
 import 'package:movegui/models/open_hours_model.dart';
+import 'package:movegui/models/pressing_model.dart';
 import 'package:movegui/models/restaurant_model.dart';
 import 'package:movegui/models/store_model.dart';
+import 'package:movegui/screens/pressing/pressing_detail_screen.dart';
 import 'package:movegui/screens/restos/resto_category_screnn.dart';
+import 'package:movegui/services/assets_manager.dart';
 
 class StoreItem
     extends
@@ -22,13 +27,27 @@ class StoreItem
           MaterialPageRoute(builder: (context) => RestoCategoryScreen()),
         );
         break;
+      case AppConstants.CATEGORY_PRESSING:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder:
+                (context) =>
+                    PressingDetailScreen(model: model as PressingModel),
+          ),
+        );
+        break;
     }
+  }
+
+  bool isPressing() {
+    return category == AppConstants.CATEGORY_PRESSING;
   }
 
   bool isOpen() {
     final now = DateTime.now();
     final int dayNumber = now.weekday;
-    final today = AppConstants.daysOfWeek[dayNumber];
+    final  today = AppConstants.daysOfWeek[dayNumber - 1] ;
     int nowMinutes = -1;
     int openMinutes = -1;
     int closeMinutes = -1;
@@ -95,7 +114,7 @@ class StoreItem
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 46, 2, 3),
+                          color: Color.fromARGB(255, 145, 8, 10),
                         ),
                       ),
                       SizedBox(width: 6),
@@ -119,7 +138,14 @@ class StoreItem
                     overflow: TextOverflow.ellipsis,
                   ),
 
-                  SizedBox(height: 8),
+                  SizedBox(height: 6),
+
+                  isPressing()
+                      ? Text(
+                        isPressing() ? "À partir de 5 000 GNF / vêtement" : "",
+                        style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+                      )
+                      : SizedBox(height: 8),
 
                   // Open Hours
                   /*
@@ -182,7 +208,9 @@ class StoreItem
                                 ),
                                 SizedBox(width: 6),
                                 Text(
-                                  "Ramassage & livraison",
+                                  isPressing()
+                                      ? "Ramassage & livraison"
+                                      : "Livraison",
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.grey[700],
@@ -241,7 +269,9 @@ class StoreItem
                                 SizedBox(width: 6),
                                 Expanded(
                                   child: Text(
-                                    "48h maximum",
+                                    isPressing()
+                                        ? "48h maximum"
+                                        : "Rapid et efficace",
                                     style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.grey[700],
@@ -295,21 +325,45 @@ class StoreItem
                           children: [
                             Row(
                               children: [
-                                Icon(
-                                  Icons.payment,
-                                  size: 18,
-                                  color: Colors.grey[700],
+                                Image.asset(
+                                  AssetsManager.cashIcon,
+                                  width: 28,
+                                  height: 28,
                                 ),
                                 SizedBox(width: 6),
-                                Expanded(
-                                  child: Text(
-                                    "Paiement cash ou Orange Money",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey[700],
-                                    ),
-                                  ),
+                                Image.asset(
+                                  AssetsManager.orangeIcon,
+                                  width: 28,
+                                  height: 28,
                                 ),
+                                SizedBox(width: 6),
+                                Image.asset(
+                                  AssetsManager.paypalIcon,
+                                  width: 28,
+                                  height: 28,
+                                ),
+                                SizedBox(width: 6),
+                                Image.asset(
+                                  AssetsManager.masterCardIcon,
+                                  width: 28,
+                                  height: 28,
+                                ),
+                                SizedBox(width: 6),
+                                Image.asset(
+                                  AssetsManager.ymoIcon,
+                                  width: 28,
+                                  height: 28,
+                                ),
+
+                                /*
+                                      Text(
+                                        "Paiement cash ou Orange Money",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.grey[700],
+                                        ),
+                                      ),
+                                      */
                               ],
                             ),
                           ],
@@ -317,6 +371,35 @@ class StoreItem
                       ),
                     ],
                   ),
+                   SizedBox(height: 8),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.all(12.0),
+                        backgroundColor: AppColors.backgroundColor,
+                        // backgroundColor: Colors.red,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                      icon: const Icon(
+                        IconlyLight.send,
+                        color: AppColors.textColor,
+                      ),
+                      label: const Text(
+                        "Commander Maintenant",
+                        style: TextStyle(
+                          color: AppColors.textColor,
+                          fontSize: 18,
+                        ),
+                      ),
+                      onPressed: () async {
+                        _onPressedImage(context, category, model.name);
+                      },
+                    ),
+                  ),
+                  
                 ],
               ),
             ),
