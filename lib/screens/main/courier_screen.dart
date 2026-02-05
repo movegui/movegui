@@ -9,7 +9,7 @@ final String title;
    @override
   Widget build(Object context) {
    // return RestoScreen();
-   return CategoriesScreen(categoryType: AppConstants.COURSESCATEGORY,);
+   return CategoriesScreen(categoryType: AppConstants.COURSES_CATEGORY,);
   }
 
 }

@@ -21,8 +21,13 @@ class AppConstants {
     "Dimanche",
   ];
 
-  static int COMMANDCATEGORY = 0;
-  static int COURSESCATEGORY = 1;
+  static const int COMMAND_CATEGORY = 0;
+  static const int COURSES_CATEGORY = 1;
+  static const int CATEGORY_RESTAURANT = 2;
+  static const int CATEGORY_PATISSERIE = 3;
+  static const int CATEGORY_SUPERMARKT = 4;
+  static const int CATEGORY_SUPPLIER = 5;
+  static const int CATEGORY_PRESSING = 6;
 }
 
 

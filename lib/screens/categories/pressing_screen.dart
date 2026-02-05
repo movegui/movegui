@@ -87,7 +87,7 @@ Widget build(BuildContext context) {
                   mainAxisSpacing: 12,
                   crossAxisSpacing: 12,
                   builder: (context, index) {
-                    return StoreWidget(model: pressings[index]);
+                    return StoreWidget(model: pressings[index], catgory: AppConstants.CATEGORY_PRESSING,);
                   },
                 ),
               ),

@@ -11,7 +11,7 @@ class Commandscreen extends StatelessWidget {
   @override
   Widget build(Object context) {
    // return RestoScreen();
-   return CategoriesScreen(categoryType: AppConstants.COMMANDCATEGORY,);
+   return CategoriesScreen(categoryType: AppConstants.COMMAND_CATEGORY,);
   }
   
 }

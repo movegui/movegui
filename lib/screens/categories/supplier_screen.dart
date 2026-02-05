@@ -86,7 +86,7 @@ Widget build(BuildContext context) {
                   mainAxisSpacing: 12,
                   crossAxisSpacing: 12,
                   builder: (context, index) {
-                    return StoreWidget(model: suppliers[index]);
+                    return StoreWidget(model: suppliers[index], catgory: AppConstants.CATEGORY_SUPPLIER,);
                   },
                 ),
               ),
