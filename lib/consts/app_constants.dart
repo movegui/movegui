@@ -47,6 +47,7 @@ abstract class StoreConstants extends ImageConstatnt {
   String getTypeStoreText();
   String getMenuTitleText();
   String getTitleName();
+  String getCustomerAdressHinterText();
 }
 
 abstract class CoursesConstants {
@@ -133,6 +134,12 @@ class RestaurantConstants extends StoreConstants {
   String getTitleName() {
     return "Restaurant";
   }
+  
+  @override
+  String getCustomerAdressHinterText() {
+    // TODO: implement getCustomerAdressHinterText
+    throw UnimplementedError();
+  }
 }
 
 class ProfessionConstants extends StoreConstants {
@@ -204,6 +211,12 @@ class ProfessionConstants extends StoreConstants {
   @override
   String getTitleName() {
     return "Profession";
+  }
+  
+  @override
+  String getCustomerAdressHinterText() {
+    // TODO: implement getCustomerAdressHinterText
+    throw UnimplementedError();
   }
 }
 
@@ -277,6 +290,12 @@ class PatisserieConstants extends StoreConstants {
   String getTitleName() {
     return "Patisserie";
   }
+  
+  @override
+  String getCustomerAdressHinterText() {
+    // TODO: implement getCustomerAdressHinterText
+    throw UnimplementedError();
+  }
 }
 
 class PressingConstants extends StoreConstants {
@@ -348,6 +367,11 @@ class PressingConstants extends StoreConstants {
   @override
   String getTitleName() {
     return "Pressing";
+  }
+  
+  @override
+  String getCustomerAdressHinterText() {
+     return 'Veuillez saisir l\'adresse de livraison';
   }
 }
 
@@ -421,6 +445,12 @@ class SuperMarktConstants extends StoreConstants {
   String getTitleName() {
     return "Super Marché";
   }
+  
+  @override
+  String getCustomerAdressHinterText() {
+    // TODO: implement getCustomerAdressHinterText
+    throw UnimplementedError();
+  }
 }
 
 class SupplierConstants extends StoreConstants {
@@ -492,6 +522,12 @@ class SupplierConstants extends StoreConstants {
   @override
   String getTitleName() {
     return "Fournisseur";
+  }
+  
+  @override
+  String getCustomerAdressHinterText() {
+    // TODO: implement getCustomerAdressHinterText
+    throw UnimplementedError();
   }
 }
 

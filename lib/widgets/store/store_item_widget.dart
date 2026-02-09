@@ -72,11 +72,12 @@ class StoreItem
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton(
         onPressed:
-            () => _onPressedImage(
+        //  isOpen() ? 
+           () async => _onPressedImage(
               context,
               category,
               model.name,
-            ), // Add your action here
+            ), //:null, // Add your action here
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
@@ -394,9 +395,10 @@ class StoreItem
                           fontSize: 18,
                         ),
                       ),
-                      onPressed: () async {
+                      onPressed: isOpen() ? () async {
+                        
                         _onPressedImage(context, category, model.name);
-                      },
+                      }: null,
                     ),
                   ),
                   

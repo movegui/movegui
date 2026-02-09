@@ -57,4 +57,17 @@ class MyValidators {
     }
     return null;
   }
+    static String? textValidator(String? value){
+    if(value!.isEmpty) {
+      return 'Vewuillez saisir la Categorie svp';
+    }
+    return null;
+  }
+
+    static String? textNameValidator(String? value){
+    if(value!.isEmpty) {
+      return 'Vewuillez saisir le Nom svp';
+    }
+    return null;
+  }
 }

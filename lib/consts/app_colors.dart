@@ -10,4 +10,6 @@ class AppColors {
   static const Color selectionColor = Colors.yellow;
   static const Color error = Colors.red;
   static const Color textColor = Color(0xFFFFFFFF);
+  static const Color disabled = Colors.grey;
+    static const Color placeHolderText = Colors.grey;
 }
