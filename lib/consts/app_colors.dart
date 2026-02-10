@@ -12,4 +12,5 @@ class AppColors {
   static const Color textColor = Color(0xFFFFFFFF);
   static const Color disabled = Colors.grey;
     static const Color placeHolderText = Colors.grey;
+      static const Color validColor = Colors.lightGreen;
 }

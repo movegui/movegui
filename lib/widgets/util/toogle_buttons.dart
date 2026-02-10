@@ -29,7 +29,7 @@ class _ToggleButtonExampleState extends State<ToggleButtonExample> {
           },
            color: Colors.black, // text color when unselected
           selectedColor: AppColors.textColor, // text color when selected
-          fillColor: AppColors.backgroundColor, // background color when selected
+          fillColor: AppColors.validColor, // background color when selected
           borderColor: Colors.grey,
           selectedBorderColor: AppColors.textColor,
                 children: <Widget>[
