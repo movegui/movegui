@@ -8,11 +8,18 @@ import 'package:movegui/screens/auth/forgot_password.dart';
 import 'package:movegui/screens/auth/register_screen.dart';
 import 'package:movegui/screens/main/home_screen.dart';
 import 'package:movegui/services/my_app_functions.dart';
+import 'package:movegui/services/title_manager.dart';
 import 'package:movegui/widgets/auth/google_btn.dart';
 import 'package:movegui/widgets/subtitle_text.dart';
 
 class LoginEmailPage extends StatefulWidget {
-  const LoginEmailPage({super.key});
+  const LoginEmailPage({super.key, required this.onTitleChange, required this.navigatorKey, required this.observer, required this.homeCanPop,});
+
+    final Function(String) onTitleChange;
+     final GlobalKey<NavigatorState> navigatorKey;
+     final NavigatorObserver observer;
+      final ValueNotifier<bool> homeCanPop;
+    
   @override
   State<StatefulWidget> createState() => LoginEmailPageState();
 }
@@ -73,7 +80,7 @@ class LoginEmailPageState extends State<LoginEmailPage> {
         fontSize: 16.0,
     );
     Navigator.pushReplacement(context, 
-          MaterialPageRoute(builder: (context) => HomeScreen(title: 'Movegui')));
+          MaterialPageRoute(builder: (context) => HomeScreen(onTitleChange: widget.onTitleChange,)));
       }catch(error){
         MyAppFunctions.showErrorOrWarningDialog(
           context: context,
@@ -272,7 +279,7 @@ class LoginEmailPageState extends State<LoginEmailPage> {
                           context,
                           MaterialPageRoute(
                             builder:
-                                (context) => RegisterScreenMovgui()
+                                (context) => Text('hallo') //RegisterScreenMovgui(onTitleChange: widget.onTitleChange, navigatorKey: widget.navigatorKey, homeCanPop: widget.homeCanPop, observer: widget.observer,)
                           ),
                         );
                       },

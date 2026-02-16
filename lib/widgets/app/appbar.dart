@@ -1,118 +1,118 @@
 import 'package:flutter/material.dart';
 import 'package:movegui/consts/app_colors.dart';
-import 'package:movegui/screens/auth/user_menu_screen.dart';
-import 'package:movegui/screens/inner_screen/notification_screen.dart';
-import 'package:movegui/screens/search_screen.dart';
-import 'package:movegui/screens/shopping_cart_screen.dart';
 
 class MoveguiAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const MoveguiAppBar({super.key, required this.title, required this.itemCount});
-
+  const MoveguiAppBar({
+    super.key,
+    required this.title,
+    required this.itemCount,
+    required this.navigatorKey,
+    required this.homeCanPop,
+    required this.onTitleChange,
+  });
+  final GlobalKey<NavigatorState> navigatorKey;
   final String title;
   final int itemCount;
+  final ValueNotifier<bool> homeCanPop;
+  final Function(String) onTitleChange;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(title),
       titleTextStyle: TextStyle(
-        color: Color(0xFFFFFFFF), // Set the title color
+        color: AppColors.textColor,
         fontSize: 20,
       ),
-      leading: Builder(
-        builder: (BuildContext context) {
-          return IconButton(
-            icon: Icon(Icons.menu),
-            color: Color(0xFFFFFFFF),
-            tooltip: 'Navigation menu',
-            onPressed: () {
-              //  _showMenu(context);
-              Scaffold.of(context).openDrawer();
-            },
-          );
+      leading: ValueListenableBuilder<bool>(
+        valueListenable: homeCanPop,
+        builder: (context, canPop, _) {
+          if (canPop) {
+            return IconButton(
+              icon: const Icon(Icons.arrow_back),
+              color: AppColors.textColor,
+              hoverColor: AppColors.selectionColor,
+              onPressed: () {         
+                if (navigatorKey.currentState?.canPop() ?? false) {
+                  navigatorKey.currentState?.pop();
+                }   
+                         
+              },
+            );
+          } else {
+            return Builder(
+              builder:
+                  (context) => IconButton(
+                    icon: const Icon(Icons.menu),
+                    color: AppColors.textColor,
+                    tooltip: 'Navigation menu',
+                    hoverColor: AppColors.selectionColor,
+                    onPressed: () => Scaffold.of(context).openDrawer(),
+                  ),
+            );
+          }
         },
       ),
-      backgroundColor: Color(0xFF871A1C), // Customize color
+      backgroundColor: AppColors.backgroundColor, 
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.search),
-          color: Color(0xFFFFFFFF),
+          color: AppColors.textColor,
+          hoverColor: AppColors.selectionColor,
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SearchScreen()),
-            );
+            navigatorKey.currentState?.pushNamed('/search');
           },
         ),
         IconButton(
           icon: Icon(Icons.notifications),
-          color: Color(0xFFFFFFFF),
+          color: AppColors.textColor,
+          hoverColor: AppColors.selectionColor,
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => NotificationScreen()),
-            );
+            navigatorKey.currentState?.pushNamed('/notifation');
           },
         ),
         Stack(
-  children: [
-    IconButton(
-      icon: const Icon(Icons.add_shopping_cart_outlined),
-      color: const Color(0xFFFFFFFF),
-   //   iconSize: 18,
-      onPressed: () {
-        print('click on panier icon');
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ShoppingCartScreen(),
-          ),
-        );
-      },
-    ),
- //   if (itemCount > 0) // 👈 Afficher le badge seulement si le panier n'est pas vide
-      Positioned(
-        right: 6,
-        top: 6,
-        child: Container(
-          padding: const EdgeInsets.all(4),
-          decoration: BoxDecoration(
-            color: AppColors.selectionColor,
-            shape: BoxShape.circle,
-          ),
-          child: Text(
-            '$itemCount',
-            style: const TextStyle(
-              color: AppColors.backgroundColor,
-              fontSize: 10,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.add_shopping_cart_outlined),
+              color: AppColors.textColor,
+              hoverColor: AppColors.selectionColor,
+              onPressed: () {
+                navigatorKey.currentState?.pushNamed('/shopping');
+              },
             ),
-          ),
-        ),
-      ),
-  ],
-),
-        /*
-        IconButton(
-          icon: Icon(Icons.add_shopping_cart_outlined),
-          color: Color(0xFFFFFFFF),
-          onPressed: () {
-            print('click on panier icon');
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ShoppingCartScreen(),
+            Positioned(
+              right: 6,
+              top: 6,
+              child: Container(
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: AppColors.selectionColor,
+                  shape: BoxShape.circle,
                 ),
-              );
-              
-          },
+                child: Text(
+                  '$itemCount',
+                  style: const TextStyle(
+                    color: AppColors.backgroundColor,
+                    fontSize: 10,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        /*
+        UserMenuScreen(
+          navigatorKey: navigatorKey,
+          onTitleChange: onTitleChange,
+          observer: observer,
+          barCanPop: homeCanPop,
         ),
         */
-        UserMenuScreen(),
       ],
     );
   }
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }

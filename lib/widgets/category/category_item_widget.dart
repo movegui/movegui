@@ -1,9 +1,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:movegui/screens/main/home_screen.dart';
+import 'package:movegui/widgets/home/home_image_widget.dart';
 
-class CategoryItem extends MoveguiWidgetImage {
-  const CategoryItem({super.key, required super.title, required super.imagePath, required super.action, required super.index});
+class CategoryItem extends ImageWidget {
+  const CategoryItem({super.key, required super.title, required super.imagePath, required super.action, required super.routeName,});
 
  
   @override
@@ -11,7 +12,7 @@ class CategoryItem extends MoveguiWidgetImage {
      return Padding(
       padding: EdgeInsets.all(6),
       child: ElevatedButton(
-          onPressed: () => action(context, index, title),
+          onPressed: () => action(context, routeName, title),
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(),
             padding: EdgeInsets.all(1),

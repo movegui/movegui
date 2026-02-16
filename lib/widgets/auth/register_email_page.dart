@@ -16,12 +16,20 @@ class RegisterEmailPage extends StatefulWidget {
   final ValueChanged<String?> onGenderChanged;
   final ValueChanged<DateTime?>? onBirthDateChanged;
   final String? selectedGender;
+  final Function(String) onTitleChange;
+  final GlobalKey<NavigatorState> navigatorKey;
+  final NavigatorObserver observer;
+  final ValueNotifier<bool> homeCanPop;
 
   const RegisterEmailPage({
     super.key,
     required this.onGenderChanged,
     this.onBirthDateChanged,
     this.selectedGender,
+    required this.onTitleChange,
+    required this.navigatorKey,
+    required this.observer,
+    required this.homeCanPop,
   });
 
   @override
@@ -87,40 +95,48 @@ class RegisterEmailPageState extends State<RegisterEmailPage> {
     super.dispose();
   }
 
-  
   Future<void> _registerFCT() async {
     final isValid = _formkey.currentState!.validate();
     FocusScope.of(context).unfocus();
-    
-    if(isValid){
-      try{
+
+    if (isValid) {
+      try {
         setState(() {
           isloading = true;
         });
-      // await auth?.createUserWithEmailAndPassword(email: _emailController.text.trim(), password: _passwordController.text.trim());
-     //  OtpVerificationScreen(verificationId:  _emailController.text, );
-       Fluttertoast.showToast(
-        msg: "Votre Compte a été créer avec succes",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0
-    );
-    Navigator.pushReplacement(context, 
-          MaterialPageRoute(builder: (context) => HomeScreen(title: 'Movegui')));
-      }catch(error){
+        // await auth?.createUserWithEmailAndPassword(email: _emailController.text.trim(), password: _passwordController.text.trim());
+        //  OtpVerificationScreen(verificationId:  _emailController.text, );
+        Fluttertoast.showToast(
+          msg: "Votre Compte a été créer avec succes",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder:
+                (context) => HomeScreen(
+                  onTitleChange: widget.onTitleChange,
+                  //navigatorKey: widget.navigatorKey,
+                 // observer: widget.observer, homeCanPop: widget.homeCanPop,
+                ),
+          ),
+        );
+      } catch (error) {
         MyAppFunctions.showErrorOrWarningDialog(
           context: context,
           subtitle: error.toString(),
-          fct: (){});
-      }finally{
+          fct: () {},
+        );
+      } finally {
         isloading = false;
       }
     }
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -170,7 +186,7 @@ class RegisterEmailPageState extends State<RegisterEmailPage> {
 
           const SizedBox(height: 18.0),
           ButtonValidationWidget(title: 'Enregistrer', onPress: _registerFCT),
-          SizedBox(height: 16,),
+          SizedBox(height: 16),
           OtherRegistrationWidget(),
 
           /*

@@ -57,7 +57,7 @@ Widget build(BuildContext context) {
     child: GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: MoveguiAppBar(title: supplierConstants.getTitleName(), itemCount: shoppingProvider.itemCount),
+       // appBar: MoveguiAppBar(title: supplierConstants.getTitleName(), itemCount: shoppingProvider.itemCount),
         drawer: MoveGuiMenu(),
         body: Padding(
           padding: const EdgeInsets.all(8.0),

@@ -10,7 +10,7 @@ class NotificationScreen extends StatelessWidget{
     final shoppingProvider = Provider.of<ShoppingProvider>(context);
 
     return Scaffold(
-      appBar: MoveguiAppBar(title: 'Notification', itemCount: shoppingProvider.itemCount,),
+     // appBar: MoveguiAppBar(title: 'Notification', itemCount: shoppingProvider.itemCount,),
     );
   }
   

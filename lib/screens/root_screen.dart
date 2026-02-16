@@ -1,47 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:movegui/observers/home_nav_observer.dart';
 import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/screens/main/command_screen.dart';
 import 'package:movegui/screens/main/develivery_screen.dart';
 import 'package:movegui/screens/main/home_screen.dart';
 import 'package:movegui/screens/main/courier_screen.dart';
+import 'package:movegui/screens/main/movegui_screen.dart';
+import 'package:movegui/services/title_manager.dart';
+import 'package:movegui/widgets/app/app_footer.dart';
 import 'package:movegui/widgets/app/appbar.dart';
-import 'package:movegui/widgets/app/root_bottom_navigation_bar.dart';
 import 'package:movegui/widgets/menu/menu.dart';
 import 'package:provider/provider.dart';
 
 class RootScreen extends StatefulWidget {
-  const RootScreen({
-    super.key,
-    required this.currentScreen,
-    required this.title,
-  });
-  final int currentScreen;
-  final String title;
+  RootScreen({super.key});
 
   @override
-  // ignore: no_logic_in_create_state
-  State<RootScreen> createState() =>
-      _RootScreenState(currentScreen: currentScreen, title: title);
+  State<RootScreen> createState() => _RootScreenState();
 }
 
 class _RootScreenState extends State<RootScreen> {
-  _RootScreenState({required this.currentScreen, required this.title});
+  late int currentScreen;
+  String title = TitleManager.homeTitle;
+  static const double iconSize = 18.0;
+  late HomeNavObserver homeObserver;
+  final ValueNotifier<bool> homeCanPop = ValueNotifier(false);
+  final GlobalKey<NavigatorState> barNavigatorKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> homeNavigatorKey =
+      GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> commandNavigatorKey =
+      GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> deliveryNavigatorKey =
+      GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> courrierNavigatorKey =
+      GlobalKey<NavigatorState>();
+  final RouteObserver<ModalRoute<void>> homeRouteObserver =
+      RouteObserver<ModalRoute<void>>();
 
-  late List<Widget> screens;
-  int currentScreen;
-  String title;
-  late PageController controller;
   @override
   void initState() {
     super.initState();
-    screens = [
-      HomeScreen(title: title),
-      // ReservationScreen(title: title),
-      Commandscreen(title: title),
-      DeveliveryScreen(title: title),
-      CourierScreen(title: title),
-    ];
-    controller = PageController(initialPage: currentScreen);
+    currentScreen = 0;
+    homeObserver = HomeNavObserver(homeCanPop);
+  }
+
+
+
+  void updateTitle(String newTitle) {
+    setState(() {
+      title = newTitle;
+    });
   }
 
   @override
@@ -51,113 +59,137 @@ class _RootScreenState extends State<RootScreen> {
       appBar: MoveguiAppBar(
         title: title,
         itemCount: shoppingProvider.itemCount,
+        navigatorKey: homeNavigatorKey,
+        homeCanPop: homeCanPop,
+        onTitleChange: (value) {
+          updateTitle(value);
+        },
       ),
       drawer: MoveGuiMenu(),
-      body: PageView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: controller,
-        children: screens,
+      body: IndexedStack(
+        index: currentScreen,
+        children: [
+          _buildHomeNavigator(),
+          _buildCommandNavigator(),
+          _buildDeliveryNavigator(),
+          _buildCoursesNavigator(),
+        ],
       ),
 
-      bottomNavigationBar: RootBottomNavigationBar(
+      bottomNavigationBar: AppFooter(
         currentIndex: currentScreen,
-        onDestinationSelected: (index) {
+        iconSize: iconSize,
+        onTap: (index) {
           setState(() {
             currentScreen = index;
           });
-          controller.jumpToPage(currentScreen);
         },
       ),
-
-      /*
-      NavigationBarTheme(
-        data: NavigationBarThemeData(
-          labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
-            if (states.contains(WidgetState.selected)) {
-              return const TextStyle(
-                color: AppColors.textColor,
-                fontWeight: FontWeight.bold,
-              );
-            }
-            return const TextStyle(
-              color: AppColors.textColor,
-              fontWeight: FontWeight.normal,
-            );
-          }),
-        ),
-        child: NavigationBar(
-          indicatorColor: Colors.transparent,
-          selectedIndex: currentScreen,
-          backgroundColor: Theme.of(context).primaryColor,
-          elevation: 10,
-          height: kBottomNavigationBarHeight,
-          onDestinationSelected: (index) {
-            setState(() {
-              currentScreen = index;
-            });
-            controller.jumpToPage(currentScreen);
-          },
-          destinations: const [
-            NavigationDestination(
-              selectedIcon: Icon(Icons.home, color: AppColors.selectionColor),
-              icon: Icon(Icons.home, color: AppColors.textColor),
-              label: "Home",
-            ),
-
-            NavigationDestination(
-              selectedIcon: ImageIcon(
-                AssetImage(AssetsManager.commandeIcon3),
-                color: AppColors.selectionColor,
-                size: 24,
-              ),
-              icon: ImageIcon(
-                AssetImage(AssetsManager.commandeIcon3),
-                color: AppColors.textColor,
-              ),
-              label: "Commande",
-            ),
-      
-            NavigationDestination(
-              selectedIcon: ImageIcon(
-                AssetImage(AssetsManager.livraisonIcon3),
-                color: AppColors.selectionColor,
-              ),
-              icon: ImageIcon(
-                AssetImage(AssetsManager.livraisonIcon3),
-                color: AppColors.textColor,
-              ),
-              label: "Livraison",
-            ),
-            NavigationDestination(
-              selectedIcon: ImageIcon(
-                AssetImage(AssetsManager.reservationIcon3),
-                color: AppColors.selectionColor,
-              ),
-              icon: ImageIcon(
-                AssetImage(AssetsManager.reservationIcon3),
-                color: AppColors.textColor,
-                size: 24,
-              ),
-              label: "Courses",
-            ),
-
-          ],
-        ),
-      ),
-      */
     );
   }
 
-  showUserMenu(BuildContext context) async {
-    /*
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          // return object of type Dialog
-          return UserScreen();
+  Widget _buildHomeNavigator() {
+    return Navigator(
+      key: homeNavigatorKey,
+      initialRoute: '/',
+      observers: [homeObserver],
+      onGenerateRoute: (settings) {
+        Widget page;
+        switch (settings.name) {
+          case '/':
+            page = HomeScreen(
+              onTitleChange: (value) {
+                updateTitle(value);
+              },
+              navigatorKey: homeNavigatorKey,
+              routeObserver: homeRouteObserver,
+            );
+            break;
+          case '/home/movegui':
+            page = MoveguiScreen(
+              onTitleChange: (value) {
+                updateTitle(value);
+              },
+            );
+            break;
+
+          case '/command':
+            page = Commandscreen(
+              onTitleChange: (value) {
+                updateTitle(value);
+              },
+            );
+            break;
+          case '/delivery':
+            page = DeveliveryScreen(
+              onTitleChange: (value) {
+                updateTitle(value);
+              },
+            );
+            break;
+          case '/courses':
+            page = CourierScreen(
+              onTitleChange: (value) {
+                updateTitle(value);
+              },
+            );
+            break;
+
+          default:
+            page = HomeScreen(
+              onTitleChange: (value) {
+                updateTitle(value);
+              },
+              navigatorKey: homeNavigatorKey,
+              routeObserver: homeRouteObserver,
+            );
         }
-      );
-      */
+        return MaterialPageRoute(builder: (_) => page, settings: settings);
+      },
+    );
+  }
+
+  Widget _buildCommandNavigator() {
+    return Navigator(
+      key: commandNavigatorKey,
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(
+          builder:
+              (_) => Commandscreen(
+                onTitleChange: (value) {
+                  updateTitle(value);
+                },
+              ),
+        );
+      },
+    );
+  }
+
+  Widget _buildDeliveryNavigator() {
+    return Navigator(
+      key: deliveryNavigatorKey,
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(builder: (_) => DeveliveryScreen( onTitleChange: (value) {
+                  updateTitle(value);
+                },));
+      },
+    );
+  }
+
+  Widget _buildCoursesNavigator() {
+    return Navigator(
+      key: courrierNavigatorKey,
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(builder: (_) => CourierScreen( onTitleChange: (value) {
+                  updateTitle(value);
+                },));
+      },
+    );
+  }
+
+  /*
+  showUserMenu(BuildContext context) async {
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -184,4 +216,5 @@ class _RootScreenState extends State<RootScreen> {
       },
     );
   }
+  */
 }

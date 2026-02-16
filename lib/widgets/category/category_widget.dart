@@ -6,7 +6,7 @@ import 'package:movegui/widgets/category/category_item_widget.dart';
 class CategoryWidget extends StatelessWidget{
   const CategoryWidget({super.key});
 
-  void _onPressedImage(BuildContext context, int index, String title) {
+  void _onPressedImage(BuildContext context, String routeName, String title) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -22,33 +22,33 @@ class CategoryWidget extends StatelessWidget{
         children: [
               CategoryItem(
                   title: 'Pizza',
+                  routeName: '',
                   imagePath: AssetsManager.category1Image,
                   action: _onPressedImage,
-                  index: 0,
                 ),
                 CategoryItem(
                   title: 'Fast Food',
+                  routeName: '',
                   imagePath: AssetsManager.category2Image,
                   action: _onPressedImage,
-                  index: 1,
                 ),
                 CategoryItem(
                   title: 'Sandwisch',
+                  routeName: '',
                   imagePath: AssetsManager.category3Image,
                   action: _onPressedImage,
-                  index: 2,
                 ),
                 CategoryItem(
                   title: 'Vegan',
+                  routeName: '',
                   imagePath: AssetsManager.category4Image,
                   action: _onPressedImage,
-                  index: 3,
                 ),
                 CategoryItem(
                   title: 'BBQ',
+                  routeName: '',
                   imagePath: AssetsManager.category5Image,
                   action: _onPressedImage,
-                  index: 4,
                 ),
         ],
 

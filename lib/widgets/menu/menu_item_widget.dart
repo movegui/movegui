@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class MenuItem  {
-  const MenuItem({ 
+class MenuItemWidget extends StatelessWidget {
+  const MenuItemWidget({ super.key,
     required this.title,
     //required this.subtitle
     required this.route,
@@ -9,7 +9,7 @@ class MenuItem  {
    final String title;
    final String route;
    
-/*
+
    @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -32,33 +32,5 @@ class MenuItem  {
       ),
     );
   }
-  */
-}
-
-
-class FooterItem extends StatelessWidget{
-  const FooterItem({super.key, 
-    required this.title,
-    //required this.subtitle
-    required this.route,
-   });
-   final String title;
-   final String route;
-   
-
-   @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(route);
-      },
-       child: Card(
-        margin: const EdgeInsets.all(6.0),
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: ListTile(title: Text(title)),
-        ),
-      ),
-    );
-  }
+  
 }

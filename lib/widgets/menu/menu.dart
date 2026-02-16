@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movegui/services/title_manager.dart';
+import 'package:movegui/widgets/menu/menu_item_widget.dart';
 import 'package:movegui/widgets/menu/menuitem.dart';
 
 class MoveGuiMenu extends StatelessWidget {
@@ -24,19 +25,19 @@ class MoveGuiMenu extends StatelessWidget {
               ),
             ),
                   ListTile(
-              title: MenuItem(title: TitleManager.homeTitle, route:'/'),
+              title: MenuItemWidget(title: TitleManager.homeTitle, route:'/'),
             ),
             ListTile(
-              title: MenuItem(title: TitleManager.reservationTitle,route: 'reservation'),
+              title: MenuItemWidget(title: TitleManager.reservationTitle,route: 'reservation'),
             ),
             ListTile(
-              title: MenuItem(title: TitleManager.commandTitle, route:'commande'),
+              title: MenuItemWidget(title: TitleManager.commandTitle, route:'commande'),
             ),
               ListTile(
-              title: MenuItem(title: TitleManager.livraisonTitle, route:'to_deliver'),
+              title: MenuItemWidget(title: TitleManager.livraisonTitle, route:'to_deliver'),
             ),
                ListTile(
-              title: MenuItem(title: TitleManager.moveguiTitle, route:'movegui'),
+              title: MenuItemWidget(title: TitleManager.moveguiTitle, route:'movegui'),
             ),
            
           ],
@@ -68,13 +69,13 @@ class SocialMenu extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: MenuItem(title: 'Facebook',route: 'facebook'),
+              title: MenuItemWidget(title: 'Facebook',route: 'facebook'),
               onTap: () {
                 // Handle item tap
               },
             ),
             ListTile(
-              title: MenuItem(title: 'Instagramm', route:'instagramm'),
+              title: MenuItemWidget(title: 'Instagramm', route:'instagramm'),
               onTap: () {
                 // Handle item tap
               },
@@ -108,13 +109,13 @@ class InfoMenu extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: MenuItem(title: 'Contact',route: 'contact'),
+              title: MenuItemWidget(title: 'Contact',route: 'contact'),
               onTap: () {
                 // Handle item tap
               },
             ),
             ListTile(
-              title: MenuItem(title: 'AGB', route:'agb'),
+              title: MenuItemWidget(title: 'AGB', route:'agb'),
               onTap: () {
                 // Handle item tap
               },
@@ -148,19 +149,19 @@ class UserMenu extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: MenuItem(title: 'Se Connecter',route: 'connect'),
+              title: MenuItemWidget(title: 'Se Connecter',route: 'connect'),
               onTap: () {
                 // Handle item tap
               },
             ),
             ListTile(
-              title: MenuItem(title: 'Deconnecter', route:'deconnecter'),
+              title: MenuItemWidget(title: 'Deconnecter', route:'deconnecter'),
               onTap: () {
                 // Handle item tap
               },
             ),
               ListTile(
-              title: MenuItem(title: 'Compte', route:'compte'),
+              title: MenuItemWidget(title: 'Compte', route:'compte'),
               onTap: () {
                 // Handle item tap
               },

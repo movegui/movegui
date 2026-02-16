@@ -64,10 +64,12 @@ class PressingDetailScreenState extends State<PressingDetailScreen> {
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
+          /*
           appBar: MoveguiAppBar(
             title: widget.model.name,
             itemCount: shoppingProvider.itemCount,
           ),
+          */
           drawer: MoveGuiMenu(),
           body: Padding(
             padding: const EdgeInsets.all(8.0),

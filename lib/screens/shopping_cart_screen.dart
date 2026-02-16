@@ -8,7 +8,7 @@ class ShoppingCartScreen extends StatelessWidget{
   Widget build(BuildContext context) {
     final shoppingProvider = Provider.of<ShoppingProvider>(context);
     return Scaffold(
-      appBar: MoveguiAppBar(title: 'Mes Produits', itemCount: shoppingProvider.itemCount,),
+    //  appBar: MoveguiAppBar(title: 'Mes Produits', itemCount: shoppingProvider.itemCount,),
     );
   }
   

@@ -22,7 +22,11 @@ import 'package:movegui/widgets/util/toogle_buttons.dart';
 
 class RegisterScreenMovgui extends StatefulWidget {
   static const routName = "register";
-  const RegisterScreenMovgui({super.key});
+  const RegisterScreenMovgui({super.key, required this.onTitleChange, required this.navigatorKey, required this.barCanPop, required this.observer});
+    final Function(String) onTitleChange;
+     final GlobalKey<NavigatorState> navigatorKey;
+      final ValueNotifier<bool> barCanPop;
+      final NavigatorObserver observer;
 
   @override
   State<RegisterScreenMovgui> createState() => _RegisterScreenState();
@@ -43,6 +47,7 @@ class _RegisterScreenState extends State<RegisterScreenMovgui> {
   @override
   void initState() {
     super.initState();
+    /*
     screens = [
       HomeScreen(title: 'Home'),
       ReservationScreen(title: 'Reservation'),
@@ -50,6 +55,7 @@ class _RegisterScreenState extends State<RegisterScreenMovgui> {
       DeveliveryScreen(title: 'Livraison'),
     ];
     controller = PageController();
+    */
   }
 
   Future<void> localImagePicker() async {
@@ -83,7 +89,7 @@ class _RegisterScreenState extends State<RegisterScreenMovgui> {
         });
       },
       child: Scaffold(
-        appBar: MoveguiAppBar(title: 'Enregistrement', itemCount: 0,),
+     //   appBar: MoveguiAppBar(title: 'Enregistrement', itemCount: 0, navigatorKey: widget.navigatorKey, currentScreen: -1, homeCanPop: widget.homeCanPop,),
         drawer: MoveGuiMenu(),
 
         //     body: _scaffoldBody,
@@ -105,7 +111,7 @@ class _RegisterScreenState extends State<RegisterScreenMovgui> {
                   ),
                 ),
                 */
-                RegisterPage(),
+                RegisterPage(onTitleChange: widget.onTitleChange, navigatorKey: widget.navigatorKey,observer: widget.observer, barCanPop: widget.barCanPop,),
                 //  LoginPhoneNumberPage(),
               ],
             ),
@@ -117,6 +123,12 @@ class _RegisterScreenState extends State<RegisterScreenMovgui> {
 }
 
 class RegisterPage extends StatefulWidget {
+    final Function(String) onTitleChange;
+     final GlobalKey<NavigatorState> navigatorKey;
+      final NavigatorObserver observer;
+      final ValueNotifier<bool> barCanPop;
+
+  const RegisterPage({super.key, required this.onTitleChange, required this.navigatorKey, required this.observer, required this.barCanPop});
   @override
   State<RegisterPage> createState() => RegisterPageState();
 }
@@ -148,7 +160,7 @@ class RegisterPageState extends State<RegisterPage> {
                 SizedBox(height: 8,),
                 currentLoginScreen == 0
                     ? RegisterPhonePage(onGenderChanged: (String? value) {  },)
-                    : RegisterEmailPage(onGenderChanged: (String? value) {  },),
+                    : RegisterEmailPage(onGenderChanged: (String? value) {  }, onTitleChange: widget.onTitleChange, navigatorKey: widget.navigatorKey,observer: widget.observer, homeCanPop: widget.barCanPop,),
                 //  LoginPhoneNumberPage(),
               ],
             ),

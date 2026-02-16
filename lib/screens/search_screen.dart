@@ -31,6 +31,7 @@ class _SearchScreenState extends State<SearchScreen> {
   void initState() {
     searchTextController = TextEditingController();
     super.initState();
+    /*
            screens = [
       HomeScreen(title: 'Home',),
       ReservationScreen(title: 'Reservation'),
@@ -39,6 +40,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
     ];
     controller = PageController(initialPage: currentScreen);
+    */
   }
 
   @override
@@ -55,7 +57,7 @@ class _SearchScreenState extends State<SearchScreen> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-             appBar: MoveguiAppBar(title: 'Search Products', itemCount: shoppingProvider.itemCount,),
+          //   appBar: MoveguiAppBar(title: 'Search Products', itemCount: shoppingProvider.itemCount,),
         drawer: MoveGuiMenu(),
         body: Padding(
           padding: const EdgeInsets.all(8.0),

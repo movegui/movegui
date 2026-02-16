@@ -39,6 +39,7 @@ class _RestoScreenState extends State<RestoScreen> {
 
     Future<void> initList() async {
     final allRestaurants = await restaurantsService.allModels();
+     if (!mounted) return;
     setState(() {
       restaurants = allRestaurants;
     });
@@ -58,7 +59,7 @@ Widget build(BuildContext context) {
     child: GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: MoveguiAppBar(title: restaurantConstants.getTitleName(), itemCount: shoppingProvider.itemCount),
+     //   appBar: MoveguiAppBar(title: restaurantConstants.getTitleName(), itemCount: shoppingProvider.itemCount, navigatorKey: ,),
         drawer: MoveGuiMenu(),
         body: Padding(
           padding: const EdgeInsets.all(8.0),

@@ -41,7 +41,7 @@ class _SearchScreenState extends State<RestoCategoryScreen> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-             appBar: MoveguiAppBar(title: 'Search Category', itemCount: shoppingProvider.itemCount,),
+       //      appBar: MoveguiAppBar(title: 'Search Category', itemCount: shoppingProvider.itemCount,),
         drawer: MoveGuiMenu(),
         body: Padding(
           padding: const EdgeInsets.all(8.0),

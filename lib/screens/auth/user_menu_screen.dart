@@ -1,7 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:movegui/consts/app_colors.dart';
+import 'package:movegui/widgets/menu/menu_item_widget.dart';
 import 'package:movegui/widgets/menu/menuitem.dart';
 
 class UserMenuScreen extends StatelessWidget {
+  final GlobalKey<NavigatorState> navigatorKey;
+  final Function(String) onTitleChange;
+  final NavigatorObserver observer;
+  final ValueNotifier<bool> barCanPop;
+
+  const UserMenuScreen({
+    super.key,
+    required this.navigatorKey,
+    required this.onTitleChange,
+    required this.observer,
+    required this.barCanPop,
+  });
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<MenuItem>(
@@ -12,34 +26,22 @@ class UserMenuScreen extends StatelessWidget {
         color: Color(0xFFFFFFFF),
       ), //use this icon
       onSelected: (MenuItem item) {
-        Navigator.pushNamed(context, item.route);
-        /*
-              setState(() {
-                    Navigator.pushNamed(context, item.route);
-              });
-              */
+        navigatorKey.currentState?.pushNamed(item.route);
       },
-      color: Color(0xFFFFFFFF),
+      color: AppColors.textColor,
+      style: ButtonStyle(
+        overlayColor: WidgetStateProperty.all(AppColors.selectionColor),
+      ),
       itemBuilder:
           (BuildContext context) => <PopupMenuEntry<MenuItem>>[
             const PopupMenuItem<MenuItem>(
-              value: MenuItem(title: 'Login', route: 'login'),
-              child: MenuItem(title: 'Login', route: 'login'),
+              value: MenuItem(title: 'Login', route: '/login'),
+              child: MenuItemWidget(title: 'Login', route: '/login'),
             ),
             const PopupMenuItem<MenuItem>(
-              value: MenuItem(title: 'Enregistrer', route: 'enregistrer'),
-              child: MenuItem(title: 'Enregistrer', route: 'enregistrer'),
+              value: MenuItem(title: 'Enregistrer', route: '/register'),
+              child: MenuItemWidget(title: 'Enregistrer', route: '/register'),
             ),
-            /*
-                  const PopupMenuItem<MenuItem>(
-                    value: MenuItem(title: '3title3', route: 'route'),
-                    child: Text('Item 3'),
-                  ),
-                  const PopupMenuItem<MenuItem>(
-                    value: MenuItem(title: 'title4', route: 'route'),
-                    child: Text('Item 4'),
-                  ),
-                  */
           ],
     );
   }

@@ -43,6 +43,7 @@ class CategoriesScreenState extends State<CategoriesScreen>{
     // restaurantsService = getIt<RestaurantsService>();
       initList();
     super.initState();
+    /*
            screens = [
       HomeScreen(title: 'Home',),
       ReservationScreen(title: 'Reservation'),
@@ -51,6 +52,7 @@ class CategoriesScreenState extends State<CategoriesScreen>{
 
     ];
     controller = PageController(initialPage: currentScreen);
+    */
   }
 
     Future<void> initList() async {
