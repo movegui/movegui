@@ -14,7 +14,8 @@ import 'package:provider/provider.dart';
 
 
 class RestoScreen extends StatefulWidget {
-  const RestoScreen({super.key});
+  const RestoScreen({super.key, required this.navigatorKey});
+    final GlobalKey<NavigatorState> navigatorKey;
 
   @override
   State<RestoScreen> createState() => _RestoScreenState();
@@ -60,7 +61,7 @@ Widget build(BuildContext context) {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
      //   appBar: MoveguiAppBar(title: restaurantConstants.getTitleName(), itemCount: shoppingProvider.itemCount, navigatorKey: ,),
-        drawer: MoveGuiMenu(),
+        drawer: MoveGuiMenu(navigatorKey: widget.navigatorKey,),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -90,7 +91,7 @@ Widget build(BuildContext context) {
                   mainAxisSpacing: 12,
                   crossAxisSpacing: 12,
                   builder: (context, index) {
-                    return StoreWidget(model: restaurants[index], catgory: AppConstants.CATEGORY_RESTAURANT,);
+                    return StoreWidget(model: restaurants[index], catgory: AppConstants.CATEGORY_RESTAURANT, navigatorKey: widget.navigatorKey,);
                   },
                 ),
               ),

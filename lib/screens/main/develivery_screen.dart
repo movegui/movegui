@@ -4,8 +4,9 @@ import 'package:movegui/screens/categories/resto_screen.dart';
 import 'package:movegui/services/title_manager.dart';
 
 class DeveliveryScreen extends StatefulWidget{
-  const DeveliveryScreen({super.key, required this.onTitleChange,});
+  const DeveliveryScreen({super.key, required this.onTitleChange, required this.navigatorKey,});
       final Function(String) onTitleChange;
+        final GlobalKey<NavigatorState> navigatorKey;
 
 
   
@@ -25,7 +26,7 @@ class DeveliveryScreenState extends State<DeveliveryScreen> {
  
    @override
   Widget build(Object context) {
-    return RestoScreen();
+    return RestoScreen(navigatorKey: widget.navigatorKey,);
   }
 
 }

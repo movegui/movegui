@@ -8,7 +8,8 @@ import 'package:movegui/widgets/store/store_item_widget.dart';
 class StoreWidget extends StatelessWidget{
   final StoreModel model;
   final int catgory;
-  const StoreWidget({super.key, required this.model, required this.catgory});
+    final GlobalKey<NavigatorState> navigatorKey;
+  const StoreWidget({super.key, required this.model, required this.catgory, required this.navigatorKey});
 
 
 
@@ -21,7 +22,7 @@ class StoreWidget extends StatelessWidget{
       child: SingleChildScrollView(child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-              StoreItem(model: this.model, category: catgory,),
+              StoreItem(model: this.model, category: catgory, navigatorKey: navigatorKey,),
                 /*
                 RestoItem(
                   title: 'Resto2',

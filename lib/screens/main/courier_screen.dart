@@ -4,8 +4,9 @@ import 'package:movegui/screens/categories/categories_screen.dart';
 import 'package:movegui/services/title_manager.dart';
 
 class CourierScreen extends StatefulWidget {
-  const CourierScreen({super.key, required this.onTitleChange});
+  const CourierScreen({super.key, required this.onTitleChange, required this.navigatorKey});
   final Function(String) onTitleChange;
+    final GlobalKey<NavigatorState> navigatorKey;
 
   @override
   State<StatefulWidget> createState() => CourierScreenState();
@@ -24,6 +25,6 @@ class CourierScreenState extends State<CourierScreen> {
 
   @override
   Widget build(Object context) {
-    return CategoriesScreen(categoryType: AppConstants.COURSES_CATEGORY);
+    return CategoriesScreen(categoryType: AppConstants.COURSES_CATEGORY, navigatorKey: widget.navigatorKey,);
   }
 }

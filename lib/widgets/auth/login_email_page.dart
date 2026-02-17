@@ -13,13 +13,19 @@ import 'package:movegui/widgets/auth/google_btn.dart';
 import 'package:movegui/widgets/subtitle_text.dart';
 
 class LoginEmailPage extends StatefulWidget {
-  const LoginEmailPage({super.key, required this.onTitleChange, required this.navigatorKey, required this.observer, required this.homeCanPop,});
+  const LoginEmailPage({
+    super.key,
+    required this.onTitleChange,
+    required this.navigatorKey,
+  //  required this.observer,
+  //  required this.homeCanPop,
+  });
 
-    final Function(String) onTitleChange;
-     final GlobalKey<NavigatorState> navigatorKey;
-     final NavigatorObserver observer;
-      final ValueNotifier<bool> homeCanPop;
-    
+  final Function(String) onTitleChange;
+  final GlobalKey<NavigatorState> navigatorKey;
+ // final NavigatorObserver observer;
+ // final ValueNotifier<bool> homeCanPop;
+
   @override
   State<StatefulWidget> createState() => LoginEmailPageState();
 }
@@ -61,32 +67,41 @@ class LoginEmailPageState extends State<LoginEmailPage> {
   }
 
   Future<void> _loginFct() async {
-     final isValid = _formkey.currentState!.validate();
+    final isValid = _formkey.currentState!.validate();
     FocusScope.of(context).unfocus();
-    
-    if(isValid){
-      try{
+
+    if (isValid) {
+      try {
         setState(() {
           isloading = true;
         });
-       await auth?.signInWithEmailAndPassword(email: _emailController.text.trim(), password: _passwordController.text.trim());
-       Fluttertoast.showToast(
-        msg: "An account has be created",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
-    );
-    Navigator.pushReplacement(context, 
-          MaterialPageRoute(builder: (context) => HomeScreen(onTitleChange: widget.onTitleChange,)));
-      }catch(error){
+        await auth?.signInWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        );
+        Fluttertoast.showToast(
+          msg: "An account has be created",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder:
+                (context) => HomeScreen(onTitleChange: widget.onTitleChange, navigatorKey: widget.navigatorKey,),
+          ),
+        );
+      } catch (error) {
         MyAppFunctions.showErrorOrWarningDialog(
           context: context,
           subtitle: error.toString(),
-          fct: (){});
-      }finally{
+          fct: () {},
+        );
+      } finally {
         isloading = false;
       }
     }
@@ -166,11 +181,10 @@ class LoginEmailPageState extends State<LoginEmailPage> {
                         (_) => setState(() => _isHoveringForgetText = false),
                     child: TextButton(
                       onPressed: () {
-                            Navigator.push(
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder:
-                                (context) => ForgotPasswordScreen()
+                            builder: (context) => ForgotPasswordScreen(),
                           ),
                         );
                       },
@@ -279,7 +293,9 @@ class LoginEmailPageState extends State<LoginEmailPage> {
                           context,
                           MaterialPageRoute(
                             builder:
-                                (context) => Text('hallo') //RegisterScreenMovgui(onTitleChange: widget.onTitleChange, navigatorKey: widget.navigatorKey, homeCanPop: widget.homeCanPop, observer: widget.observer,)
+                                (context) => Text(
+                                  'hallo',
+                                ), //RegisterScreenMovgui(onTitleChange: widget.onTitleChange, navigatorKey: widget.navigatorKey, homeCanPop: widget.homeCanPop, observer: widget.observer,)
                           ),
                         );
                       },

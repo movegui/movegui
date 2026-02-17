@@ -4,17 +4,19 @@ class MenuItemWidget extends StatelessWidget {
   const MenuItemWidget({ super.key,
     required this.title,
     //required this.subtitle
-    required this.route,
+    required this.route, required this.navigatorKey,
    });
    final String title;
    final String route;
+  final GlobalKey<NavigatorState> navigatorKey;
    
 
    @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(route);
+       // Navigator.of(context).pushNamed(route);
+       navigatorKey.currentState?.pushNamed(this.route);
       },
        child: Card(
         color: Color(0xFF871A1C),

@@ -21,6 +21,9 @@ import 'package:movegui/widgets/store/store_widget.dart';
 import 'package:provider/provider.dart';
 
 class PatisserieScreen extends StatefulWidget {
+    final GlobalKey<NavigatorState> navigatorKey;
+
+  const PatisserieScreen({super.key, required this.navigatorKey});
 
 
   @override
@@ -68,7 +71,7 @@ Widget build(BuildContext context) {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
        // appBar: MoveguiAppBar(title: patisserieConstants.getTitleName(), itemCount: shoppingProvider.itemCount),
-        drawer: MoveGuiMenu(),
+        drawer: MoveGuiMenu(navigatorKey: widget.navigatorKey,),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -98,7 +101,7 @@ Widget build(BuildContext context) {
                   mainAxisSpacing: 12,
                   crossAxisSpacing: 12,
                   builder: (context, index) {
-                    return StoreWidget(model: patisseries[index], catgory: AppConstants.CATEGORY_PATISSERIE,);
+                    return StoreWidget(model: patisseries[index], catgory: AppConstants.CATEGORY_PATISSERIE, navigatorKey: widget.navigatorKey,);
                   },
                 ),
               ),

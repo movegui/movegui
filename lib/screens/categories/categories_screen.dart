@@ -16,7 +16,8 @@ import 'package:movegui/widgets/category/categories_widget.dart';
 class CategoriesScreen extends StatefulWidget{
 
   final int categoryType;
-  CategoriesScreen({super.key, required this.categoryType});
+    final GlobalKey<NavigatorState> navigatorKey;
+  CategoriesScreen({super.key, required this.categoryType, required this.navigatorKey});
   
   @override
   State<StatefulWidget> createState() => CategoriesScreenState();
@@ -124,7 +125,7 @@ class CategoriesScreenState extends State<CategoriesScreen>{
                     mainAxisSpacing: 12,
                     crossAxisSpacing: 12,
                     builder: (context, index) {
-                      return CategoriesWidget(model: models[index],);
+                      return CategoriesWidget(model: models[index], navigatorKey: widget.navigatorKey,);
                     },
                     itemCount: models.length,
                     crossAxisCount: 1),

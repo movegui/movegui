@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:movegui/observers/home_nav_observer.dart';
 import 'package:movegui/providers/shopping_provider.dart';
+import 'package:movegui/screens/auth/login_screen.dart';
+import 'package:movegui/screens/auth/register_screen.dart';
 import 'package:movegui/screens/main/command_screen.dart';
 import 'package:movegui/screens/main/develivery_screen.dart';
 import 'package:movegui/screens/main/home_screen.dart';
@@ -65,7 +67,7 @@ class _RootScreenState extends State<RootScreen> {
           updateTitle(value);
         },
       ),
-      drawer: MoveGuiMenu(),
+      drawer: MoveGuiMenu(navigatorKey: homeNavigatorKey,),
       body: IndexedStack(
         index: currentScreen,
         children: [
@@ -102,7 +104,7 @@ class _RootScreenState extends State<RootScreen> {
                 updateTitle(value);
               },
               navigatorKey: homeNavigatorKey,
-              routeObserver: homeRouteObserver,
+             // routeObserver: homeRouteObserver,
             );
             break;
           case '/home/movegui':
@@ -117,7 +119,7 @@ class _RootScreenState extends State<RootScreen> {
             page = Commandscreen(
               onTitleChange: (value) {
                 updateTitle(value);
-              },
+              }, navigatorKey: commandNavigatorKey,
             );
             break;
           case '/delivery':
@@ -125,15 +127,23 @@ class _RootScreenState extends State<RootScreen> {
               onTitleChange: (value) {
                 updateTitle(value);
               },
+              navigatorKey: deliveryNavigatorKey,
             );
             break;
           case '/courses':
             page = CourierScreen(
               onTitleChange: (value) {
                 updateTitle(value);
-              },
+              }, navigatorKey: courrierNavigatorKey,
             );
             break;
+
+            case '/login':
+              page = LoginScreen(onTitleChange: (value){updateTitle(value);}, navigatorKey: homeNavigatorKey,);
+              break;
+
+            case 'register':
+              page = RegisterScreenMovgui(onTitleChange: (value){updateTitle(value);}, navigatorKey: homeNavigatorKey,);
 
           default:
             page = HomeScreen(
@@ -141,7 +151,7 @@ class _RootScreenState extends State<RootScreen> {
                 updateTitle(value);
               },
               navigatorKey: homeNavigatorKey,
-              routeObserver: homeRouteObserver,
+            //  routeObserver: homeRouteObserver,
             );
         }
         return MaterialPageRoute(builder: (_) => page, settings: settings);
@@ -158,7 +168,7 @@ class _RootScreenState extends State<RootScreen> {
               (_) => Commandscreen(
                 onTitleChange: (value) {
                   updateTitle(value);
-                },
+                }, navigatorKey: commandNavigatorKey,
               ),
         );
       },
@@ -171,7 +181,7 @@ class _RootScreenState extends State<RootScreen> {
       onGenerateRoute: (settings) {
         return MaterialPageRoute(builder: (_) => DeveliveryScreen( onTitleChange: (value) {
                   updateTitle(value);
-                },));
+                }, navigatorKey: deliveryNavigatorKey,));
       },
     );
   }
@@ -182,7 +192,7 @@ class _RootScreenState extends State<RootScreen> {
       onGenerateRoute: (settings) {
         return MaterialPageRoute(builder: (_) => CourierScreen( onTitleChange: (value) {
                   updateTitle(value);
-                },));
+                }, navigatorKey: courrierNavigatorKey,));
       },
     );
   }

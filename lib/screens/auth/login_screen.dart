@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:movegui/widgets/app/app_image.dart';
 import 'package:movegui/widgets/auth/login_email_page.dart';
@@ -8,11 +7,17 @@ import 'package:movegui/widgets/menu/menu.dart';
 import 'package:movegui/widgets/util/toogle_buttons.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key, required this.onTitleChange, required this.navigatorKey, required this.observer, required this.barCanPop});
-    final Function(String) onTitleChange;
-    final GlobalKey<NavigatorState> navigatorKey;
-    final NavigatorObserver observer;
-    final ValueNotifier<bool> barCanPop;
+  const LoginScreen({
+    super.key,
+    required this.onTitleChange,
+    required this.navigatorKey,
+  //  required this.observer,
+ //   required this.homeCanPop,
+  });
+  final Function(String) onTitleChange;
+  final GlobalKey<NavigatorState> navigatorKey;
+ // final NavigatorObserver observer;
+ // final ValueNotifier<bool> homeCanPop;
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -47,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
         });
       },
       child: Scaffold(
-        drawer: MoveGuiMenu(),
+        drawer: MoveGuiMenu(navigatorKey: widget.navigatorKey,),
         body: Padding(
           padding: const EdgeInsets.all(0.0),
           child: SingleChildScrollView(
@@ -57,7 +62,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 ToggleButtonExample(onStateChanged: updateState),
                 currentLoginScreen == 0
                     ? LoginPhoneNumberPage()
-                    : LoginEmailPage(onTitleChange: widget.onTitleChange, navigatorKey: widget.navigatorKey, observer: widget.observer, homeCanPop: widget.barCanPop,),            
+                    : LoginEmailPage(
+                      onTitleChange: widget.onTitleChange,
+                      navigatorKey: widget.navigatorKey,
+                   //   observer: widget.observer,
+                   //   homeCanPop: widget.barCanPop,
+                    ),
               ],
             ),
           ),
@@ -66,7 +76,3 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-
-
-
-

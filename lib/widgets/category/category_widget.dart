@@ -4,13 +4,14 @@ import 'package:movegui/services/assets_manager.dart';
 import 'package:movegui/widgets/category/category_item_widget.dart';
 
 class CategoryWidget extends StatelessWidget{
-  const CategoryWidget({super.key});
+  const CategoryWidget({super.key, required this.navigatorKey});
+    final GlobalKey<NavigatorState> navigatorKey;
 
   void _onPressedImage(BuildContext context, String routeName, String title) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ProductScreen()));
+                      builder: (context) => ProductScreen(navigatorKey: navigatorKey,)));
   }
 
   @override

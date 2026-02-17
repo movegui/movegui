@@ -13,12 +13,12 @@ class HomeScreen extends StatefulWidget {
     super.key,
     required this.onTitleChange,
     required this.navigatorKey,
-    required this.routeObserver,
+   // required this.routeObserver,
   });
   final Function(String) onTitleChange;
   final GlobalKey<NavigatorState> navigatorKey;
   final bool isHorizontal = false;
-  final RouteObserver<ModalRoute<void>> routeObserver;
+ // final RouteObserver<ModalRoute<void>> routeObserver;
 
 
   
@@ -37,6 +37,7 @@ class HomescreenState extends State<HomeScreen> with RouteAware{
   }
 
 
+/*
     @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -48,6 +49,7 @@ class HomescreenState extends State<HomeScreen> with RouteAware{
     widget.routeObserver.unsubscribe(this);
     super.dispose();
   }
+  */
 
   // Called when this screen is visible again (after popping back)
   @override

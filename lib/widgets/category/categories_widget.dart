@@ -4,7 +4,8 @@ import 'package:movegui/widgets/category/categories_item_widget.dart';
 
 class CategoriesWidget extends StatelessWidget{
   final CategoriesModel model;
-  const CategoriesWidget({super.key, required this.model});
+  const CategoriesWidget({super.key, required this.model, required this.navigatorKey});
+    final GlobalKey<NavigatorState> navigatorKey;
 
   /*
 
@@ -25,7 +26,7 @@ class CategoriesWidget extends StatelessWidget{
       child: SingleChildScrollView(child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-              CategoriesItemWidget(model: this.model,),
+              CategoriesItemWidget(model: this.model, navigatorKey: navigatorKey,),
                 /*
                 RestoItem(
                   title: 'Resto2',

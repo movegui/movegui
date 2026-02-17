@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movegui/consts/app_colors.dart';
+import 'package:movegui/screens/auth/user_menu_screen.dart';
 
 class MoveguiAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MoveguiAppBar({
@@ -101,14 +102,14 @@ class MoveguiAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ],
         ),
-        /*
+        
         UserMenuScreen(
           navigatorKey: navigatorKey,
           onTitleChange: onTitleChange,
-          observer: observer,
+        //  observer: observer,
           barCanPop: homeCanPop,
         ),
-        */
+        
       ],
     );
   }

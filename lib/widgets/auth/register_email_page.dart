@@ -18,8 +18,8 @@ class RegisterEmailPage extends StatefulWidget {
   final String? selectedGender;
   final Function(String) onTitleChange;
   final GlobalKey<NavigatorState> navigatorKey;
-  final NavigatorObserver observer;
-  final ValueNotifier<bool> homeCanPop;
+ // final NavigatorObserver observer;
+ // final ValueNotifier<bool> homeCanPop;
 
   const RegisterEmailPage({
     super.key,
@@ -28,8 +28,8 @@ class RegisterEmailPage extends StatefulWidget {
     this.selectedGender,
     required this.onTitleChange,
     required this.navigatorKey,
-    required this.observer,
-    required this.homeCanPop,
+  //  required this.observer,
+  //  required this.homeCanPop,
   });
 
   @override
@@ -120,7 +120,7 @@ class RegisterEmailPageState extends State<RegisterEmailPage> {
           MaterialPageRoute(
             builder:
                 (context) => HomeScreen(
-                  onTitleChange: widget.onTitleChange,
+                  onTitleChange: widget.onTitleChange, navigatorKey: widget.navigatorKey,
                   //navigatorKey: widget.navigatorKey,
                  // observer: widget.observer, homeCanPop: widget.homeCanPop,
                 ),

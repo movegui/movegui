@@ -10,7 +10,8 @@ import 'package:movegui/widgets/title_text.dart';
 import 'package:provider/provider.dart';
 
 class RestoCategoryScreen extends StatefulWidget {
-  const RestoCategoryScreen({super.key});
+  const RestoCategoryScreen({super.key, required this.navigatorKey});
+    final GlobalKey<NavigatorState> navigatorKey;
 
   @override
   State<RestoCategoryScreen> createState() => _SearchScreenState();
@@ -42,7 +43,7 @@ class _SearchScreenState extends State<RestoCategoryScreen> {
       },
       child: Scaffold(
        //      appBar: MoveguiAppBar(title: 'Search Category', itemCount: shoppingProvider.itemCount,),
-        drawer: MoveGuiMenu(),
+        drawer: MoveGuiMenu(navigatorKey: widget.navigatorKey,),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -83,7 +84,7 @@ class _SearchScreenState extends State<RestoCategoryScreen> {
                     mainAxisSpacing: 12,
                     crossAxisSpacing: 12,
                     builder: (context, index) {
-                      return const CategoryWidget();
+                      return CategoryWidget(navigatorKey: widget.navigatorKey,);
                     },
                     itemCount: 3,
                     crossAxisCount: 1),

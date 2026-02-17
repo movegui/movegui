@@ -9,7 +9,8 @@ import 'package:movegui/widgets/title_text.dart';
 import 'package:provider/provider.dart';
 
 class ProductScreen extends StatefulWidget {
-  const ProductScreen({super.key});
+    final GlobalKey<NavigatorState> navigatorKey;
+  const ProductScreen({super.key, required this.navigatorKey});
 
   @override
   State<ProductScreen> createState() => _SearchScreenState();
@@ -41,7 +42,7 @@ class _SearchScreenState extends State<ProductScreen> {
       },
       child: Scaffold(
          //    appBar: MoveguiAppBar(title: 'Search Products', itemCount: shoppingProvider.itemCount,),
-        drawer: MoveGuiMenu(),
+        drawer: MoveGuiMenu(navigatorKey: widget.navigatorKey,),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(

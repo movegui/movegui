@@ -11,7 +11,7 @@ import 'package:movegui/screens/categories/supplier_screen.dart';
 class CategoriesItemWidget extends StatelessWidget//extends MoveguiWidgetImage 
 {
   final CategoriesModel model;
-    CategoriesItemWidget({super.key, required this.model});
+    CategoriesItemWidget({super.key, required this.model, required this.navigatorKey});
   final restaurantConstants = RestaurantConstants();
   final patisserieConstants = PatisserieConstants();
   final superMarktConstants = SuperMarktConstants();
@@ -19,6 +19,7 @@ class CategoriesItemWidget extends StatelessWidget//extends MoveguiWidgetImage
   final pressingConstants = PressingConstants();
   final gazMarktConstants = GazMarktConstants();
   final miniMarktConstants = MiniMarktConstants();
+    final GlobalKey<NavigatorState> navigatorKey;
 
 
 @override
@@ -31,35 +32,35 @@ Widget build(BuildContext context) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => RestoScreen(),
+          builder: (context) => RestoScreen(navigatorKey: navigatorKey,),
         ),
       ),
     } else if(model.name == patisserieConstants.getTitleName()){
             Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => PatisserieScreen(),
+          builder: (context) => PatisserieScreen(navigatorKey: navigatorKey,),
         ),
       ),
     }else if(model.name == superMarktConstants.getTitleName()){
                   Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SuperMarktScreen(),
+          builder: (context) => SuperMarktScreen(navigatorKey: navigatorKey,),
         ),
       ),
     }else if(model.name == supplierConstants.getTitleName()){
                   Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SupplierScreen(),
+          builder: (context) => SupplierScreen(navigatorKey: navigatorKey,),
         ),
       ),
     }else if(model.name == pressingConstants.getTitleName()){
                   Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => PressingScreen(),
+          builder: (context) => PressingScreen(navigatorKey: navigatorKey,),
         ),
       ),
     }

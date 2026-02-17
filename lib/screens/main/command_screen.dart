@@ -7,7 +7,8 @@ import 'package:movegui/services/title_manager.dart';
 
 class Commandscreen extends StatefulWidget {
     final Function(String) onTitleChange;
-  const Commandscreen({super.key, required this.onTitleChange,});
+      final GlobalKey<NavigatorState> navigatorKey;
+  const Commandscreen({super.key, required this.onTitleChange, required this.navigatorKey,});
 
   @override
   State<StatefulWidget> createState() => CommandScreenState();
@@ -28,6 +29,6 @@ class CommandScreenState extends State<Commandscreen>  {
   @override
   Widget build(Object context) {
    // return RestoScreen();
-   return CategoriesScreen(categoryType: AppConstants.COMMAND_CATEGORY,);
+   return CategoriesScreen(categoryType: AppConstants.COMMAND_CATEGORY, navigatorKey: widget.navigatorKey,);
   }
 }

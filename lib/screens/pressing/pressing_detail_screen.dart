@@ -16,8 +16,9 @@ import 'package:provider/provider.dart';
 
 class PressingDetailScreen extends StatefulWidget {
   final PressingModel model;
+    final GlobalKey<NavigatorState> navigatorKey;
 
-  const PressingDetailScreen({super.key, required this.model});
+  const PressingDetailScreen({super.key, required this.model, required this.navigatorKey});
   @override
   State<StatefulWidget> createState() => PressingDetailScreenState();
 }
@@ -70,7 +71,7 @@ class PressingDetailScreenState extends State<PressingDetailScreen> {
             itemCount: shoppingProvider.itemCount,
           ),
           */
-          drawer: MoveGuiMenu(),
+          drawer: MoveGuiMenu(navigatorKey: widget.navigatorKey,),
           body: Padding(
             padding: const EdgeInsets.all(8.0),
             child: SingleChildScrollView(

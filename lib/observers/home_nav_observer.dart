@@ -19,7 +19,6 @@ class HomeNavObserver extends NavigatorObserver {
   void didPop(Route route, Route? previousRoute) {
     _update();
     super.didPop(route, previousRoute);
-    print('i pop');
   }
 
   @override
