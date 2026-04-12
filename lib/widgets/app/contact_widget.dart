@@ -1,19 +1,18 @@
+import 'package:another_flushbar/flushbar.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/validator.dart';
+import 'package:movegui/l10n/app_localizations.dart';
+import 'package:movegui/models/cleaning_model.dart';
+import 'package:movegui/services/message_service.dart';
+import 'package:movegui/widgets/error/message_widget.dart';
 
 class ContactWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ContactScreen();
-    /*
-    MaterialApp(
-      title: 'Formulaire de Contact MoveGui',
-      debugShowCheckedModeBanner: false,
-      home: ReclamationScreen(),
-    );
-    */
   }
 }
 
@@ -55,28 +54,57 @@ class _ContactScreenState extends State<ContactScreen> {
     super.initState();
   }
 
-  void _envoyerReclamation() {
+  Future<void> _envoyerReclamation() async {
     if (_formKey.currentState!.validate()) {
       final message = _reclamationController.text;
+      final firstanme = _vorNameController.text;
+      final lastname = _nameController.text;
+      final phone = _telefonController.text;
+      final email = _emailController.text;
+      final subject = 'Contact $firstanme $lastname';
+      try {
+        HttpsCallableResult result = await sendMessage(
+          firstanme,
+          lastname,
+          email,
+          phone,
+          subject,
+          message,
+        );
+        print(result.data);
+      } catch (e) {
+        MessageWidget.errorMessage(
+          context,
+          AppLocalizations.of(context)!.error_send_mail_title,
+          AppLocalizations.of(context)!.error_send_mail_message,
+          Icon(Icons.error, color: AppColors.error),
+          FlushbarPosition.TOP,
+        );
+      }
 
-      // Ici vous pouvez envoyer la réclamation à votre serveur ou la traiter comme souhaité
       showDialog(
         context: context,
         builder:
             (_) => AlertDialog(
-              title: Text('Réclamation envoyée'),
-              content: Text('Merci pour votre message :\n\n$message'),
+              title: Text(
+                AppLocalizations.of(context)!.success_send_message_title,
+              ),
+              content: Text(
+                AppLocalizations.of(context)!.success_send_message_message,
+              ),
               actions: [
                 TextButton(
-                  child: Text('Fermer'),
+                  child: Text(AppLocalizations.of(context)!.btn_close_label),
                   onPressed: () => Navigator.of(context).pop(),
                 ),
               ],
             ),
       );
-
-      // Réinitialise le champ après envoi
       _reclamationController.clear();
+      _vorNameController.clear();
+      _nameController.clear();
+      _emailController.clear();
+      _telefonController.clear();
     }
   }
 
@@ -92,34 +120,28 @@ class _ContactScreenState extends State<ContactScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return
-    /*
-    Scaffold(
-
-      appBar: AppBar(
-        title: Text('Formulaire de Réclamation'),
-        backgroundColor: Colors.blueAccent,
-      ),
-      body: 
-      */
-    Padding(
-      padding: const EdgeInsets.all(20.0),
+    return Padding(
+      padding: const EdgeInsets.only(left: 40.0, right: 40.0, bottom: 16.0),
       child: Form(
         key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Formulaire de Contact:', 
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 28, color: Color(0xFF871A1C))),
+            Center(
+              child: Text(
+                AppLocalizations.of(context)!.form_contact_title,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 28, color: Color(0xFF871A1C)),
+              ),
+            ),
             TextFormField(
               controller: _nameController,
               focusNode: _nameFocusNode,
               textInputAction: TextInputAction.next,
               keyboardType: TextInputType.name,
-              decoration: const InputDecoration(
-                hintText: 'Nom:',
-                prefixIcon: Icon(Icons.person),
+              decoration: InputDecoration(
+                hintText: AppLocalizations.of(context)!.input_hint_name,
+                prefixIcon: const Icon(Icons.person),
               ),
               onFieldSubmitted: (value) {
                 FocusScope.of(context).requestFocus(_vorNameFocusNode);
@@ -134,8 +156,8 @@ class _ContactScreenState extends State<ContactScreen> {
               focusNode: _vorNameFocusNode,
               textInputAction: TextInputAction.next,
               keyboardType: TextInputType.name,
-              decoration: const InputDecoration(
-                hintText: 'Prenom:',
+              decoration: InputDecoration(
+                hintText: AppLocalizations.of(context)!.input_hint_prenom,
                 prefixIcon: Icon(Icons.person),
               ),
               onFieldSubmitted: (value) {
@@ -147,31 +169,31 @@ class _ContactScreenState extends State<ContactScreen> {
             ),
             const SizedBox(height: 16.0),
 
-             TextFormField(
-            controller: _emailController,
-            focusNode: _emailFocusNode,
-            textInputAction: TextInputAction.next,
-            keyboardType: TextInputType.emailAddress,
-            decoration: const InputDecoration(
-              hintText: "Addresse Email",
-              prefixIcon: Icon(IconlyLight.message),
+            TextFormField(
+              controller: _emailController,
+              focusNode: _emailFocusNode,
+              textInputAction: TextInputAction.next,
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(
+                hintText: AppLocalizations.of(context)!.input_hint_adress_email,
+                prefixIcon: Icon(IconlyLight.message),
+              ),
+              onFieldSubmitted: (value) {
+                FocusScope.of(context).requestFocus(_telefonFocusNode);
+              },
+              validator: (value) {
+                return MyValidators.emailValidator(value);
+              },
             ),
-            onFieldSubmitted: (value) {
-              FocusScope.of(context).requestFocus(_telefonFocusNode);
-            },
-            validator: (value) {
-              return MyValidators.emailValidator(value);
-            },
-          ),
 
-           const SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             TextFormField(
               controller: _telefonController,
               focusNode: _telefonFocusNode,
               textInputAction: TextInputAction.next,
               keyboardType: TextInputType.name,
-              decoration: const InputDecoration(
-                hintText: 'Telephone:',
+              decoration: InputDecoration(
+                hintText: AppLocalizations.of(context)!.company_label_phone,
                 prefixIcon: Icon(Icons.phone),
               ),
               onFieldSubmitted: (value) {
@@ -188,12 +210,12 @@ class _ContactScreenState extends State<ContactScreen> {
               controller: _reclamationController,
               maxLines: 6,
               decoration: InputDecoration(
-                hintText: 'Votre message...',
+                hintText: AppLocalizations.of(context)!.input_hint_message,
                 border: OutlineInputBorder(),
               ),
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Veuillez entrer votre message.';
+                  return AppLocalizations.of(context)!.error_input_hint_message;
                 }
                 return null;
               },
@@ -202,7 +224,10 @@ class _ContactScreenState extends State<ContactScreen> {
             Center(
               child: ElevatedButton.icon(
                 icon: Icon(Icons.send),
-                label: Text('Envoyer', style: TextStyle(color: AppColors.textColor),),
+                label: Text(
+                  AppLocalizations.of(context)!.btn_send_label,
+                  style: TextStyle(color: AppColors.textColor, fontSize: 24),
+                ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.backgroundColor,
                   iconColor: AppColors.textColor,

@@ -1,10 +1,9 @@
 
 import 'package:flutter/material.dart';
-import 'package:movegui/screens/main/home_screen.dart';
 import 'package:movegui/widgets/home/home_image_widget.dart';
 
-class CategoryItem extends ImageWidget {
-  const CategoryItem({super.key, required super.title, required super.imagePath, required super.action, required super.routeName,});
+class CategoryItemWidget extends ImageWidget {
+  const CategoryItemWidget({super.key, required super.title, required super.imagePath, required super.action, required super.routeName,});
 
  
   @override

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/widgets/auth/google_btn.dart';
 import 'package:movegui/widgets/subtitle_text.dart';

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:movegui/providers/shopping_provider.dart';
-import 'package:movegui/widgets/app/appbar.dart';
 import 'package:provider/provider.dart';
 
 class ShoppingCartScreen extends StatelessWidget{

@@ -58,7 +58,8 @@ class MyValidators {
     return null;
   }
     static String? textValidator(String? value){
-    if(value!.isEmpty) {
+      if(value == null) return null;
+    if(value.isEmpty) {
       return 'Vewuillez saisir la Categorie svp';
     }
     return null;

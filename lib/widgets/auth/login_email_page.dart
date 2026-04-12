@@ -8,7 +8,6 @@ import 'package:movegui/screens/auth/forgot_password.dart';
 import 'package:movegui/screens/auth/register_screen.dart';
 import 'package:movegui/screens/main/home_screen.dart';
 import 'package:movegui/services/my_app_functions.dart';
-import 'package:movegui/services/title_manager.dart';
 import 'package:movegui/widgets/auth/google_btn.dart';
 import 'package:movegui/widgets/subtitle_text.dart';
 
@@ -293,9 +292,7 @@ class LoginEmailPageState extends State<LoginEmailPage> {
                           context,
                           MaterialPageRoute(
                             builder:
-                                (context) => Text(
-                                  'hallo',
-                                ), //RegisterScreenMovgui(onTitleChange: widget.onTitleChange, navigatorKey: widget.navigatorKey, homeCanPop: widget.homeCanPop, observer: widget.observer,)
+                                (context) => RegisterScreenMovgui(onTitleChange: widget.onTitleChange, navigatorKey: widget.navigatorKey,),
                           ),
                         );
                       },

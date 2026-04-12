@@ -7,7 +7,6 @@ import 'package:movegui/models/pressing_model.dart';
 import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/services/pressing_service.dart';
 import 'package:movegui/services/register_services.dart';
-import 'package:movegui/widgets/app/appbar.dart';
 import 'package:movegui/widgets/custom_text_field.dart';
 import 'package:movegui/widgets/menu/menu.dart';
 import 'package:movegui/widgets/pressing/pressing_price_list.dart';

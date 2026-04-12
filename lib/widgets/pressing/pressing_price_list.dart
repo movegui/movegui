@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter/material.dart';
 import 'package:movegui/consts/app_colors.dart';
 
 class PressingPriceList extends StatefulWidget {

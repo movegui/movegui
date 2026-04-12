@@ -1,0 +1,53 @@
+{
+    "search": "Rechercher",
+    "@search": {
+        "description": "Text pour le Button de recherche"
+    },
+    "company_adresse_label": "Adresse",
+    "@company_adresse_label": {
+        "description": "Le label adresse"
+    },
+    "company_label_phone": "Téléphone",
+    "@company_label_phone": {
+        "description": "le label de telephone"
+    },
+    "company_label_email": "Email",
+    "@company_label_email": {
+        "description": "le label Email"
+    },
+    "success_send_message_title": "Message envoyée",
+    "@success_send_message_title": {},
+    "success_send_message_message": "Merci pour votre message",
+    "@success_send_message_message": {},
+    "error_send_mail_title": "Erreur d'Authentification",
+    "@error_send_mail_title": {},
+    "error_send_mail_message": "Vous devez être enregistrer pour utilisé cette fonctionnalité",
+    "@error_send_mail_message": {},
+    "error_input_hint_message": "Veuillez entrer votre message.",
+    "@error_input_hint_message": {},
+    "btn_close_label": "Fermer",
+    "@btn_close_label": {},
+    "btn_send_label": "Envoyer",
+    "@btn_send_label": {},
+     "form_contact_title":"Formulaire de Contact:",
+    "@form_contact_title": {},
+    "input_hint_name": "Nom",
+    "@input_hint_name": {},
+    "input_hint_prenom": "Prénom",
+    "@input_hint_prenom": {},
+    "input_hint_adress_email": "Adresse Email",
+    "@input_hint_adress_email": {},
+    "input_hint_message": "Votre Message...",
+    "@input_hint_message": {},
+    "movegui_info_title":"MoveGui – Livraison & Transport à Moto en Guinée",
+    "@movegui_info_title": {},
+    "movegui_info_text_1":"MoveGui est une entreprise innovante spécialisée dans la livraison de nourriture et le transport à moto en Guinée.Notre mission est de rendre la livraison plus accessible, plus transparente et plus économique pour tous.",
+    "@movegui_info_text_1": {},
+    "movegui_info_text_2": "Nous proposons un tarif fixe pour chaque course, quelle que soit la distance, garantissant une transparence totale pour nos clients.Plus de surprises sur le prix, juste un service rapide, fiable et simple.",
+    "@movegui_info_text_2": {},
+    "movegui_info_text_3": "Grâce à nos partenariats avec des restaurants locaux, nous offrons des livraisons à moindre coût tout en soutenant l’économie locale.MoveGui, c’est la fusion parfaite entre technologie, accessibilité et efficacité.",
+    "@movegui_info_text_3": {}
+
+
+
+}

@@ -1,5 +1,4 @@
-import 'package:movegui/models/store_model.dart';
-
+/*
 class CleaningModel extends StoreModel {
   CleaningModel({
     required super.id,
@@ -7,7 +6,7 @@ class CleaningModel extends StoreModel {
     required super.createdAt,
     required super.description,
     required super.adresse,
-    required super.contact,
+    required super.contacts,
     required super.email,
     required super.imageUrl,
     required super.telephon,
@@ -25,6 +24,7 @@ class CleaningModel extends StoreModel {
     adresse: json['adresse'],
     email: json['email'],
     telephon: json['telephon'],
-    contact: json['contact'],
+    contacts: json['contact'],
   );
 }
+*/

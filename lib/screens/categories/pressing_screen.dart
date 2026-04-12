@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:movegui/consts/app_constants.dart';
 import 'package:movegui/models/pressing_model.dart';
 import 'package:movegui/providers/shopping_provider.dart';
+import 'package:movegui/responsive.dart';
 import 'package:movegui/services/pressing_service.dart';
 import 'package:movegui/services/register_services.dart';
-import 'package:movegui/widgets/app/appbar.dart';
 import 'package:movegui/widgets/menu/menu.dart';
 import 'package:movegui/widgets/store/store_widget.dart';
 import 'package:provider/provider.dart';
@@ -64,7 +64,23 @@ Widget build(BuildContext context) {
         drawer: MoveGuiMenu(navigatorKey: widget.navigatorKey,),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
+          child: Responsive.isDesktop(context) ? buildDesktop() : buildMobil() 
+        ),
+        /*
+        bottomNavigationBar:RootBottomNavigationBar(
+        currentIndex: 1,
+        onDestinationSelected: (index) {
+          Navigator.pop(context, index);
+        },
+      ),
+      */
+      ),
+    ),
+  );
+}
+
+  Widget buildMobil(){
+    return Column(
             children: [
               const SizedBox(height: 15),
         
@@ -96,21 +112,26 @@ Widget build(BuildContext context) {
                 ),
               ),
             ],
-          ),
-        ),
-        /*
-        bottomNavigationBar:RootBottomNavigationBar(
-        currentIndex: 1,
-        onDestinationSelected: (index) {
-          Navigator.pop(context, index);
-        },
-      ),
-      */
-      ),
-    ),
-  );
-}
+          );
+  }
 
-  
+  Widget buildDesktop(){
+   return Column(
+            children: [
+              const SizedBox(height: 15),
+              Expanded(
+                child: DynamicHeightGridView(
+                  itemCount: pressings.length,
+                  crossAxisCount: 3,
+                  mainAxisSpacing: 12,
+                  crossAxisSpacing: 12,
+                  builder: (context, index) {
+                    return StoreWidget(model: pressings[index], catgory: AppConstants.CATEGORY_PRESSING, navigatorKey: widget.navigatorKey,);
+                  },
+                ),
+              ),
+            ],
+          );
+  }
   
 }

@@ -21,31 +21,31 @@ class CategoryWidget extends StatelessWidget{
       child: SingleChildScrollView(child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-              CategoryItem(
+              CategoryItemWidget(
                   title: 'Pizza',
                   routeName: '',
                   imagePath: AssetsManager.category1Image,
                   action: _onPressedImage,
                 ),
-                CategoryItem(
+                CategoryItemWidget(
                   title: 'Fast Food',
                   routeName: '',
                   imagePath: AssetsManager.category2Image,
                   action: _onPressedImage,
                 ),
-                CategoryItem(
+                CategoryItemWidget(
                   title: 'Sandwisch',
                   routeName: '',
                   imagePath: AssetsManager.category3Image,
                   action: _onPressedImage,
                 ),
-                CategoryItem(
+                CategoryItemWidget(
                   title: 'Vegan',
                   routeName: '',
                   imagePath: AssetsManager.category4Image,
                   action: _onPressedImage,
                 ),
-                CategoryItem(
+                CategoryItemWidget(
                   title: 'BBQ',
                   routeName: '',
                   imagePath: AssetsManager.category5Image,

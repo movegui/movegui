@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/validator.dart';
 
@@ -70,7 +69,7 @@ class _GenderAndBirthdatePickerState extends State<GenderPicker> {
                 widget.onGenderChanged.call(value!);
               },
               validator: (value) {
-                MyValidators.textValidator(value);
+                return MyValidators.textValidator(value);
               },
             ),
 

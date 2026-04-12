@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:movegui/consts/app_colors.dart';
+import 'package:movegui/responsive.dart';
 import 'package:movegui/services/my_app_functions.dart';
 import 'package:movegui/widgets/app/app_image.dart';
 import 'package:movegui/widgets/auth/register_email_page.dart';
@@ -58,6 +60,12 @@ class _RegisterScreenState extends State<RegisterScreenMovgui> {
     );
   }
 
+  void updateState(int state) {
+    setState(() {
+      currentLoginScreen = state;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -69,78 +77,68 @@ class _RegisterScreenState extends State<RegisterScreenMovgui> {
         });
       },
       child: Scaffold(
-        drawer: MoveGuiMenu(navigatorKey: widget.navigatorKey,),
-        body: Padding(
+     //   appBar: Responsive.isDesktop(context) ? MenuBarWeb() : null,
+        drawer: MoveGuiMenu(navigatorKey: widget.navigatorKey),
+        body: Responsive.isDesktop(context) ? buildDesktop() : buildMobil(),
+      ),
+    );
+  }
+
+  Widget buildMobil(){
+    return  Padding(
           padding: const EdgeInsets.all(0.0),
           child: SingleChildScrollView(
             child: Column(
               children: [
-                RegisterPage(
-                  onTitleChange: widget.onTitleChange,
-                  navigatorKey: widget.navigatorKey,
-                //  observer: widget.observer,
-                //  barCanPop: widget.barCanPop,
-                ),
+                AppImage(),
+                ToggleButtonExample(onStateChanged: updateState),
+                SizedBox(height: 8),
+                currentLoginScreen == 0
+                    ? RegisterPhonePage(onGenderChanged: (String? value) {})
+                    : RegisterEmailPage(
+                      onGenderChanged: (String? value) {},
+                      onTitleChange: widget.onTitleChange,
+                      navigatorKey: widget.navigatorKey,
+                    ),
               ],
             ),
           ),
+        );
+
+  }
+
+  Widget buildDesktop(){
+    return  Center(
+      child: Container(
+        width: 500,
+     //   height: 500,
+        decoration: BoxDecoration(
+          color: AppColors.textColor, // background color
+          border: Border.all(
+            color: AppColors.backgroundColor, // border color
+            width: 10,
+          ),
+          borderRadius: BorderRadius.circular(15), // optional rounded corners
+        ),
+        child: Column(
+          mainAxisAlignment:
+              MainAxisAlignment.center, // center content vertically
+          crossAxisAlignment: CrossAxisAlignment.center, // center horizontally
+          children: [
+                AppImage(),
+                ToggleButtonExample(onStateChanged: updateState),
+                SizedBox(height: 8),
+                currentLoginScreen == 0
+                    ? RegisterPhonePage(onGenderChanged: (String? value) {})
+                    : RegisterEmailPage(
+                      onGenderChanged: (String? value) {},
+                      onTitleChange: widget.onTitleChange,
+                      navigatorKey: widget.navigatorKey,
+                    ),
+              ],
         ),
       ),
     );
-  }
-}
 
-class RegisterPage extends StatefulWidget {
-  final Function(String) onTitleChange;
-  final GlobalKey<NavigatorState> navigatorKey;
- // final NavigatorObserver observer;
- // final ValueNotifier<bool> barCanPop;
-
-  const RegisterPage({
-    super.key,
-    required this.onTitleChange,
-    required this.navigatorKey,
-  //  required this.observer,
-  //  required this.barCanPop,
-  });
-  @override
-  State<RegisterPage> createState() => RegisterPageState();
-}
-
-class RegisterPageState extends State<RegisterPage> {
-  int currentLoginScreen = 0;
-  void updateState(int state) {
-    setState(() {
-      currentLoginScreen = state;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        setState(() {
-          print("je suis la dans ");
-        });
-      },
-      child: Column(
-        children: [
-          AppImage(),
-          ToggleButtonExample(onStateChanged: updateState),
-          SizedBox(height: 8),
-          currentLoginScreen == 0
-              ? RegisterPhonePage(onGenderChanged: (String? value) {})
-              : RegisterEmailPage(
-                onGenderChanged: (String? value) {},
-                onTitleChange: widget.onTitleChange,
-                navigatorKey: widget.navigatorKey,
-            //    observer: widget.observer,
-            //    homeCanPop: widget.barCanPop,
-              ),
-          //  LoginPhoneNumberPage(),
-        ],
-      ),
-    );
   }
 }

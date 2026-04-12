@@ -27,11 +27,11 @@ class _ToggleButtonExampleState extends State<ToggleButtonExample> {
             });
            
           },
-           color: Colors.black, // text color when unselected
+           color: Colors.grey, // text color when unselected
           selectedColor: AppColors.textColor, // text color when selected
-          fillColor: AppColors.validColor, // background color when selected
-          borderColor: Colors.grey,
-          selectedBorderColor: AppColors.textColor,
+         // fillColor: AppColors.selectionColor, // background color when selected
+         // borderColor: Colors.grey,
+        //  selectedBorderColor: AppColors.textColor,
                 children: <Widget>[
                     MovguiToggleButton(title: "Telephone", iconData: Icons.phone,),
                     MovguiToggleButton(title: "E-Mail", iconData: Icons.email,)
@@ -52,7 +52,7 @@ class MovguiToggleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return                        Container(
                     padding: const EdgeInsets.all(8.0),
-                //    color: AppColors.backgroundColor,
+                    color: AppColors.backgroundColor,
                     child: Row(
                      mainAxisAlignment: MainAxisAlignment.center,                   
                       children: [                               

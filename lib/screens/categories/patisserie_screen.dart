@@ -1,21 +1,13 @@
 
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:movegui/consts/app_constants.dart';
 import 'package:movegui/models/patisserie_model.dart';
-import 'package:movegui/models/restaurant_model.dart';
 import 'package:movegui/providers/shopping_provider.dart';
-import 'package:movegui/screens/main/command_screen.dart';
-import 'package:movegui/screens/main/develivery_screen.dart';
-import 'package:movegui/screens/main/home_screen.dart';
-import 'package:movegui/screens/main/reservation_screen.dart';
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
+import 'package:movegui/responsive.dart';
 import 'package:movegui/services/patisseries_service.dart';
 import 'package:movegui/services/register_services.dart';
-import 'package:movegui/services/restaurants_service.dart';
-import 'package:movegui/widgets/app/appbar.dart';
-import 'package:movegui/widgets/app/root_bottom_navigation_bar.dart';
 import 'package:movegui/widgets/menu/menu.dart';
 import 'package:movegui/widgets/store/store_widget.dart';
 import 'package:provider/provider.dart';
@@ -74,7 +66,23 @@ Widget build(BuildContext context) {
         drawer: MoveGuiMenu(navigatorKey: widget.navigatorKey,),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
+          child: Responsive.isDesktop(context) ? buildDestop() : buildMobil()
+        ),
+        /*
+        bottomNavigationBar:RootBottomNavigationBar(
+        currentIndex: 1,
+        onDestinationSelected: (index) {
+          Navigator.pop(context, index);
+        },
+      ),
+      */
+      ),
+    ),
+  );
+}
+
+Widget buildMobil(){
+ return  Column(
             children: [
               const SizedBox(height: 15),
         
@@ -106,19 +114,26 @@ Widget build(BuildContext context) {
                 ),
               ),
             ],
-          ),
-        ),
-        /*
-        bottomNavigationBar:RootBottomNavigationBar(
-        currentIndex: 1,
-        onDestinationSelected: (index) {
-          Navigator.pop(context, index);
-        },
-      ),
-      */
-      ),
-    ),
-  );
+          );
+}
+
+Widget buildDestop(){
+ return Column(
+            children: [
+              const SizedBox(height: 15),      
+              Expanded(
+                child: DynamicHeightGridView(
+                  itemCount: patisseries.length,
+                  crossAxisCount: 3,
+                  mainAxisSpacing: 12,
+                  crossAxisSpacing: 12,
+                  builder: (context, index) {
+                    return StoreWidget(model: patisseries[index], catgory: AppConstants.CATEGORY_PATISSERIE, navigatorKey: widget.navigatorKey,);
+                  },
+                ),
+              ),
+            ],
+          );
 }
 
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/validator.dart';
 import 'package:movegui/widgets/auth/button_validation_widget.dart';
 import 'package:movegui/widgets/person/birthdate_picker.dart';

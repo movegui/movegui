@@ -2,10 +2,6 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:movegui/models/categories_model.dart';
-import 'package:movegui/screens/main/command_screen.dart';
-import 'package:movegui/screens/main/develivery_screen.dart';
-import 'package:movegui/screens/main/home_screen.dart';
-import 'package:movegui/screens/main/reservation_screen.dart';
 import 'package:movegui/services/categories_service.dart';
 import 'package:movegui/services/register_services.dart';
 import 'package:movegui/widgets/category/categories_widget.dart';

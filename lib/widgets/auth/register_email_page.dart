@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/screens/main/home_screen.dart';
 import 'package:movegui/services/my_app_functions.dart';
 import 'package:movegui/widgets/auth/button_validation_widget.dart';
@@ -98,6 +96,7 @@ class RegisterEmailPageState extends State<RegisterEmailPage> {
   Future<void> _registerFCT() async {
     final isValid = _formkey.currentState!.validate();
     FocusScope.of(context).unfocus();
+    
 
     if (isValid) {
       try {
@@ -185,7 +184,7 @@ class RegisterEmailPageState extends State<RegisterEmailPage> {
           ),
 
           const SizedBox(height: 18.0),
-          ButtonValidationWidget(title: 'Enregistrer', onPress: _registerFCT),
+          ButtonValidationWidget(title: 'Enregistrer', onPress:  _registerFCT),
           SizedBox(height: 16),
           OtherRegistrationWidget(),
 

@@ -8,10 +8,13 @@ class TextWidget extends StatelessWidget {
     this.textSize = 16,
     this.maxLines = 10,
     this.isTitle = false,
+    required this.height
   }) : super(key: key);
   final String text;
   final Color color;
   final double textSize;
+  final double? height;
+  final TextAlign textAlign;
   bool isTitle;
   int maxLines = 10;
   @override
@@ -24,6 +27,8 @@ class TextWidget extends StatelessWidget {
           color: color,
           overflow: TextOverflow.ellipsis,
           fontWeight: isTitle ? FontWeight.w600 : FontWeight.w400),
+          height: this.height,
+          textAlign: this.textAlign
     );
   }
 }

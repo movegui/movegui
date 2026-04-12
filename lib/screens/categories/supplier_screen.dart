@@ -6,7 +6,6 @@ import 'package:movegui/models/supplier_model.dart';
 import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/services/register_services.dart';
 import 'package:movegui/services/suppliers_service.dart';
-import 'package:movegui/widgets/app/appbar.dart';
 import 'package:movegui/widgets/menu/menu.dart';
 import 'package:movegui/widgets/store/store_widget.dart';
 import 'package:provider/provider.dart';

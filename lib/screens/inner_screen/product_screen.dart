@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:movegui/providers/shopping_provider.dart';
-import 'package:movegui/widgets/app/appbar.dart';
 import 'package:movegui/widgets/menu/menu.dart';
 import 'package:movegui/widgets/products/product_widget.dart';
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';

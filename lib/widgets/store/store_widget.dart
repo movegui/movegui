@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movegui/models/model.dart';
-import 'package:movegui/models/restaurant_model.dart';
 import 'package:movegui/models/store_model.dart';
-import 'package:movegui/screens/restos/resto_category_screnn.dart';
 import 'package:movegui/widgets/store/store_item_widget.dart';
 
 class StoreWidget extends StatelessWidget{

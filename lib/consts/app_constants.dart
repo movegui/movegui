@@ -1,3 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:movegui/widgets/category/category_item.dart';
+import 'package:movegui/widgets/web/tab_item.dart';
+
 import '../services/assets_manager.dart';
 
 class AppConstants {
@@ -8,6 +12,15 @@ class AppConstants {
     AssetsManager.banner1,
     AssetsManager.banner2,
   ];
+
+  static const name = "MoveGui";
+  static const Adresse = "Ratoma";
+  /*
+  static const search = "Rechercher";
+  static const LABEL_ADRESS = "Adresse";
+  static const LABEL_PHONE = "Telephone";
+  static const LABEL_EMAIL = "Email";
+  */
 
   // [url=https://ibb.co/JM0KMG0][img]https://i.ibb.co/JM0KMG0/riz-gras.jpg[/img][/url]
 
@@ -28,9 +41,81 @@ class AppConstants {
   static const int CATEGORY_SUPERMARKT = 4;
   static const int CATEGORY_SUPPLIER = 5;
   static const int CATEGORY_PRESSING = 6;
+
+  static const String COURSES_CATEGORY_NAME = "Courses";
+  static const String CATEGORY_RESTAURANT_NAME = "Restaurant";
+  static const String CATEGORY_PATISSERIE_NAME = "Patisserie";
+  static const String CATEGORY_SUPERMARKT_NAME = "Super Marché";
+  static const String CATEGORY_SUPPLIER_NAME = "Fournisseur";
+  static const String CATEGORY_PRESSING_NAME = "Pressing";
+  static const String CATEGORY_DISCOVERY_NAME = "Discovery";
+  static const String CATEGORY_BOULANGERIE_NAME = "Boulangerie";
+  static const String CATEGORY_PHARMACY_NAME = "Pharmacie";
+  static const String CATEGORY_BEAUTY_NAME = "Beauté & Soins";
+
+  static List<TabItem> menuTabs = [
+    TabItem(
+      title: CATEGORY_DISCOVERY_NAME,
+      icon: Icons.explore,
+      routeName: '/home',
+    ),
+    TabItem(
+      title: CATEGORY_PRESSING_NAME,
+      icon: Icons.cleaning_services,
+      routeName: '/pressing',
+    ),
+    TabItem(
+      title: CATEGORY_RESTAURANT_NAME,
+      icon: Icons.restaurant,
+      routeName: '/restaurant',
+    ),
+    /*
+    TabItem(
+      title: COURSES_CATEGORY_NAME,
+      icon: Icons.delivery_dining,
+      routeName: '/courses',
+    ),
+    */
+    TabItem(
+      title: CATEGORY_PATISSERIE_NAME,
+      icon: Icons.store,
+      routeName: '/pastry',
+    ),
+  ];
+
+  static List<CategoryItem> categoriesItems = [
+    CategoryItem(
+      name: CATEGORY_RESTAURANT_NAME,
+      imageUrl: AssetsManager.resto1Image,
+      routeName: '/restaurant',
+    ),
+    CategoryItem(
+      name: CATEGORY_PATISSERIE_NAME,
+      imageUrl: AssetsManager.category1Image,
+      routeName: '/pastry',
+    ),
+    CategoryItem(
+      name: CATEGORY_PRESSING_NAME,
+      imageUrl: AssetsManager.pressing1Image,
+      routeName: '/pressing',
+    ),
+    CategoryItem(
+      name: CATEGORY_SUPERMARKT_NAME,
+      imageUrl: AssetsManager.category2Image,
+      routeName: '/super_markt',
+    ),
+    CategoryItem(
+      name: CATEGORY_PHARMACY_NAME,
+      imageUrl: AssetsManager.category3Image,
+      routeName: '/pharmacy',
+    ),
+    CategoryItem(
+      name: CATEGORY_BEAUTY_NAME,
+      imageUrl: AssetsManager.category4Image,
+      routeName: '/beauty',
+    ),
+  ];
 }
-
-
 
 abstract class StoreConstants extends ImageConstatnt {
   String getNameLabelText();
@@ -51,7 +136,7 @@ abstract class StoreConstants extends ImageConstatnt {
 }
 
 abstract class CoursesConstants {
-    String getTitleName();
+  String getTitleName();
 }
 
 class ImageConstatnt {
@@ -134,7 +219,7 @@ class RestaurantConstants extends StoreConstants {
   String getTitleName() {
     return "Restaurant";
   }
-  
+
   @override
   String getCustomerAdressHinterText() {
     // TODO: implement getCustomerAdressHinterText
@@ -212,7 +297,7 @@ class ProfessionConstants extends StoreConstants {
   String getTitleName() {
     return "Profession";
   }
-  
+
   @override
   String getCustomerAdressHinterText() {
     // TODO: implement getCustomerAdressHinterText
@@ -290,7 +375,7 @@ class PatisserieConstants extends StoreConstants {
   String getTitleName() {
     return "Patisserie";
   }
-  
+
   @override
   String getCustomerAdressHinterText() {
     // TODO: implement getCustomerAdressHinterText
@@ -368,10 +453,10 @@ class PressingConstants extends StoreConstants {
   String getTitleName() {
     return "Pressing";
   }
-  
+
   @override
   String getCustomerAdressHinterText() {
-     return 'Veuillez saisir l\'adresse de livraison';
+    return 'Veuillez saisir l\'adresse de livraison';
   }
 }
 
@@ -445,7 +530,7 @@ class SuperMarktConstants extends StoreConstants {
   String getTitleName() {
     return "Super Marché";
   }
-  
+
   @override
   String getCustomerAdressHinterText() {
     // TODO: implement getCustomerAdressHinterText
@@ -523,7 +608,7 @@ class SupplierConstants extends StoreConstants {
   String getTitleName() {
     return "Fournisseur";
   }
-  
+
   @override
   String getCustomerAdressHinterText() {
     // TODO: implement getCustomerAdressHinterText
@@ -567,22 +652,25 @@ class StoreCategoriesConstants extends CategoriesConstants {
 }
 
 class MiniMarktConstants extends CoursesConstants {
-
   @override
   String getTitleName() {
-   return "Marchés";
+    return "Marchés";
   }
-  
 }
 
 class GazMarktConstants extends CoursesConstants {
-
   @override
   String getTitleName() {
     return "Gaz";
   }
-  
-
 }
 
+class LoginConstatnts {
+  String getLoginTitle() {
+    return "Connectez-vous";
+  }
 
+  String getRegisterTitle() {
+    return "Enregistrez-vous";
+  }
+}

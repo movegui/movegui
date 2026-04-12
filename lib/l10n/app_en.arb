@@ -1,0 +1,50 @@
+{
+    "search": "Search",
+    "@search": {
+        "description": "Text for search Button"
+    },
+    "company_adresse_label": "Adress",
+    "@company_adresse_label": {
+        "description": "the adress label"
+    },
+    "company_label_phone": "Phone",
+    "@company_label_phone": {
+        "description": "the phone label"
+    },
+    "company_label_email": "Email",
+    "@company_label_email": {
+        "description": "the Email label"
+    },
+    "success_send_message_title": "Message send",
+    "@success_send_message_title": {},
+    "success_send_message_message": "Thank you for your message",
+    "@success_send_message_message": {},
+    "error_send_mail_title": "Authentication Error",
+    "@error_send_mail_title": {},
+    "error_send_mail_message": "You must sign before using this functionnality",
+    "@error_send_mail_message": {},
+    "error_input_hint_message": "Please write your message.",
+    "@error_input_hint_message": {},
+    "btn_close_label": "Close",
+    "@btn_close_label": {},
+    "btn_send_label": "Send",
+    "@btn_send_label": {},
+    "form_contact_title":"Contact Form:",
+    "@form_contact_title": {},
+     "input_hint_name": "Firstname",
+    "@input_hint_name": {},
+    "input_hint_prenom": "Lastname",
+    "@input_hint_prenom": {},
+    "input_hint_adress_email": "Email Adress",
+    "@input_hint_adress_email": {},
+    "input_hint_message": "Your Message...",
+    "@input_hint_message": {},
+     "movegui_info_title":"MoveGui – Motorcycle Delivery & Transport in Guinea",
+    "@movegui_info_title": {},
+    "movegui_info_text_1":"MoveGui is an innovative company specialising in food delivery and motorcycle transport in Guinea.Our mission is to make delivery more accessible, more transparent and more affordable for everyone.",
+    "@movegui_info_text_1": {},
+    "movegui_info_text_2": "We offer a fixed price for every journey, regardless of the distance, ensuring complete transparency for our customers.No more price surprises – just a fast, reliable and straightforward service..",
+    "@movegui_info_text_2": {},
+    "movegui_info_text_3": "Thanks to our partnerships with local restaurants, we offer low-cost deliveries whilst supporting the local economy.MoveGui is the perfect blend of technology, accessibility and efficiency.",
+    "@movegui_info_text_3": {}
+}
