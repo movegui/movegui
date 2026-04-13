@@ -67,4 +67,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get movegui_info_text_3 => 'Grâce à nos partenariats avec des restaurants locaux, nous offrons des livraisons à moindre coût tout en soutenant l’économie locale.MoveGui, c’est la fusion parfaite entre technologie, accessibilité et efficacité.';
+
+  @override
+  String get deactivate_button_title => 'Service Indisponible';
+
+  @override
+  String get deactivate_button_message => 'Service indisponible pour le moment';
+
+  @override
+  String get deactivate_button_attach_message => 'Bientôt disponible';
 }

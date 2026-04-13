@@ -1,23 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:movegui/l10n/app_localizations.dart';
 
 class ImageWidget extends StatelessWidget {
   const ImageWidget({
     super.key,
     required this.title,
     required this.imagePath,
-    required this.action, required this.routeName,
+    required this.action,
+    required this.routeName,
+    required this.enabled,
   });
   final String title;
   final String imagePath;
-  final Function(BuildContext context, String routeName, String title) action;
+  final Function(
+    BuildContext context,
+    String routeName,
+    String title,
+    bool enabled,
+  )
+  action;
   final String routeName;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(6),
       child: ElevatedButton(
-        onPressed: () => action(context, routeName, title),
+        onPressed: () => action(context, routeName, title, enabled),
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(),
           padding: EdgeInsets.all(1),
@@ -65,6 +75,15 @@ class ImageWidget extends StatelessWidget {
                 ],
               ),
             ),
+
+            if (!enabled)
+              Padding(
+                padding: const EdgeInsets.only(top: 6),
+                child: Text(
+                   AppLocalizations.of(context)!.deactivate_button_attach_message,
+                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+              ),
           ],
         ),
       ),

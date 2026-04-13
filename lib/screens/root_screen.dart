@@ -1,6 +1,9 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/app_constants.dart';
+import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/observers/home_nav_observer.dart';
 import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/responsive.dart';
@@ -20,14 +23,14 @@ import 'package:movegui/widgets/app/app_footer.dart';
 import 'package:movegui/widgets/app/app_footer_web.dart';
 import 'package:movegui/widgets/app/appbar.dart';
 import 'package:movegui/widgets/category/category_item_widget.dart';
+import 'package:movegui/widgets/error/message_widget.dart';
 import 'package:movegui/widgets/menu/menu.dart';
 import 'package:movegui/widgets/util/tab_button.dart';
 import 'package:movegui/widgets/web/menu_bar_web.dart';
 import 'package:provider/provider.dart';
 
 class RootScreen extends StatefulWidget {
-
-  RootScreen({super.key,});
+  RootScreen({super.key});
 
   @override
   State<RootScreen> createState() => _RootScreenState();
@@ -51,8 +54,7 @@ class _RootScreenState extends State<RootScreen> {
       GlobalKey<NavigatorState>();
   final RouteObserver<ModalRoute<void>> homeRouteObserver =
       RouteObserver<ModalRoute<void>>();
-      final GlobalKey<NavigatorState> webNavigatorKey =
-    GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> webNavigatorKey = GlobalKey<NavigatorState>();
 
   @override
   void initState() {
@@ -86,13 +88,10 @@ class _RootScreenState extends State<RootScreen> {
       drawer: MoveGuiMenu(navigatorKey: homeNavigatorKey),
       body:
           Responsive.isDesktop(context)
-              ?   
-              SafeArea(
-                child: 
-                
-                 Column(
+              ? SafeArea(
+                child: Column(
                   children: [
-                   // _buildWebNavigator(),
+                    // _buildWebNavigator(),
                     _buildTabs(),
                     const SizedBox(height: 20),
                     _buildCategories(),
@@ -100,8 +99,7 @@ class _RootScreenState extends State<RootScreen> {
                     // Expanded(child: _buildPromoSlider()),
                   ],
                 ),
-                
-              )            
+              )
               : IndexedStack(
                 index: currentScreen,
                 children: [
@@ -259,73 +257,62 @@ class _RootScreenState extends State<RootScreen> {
     );
   }
 
-Widget _buildWebNavigator() {
-  return Navigator(
-    key: webNavigatorKey,
-    initialRoute: '/',
-    onGenerateRoute: (settings) {
-      Widget page;
+  Widget _buildWebNavigator() {
+    return Navigator(
+      key: webNavigatorKey,
+      initialRoute: '/',
+      onGenerateRoute: (settings) {
+        Widget page;
 
-      switch (settings.name) {
-        case '/':
-          page = Column(
-            children: [
-              _buildTabs(),
-              const SizedBox(height: 20),
-              _buildCategories(),
-            ],
-          );
-          break;
+        switch (settings.name) {
+          case '/':
+            page = Column(
+              children: [
+                _buildTabs(),
+                const SizedBox(height: 20),
+                _buildCategories(),
+              ],
+            );
+            break;
 
-        case '/login':
-          page = LoginScreen(
-            onTitleChange: (_) {},
-            navigatorKey: webNavigatorKey,
-          );
-          break;
+          case '/login':
+            page = LoginScreen(
+              onTitleChange: (_) {},
+              navigatorKey: webNavigatorKey,
+            );
+            break;
 
-        case '/register':
-          page = RegisterScreenMovgui(
-            onTitleChange: (_) {},
-            navigatorKey: webNavigatorKey,
-          );
-          break;
+          case '/register':
+            page = RegisterScreenMovgui(
+              onTitleChange: (_) {},
+              navigatorKey: webNavigatorKey,
+            );
+            break;
 
-        case '/restaurant':
-          page = RestoScreen(
-            navigatorKey: webNavigatorKey,
-          );
-          break;
+          case '/restaurant':
+            page = RestoScreen(navigatorKey: webNavigatorKey);
+            break;
 
-        case '/pressing':
-          page = PressingScreen(
-            navigatorKey: webNavigatorKey,
-          );
-          break;
+          case '/pressing':
+            page = PressingScreen(navigatorKey: webNavigatorKey);
+            break;
 
-        case '/pastry':
-          page = PatisserieScreen(
-            navigatorKey: webNavigatorKey,
-          );
-          break;
+          case '/pastry':
+            page = PatisserieScreen(navigatorKey: webNavigatorKey);
+            break;
 
-        case '/super_markt':
-          page = SuperMarktScreen(
-            navigatorKey: webNavigatorKey,
-          );
-          break;
+          case '/super_markt':
+            page = SuperMarktScreen(navigatorKey: webNavigatorKey);
+            break;
 
-        default:
-          page = Container();
-      }
+          default:
+            page = Container();
+        }
 
-      return MaterialPageRoute(
-        builder: (_) => page,
-        settings: settings,
-      );
-    },
-  );
-}
+        return MaterialPageRoute(builder: (_) => page, settings: settings);
+      },
+    );
+  }
 
   /*
   showUserMenu(BuildContext context) async {
@@ -372,9 +359,9 @@ Widget _buildWebNavigator() {
               onTap: () {
                 setState(() {
                   selectedTabIndex = index;
-                    Navigator.pushNamed(context, tab.routeName);
-                });           
-             //   webNavigatorKey.currentState!.pushNamed(tab.routeName);
+                  Navigator.pushNamed(context, tab.routeName);
+                });
+                //   webNavigatorKey.currentState!.pushNamed(tab.routeName);
               },
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -393,8 +380,22 @@ Widget _buildWebNavigator() {
     );
   }
 
-  void _onPressedImage(BuildContext context, String routeName, String title) {
-    Navigator.pushNamed(context, routeName);
+  void _onPressedImage(
+    BuildContext context,
+    String routeName,
+    String title,
+    bool enabled,
+  ) {
+    if (enabled)
+      Navigator.pushNamed(context, routeName);
+    else
+      MessageWidget.errorMessage(
+        context,
+        AppLocalizations.of(context)!.deactivate_button_title,
+        AppLocalizations.of(context)!.deactivate_button_message,
+        Icon(Icons.error, color: AppColors.error),
+        FlushbarPosition.TOP,
+      );
   }
 
   Widget _buildCategories() {
@@ -408,6 +409,7 @@ Widget _buildWebNavigator() {
             imagePath: AppConstants.categoriesItems[index].imageUrl,
             action: _onPressedImage,
             routeName: AppConstants.categoriesItems[index].routeName,
+            enabled: AppConstants.categoriesItems[index].enabled,
           );
         },
         itemCount: AppConstants.categoriesItems.length,

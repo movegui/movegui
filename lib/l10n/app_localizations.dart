@@ -214,6 +214,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Thanks to our partnerships with local restaurants, we offer low-cost deliveries whilst supporting the local economy.MoveGui is the perfect blend of technology, accessibility and efficiency.'**
   String get movegui_info_text_3;
+
+  /// No description provided for @deactivate_button_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Service Unavailable '**
+  String get deactivate_button_title;
+
+  /// No description provided for @deactivate_button_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Service currently unavailable'**
+  String get deactivate_button_message;
+
+  /// No description provided for @deactivate_button_attach_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming soon'**
+  String get deactivate_button_attach_message;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

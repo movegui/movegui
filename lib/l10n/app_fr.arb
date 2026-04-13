@@ -46,7 +46,13 @@
     "movegui_info_text_2": "Nous proposons un tarif fixe pour chaque course, quelle que soit la distance, garantissant une transparence totale pour nos clients.Plus de surprises sur le prix, juste un service rapide, fiable et simple.",
     "@movegui_info_text_2": {},
     "movegui_info_text_3": "Grâce à nos partenariats avec des restaurants locaux, nous offrons des livraisons à moindre coût tout en soutenant l’économie locale.MoveGui, c’est la fusion parfaite entre technologie, accessibilité et efficacité.",
-    "@movegui_info_text_3": {}
+    "@movegui_info_text_3": {},
+    "deactivate_button_title": "Service Indisponible",
+    "@deactivate_button_title": {},
+    "deactivate_button_message": "Service indisponible pour le moment",
+    "@deactivate_button_message": {},
+    "deactivate_button_attach_message": "Bientôt disponible",
+    "@deactivate_button_attach_message": {}
 
 
 

@@ -67,4 +67,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get movegui_info_text_3 => 'Thanks to our partnerships with local restaurants, we offer low-cost deliveries whilst supporting the local economy.MoveGui is the perfect blend of technology, accessibility and efficiency.';
+
+  @override
+  String get deactivate_button_title => 'Service Unavailable ';
+
+  @override
+  String get deactivate_button_message => 'Service currently unavailable';
+
+  @override
+  String get deactivate_button_attach_message => 'Coming soon';
 }

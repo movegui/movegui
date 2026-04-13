@@ -88,31 +88,38 @@ class AppConstants {
       name: CATEGORY_RESTAURANT_NAME,
       imageUrl: AssetsManager.resto1Image,
       routeName: '/restaurant',
+      enabled: false,
     ),
     CategoryItem(
       name: CATEGORY_PATISSERIE_NAME,
       imageUrl: AssetsManager.category1Image,
       routeName: '/pastry',
+      enabled: false,
     ),
     CategoryItem(
       name: CATEGORY_PRESSING_NAME,
       imageUrl: AssetsManager.pressing1Image,
       routeName: '/pressing',
+      enabled: true,
+
     ),
     CategoryItem(
       name: CATEGORY_SUPERMARKT_NAME,
       imageUrl: AssetsManager.category2Image,
       routeName: '/super_markt',
+      enabled: false,
     ),
     CategoryItem(
       name: CATEGORY_PHARMACY_NAME,
       imageUrl: AssetsManager.category3Image,
       routeName: '/pharmacy',
+      enabled: false,
     ),
     CategoryItem(
       name: CATEGORY_BEAUTY_NAME,
       imageUrl: AssetsManager.category4Image,
       routeName: '/beauty',
+      enabled: false,
     ),
   ];
 }

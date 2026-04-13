@@ -46,5 +46,11 @@
     "movegui_info_text_2": "We offer a fixed price for every journey, regardless of the distance, ensuring complete transparency for our customers.No more price surprises – just a fast, reliable and straightforward service..",
     "@movegui_info_text_2": {},
     "movegui_info_text_3": "Thanks to our partnerships with local restaurants, we offer low-cost deliveries whilst supporting the local economy.MoveGui is the perfect blend of technology, accessibility and efficiency.",
-    "@movegui_info_text_3": {}
+    "@movegui_info_text_3": {},
+    "deactivate_button_title": "Service Unavailable ",
+    "@deactivate_button_title": {},
+    "deactivate_button_message": "Service currently unavailable",
+    "@deactivate_button_message": {},
+       "deactivate_button_attach_message": "Coming soon",
+    "@deactivate_button_attach_message": {}
 }
