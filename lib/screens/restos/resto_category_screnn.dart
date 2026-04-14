@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:movegui/providers/shopping_provider.dart';
-import 'package:movegui/widgets/category/category_widget.dart';
+import 'package:movegui/screens/restos/resto_sub_category_screen.dart';
 import 'package:movegui/widgets/menu/menu.dart';
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:movegui/widgets/title_text.dart';
@@ -83,7 +83,7 @@ class _SearchScreenState extends State<RestoCategoryScreen> {
                     mainAxisSpacing: 12,
                     crossAxisSpacing: 12,
                     builder: (context, index) {
-                      return CategoryWidget(navigatorKey: widget.navigatorKey,);
+                      return RestoSubCategoryScreen(navigatorKey: widget.navigatorKey,);
                     },
                     itemCount: 3,
                     crossAxisCount: 1),

@@ -8,7 +8,7 @@ class MessageWidget {
       title: title, //'Erreur d\'age',
       message: message, // 'Vous devez être âgé d\'au moins 18 ans.',
       icon:icon,
-      duration: Duration(seconds: 5),
+      duration: Duration(seconds: 3),
       flushbarPosition: flushbarPosition, //.TOP,
       messageColor: AppColors.textColor,
       backgroundColor: AppColors.error,

@@ -5,7 +5,6 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/validator.dart';
 import 'package:movegui/l10n/app_localizations.dart';
-import 'package:movegui/models/cleaning_model.dart';
 import 'package:movegui/services/message_service.dart';
 import 'package:movegui/widgets/error/message_widget.dart';
 

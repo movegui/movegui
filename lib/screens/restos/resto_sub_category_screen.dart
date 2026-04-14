@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:movegui/screens/inner_screen/product_screen.dart';
 import 'package:movegui/services/assets_manager.dart';
-import 'package:movegui/widgets/category/category_item_widget.dart';
+import 'package:movegui/widgets/shared/widget_with_image.dart';
 
-class CategoryWidget extends StatelessWidget {
-  const CategoryWidget({super.key, required this.navigatorKey});
+class RestoSubCategoryScreen extends StatelessWidget {
+  const RestoSubCategoryScreen({super.key, required this.navigatorKey});
   final GlobalKey<NavigatorState> navigatorKey;
 
   void _onPressedImage(
@@ -30,35 +30,35 @@ class CategoryWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CategoryItemWidget(
+            WidgetWithImage(
               title: 'Pizza',
               routeName: '',
               imagePath: AssetsManager.category1Image,
               action: _onPressedImage,
               enabled: false,
             ),
-            CategoryItemWidget(
-              title: 'Fast Food',
+            WidgetWithImage(
+              title: 'Burger',
               routeName: '',
-              imagePath: AssetsManager.category2Image,
+              imagePath: AssetsManager.fast_food,
               action: _onPressedImage,
               enabled: false,
             ),
-            CategoryItemWidget(
+            WidgetWithImage(
               title: 'Sandwisch',
               routeName: '',
               imagePath: AssetsManager.category3Image,
               action: _onPressedImage,
               enabled: false,
             ),
-            CategoryItemWidget(
+            WidgetWithImage(
               title: 'Vegan',
               routeName: '',
               imagePath: AssetsManager.category4Image,
               action: _onPressedImage,
               enabled: false,
             ),
-            CategoryItemWidget(
+            WidgetWithImage(
               title: 'BBQ',
               routeName: '',
               imagePath: AssetsManager.category5Image,

@@ -14,12 +14,11 @@ class AssetsManager {
   static const String courseIcon1 = "$assetsIconsPath/course.jpg";
 
   // payment
-    static const String orangeIcon = "$assetsIconsPath/orange_money.png";
-    static const String paypalIcon = "$assetsIconsPath/paypal.png";
-    static const String masterCardIcon = "$assetsIconsPath/master_card.png";
-    static const String ymoIcon = "$assetsIconsPath/ymo.png";
-    static const String cashIcon = "$assetsIconsPath/cash.png";
-
+  static const String orangeIcon = "$assetsIconsPath/orange_money.png";
+  static const String paypalIcon = "$assetsIconsPath/paypal.png";
+  static const String masterCardIcon = "$assetsIconsPath/master_card.png";
+  static const String ymoIcon = "$assetsIconsPath/ymo.png";
+  static const String cashIcon = "$assetsIconsPath/cash.png";
 
   static String imagesPath = "assets/images";
   static String profileImagesPath = "assets/images/profile";
@@ -29,7 +28,7 @@ class AssetsManager {
   static String restoImagesPath = "assets/images/resto";
   static String pressingImagesPath = "assets/images/pressing";
 
-// general images
+  // general images
   static String forgotPassword = "$imagesPath/forgot_password.jpg";
   static String mapRounded = "$imagesPath/rounded_map.png";
   static String warning = "$imagesPath/warning.png";
@@ -74,14 +73,40 @@ class AssetsManager {
   static String resto5Image = "$restoImagesPath/resto_5.jpg";
 
   static String category1Image = "$categoriesImagesPath/pizza.jpg";
-  static String category2Image = "$categoriesImagesPath/fast_food.jpg";
+  // static String category2Image = "$categoriesImagesPath/fast_food.jpg";
   static String category3Image = "$categoriesImagesPath/sandwisch4.jpg";
   static String category4Image = "$categoriesImagesPath/vegan.jpg";
   static String category5Image = "$categoriesImagesPath/bbq.jpg";
 
-  // Pressing 
+  // Pressing
   static String pressing1Image = "$pressingImagesPath/pressing.jpg";
-   static String pressing2Image = "$pressingImagesPath/pressing1.jpg";
-    static String pressing3Image = "$pressingImagesPath/pressing2.jpeg";
+  static String pressing2Image = "$pressingImagesPath/pressing1.jpg";
+  static String pressing3Image = "$pressingImagesPath/pressing2.jpeg";
 
+  // fast food
+  static String fast_food = "$categoriesImagesPath/fast_food.jpg";
+
+  // patisserie
+  static String pastry = "$categoriesImagesPath/patisserie.jpg";
+
+  // super marché
+  static String super_market = "$categoriesImagesPath/super_marche.jpg";
+
+  // pharmacie
+  static String pharmacy = "$categoriesImagesPath/pharmacie.jpg";
+
+  // pharmacie
+  static String Profession = "$categoriesImagesPath/metier.png";
+
+  // grossiste
+  static String wholesaler = "$categoriesImagesPath/grossiste.jpg";
+
+  // boutique
+  static String shop = "$categoriesImagesPath/boutique.jpg";
+
+  // magasins
+  static String store = "$categoriesImagesPath/magasin.jpg";
+
+  // beauty
+  static String beauty = "$categoriesImagesPath/beauty.jpg";
 }

@@ -22,7 +22,7 @@ import 'package:movegui/services/title_manager.dart';
 import 'package:movegui/widgets/app/app_footer.dart';
 import 'package:movegui/widgets/app/app_footer_web.dart';
 import 'package:movegui/widgets/app/appbar.dart';
-import 'package:movegui/widgets/category/category_item_widget.dart';
+import 'package:movegui/widgets/shared/widget_with_image.dart';
 import 'package:movegui/widgets/error/message_widget.dart';
 import 'package:movegui/widgets/menu/menu.dart';
 import 'package:movegui/widgets/util/tab_button.dart';
@@ -91,12 +91,10 @@ class _RootScreenState extends State<RootScreen> {
               ? SafeArea(
                 child: Column(
                   children: [
-                    // _buildWebNavigator(),
-                    _buildTabs(),
+                    _buildWebTabs(context),
                     const SizedBox(height: 20),
-                    _buildCategories(),
+                    _builWebdCategoriesWidget(context),
                     const SizedBox(height: 30),
-                    // Expanded(child: _buildPromoSlider()),
                   ],
                 ),
               )
@@ -256,7 +254,7 @@ class _RootScreenState extends State<RootScreen> {
       },
     );
   }
-
+/*
   Widget _buildWebNavigator() {
     return Navigator(
       key: webNavigatorKey,
@@ -313,6 +311,7 @@ class _RootScreenState extends State<RootScreen> {
       },
     );
   }
+  */
 
   /*
   showUserMenu(BuildContext context) async {
@@ -345,11 +344,11 @@ class _RootScreenState extends State<RootScreen> {
   }
   */
 
-  Widget _buildTabs() {
+  Widget _buildWebTabs(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(AppConstants.menuTabs.length, (index) {
-        final tab = AppConstants.menuTabs[index];
+      children: List.generate(AppConstants.menuTabs(AppLocalizations.of(context)!).length, (index) {
+        final tab = AppConstants.menuTabs(AppLocalizations.of(context)!)[index];
 
         return Row(
           mainAxisSize: MainAxisSize.min,
@@ -359,7 +358,12 @@ class _RootScreenState extends State<RootScreen> {
               onTap: () {
                 setState(() {
                   selectedTabIndex = index;
-                  Navigator.pushNamed(context, tab.routeName);
+                  _onPressedImage(context, tab.routeName, title, tab.enabled);
+                  /*
+                  if(tab.enabled)
+                    Navigator.pushNamed(context, tab.routeName);
+                    else
+                    */
                 });
                 //   webNavigatorKey.currentState!.pushNamed(tab.routeName);
               },
@@ -372,7 +376,7 @@ class _RootScreenState extends State<RootScreen> {
                 ],
               ),
             ),
-            if (index != AppConstants.menuTabs.length - 1)
+            if (index != AppConstants.menuTabs(AppLocalizations.of(context)!).length - 1)
               const SizedBox(width: 20),
           ],
         );
@@ -398,62 +402,23 @@ class _RootScreenState extends State<RootScreen> {
       );
   }
 
-  Widget _buildCategories() {
+  Widget _builWebdCategoriesWidget(BuildContext context) {
     return Expanded(
       child: DynamicHeightGridView(
         mainAxisSpacing: 12,
         crossAxisSpacing: 12,
         builder: (context, index) {
-          return CategoryItemWidget(
-            title: AppConstants.categoriesItems[index].name,
-            imagePath: AppConstants.categoriesItems[index].imageUrl,
+          return WidgetWithImage(
+            title: AppConstants.categoriesItems(AppLocalizations.of(context)!)[index].name,
+            imagePath: AppConstants.categoriesItems(AppLocalizations.of(context)!)[index].imageUrl,
             action: _onPressedImage,
-            routeName: AppConstants.categoriesItems[index].routeName,
-            enabled: AppConstants.categoriesItems[index].enabled,
+            routeName: AppConstants.categoriesItems(AppLocalizations.of(context)!)[index].routeName,
+            enabled: AppConstants.categoriesItems(AppLocalizations.of(context)!)[index].enabled,
           );
         },
-        itemCount: AppConstants.categoriesItems.length,
+        itemCount: AppConstants.categoriesItems(AppLocalizations.of(context)!).length,
         crossAxisCount: 5,
       ),
     );
-
-    /*
-    final categories = [
-      "Restaurants",
-      "Groceries",
-      "Pharmacy",
-      "Alcohol",
-      "Health & Beauty",
-      "Flowers",
-    ];
-
-    return SizedBox(
-      height: 110,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: categories.length,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        itemBuilder: (context, index) {
-          return Container(
-            width: 140,
-            margin: const EdgeInsets.only(right: 15),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.fastfood, size: 32),
-                const SizedBox(height: 10),
-                Text(categories[index], textAlign: TextAlign.center),
-              ],
-            ),
-          );
-        },
-      ),
-    );
-    */
   }
 }

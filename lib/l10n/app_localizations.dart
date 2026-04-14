@@ -232,6 +232,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Coming soon'**
   String get deactivate_button_attach_message;
+
+  /// No description provided for @category_courses_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Races'**
+  String get category_courses_name;
+
+  /// No description provided for @category_restaurant_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Restaurant'**
+  String get category_restaurant_name;
+
+  /// No description provided for @category_patisserie_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Pastry shop'**
+  String get category_patisserie_name;
+
+  /// No description provided for @category_supermarche_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Super Market'**
+  String get category_supermarche_name;
+
+  /// No description provided for @category_supplier_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier'**
+  String get category_supplier_name;
+
+  /// No description provided for @category_pressing_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Dry cleaning'**
+  String get category_pressing_name;
+
+  /// No description provided for @category_discovery_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Discovery'**
+  String get category_discovery_name;
+
+  /// No description provided for @category_boulangerie_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Bakery'**
+  String get category_boulangerie_name;
+
+  /// No description provided for @category_pharmacy_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Pharmacy'**
+  String get category_pharmacy_name;
+
+  /// No description provided for @category_beauty_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Beauty & Care'**
+  String get category_beauty_name;
+
+  /// No description provided for @categroy_store_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Store'**
+  String get categroy_store_name;
+
+  /// No description provided for @category_shop_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Shop'**
+  String get category_shop_name;
+
+  /// No description provided for @category_wholesaler_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Wholesaler'**
+  String get category_wholesaler_name;
+
+  /// No description provided for @category_profession_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Professions'**
+  String get category_profession_name;
+
+  /// No description provided for @category_fast_food_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Fast Food'**
+  String get category_fast_food_name;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

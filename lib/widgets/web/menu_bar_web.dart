@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/app_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
-import 'package:movegui/l10n/app_localizations_en.dart';
 
 class MenuBarWeb extends StatefulWidget implements PreferredSizeWidget {
   @override

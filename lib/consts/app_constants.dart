@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/widgets/category/category_item.dart';
 import 'package:movegui/widgets/web/tab_item.dart';
 
@@ -42,83 +43,99 @@ class AppConstants {
   static const int CATEGORY_SUPPLIER = 5;
   static const int CATEGORY_PRESSING = 6;
 
-  static const String COURSES_CATEGORY_NAME = "Courses";
-  static const String CATEGORY_RESTAURANT_NAME = "Restaurant";
-  static const String CATEGORY_PATISSERIE_NAME = "Patisserie";
-  static const String CATEGORY_SUPERMARKT_NAME = "Super Marché";
-  static const String CATEGORY_SUPPLIER_NAME = "Fournisseur";
-  static const String CATEGORY_PRESSING_NAME = "Pressing";
-  static const String CATEGORY_DISCOVERY_NAME = "Discovery";
-  static const String CATEGORY_BOULANGERIE_NAME = "Boulangerie";
-  static const String CATEGORY_PHARMACY_NAME = "Pharmacie";
-  static const String CATEGORY_BEAUTY_NAME = "Beauté & Soins";
-
-  static List<TabItem> menuTabs = [
+  static List<TabItem> menuTabs(AppLocalizations localizations) => [
     TabItem(
-      title: CATEGORY_DISCOVERY_NAME,
+      title: localizations.category_discovery_name,
       icon: Icons.explore,
       routeName: '/home',
+      enabled: true,
     ),
     TabItem(
-      title: CATEGORY_PRESSING_NAME,
+      title: localizations.category_pressing_name,
       icon: Icons.cleaning_services,
       routeName: '/pressing',
+      enabled: true,
     ),
     TabItem(
-      title: CATEGORY_RESTAURANT_NAME,
+      title: localizations.category_restaurant_name,
       icon: Icons.restaurant,
       routeName: '/restaurant',
+      enabled: false,
     ),
-    /*
     TabItem(
-      title: COURSES_CATEGORY_NAME,
-      icon: Icons.delivery_dining,
-      routeName: '/courses',
-    ),
-    */
-    TabItem(
-      title: CATEGORY_PATISSERIE_NAME,
+      title: localizations.category_patisserie_name,
       icon: Icons.store,
       routeName: '/pastry',
+      enabled: false,
     ),
   ];
 
-  static List<CategoryItem> categoriesItems = [
+  static List<CategoryItem> categoriesItems(AppLocalizations localizations) => [
     CategoryItem(
-      name: CATEGORY_RESTAURANT_NAME,
+      name: localizations.category_pressing_name,
+      imageUrl: AssetsManager.pressing1Image,
+      routeName: '/pressing',
+      enabled: true,
+    ),
+    CategoryItem(
+      name: localizations.category_restaurant_name,
       imageUrl: AssetsManager.resto1Image,
       routeName: '/restaurant',
       enabled: false,
     ),
     CategoryItem(
-      name: CATEGORY_PATISSERIE_NAME,
-      imageUrl: AssetsManager.category1Image,
+      name: localizations.category_patisserie_name,
+      imageUrl: AssetsManager.pastry,
       routeName: '/pastry',
       enabled: false,
     ),
-    CategoryItem(
-      name: CATEGORY_PRESSING_NAME,
-      imageUrl: AssetsManager.pressing1Image,
-      routeName: '/pressing',
-      enabled: true,
 
-    ),
     CategoryItem(
-      name: CATEGORY_SUPERMARKT_NAME,
-      imageUrl: AssetsManager.category2Image,
+      name: localizations.category_supermarche_name,
+      imageUrl: AssetsManager.super_market,
       routeName: '/super_markt',
       enabled: false,
     ),
     CategoryItem(
-      name: CATEGORY_PHARMACY_NAME,
-      imageUrl: AssetsManager.category3Image,
+      name: localizations.category_pharmacy_name,
+      imageUrl: AssetsManager.pharmacy,
       routeName: '/pharmacy',
       enabled: false,
     ),
     CategoryItem(
-      name: CATEGORY_BEAUTY_NAME,
-      imageUrl: AssetsManager.category4Image,
+      name: localizations.category_beauty_name,
+      imageUrl: AssetsManager.beauty,
       routeName: '/beauty',
+      enabled: false,
+    ),
+    CategoryItem(
+      name: localizations.categroy_store_name,
+      imageUrl: AssetsManager.store,
+      routeName: '/store',
+      enabled: false,
+    ),
+    CategoryItem(
+      name: localizations.category_shop_name,
+      imageUrl: AssetsManager.shop,
+      routeName: '/shop',
+      enabled: false,
+    ),
+    CategoryItem(
+      name: localizations.category_wholesaler_name,
+      imageUrl: AssetsManager.wholesaler,
+      routeName: '/wholesaler',
+      enabled: false,
+    ),
+    CategoryItem(
+      name: localizations.category_profession_name,
+      imageUrl: AssetsManager.Profession,
+      routeName: '/profession',
+      enabled: false,
+    ),
+    CategoryItem(
+      name: localizations.category_fast_food_name,
+      imageUrl: AssetsManager.fast_food,
+      routeName: '/fast_food',
       enabled: false,
     ),
   ];

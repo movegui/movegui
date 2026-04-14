@@ -76,4 +76,49 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deactivate_button_attach_message => 'Coming soon';
+
+  @override
+  String get category_courses_name => 'Races';
+
+  @override
+  String get category_restaurant_name => 'Restaurant';
+
+  @override
+  String get category_patisserie_name => 'Pastry shop';
+
+  @override
+  String get category_supermarche_name => 'Super Market';
+
+  @override
+  String get category_supplier_name => 'Supplier';
+
+  @override
+  String get category_pressing_name => 'Dry cleaning';
+
+  @override
+  String get category_discovery_name => 'Discovery';
+
+  @override
+  String get category_boulangerie_name => 'Bakery';
+
+  @override
+  String get category_pharmacy_name => 'Pharmacy';
+
+  @override
+  String get category_beauty_name => 'Beauty & Care';
+
+  @override
+  String get categroy_store_name => 'Store';
+
+  @override
+  String get category_shop_name => 'Shop';
+
+  @override
+  String get category_wholesaler_name => 'Wholesaler';
+
+  @override
+  String get category_profession_name => 'Professions';
+
+  @override
+  String get category_fast_food_name => 'Fast Food';
 }

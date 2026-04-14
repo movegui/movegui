@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/l10n/app_localizations.dart';
-import 'package:movegui/l10n/app_localizations_en.dart';
 import 'package:movegui/widgets/home/home_image_widget.dart';
 
-class CategoryItemWidget extends ImageWidget {
-  const CategoryItemWidget({
+class WidgetWithImage extends ImageWidget {
+  const WidgetWithImage({
     super.key,
     required super.title,
     required super.imagePath,
@@ -22,8 +22,7 @@ class CategoryItemWidget extends ImageWidget {
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(),
           padding: EdgeInsets.all(1),
-          backgroundColor: Color(0xFFFFFFFF),
-          //  backgroundColor: Color(0xFF871A1C)
+          backgroundColor: AppColors.textColor,
         ),
         child: Column(
           children: [
@@ -33,17 +32,10 @@ class CategoryItemWidget extends ImageWidget {
               padding: const EdgeInsets.all(0),
               height: 200,
               decoration: BoxDecoration(
-                color: Color(0xFFFFFFFF),
+                color: AppColors.textColor,
                 image: DecorationImage(
                   image: AssetImage(imagePath), // or NetworkImage
                   fit: BoxFit.fitHeight, // covers entire container
-                  /*
-                    colorFilter: ColorFilter.mode(
-                      Color(
-                          0xFF871A1C), // Change this to your desired color and opacity
-                      BlendMode.color, // Other modes: overlay, multiply, etc.
-                    ),
-                    */
                 ),
               ),
             ),
@@ -60,8 +52,7 @@ class CategoryItemWidget extends ImageWidget {
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFFFFFFFF),
-                      //   backgroundColor: Colors.black)
+                      color: AppColors.textColor,
                     ),
                   ),
                 ],
@@ -71,8 +62,13 @@ class CategoryItemWidget extends ImageWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 6),
                 child: Text(
-                  AppLocalizations.of(context)!.deactivate_button_attach_message,
-                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                  AppLocalizations.of(
+                    context,
+                  )!.deactivate_button_attach_message,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: AppColors.placeHolderText,
+                  ),
                 ),
               ),
           ],

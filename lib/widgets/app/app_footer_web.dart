@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:movegui/consts/app_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/services/config_service.dart';
 import 'package:movegui/widgets/title_text.dart';

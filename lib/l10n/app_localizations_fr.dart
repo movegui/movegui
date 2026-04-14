@@ -76,4 +76,49 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get deactivate_button_attach_message => 'Bientôt disponible';
+
+  @override
+  String get category_courses_name => 'Courses';
+
+  @override
+  String get category_restaurant_name => 'Restaurant';
+
+  @override
+  String get category_patisserie_name => 'Patisserie';
+
+  @override
+  String get category_supermarche_name => 'Super Marché';
+
+  @override
+  String get category_supplier_name => 'Fournisseur';
+
+  @override
+  String get category_pressing_name => 'Pressing';
+
+  @override
+  String get category_discovery_name => 'Discovery';
+
+  @override
+  String get category_boulangerie_name => 'Boulangerie';
+
+  @override
+  String get category_pharmacy_name => 'Pharmacie';
+
+  @override
+  String get category_beauty_name => 'Beauté & Soins';
+
+  @override
+  String get categroy_store_name => 'Magasin';
+
+  @override
+  String get category_shop_name => 'Boutique';
+
+  @override
+  String get category_wholesaler_name => 'Grossiste';
+
+  @override
+  String get category_profession_name => 'Metiers';
+
+  @override
+  String get category_fast_food_name => 'Fast Food';
 }

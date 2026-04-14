@@ -52,7 +52,47 @@
     "deactivate_button_message": "Service indisponible pour le moment",
     "@deactivate_button_message": {},
     "deactivate_button_attach_message": "Bientôt disponible",
-    "@deactivate_button_attach_message": {}
+    "@deactivate_button_attach_message": {},
+    "category_courses_name": "Courses",
+    "@category_courses_name": {},
+    "category_restaurant_name": "Restaurant",
+    "@category_restaurant_name": {},
+    "category_patisserie_name": "Patisserie",
+    "@category_patisserie_name": {},
+    "category_supermarche_name": "Super Marché",
+    "@category_supermarche_name": {},
+    "category_supplier_name": "Fournisseur",
+    "@category_supplier_name": {},
+    "category_pressing_name": "Pressing",
+    "@category_pressing_name": {},
+    "category_discovery_name": "Discovery",
+    "@category_discovery_name": {},
+    "category_boulangerie_name": "Boulangerie",
+    "@category_boulangerie_name": {},
+    "category_pharmacy_name": "Pharmacie",
+    "@category_pharmacy_name": {},
+    "category_beauty_name": "Beauté & Soins",
+    "@category_beauty_name": {},
+    "categroy_store_name": "Magasin",
+    "@categroy_store_name": {},
+    "category_shop_name": "Boutique",
+    "@category_shop_name": {},
+    "category_wholesaler_name": "Grossiste",
+    "@category_wholesaler_name": {},
+    "category_profession_name": "Metiers",
+    "@category_profession_name": {},
+    "category_fast_food_name": "Fast Food",
+    "@category_fast_food_name": {}
+    
+    
+    
+    
+
+
+ 
+
+
+
 
 
 
