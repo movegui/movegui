@@ -6,14 +6,15 @@ import 'package:movegui/consts/route_contants.dart';
 import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/button_item.dart';
+import 'package:movegui/providers/appbar_title_provider.dart';
 import 'package:movegui/widgets/error/message_widget.dart';
 import 'package:movegui/widgets/util/button_widget.dart';
+import 'package:provider/provider.dart';
 
 class AuthLinkWidget extends StatefulWidget {
-  final Function(String) onTitleChange;
   final String? email;
 
-  const AuthLinkWidget({super.key, required this.onTitleChange, this.email});
+  const AuthLinkWidget({super.key, this.email});
   @override
   State<StatefulWidget> createState() => AuthLinkWidgetState();
 }

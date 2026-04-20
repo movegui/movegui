@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:movegui/l10n/app_localizations.dart';
-import 'package:movegui/services/title_manager.dart';
 import 'package:movegui/widgets/menu/menu_item_widget.dart';
 
 class MoveGuiMenu extends StatelessWidget {

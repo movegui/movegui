@@ -6,15 +6,16 @@ import 'package:movegui/consts/route_contants.dart';
 import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/button_item.dart';
+import 'package:movegui/providers/appbar_title_provider.dart';
 import 'package:movegui/services/my_app_functions.dart';
+import 'package:movegui/widgets/app/separator_widget.dart';
 import 'package:movegui/widgets/auth/opt_screen.dart';
 import 'package:movegui/widgets/auth/validation_button.dart';
 import 'package:movegui/widgets/util/input_phone_widget.dart';
+import 'package:provider/provider.dart';
 
 class LoginPhoneNumberPage extends StatefulWidget {
-  const LoginPhoneNumberPage({super.key, required this.onTitleChange});
-  
-  final Function(String) onTitleChange;
+  const LoginPhoneNumberPage({super.key,});
 
   @override
   State<LoginPhoneNumberPage> createState() => LoginPhoneNumberPageState();
@@ -27,14 +28,22 @@ class LoginPhoneNumberPageState extends State<LoginPhoneNumberPage> {
   final _formkey = GlobalKey<FormState>();
   bool isloading = false;
   FirebaseAuth? auth;
+  
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<AppbarTitleProvider>().setTitle(
+        AppLocalizations.of(context)!.login_title,
+      );
+    });
+  }
 
   @override
   void initState() {
     _phoneNumberController = TextEditingController();
     _phoneNumberFocusNode = FocusNode();
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-      widget.onTitleChange(AppLocalizations.of(context)!.login_title);
-    });
     try {
       auth = FirebaseAuth.instance;
     } catch (e) {
@@ -143,7 +152,8 @@ class LoginPhoneNumberPageState extends State<LoginPhoneNumberPage> {
                   phoneFocusNode: _phoneNumberFocusNode,
                   nextFocusNode: _phoneNumberFocusNode,
                 ),
-                              Padding(
+                SeparatorWidget(height: WidgetConstants.sepWidgetHeight * 1.5),
+                Padding(
                   padding: const EdgeInsets.only(
                     left: WidgetConstants.sepWidgetHeight,
                     right: WidgetConstants.sepWidgetHeight,

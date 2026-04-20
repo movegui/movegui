@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/widget_constants.dart';
+import 'package:movegui/l10n/app_localizations.dart';
+import 'package:movegui/providers/appbar_title_provider.dart';
 import 'package:movegui/responsive.dart';
 import 'package:movegui/widgets/app/app_image.dart';
 import 'package:movegui/widgets/app/separator_widget.dart';
 import 'package:movegui/widgets/auth/login_forget_password_page.dart';
+import 'package:provider/provider.dart';
 
 
 class MoveguiForgotPasswordScreen extends StatefulWidget {
 
-  const MoveguiForgotPasswordScreen({super.key, required this.onTitleChange});
-    final Function(String) onTitleChange;
+  const MoveguiForgotPasswordScreen({super.key,});
 
   @override
   State<MoveguiForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
@@ -24,6 +26,17 @@ class _ForgotPasswordScreenState extends State<MoveguiForgotPasswordScreen> {
   void initState() {
     _emailController = TextEditingController();
     super.initState();
+  }
+
+  
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<AppbarTitleProvider>().setTitle(
+        AppLocalizations.of(context)!.forget_password_title,
+      );
+    });
   }
 
   @override
@@ -67,7 +80,7 @@ class _ForgotPasswordScreenState extends State<MoveguiForgotPasswordScreen> {
             children: [
               AppImage(heightScale: 0.20,),
               SeparatorWidget(height: WidgetConstants.sepWidgetHeight,),
-              LoginForgetPasswordPage(onTitleChange: widget.onTitleChange),
+              LoginForgetPasswordPage(),
            
             ],
           ),

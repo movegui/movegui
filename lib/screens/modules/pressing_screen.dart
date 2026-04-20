@@ -3,17 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:movegui/consts/app_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/pressing_model.dart';
+import 'package:movegui/providers/appbar_title_provider.dart';
 import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/responsive.dart';
 import 'package:movegui/services/pressing_service.dart';
 import 'package:movegui/services/register_services.dart';
-import 'package:movegui/services/title_manager.dart';
 import 'package:movegui/widgets/store/store_widget.dart';
 import 'package:provider/provider.dart';
 
 class PressingScreen extends StatefulWidget {
-  final Function(String) onTitleChange;
-  const PressingScreen({super.key, required this.onTitleChange});
+  const PressingScreen({super.key,});
 
   @override
   State<StatefulWidget> createState() => PressingScreenState();
@@ -27,14 +26,23 @@ class PressingScreenState extends State<PressingScreen> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      widget.onTitleChange(AppLocalizations.of(context)!.pressing_title);
-    });
     searchTextController = TextEditingController();
     pressingService = getIt<PressingService>();
     initList();
     super.initState();
   }
+
+  
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+       WidgetsBinding.instance.addPostFrameCallback((_) {
+    context.read<AppbarTitleProvider>().setTitle(
+      AppLocalizations.of(context)!.pressing_title,
+    );
+  });
+  }
+
 
   Future<void> initList() async {
     final allPressings = await pressingService.allModels();

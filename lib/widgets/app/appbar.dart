@@ -8,16 +8,26 @@ class MoveguiAppBar extends StatelessWidget implements PreferredSizeWidget {
     super.key,
     required this.title,
     required this.itemCount,
-    required this.homenavigatorKey,
     required this.homeCanPop,
-    required this.onTitleChange,
     required this.activeNavigator,
+    required this.homeNavigatorKey,
+    required this.orderNavigatorKey,
+    required this.deliveryNavigatorKey,
+    required this.profileNavigatorKey,
+    required this.orderCanPop,
+    required this.deliveryCanPop,
+    required this.profileCanPop,
   });
-  final GlobalKey<NavigatorState> homenavigatorKey;
+  final GlobalKey<NavigatorState> homeNavigatorKey;
+  final GlobalKey<NavigatorState> orderNavigatorKey;
+  final GlobalKey<NavigatorState> deliveryNavigatorKey;
+  final GlobalKey<NavigatorState> profileNavigatorKey;
   final String title;
   final int itemCount;
   final ValueNotifier<bool> homeCanPop;
-  final Function(String) onTitleChange;
+  final ValueNotifier<bool> orderCanPop;
+  final ValueNotifier<bool> deliveryCanPop;
+  final ValueNotifier<bool> profileCanPop;
   final ValueNotifier<ActiveNavigator> activeNavigator;
 
   @override
@@ -25,7 +35,62 @@ class MoveguiAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: Text(title),
       titleTextStyle: TextStyle(color: AppColors.textColor, fontSize: 20),
-      leading: ValueListenableBuilder<bool>(
+      leading: Builder(
+        builder: (context) {
+          /*
+          final canPop =
+              homeCanPop.value  ||
+              orderCanPop.value; ||
+              deliveryCanPop.value ||
+              profileCanPop.value; // Navigator.of(context).canPop();
+              */
+              print("aciive value is ${activeNavigator.value}");
+          final currentNavigator = switch (activeNavigator.value) {
+            ActiveNavigator.home => homeNavigatorKey,
+            ActiveNavigator.order => orderNavigatorKey,
+            ActiveNavigator.delivery => deliveryNavigatorKey,
+            ActiveNavigator.profile => profileNavigatorKey,
+          };
+          final canPop = currentNavigator.currentState?.canPop() ?? false;
+          /*
+          final canPop = switch (activeNavigator.value) {
+            ActiveNavigator.home =>
+              homeNavigatorKey.currentState?.canPop() ?? false,
+
+            ActiveNavigator.order =>
+              orderNavigatorKey.currentState?.canPop() ?? false,
+
+            ActiveNavigator.delivery =>
+              deliveryNavigatorKey.currentState?.canPop() ?? false,
+
+            ActiveNavigator.profile =>
+              profileNavigatorKey.currentState?.canPop() ?? false,
+          };
+          */
+          print('i can pop: $canPop');
+          if (canPop) {
+            return IconButton(
+              icon: const Icon(Icons.arrow_back),
+              color: AppColors.textColor,
+              hoverColor: AppColors.selectionColor,
+              onPressed: () {
+               // Navigator.of(context).maybePop();
+               currentNavigator.currentState?.maybePop();
+              },
+            );
+          }
+
+          return IconButton(
+            icon: const Icon(Icons.menu),
+            color: AppColors.textColor,
+            tooltip: AppLocalizations.of(context)!.navigation_menu_tooltip,
+            hoverColor: AppColors.selectionColor,
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          );
+        },
+      ),
+      /*
+      leading: ValueListenableBuilder<bool>( 
         valueListenable: homeCanPop,
         builder: (context, homeCanPop, _) {
           if (homeCanPop) {
@@ -50,6 +115,39 @@ class MoveguiAppBar extends StatelessWidget implements PreferredSizeWidget {
             );
         },
       ),
+      */
+
+      /*
+      leading: Builder(
+  builder: (context) {
+    final isOrders = activeNavigator.value == ActiveNavigator.orders;
+
+    final canPop = isOrders
+        ? (orderNavigatorKey.currentState?.canPop() ?? false)
+        : (homeNavigatorKey.currentState?.canPop() ?? false);
+
+    if (canPop) {
+      return IconButton(
+        icon: const Icon(Icons.arrow_back),
+        color: AppColors.textColor,
+        onPressed: () {
+          if (isOrders) {
+            orderNavigatorKey.currentState?.pop();
+          } else {
+            homeNavigatorKey.currentState?.pop();
+          }
+        },
+      );
+    }
+
+    return IconButton(
+      icon: const Icon(Icons.menu),
+      color: AppColors.textColor,
+      onPressed: () => Scaffold.of(context).openDrawer(),
+    );
+  },
+),
+      */
       backgroundColor: AppColors.backgroundColor,
       actions: <Widget>[
         IconButton(
@@ -57,7 +155,7 @@ class MoveguiAppBar extends StatelessWidget implements PreferredSizeWidget {
           color: AppColors.textColor,
           hoverColor: AppColors.selectionColor,
           onPressed: () {
-            homenavigatorKey.currentState?.pushNamed('/search');
+            Navigator.pushNamed(context, '/search');
           },
         ),
         Stack(
@@ -67,7 +165,7 @@ class MoveguiAppBar extends StatelessWidget implements PreferredSizeWidget {
               color: AppColors.textColor,
               hoverColor: AppColors.selectionColor,
               onPressed: () {
-                homenavigatorKey.currentState?.pushNamed('/shopping');
+                Navigator.pushNamed(context, '/shopping');
               },
             ),
             Positioned(
@@ -95,7 +193,7 @@ class MoveguiAppBar extends StatelessWidget implements PreferredSizeWidget {
           color: AppColors.textColor,
           hoverColor: AppColors.selectionColor,
           onPressed: () {
-            homenavigatorKey.currentState?.pushNamed('/notification');
+            Navigator.pushNamed(context, '/notification');
           },
         ),
       ],

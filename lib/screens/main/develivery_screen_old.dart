@@ -8,8 +8,8 @@ import 'package:movegui/services/title_manager.dart';
 import 'package:movegui/widgets/error/message_widget.dart';
 import 'package:movegui/widgets/shared/widget_with_image.dart';
 
-class DeveliveryScreen extends StatefulWidget {
-  const DeveliveryScreen({
+class OldDeveliveryScreen extends StatefulWidget {
+  const OldDeveliveryScreen({
     super.key,
     required this.onTitleChange,
     required this.navigatorKey,
@@ -21,7 +21,7 @@ class DeveliveryScreen extends StatefulWidget {
   State<StatefulWidget> createState() => DeveliveryScreenState();
 }
 
-class DeveliveryScreenState extends State<DeveliveryScreen> {
+class DeveliveryScreenState extends State<OldDeveliveryScreen> {
   @override
   void initState() {
     super.initState();

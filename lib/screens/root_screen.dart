@@ -3,24 +3,24 @@ import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as context;
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/app_constants.dart';
 import 'package:movegui/consts/route_contants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/observers/home_nav_observer.dart';
+import 'package:movegui/providers/appbar_title_provider.dart';
 import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/responsive.dart';
 import 'package:movegui/screens/auth/login_screen.dart';
 import 'package:movegui/screens/auth/movegui_forgot_password_screen.dart';
 import 'package:movegui/screens/auth/movegui_register_screen.dart';
-import 'package:movegui/screens/delivery/my_delivery_screen.dart';
+import 'package:movegui/screens/main/delivery_screen.dart';
 import 'package:movegui/screens/main/home_screen.dart';
 import 'package:movegui/screens/modules/pressing_screen.dart';
-import 'package:movegui/screens/order/my_order_screen.dart';
-import 'package:movegui/services/title_manager.dart';
+import 'package:movegui/screens/main/order_screen.dart';
 import 'package:movegui/widgets/app/app_footer.dart';
 import 'package:movegui/widgets/app/app_footer_web.dart';
-import 'package:movegui/widgets/app/app_image.dart';
 import 'package:movegui/widgets/app/appbar.dart';
 import 'package:movegui/widgets/shared/widget_with_image.dart';
 import 'package:movegui/widgets/error/message_widget.dart';
@@ -29,7 +29,7 @@ import 'package:movegui/widgets/util/tab_button.dart';
 import 'package:movegui/widgets/web/menu_bar_web.dart';
 import 'package:provider/provider.dart';
 
-enum ActiveNavigator { home, command, delivery, courier }
+enum ActiveNavigator { home, order, delivery, profile }
 
 class RootScreen extends StatefulWidget {
   RootScreen({super.key});
@@ -72,7 +72,7 @@ class _RootScreenState extends State<RootScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    title = AppLocalizations.of(context)!.home_title;
+    //  title = AppLocalizations.of(context)!.home_title;
   }
 
   @override
@@ -88,7 +88,7 @@ class _RootScreenState extends State<RootScreen> {
     //     String title = AppLocalizations.of(context)!.home_title;
     homeObserver = HomeNavObserver(
       homeCanPop,
-
+      /*
       onRouteChanged: (route) {
         switch (route) {
           case '/home':
@@ -110,6 +110,7 @@ class _RootScreenState extends State<RootScreen> {
             activeNavigator.value = ActiveNavigator.home;
         }
       },
+      */
     );
     commandObserver = HomeNavObserver(commandCanPop);
     deliveryObserver = HomeNavObserver(deliveryanPop);
@@ -120,6 +121,7 @@ class _RootScreenState extends State<RootScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
 
+      /*
       setState(() {
         print('Hallo $newTitle');
         switch (currentScreen) {
@@ -154,6 +156,7 @@ class _RootScreenState extends State<RootScreen> {
             break;
         }
       });
+      */
     });
   }
 
@@ -166,14 +169,18 @@ class _RootScreenState extends State<RootScreen> {
           Responsive.isDesktop(context)
               ? MenuBarWeb()
               : MoveguiAppBar(
-                title: title,
+                title: context.watch<AppbarTitleProvider>().title,
                 itemCount: shoppingProvider.itemCount,
-                homenavigatorKey: homeNavigatorKey,
+                //    homenavigatorKey: homeNavigatorKey,
                 homeCanPop: homeCanPop,
-                onTitleChange: (value) {
-                  updateTitle(value);
-                },
                 activeNavigator: activeNavigator,
+                homeNavigatorKey: homeNavigatorKey,
+                orderNavigatorKey: commandNavigatorKey,
+                deliveryNavigatorKey: deliveryNavigatorKey,
+                profileNavigatorKey: profileNavigatorKey,
+                orderCanPop: commandCanPop,
+                deliveryCanPop: deliveryanPop,
+                profileCanPop: profileCanPop,
               ),
       drawer: MoveGuiMenu(navigatorKey: homeNavigatorKey),
       body:
@@ -209,24 +216,28 @@ class _RootScreenState extends State<RootScreen> {
                     currentScreen = index;
                     switch (index) {
                       case 0:
-                        updateTitle(AppLocalizations.of(context)!.home_title);
+                        context.read<AppbarTitleProvider>().setTitle(
+                          AppLocalizations.of(context)!.home_title,
+                        );
                         activeNavigator.value = ActiveNavigator.home;
                         break;
                       case 1:
-                        updateTitle(
+                        context.read<AppbarTitleProvider>().setTitle(
                           AppLocalizations.of(context)!.my_orders_title,
                         );
+                        activeNavigator.value = ActiveNavigator.order;
                         break;
                       case 2:
-                        updateTitle(
+                        context.read<AppbarTitleProvider>().setTitle(
                           AppLocalizations.of(context)!.my_deliveries_title,
                         );
+                        activeNavigator.value = ActiveNavigator.delivery;
                         break;
                       case 3:
-                        updateTitle(
+                        context.read<AppbarTitleProvider>().setTitle(
                           AppLocalizations.of(context)!.profile_title,
                         );
-                        activeNavigator.value = ActiveNavigator.courier;
+                        activeNavigator.value = ActiveNavigator.profile;
                         break;
                     }
                   });
@@ -244,27 +255,15 @@ class _RootScreenState extends State<RootScreen> {
         Widget page;
         switch (settings.name) {
           case '/':
-            page = HomeScreen(
-              onTitleChange: (value) {
-                updateTitle(value);
-              },
-            );
+            page = HomeScreen();
             break;
 
           case '/pressing':
-            page = PressingScreen(
-              onTitleChange: (value) {
-                updateTitle(value);
-              },
-            );
+            page = PressingScreen();
             break;
 
           default:
-            page = HomeScreen(
-              onTitleChange: (value) {
-                updateTitle(value);
-              },
-            );
+            page = HomeScreen();
         }
         return MaterialPageRoute(builder: (_) => page, settings: settings);
       },
@@ -280,7 +279,7 @@ class _RootScreenState extends State<RootScreen> {
         Widget page;
         switch (settings.name) {
           case '/myOrders':
-            page = MyOrderScreen(
+            page = OrderScreen(
               onTitleChange: (value) {
                 updateTitle(value);
               },
@@ -288,7 +287,7 @@ class _RootScreenState extends State<RootScreen> {
             break;
 
           default:
-            page = MyOrderScreen(
+            page = OrderScreen(
               onTitleChange: (value) {
                 updateTitle(value);
               },
@@ -308,19 +307,11 @@ class _RootScreenState extends State<RootScreen> {
         Widget page;
         switch (settings.name ?? '/myDeliveries') {
           case '/myDeliveries':
-            page = MyDeliveryScreen(
-              onTitleChange: (value) {
-                updateTitle(value);
-              },
-            );
+            page = DeliveryScreen();
             break;
 
           default:
-            page = MyDeliveryScreen(
-              onTitleChange: (value) {
-                updateTitle(value);
-              },
-            );
+            page = DeliveryScreen();
         }
         return MaterialPageRoute(builder: (_) => page, settings: settings);
       },
@@ -329,8 +320,9 @@ class _RootScreenState extends State<RootScreen> {
 
   Widget _buildProfileNavigator() {
     return Navigator(
-      // key: profileNavigatorKey,
+       key: profileNavigatorKey,
       initialRoute: '/profile',
+      observers: [profileObserver],
       onGenerateRoute: (settings) {
         Widget page;
 
@@ -338,33 +330,20 @@ class _RootScreenState extends State<RootScreen> {
           case RouteContants.PROFILE_ROUTE:
             page =
                 FirebaseAuth.instance.currentUser == null
-                    ? LoginScreen(
-                      onTitleChange: (newTitle) {
-                        print('im here');
-                        updateTitle(newTitle);
-                      },
-                    )
+                    ? LoginScreen()
                     : const ProfileScreen();
             break;
           case RouteContants.REGISTER_ROUTE:
             page =
                 FirebaseAuth.instance.currentUser == null
-                    ? MoveguiRegisterScreen(
-                      onTitleChange: (newTitle) {
-                        updateTitle(newTitle);
-                      },
-                    )
+                    ? MoveguiRegisterScreen()
                     : const ProfileScreen();
             break;
           case RouteContants.FORGET_PASSWORD_ROUTE:
             final args = settings.arguments as Map<String, dynamic>;
             page =
                 FirebaseAuth.instance.currentUser == null
-                    ? MoveguiForgotPasswordScreen(
-                      onTitleChange: (newTitle) {
-                        updateTitle(newTitle);
-                      },
-                    )
+                    ? MoveguiForgotPasswordScreen()
                     /*
                     ForgotPasswordScreen(
                       email: args['email'],
@@ -378,11 +357,7 @@ class _RootScreenState extends State<RootScreen> {
           default:
             page =
                 FirebaseAuth.instance.currentUser == null
-                    ? LoginScreen(
-                      onTitleChange: (newTitle) {
-                        updateTitle(newTitle);
-                      },
-                    )
+                    ? LoginScreen()
                     : const ProfileScreen();
         }
 

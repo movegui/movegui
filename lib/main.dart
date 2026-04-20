@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:movegui/firebase_options.dart';
 import 'package:movegui/l10n/app_localizations.dart';
+import 'package:movegui/providers/appbar_title_provider.dart';
 import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/providers/theme_provider.dart';
 import 'package:movegui/screens/auth/movegui_register_screen.dart';
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => ShoppingProvider()),
+        ChangeNotifierProvider(create: (_) => AppbarTitleProvider()),
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, child) {
@@ -91,9 +93,7 @@ class MyApp extends StatelessWidget {
 
                 case '/pressing':
                   page = WebLayout(
-                    child: PressingScreen(
-                      onTitleChange: (_){},
-                      ),
+                    child: PressingScreen(),
                   );
                   break;
 
@@ -116,9 +116,7 @@ class MyApp extends StatelessWidget {
 
                 case '/register':
                   page = WebLayout(
-                    child: MoveguiRegisterScreen(
-                      onTitleChange: (_) {},
-                    ),
+                    child: MoveguiRegisterScreen(),
                   );
                   break;
 

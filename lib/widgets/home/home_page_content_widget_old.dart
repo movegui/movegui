@@ -38,7 +38,7 @@ class HomePageContentOldWidget extends StatelessWidget {
                   ),
 
                   ImageWidget(
-                    title: TitleManager.commandTitle,
+                    title: AppLocalizations.of(context)!.,
                     routeName: '/command',
                     imagePath: AssetsManager.commandeIcon,
                     action:

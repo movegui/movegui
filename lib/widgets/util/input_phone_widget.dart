@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:movegui/consts/validator.dart';
 import 'package:movegui/widgets/util/input_widget.dart';
 

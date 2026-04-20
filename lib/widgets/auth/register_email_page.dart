@@ -17,14 +17,12 @@ class RegisterEmailPage extends StatefulWidget {
   final ValueChanged<String?> onGenderChanged;
   final ValueChanged<DateTime?>? onBirthDateChanged;
   final String? selectedGender;
-  final Function(String) onTitleChange;
 
   const RegisterEmailPage({
     super.key,
     required this.onGenderChanged,
     this.onBirthDateChanged,
     this.selectedGender,
-    required this.onTitleChange,
   });
 
   @override
@@ -105,7 +103,7 @@ class RegisterEmailPageState extends State<RegisterEmailPage> {
           context,
           MaterialPageRoute(
             builder:
-                (context) => auth?.currentUser != null? ProfileScreen() : HomeScreen(onTitleChange: widget.onTitleChange),
+                (context) => auth?.currentUser != null? ProfileScreen() : HomeScreen(),
           ),
         );
       } catch (error) {

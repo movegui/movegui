@@ -1,13 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:movegui/consts/route_contants.dart';
-import 'package:movegui/consts/validator.dart';
 import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/button_item.dart';
+import 'package:movegui/providers/appbar_title_provider.dart';
 import 'package:movegui/services/my_app_functions.dart';
 import 'package:movegui/widgets/app/separator_widget.dart';
 import 'package:movegui/widgets/auth/auth_link_widget.dart';
@@ -15,11 +14,10 @@ import 'package:movegui/widgets/auth/other_registration_widget.dart';
 import 'package:movegui/widgets/auth/validation_button.dart';
 import 'package:movegui/widgets/util/input_email_widget.dart';
 import 'package:movegui/widgets/util/password_widget.dart';
+import 'package:provider/provider.dart';
 
 class LoginEmailPage extends StatefulWidget {
-  const LoginEmailPage({super.key, required this.onTitleChange});
-
-  final Function(String) onTitleChange;
+  const LoginEmailPage({super.key,});
 
   @override
   State<StatefulWidget> createState() => LoginEmailPageState();
@@ -38,15 +36,24 @@ class LoginEmailPageState extends State<LoginEmailPage> {
   bool isloading = false;
   FirebaseAuth? auth;
 
+
+  
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<AppbarTitleProvider>().setTitle(
+        AppLocalizations.of(context)!.login_title,
+      );
+    });
+  }
+
   @override
   void initState() {
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
     _emailFocusNode = FocusNode();
     _passwordFocusNode = FocusNode();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      widget.onTitleChange(AppLocalizations.of(context)!.login_title);
-    });
     try {
       auth = FirebaseAuth.instance;
     } catch (e) {
@@ -152,7 +159,7 @@ class LoginEmailPageState extends State<LoginEmailPage> {
                   },
                 ),
                 SeparatorWidget(height: WidgetConstants.sepWidgetHeight * 0.5),
-                AuthLinkWidget(onTitleChange: widget.onTitleChange),
+                AuthLinkWidget(),
                 SeparatorWidget(height: WidgetConstants.sepWidgetHeight * 0.5),
 
                 Padding(

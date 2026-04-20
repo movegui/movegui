@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/l10n/app_localizations.dart';
+import 'package:movegui/providers/appbar_title_provider.dart';
 import 'package:movegui/responsive.dart';
 import 'package:movegui/services/my_app_functions.dart';
-import 'package:movegui/services/title_manager.dart';
 import 'package:movegui/widgets/app/app_image.dart';
 import 'package:movegui/widgets/auth/register_email_page.dart';
 import 'package:movegui/widgets/auth/register_phone_page.dart';
 import 'package:movegui/widgets/util/toogle_buttons.dart';
+import 'package:provider/provider.dart';
 
 class MoveguiRegisterScreen extends StatefulWidget {
-  const MoveguiRegisterScreen({super.key, required this.onTitleChange});
-  final Function(String) onTitleChange;
+  const MoveguiRegisterScreen({super.key, });
+
   @override
   State<MoveguiRegisterScreen> createState() => _RegisterScreenState();
 }
@@ -30,10 +31,18 @@ class _RegisterScreenState extends State<MoveguiRegisterScreen> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      widget.onTitleChange(AppLocalizations.of(context)!.movegui_title);
-    });
     super.initState();
+  }
+
+  
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<AppbarTitleProvider>().setTitle(
+        AppLocalizations.of(context)!.register_title,
+      );
+    });
   }
 
   Future<void> localImagePicker() async {
@@ -89,7 +98,6 @@ class _RegisterScreenState extends State<MoveguiRegisterScreen> {
                 ? RegisterPhonePage(onGenderChanged: (String? value) {})
                 : RegisterEmailPage(
                   onGenderChanged: (String? value) {gender = value!;},
-                  onTitleChange: widget.onTitleChange,
                 ),
           ],
         ),
@@ -118,7 +126,6 @@ class _RegisterScreenState extends State<MoveguiRegisterScreen> {
                 ? RegisterPhonePage(onGenderChanged: (String? value) { gender = value!;})
                 : RegisterEmailPage(
                   onGenderChanged: (String? value) { gender = value!;},
-                  onTitleChange: widget.onTitleChange,
                 ),
           ],
         ),
