@@ -1,26 +1,26 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/app_constants.dart';
+import 'package:movegui/consts/route_contants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/observers/home_nav_observer.dart';
 import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/responsive.dart';
 import 'package:movegui/screens/auth/login_screen.dart';
-import 'package:movegui/screens/auth/register_screen.dart';
-import 'package:movegui/screens/categories/patisserie_screen.dart';
-import 'package:movegui/screens/categories/pressing_screen.dart';
-import 'package:movegui/screens/categories/resto_screen.dart';
-import 'package:movegui/screens/categories/super_markt_screen.dart';
-import 'package:movegui/screens/main/command_screen.dart';
-import 'package:movegui/screens/main/develivery_screen.dart';
+import 'package:movegui/screens/auth/movegui_forgot_password_screen.dart';
+import 'package:movegui/screens/auth/movegui_register_screen.dart';
+import 'package:movegui/screens/delivery/my_delivery_screen.dart';
 import 'package:movegui/screens/main/home_screen.dart';
-import 'package:movegui/screens/main/courier_screen.dart';
-import 'package:movegui/screens/main/movegui_screen.dart';
+import 'package:movegui/screens/modules/pressing_screen.dart';
+import 'package:movegui/screens/order/my_order_screen.dart';
 import 'package:movegui/services/title_manager.dart';
 import 'package:movegui/widgets/app/app_footer.dart';
 import 'package:movegui/widgets/app/app_footer_web.dart';
+import 'package:movegui/widgets/app/app_image.dart';
 import 'package:movegui/widgets/app/appbar.dart';
 import 'package:movegui/widgets/shared/widget_with_image.dart';
 import 'package:movegui/widgets/error/message_widget.dart';
@@ -28,6 +28,8 @@ import 'package:movegui/widgets/menu/menu.dart';
 import 'package:movegui/widgets/util/tab_button.dart';
 import 'package:movegui/widgets/web/menu_bar_web.dart';
 import 'package:provider/provider.dart';
+
+enum ActiveNavigator { home, command, delivery, courier }
 
 class RootScreen extends StatefulWidget {
   RootScreen({super.key});
@@ -37,12 +39,18 @@ class RootScreen extends StatefulWidget {
 }
 
 class _RootScreenState extends State<RootScreen> {
+  late String title;
   int selectedTabIndex = 0; // make this stateful
   late int currentScreen;
-  String title = TitleManager.homeTitle;
   static const double iconSize = 18.0;
   late HomeNavObserver homeObserver;
+  late HomeNavObserver commandObserver;
+  late HomeNavObserver deliveryObserver;
+  late HomeNavObserver profileObserver;
   final ValueNotifier<bool> homeCanPop = ValueNotifier(false);
+  final ValueNotifier<bool> commandCanPop = ValueNotifier(false);
+  final ValueNotifier<bool> deliveryanPop = ValueNotifier(false);
+  final ValueNotifier<bool> profileCanPop = ValueNotifier(false);
   final GlobalKey<NavigatorState> barNavigatorKey = GlobalKey<NavigatorState>();
   final GlobalKey<NavigatorState> homeNavigatorKey =
       GlobalKey<NavigatorState>();
@@ -50,27 +58,108 @@ class _RootScreenState extends State<RootScreen> {
       GlobalKey<NavigatorState>();
   final GlobalKey<NavigatorState> deliveryNavigatorKey =
       GlobalKey<NavigatorState>();
-  final GlobalKey<NavigatorState> courrierNavigatorKey =
+  final GlobalKey<NavigatorState> profileNavigatorKey =
       GlobalKey<NavigatorState>();
   final RouteObserver<ModalRoute<void>> homeRouteObserver =
       RouteObserver<ModalRoute<void>>();
   final GlobalKey<NavigatorState> webNavigatorKey = GlobalKey<NavigatorState>();
 
+  final ValueNotifier<ActiveNavigator> activeNavigator = ValueNotifier(
+    ActiveNavigator.home,
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    title = AppLocalizations.of(context)!.home_title;
+  }
+
   @override
   void initState() {
     super.initState();
     currentScreen = 0;
-    homeObserver = HomeNavObserver(homeCanPop);
+    /*
+    if(!mounted)
+    return;
+    title = AppLocalizations.of(context)!.home_title;
+    */
+
+    //     String title = AppLocalizations.of(context)!.home_title;
+    homeObserver = HomeNavObserver(
+      homeCanPop,
+
+      onRouteChanged: (route) {
+        switch (route) {
+          case '/home':
+            updateTitle(AppLocalizations.of(context)!.home_title);
+            activeNavigator.value = ActiveNavigator.home;
+            break;
+          case '/command':
+            updateTitle(AppLocalizations.of(context)!.my_orders_title);
+            break;
+          case '/delivery':
+            updateTitle(AppLocalizations.of(context)!.my_deliveries_title);
+            break;
+          case '/profile':
+            updateTitle(AppLocalizations.of(context)!.profile_title);
+            activeNavigator.value = ActiveNavigator.courier;
+            break;
+          default:
+            updateTitle(AppLocalizations.of(context)!.home_title);
+            activeNavigator.value = ActiveNavigator.home;
+        }
+      },
+    );
+    commandObserver = HomeNavObserver(commandCanPop);
+    deliveryObserver = HomeNavObserver(deliveryanPop);
+    profileObserver = HomeNavObserver(profileCanPop);
   }
 
   void updateTitle(String newTitle) {
-    setState(() {
-      title = newTitle;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+
+      setState(() {
+        print('Hallo $newTitle');
+        switch (currentScreen) {
+          case 0:
+            title = AppLocalizations.of(context)!.home_title;
+            break;
+          case 1:
+            title = AppLocalizations.of(context)!.my_orders_title;
+            break;
+          case 2:
+            title = AppLocalizations.of(context)!.my_deliveries_title;
+            break;
+          case 3:
+            title = newTitle;
+            /*
+            if (title == AppLocalizations.of(context)!.profile_title &&
+                newTitle == AppLocalizations.of(context)!.login_title)
+              title = AppLocalizations.of(context)!.login_title;
+            else if (title == AppLocalizations.of(context)!.profile_title &&
+                newTitle == AppLocalizations.of(context)!.register_title)
+              title = AppLocalizations.of(context)!.register_title;
+            else if (title == AppLocalizations.of(context)!.profile_title &&
+                newTitle == AppLocalizations.of(context)!.forget_password_title)
+              title = AppLocalizations.of(context)!.forget_password_title;
+            else if (title == AppLocalizations.of(context)!.profile_title &&
+                newTitle == AppLocalizations.of(context)!.pressing_title)
+              title = AppLocalizations.of(context)!.pressing_title;
+            else
+              title = AppLocalizations.of(context)!.profile_title;
+              */
+
+            break;
+        }
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    //  title = AppLocalizations.of(context)!.home_title;
     final shoppingProvider = Provider.of<ShoppingProvider>(context);
     return Scaffold(
       appBar:
@@ -79,11 +168,12 @@ class _RootScreenState extends State<RootScreen> {
               : MoveguiAppBar(
                 title: title,
                 itemCount: shoppingProvider.itemCount,
-                navigatorKey: homeNavigatorKey,
+                homenavigatorKey: homeNavigatorKey,
                 homeCanPop: homeCanPop,
                 onTitleChange: (value) {
                   updateTitle(value);
                 },
+                activeNavigator: activeNavigator,
               ),
       drawer: MoveGuiMenu(navigatorKey: homeNavigatorKey),
       body:
@@ -102,9 +192,9 @@ class _RootScreenState extends State<RootScreen> {
                 index: currentScreen,
                 children: [
                   _buildHomeNavigator(),
-                  _buildCommandNavigator(),
-                  _buildDeliveryNavigator(),
-                  _buildCoursesNavigator(),
+                  _buildMyOrdersNavigator(),
+                  _buildMyDeliveriesNavigator(),
+                  _buildProfileNavigator(),
                 ],
               ),
 
@@ -117,6 +207,28 @@ class _RootScreenState extends State<RootScreen> {
                 onTap: (index) {
                   setState(() {
                     currentScreen = index;
+                    switch (index) {
+                      case 0:
+                        updateTitle(AppLocalizations.of(context)!.home_title);
+                        activeNavigator.value = ActiveNavigator.home;
+                        break;
+                      case 1:
+                        updateTitle(
+                          AppLocalizations.of(context)!.my_orders_title,
+                        );
+                        break;
+                      case 2:
+                        updateTitle(
+                          AppLocalizations.of(context)!.my_deliveries_title,
+                        );
+                        break;
+                      case 3:
+                        updateTitle(
+                          AppLocalizations.of(context)!.profile_title,
+                        );
+                        activeNavigator.value = ActiveNavigator.courier;
+                        break;
+                    }
                   });
                 },
               ),
@@ -136,67 +248,22 @@ class _RootScreenState extends State<RootScreen> {
               onTitleChange: (value) {
                 updateTitle(value);
               },
-              navigatorKey: homeNavigatorKey,
-              // routeObserver: homeRouteObserver,
-            );
-            break;
-          case '/home/movegui':
-            page = MoveguiScreen(
-              onTitleChange: (value) {
-                updateTitle(value);
-              },
             );
             break;
 
-          case '/command':
-            page = Commandscreen(
+          case '/pressing':
+            page = PressingScreen(
               onTitleChange: (value) {
                 updateTitle(value);
               },
-              navigatorKey: commandNavigatorKey,
             );
             break;
-          case '/delivery':
-            page = DeveliveryScreen(
-              onTitleChange: (value) {
-                updateTitle(value);
-              },
-              navigatorKey: deliveryNavigatorKey,
-            );
-            break;
-          case '/courses':
-            page = CourierScreen(
-              onTitleChange: (value) {
-                updateTitle(value);
-              },
-              navigatorKey: courrierNavigatorKey,
-            );
-            break;
-
-          case '/login':
-            page = LoginScreen(
-              onTitleChange: (value) {
-                updateTitle(value);
-              },
-              navigatorKey: homeNavigatorKey,
-            );
-            break;
-
-          case 'register':
-            page = RegisterScreenMovgui(
-              onTitleChange: (value) {
-                updateTitle(value);
-              },
-              navigatorKey: homeNavigatorKey,
-            );
 
           default:
             page = HomeScreen(
               onTitleChange: (value) {
                 updateTitle(value);
               },
-              navigatorKey: homeNavigatorKey,
-              //  routeObserver: homeRouteObserver,
             );
         }
         return MaterialPageRoute(builder: (_) => page, settings: settings);
@@ -204,57 +271,141 @@ class _RootScreenState extends State<RootScreen> {
     );
   }
 
-  Widget _buildCommandNavigator() {
+  Widget _buildMyOrdersNavigator() {
     return Navigator(
       key: commandNavigatorKey,
+      initialRoute: '/myOrders',
+      observers: [commandObserver],
       onGenerateRoute: (settings) {
-        return MaterialPageRoute(
-          builder:
-              (_) => Commandscreen(
-                onTitleChange: (value) {
-                  updateTitle(value);
-                },
-                navigatorKey: commandNavigatorKey,
-              ),
-        );
+        Widget page;
+        switch (settings.name) {
+          case '/myOrders':
+            page = MyOrderScreen(
+              onTitleChange: (value) {
+                updateTitle(value);
+              },
+            );
+            break;
+
+          default:
+            page = MyOrderScreen(
+              onTitleChange: (value) {
+                updateTitle(value);
+              },
+            );
+        }
+        return MaterialPageRoute(builder: (_) => page, settings: settings);
       },
     );
   }
 
-  Widget _buildDeliveryNavigator() {
+  Widget _buildMyDeliveriesNavigator() {
     return Navigator(
       key: deliveryNavigatorKey,
+      initialRoute: '/myDeliveries',
+      observers: [deliveryObserver],
       onGenerateRoute: (settings) {
-        return MaterialPageRoute(
-          builder:
-              (_) => DeveliveryScreen(
-                onTitleChange: (value) {
-                  updateTitle(value);
-                },
-                navigatorKey: deliveryNavigatorKey,
-              ),
-        );
+        Widget page;
+        switch (settings.name ?? '/myDeliveries') {
+          case '/myDeliveries':
+            page = MyDeliveryScreen(
+              onTitleChange: (value) {
+                updateTitle(value);
+              },
+            );
+            break;
+
+          default:
+            page = MyDeliveryScreen(
+              onTitleChange: (value) {
+                updateTitle(value);
+              },
+            );
+        }
+        return MaterialPageRoute(builder: (_) => page, settings: settings);
       },
     );
   }
 
-  Widget _buildCoursesNavigator() {
+  Widget _buildProfileNavigator() {
     return Navigator(
-      key: courrierNavigatorKey,
+      // key: profileNavigatorKey,
+      initialRoute: '/profile',
       onGenerateRoute: (settings) {
-        return MaterialPageRoute(
-          builder:
-              (_) => CourierScreen(
-                onTitleChange: (value) {
-                  updateTitle(value);
-                },
-                navigatorKey: courrierNavigatorKey,
-              ),
-        );
+        Widget page;
+
+        switch (settings.name) {
+          case RouteContants.PROFILE_ROUTE:
+            page =
+                FirebaseAuth.instance.currentUser == null
+                    ? LoginScreen(
+                      onTitleChange: (newTitle) {
+                        print('im here');
+                        updateTitle(newTitle);
+                      },
+                    )
+                    : const ProfileScreen();
+            break;
+          case RouteContants.REGISTER_ROUTE:
+            page =
+                FirebaseAuth.instance.currentUser == null
+                    ? MoveguiRegisterScreen(
+                      onTitleChange: (newTitle) {
+                        updateTitle(newTitle);
+                      },
+                    )
+                    : const ProfileScreen();
+            break;
+          case RouteContants.FORGET_PASSWORD_ROUTE:
+            final args = settings.arguments as Map<String, dynamic>;
+            page =
+                FirebaseAuth.instance.currentUser == null
+                    ? MoveguiForgotPasswordScreen(
+                      onTitleChange: (newTitle) {
+                        updateTitle(newTitle);
+                      },
+                    )
+                    /*
+                    ForgotPasswordScreen(
+                      email: args['email'],
+                      // subtitleBuilder: (context) => Text('test'),
+                      headerBuilder: (context, constraints, shrinkOffset) => AppImage(),
+                    )
+                    */
+                    : const ProfileScreen();
+            break;
+
+          default:
+            page =
+                FirebaseAuth.instance.currentUser == null
+                    ? LoginScreen(
+                      onTitleChange: (newTitle) {
+                        updateTitle(newTitle);
+                      },
+                    )
+                    : const ProfileScreen();
+        }
+
+        return MaterialPageRoute(settings: settings, builder: (_) => page);
       },
     );
   }
-/*
+
+  /*
+Widget _buildProfileNavigator() {
+  return Navigator(
+    key: profileNavigatorKey,
+    observers: [profileObserver],
+    onGenerateRoute: (settings) {
+      return MaterialPageRoute(
+        builder: (_) => const ProfileScreen(),
+      );
+    },
+  );
+}
+*/
+
+  /*
   Widget _buildWebNavigator() {
     return Navigator(
       key: webNavigatorKey,
@@ -347,40 +498,52 @@ class _RootScreenState extends State<RootScreen> {
   Widget _buildWebTabs(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(AppConstants.menuTabs(AppLocalizations.of(context)!).length, (index) {
-        final tab = AppConstants.menuTabs(AppLocalizations.of(context)!)[index];
+      children: List.generate(
+        AppConstants.menuTabs(AppLocalizations.of(context)!).length,
+        (index) {
+          final tab =
+              AppConstants.menuTabs(AppLocalizations.of(context)!)[index];
 
-        return Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TabButton(
-              selected: selectedTabIndex == index,
-              onTap: () {
-                setState(() {
-                  selectedTabIndex = index;
-                  _onPressedImage(context, tab.routeName, title, tab.enabled);
-                  /*
+          return Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TabButton(
+                selected: selectedTabIndex == index,
+                onTap: () {
+                  setState(() {
+                    selectedTabIndex = index;
+                    _onPressedImage(
+                      context,
+                      tab.routeName,
+                      title,
+                      tab.enabled,
+                      // null,
+                    );
+                    /*
                   if(tab.enabled)
                     Navigator.pushNamed(context, tab.routeName);
                     else
                     */
-                });
-                //   webNavigatorKey.currentState!.pushNamed(tab.routeName);
-              },
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(tab.icon, size: 18),
-                  const SizedBox(width: 6),
-                  Text(tab.title),
-                ],
+                  });
+                  //   webNavigatorKey.currentState!.pushNamed(tab.routeName);
+                },
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(tab.icon, size: 18),
+                    const SizedBox(width: 6),
+                    Text(tab.title),
+                  ],
+                ),
               ),
-            ),
-            if (index != AppConstants.menuTabs(AppLocalizations.of(context)!).length - 1)
-              const SizedBox(width: 20),
-          ],
-        );
-      }),
+              if (index !=
+                  AppConstants.menuTabs(AppLocalizations.of(context)!).length -
+                      1)
+                const SizedBox(width: 20),
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -409,14 +572,30 @@ class _RootScreenState extends State<RootScreen> {
         crossAxisSpacing: 12,
         builder: (context, index) {
           return WidgetWithImage(
-            title: AppConstants.categoriesItems(AppLocalizations.of(context)!)[index].name,
-            imagePath: AppConstants.categoriesItems(AppLocalizations.of(context)!)[index].imageUrl,
+            title:
+                AppConstants.allCategoriesItems(
+                  AppLocalizations.of(context)!,
+                )[index].name,
+            imagePath:
+                AppConstants.allCategoriesItems(
+                  AppLocalizations.of(context)!,
+                )[index].imageUrl,
             action: _onPressedImage,
-            routeName: AppConstants.categoriesItems(AppLocalizations.of(context)!)[index].routeName,
-            enabled: AppConstants.categoriesItems(AppLocalizations.of(context)!)[index].enabled,
+            routeName:
+                AppConstants.allCategoriesItems(
+                  AppLocalizations.of(context)!,
+                )[index].routeName,
+            enabled:
+                AppConstants.allCategoriesItems(
+                  AppLocalizations.of(context)!,
+                )[index].enabled,
+            //navigatorkey: null,
           );
         },
-        itemCount: AppConstants.categoriesItems(AppLocalizations.of(context)!).length,
+        itemCount:
+            AppConstants.allCategoriesItems(
+              AppLocalizations.of(context)!,
+            ).length,
         crossAxisCount: 5,
       ),
     );

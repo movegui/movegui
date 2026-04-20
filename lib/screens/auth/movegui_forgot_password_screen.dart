@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:movegui/widgets/app/app_name_text.dart';
-import '../../consts/validator.dart';
-import '../../services/assets_manager.dart';
-import '../../widgets/subtitle_text.dart';
-import '../../widgets/title_text.dart';
+import 'package:movegui/consts/app_colors.dart';
+import 'package:movegui/consts/widget_constants.dart';
+import 'package:movegui/responsive.dart';
+import 'package:movegui/widgets/app/app_image.dart';
+import 'package:movegui/widgets/app/separator_widget.dart';
+import 'package:movegui/widgets/auth/login_forget_password_page.dart';
 
-class ForgotPasswordScreen extends StatefulWidget {
-  static const routeName = '/ForgotPasswordScreen';
-  const ForgotPasswordScreen({super.key});
+
+class MoveguiForgotPasswordScreen extends StatefulWidget {
+
+  const MoveguiForgotPasswordScreen({super.key, required this.onTitleChange});
+    final Function(String) onTitleChange;
 
   @override
-  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
+  State<MoveguiForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
 }
 
-class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+class _ForgotPasswordScreenState extends State<MoveguiForgotPasswordScreen> {
   late final TextEditingController _emailController;
   late final _formKey = GlobalKey<FormState>();
 
@@ -38,16 +40,74 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     if (isValid) {}
   }
 
+
+    @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        setState(() {
+        });
+      },
+      child: Scaffold(
+        body: Responsive.isDesktop(context) ? buildDeskop() : buildMobil(),
+        resizeToAvoidBottomInset: true,
+      ),
+    );
+  }
+
+  Widget buildMobil() {
+    return Padding(
+      padding: const EdgeInsets.all(0.0),
+      child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AppImage(heightScale: 0.20,),
+              SeparatorWidget(height: WidgetConstants.sepWidgetHeight,),
+              LoginForgetPasswordPage(onTitleChange: widget.onTitleChange),
+           
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildDeskop() {
+    return Center(
+      child: Container(
+        width: 500,
+        height: 500,
+        decoration: BoxDecoration(
+          color: AppColors.textColor,
+          border: Border.all(color: AppColors.backgroundColor, width: 10),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+
+          ],
+        ),
+      ),
+    );
+  }
+
+
+
+
+/*
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const AppNameTextWidget(
-          fontSize: 22,
-        ),
-      ),
+      
+
+      
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
@@ -142,4 +202,5 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       ),
     );
   }
+  */
 }

@@ -27,6 +27,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get success_send_message_message => 'Thank you for your message';
 
   @override
+  String get success_registration_new_user => 'Your account has been successfully created';
+
+  @override
+  String get success_login_message => 'Login successful';
+
+  @override
+  String get success_login_reset_password => 'Lien envoyé avec Succes';
+
+  @override
+  String get login_forget_password_txt => 'Enter your email address and we will send you a link to reset your password ';
+
+  @override
   String get error_send_mail_title => 'Authentication Error';
 
   @override
@@ -36,10 +48,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get error_input_hint_message => 'Please write your message.';
 
   @override
+  String get error_firebase_initialisation => 'FirebaseAuth initialization failed:';
+
+  @override
+  String get error_login_message => 'Login failed';
+
+  @override
+  String get label_login_facebook => 'Facebook';
+
+  @override
+  String get label_login_google => 'Google';
+
+  @override
   String get btn_close_label => 'Close';
 
   @override
   String get btn_send_label => 'Send';
+
+  @override
+  String get btn_register_label => 'Register';
 
   @override
   String get form_contact_title => 'Contact Form:';
@@ -121,4 +148,79 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get category_fast_food_name => 'Fast Food';
+
+  @override
+  String get home_title => 'Home';
+
+  @override
+  String get movegui_title => 'Movegui';
+
+  @override
+  String get command_title => 'Command';
+
+  @override
+  String get delivery_title => 'Delivey';
+
+  @override
+  String get courier_title => 'Courier';
+
+  @override
+  String get pressing_title => 'Dry Cleaning';
+
+  @override
+  String get my_orders_title => 'Mes Commandes';
+
+  @override
+  String get my_deliveries_title => 'Mes Livraisons';
+
+  @override
+  String get profile_title => 'Profile';
+
+  @override
+  String get navigation_menu_tooltip => 'Navigation Menu';
+
+  @override
+  String get login_title => 'Login';
+
+  @override
+  String get register_title => 'Registration';
+
+  @override
+  String get forget_password_title => 'Forgetten Password';
+
+  @override
+  String get label_login_forget_password => 'Forgotten your password?';
+
+  @override
+  String get label_login => 'Login';
+
+  @override
+  String get label_login_connect_using => 'Or connect using';
+
+  @override
+  String get label_login_invite => 'Invité ?';
+
+  @override
+  String get label_login_new_user => 'Nouveau ?';
+
+  @override
+  String get label_registration => 'Sign-up';
+
+  @override
+  String get exception_login_message => 'The Supplied User credential is incorrect, Please check your email address and password';
+
+  @override
+  String get tooltip_sign_in_with_google => 'Sign in with Google';
+
+  @override
+  String get tooltip_sign_in_with_facebook => 'Sign in with Facebook';
+
+  @override
+  String get tooltip_sign_in => 'Clic here to Connect';
+
+  @override
+  String get tooltip_forget_password => 'Click here to reset password :)';
+
+  @override
+  String get tooltip_registration => 'Cliquez ici pour vous enregistrer :)';
 }

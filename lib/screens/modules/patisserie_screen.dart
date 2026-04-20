@@ -1,48 +1,49 @@
 
-import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
+
 import 'package:flutter/material.dart';
 import 'package:movegui/consts/app_constants.dart';
-import 'package:movegui/models/pressing_model.dart';
+import 'package:movegui/models/patisserie_model.dart';
 import 'package:movegui/providers/shopping_provider.dart';
+import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:movegui/responsive.dart';
-import 'package:movegui/services/pressing_service.dart';
+import 'package:movegui/services/patisseries_service.dart';
 import 'package:movegui/services/register_services.dart';
-import 'package:movegui/widgets/menu/menu.dart';
 import 'package:movegui/widgets/store/store_widget.dart';
 import 'package:provider/provider.dart';
 
-class PressingScreen extends StatefulWidget{
-  final GlobalKey<NavigatorState> navigatorKey;
+class PatisserieScreen extends StatefulWidget {
+    final GlobalKey<NavigatorState> navigatorKey;
 
-  const PressingScreen({super.key, required this.navigatorKey});
+  const PatisserieScreen({super.key, required this.navigatorKey});
+
 
   @override
-  State<StatefulWidget> createState() => PressingScreenState();
-  
+  State<StatefulWidget> createState() => PatisserieScreenState();
+
 }
 
-class PressingScreenState extends State<PressingScreen>{
-  
+class PatisserieScreenState extends State<PatisserieScreen>{
+ 
  late TextEditingController searchTextController;
-  List<PressingModel> pressings = [];
-  late PressingService pressingService;
-  final pressingConstants = PressingConstants();
+  List<PatisserieModel> patisseries = [];
+  late PatisseriesService patisserieService;
+  final patisserieConstants = PatisserieConstants();
     
 
 
   @override
   void initState() {
     searchTextController = TextEditingController();
-     pressingService = getIt<PressingService>();
+     patisserieService = getIt<PatisseriesService>();
       initList();
     super.initState();
 
   }
 
     Future<void> initList() async {
-    final allPressings = await pressingService.allModels();
+    final allPatisseries = await patisserieService.allModels();
     setState(() {
-      pressings = allPressings;
+      patisseries = allPatisseries;
     });
   }
 
@@ -60,11 +61,9 @@ Widget build(BuildContext context) {
     child: GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-      //  appBar: MoveguiAppBar(title: pressingConstants.getTitleName(), itemCount: shoppingProvider.itemCount),
-        drawer: MoveGuiMenu(navigatorKey: widget.navigatorKey,),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Responsive.isDesktop(context) ? buildDesktop() : buildMobil() 
+          child: Responsive.isDesktop(context) ? buildDestop() : buildMobil()
         ),
         /*
         bottomNavigationBar:RootBottomNavigationBar(
@@ -79,8 +78,8 @@ Widget build(BuildContext context) {
   );
 }
 
-  Widget buildMobil(){
-    return Column(
+Widget buildMobil(){
+ return  Column(
             children: [
               const SizedBox(height: 15),
         
@@ -102,36 +101,40 @@ Widget build(BuildContext context) {
         
               Expanded(
                 child: DynamicHeightGridView(
-                  itemCount: pressings.length,
+                  itemCount: patisseries.length,
                   crossAxisCount: 1,
                   mainAxisSpacing: 12,
                   crossAxisSpacing: 12,
                   builder: (context, index) {
-                    return StoreWidget(model: pressings[index], catgory: AppConstants.CATEGORY_PRESSING, navigatorKey: widget.navigatorKey,);
+                    return StoreWidget(model: patisseries[index], catgory: AppConstants.CATEGORY_PATISSERIE, 
+                   // navigatorKey: widget.navigatorKey,
+                    );
                   },
                 ),
               ),
             ],
           );
-  }
+}
 
-  Widget buildDesktop(){
-   return Column(
+Widget buildDestop(){
+ return Column(
             children: [
-              const SizedBox(height: 15),
+              const SizedBox(height: 15),      
               Expanded(
                 child: DynamicHeightGridView(
-                  itemCount: pressings.length,
+                  itemCount: patisseries.length,
                   crossAxisCount: 3,
                   mainAxisSpacing: 12,
                   crossAxisSpacing: 12,
                   builder: (context, index) {
-                    return StoreWidget(model: pressings[index], catgory: AppConstants.CATEGORY_PRESSING, navigatorKey: widget.navigatorKey,);
+                    return StoreWidget(model: patisseries[index], catgory: AppConstants.CATEGORY_PATISSERIE,
+                    // navigatorKey: widget.navigatorKey,
+                     );
                   },
                 ),
               ),
             ],
           );
-  }
-  
+}
+
 }

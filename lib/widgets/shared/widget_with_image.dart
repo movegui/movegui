@@ -13,6 +13,7 @@ class WidgetWithImage extends ImageWidget {
     required super.enabled,
   });
 
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -30,12 +31,12 @@ class WidgetWithImage extends ImageWidget {
               width: MediaQuery.of(context).size.width,
               margin: const EdgeInsets.all(0),
               padding: const EdgeInsets.all(0),
-              height: 200,
+              height: 180,
               decoration: BoxDecoration(
                 color: AppColors.textColor,
                 image: DecorationImage(
-                  image: AssetImage(imagePath), // or NetworkImage
-                  fit: BoxFit.fitHeight, // covers entire container
+                  image: AssetImage(imagePath),
+                  fit: BoxFit.fitHeight, 
                 ),
               ),
             ),
@@ -43,14 +44,14 @@ class WidgetWithImage extends ImageWidget {
               color: Color(0xFF871A1C),
               padding: EdgeInsets.only(top: 2),
               width: MediaQuery.of(context).size.width,
-              height: 50,
+              height: 30,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     title,
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: AppColors.textColor,
                     ),

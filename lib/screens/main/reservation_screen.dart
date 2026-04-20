@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:movegui/screens/categories/resto_screen.dart';
+import 'package:movegui/screens/modules/resto_screen.dart';
 
 class ReservationScreen extends StatelessWidget{
   const ReservationScreen({super.key, required this.title, required this.navigatorKey});

@@ -131,6 +131,30 @@ abstract class AppLocalizations {
   /// **'Thank you for your message'**
   String get success_send_message_message;
 
+  /// No description provided for @success_registration_new_user.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account has been successfully created'**
+  String get success_registration_new_user;
+
+  /// No description provided for @success_login_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Login successful'**
+  String get success_login_message;
+
+  /// No description provided for @success_login_reset_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Lien envoyé avec Succes'**
+  String get success_login_reset_password;
+
+  /// No description provided for @login_forget_password_txt.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email address and we will send you a link to reset your password '**
+  String get login_forget_password_txt;
+
   /// No description provided for @error_send_mail_title.
   ///
   /// In en, this message translates to:
@@ -149,6 +173,30 @@ abstract class AppLocalizations {
   /// **'Please write your message.'**
   String get error_input_hint_message;
 
+  /// No description provided for @error_firebase_initialisation.
+  ///
+  /// In en, this message translates to:
+  /// **'FirebaseAuth initialization failed:'**
+  String get error_firebase_initialisation;
+
+  /// No description provided for @error_login_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Login failed'**
+  String get error_login_message;
+
+  /// No description provided for @label_login_facebook.
+  ///
+  /// In en, this message translates to:
+  /// **'Facebook'**
+  String get label_login_facebook;
+
+  /// No description provided for @label_login_google.
+  ///
+  /// In en, this message translates to:
+  /// **'Google'**
+  String get label_login_google;
+
   /// No description provided for @btn_close_label.
   ///
   /// In en, this message translates to:
@@ -160,6 +208,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Send'**
   String get btn_send_label;
+
+  /// No description provided for @btn_register_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Register'**
+  String get btn_register_label;
 
   /// No description provided for @form_contact_title.
   ///
@@ -322,6 +376,156 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Fast Food'**
   String get category_fast_food_name;
+
+  /// No description provided for @home_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home_title;
+
+  /// No description provided for @movegui_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Movegui'**
+  String get movegui_title;
+
+  /// No description provided for @command_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Command'**
+  String get command_title;
+
+  /// No description provided for @delivery_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivey'**
+  String get delivery_title;
+
+  /// No description provided for @courier_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Courier'**
+  String get courier_title;
+
+  /// No description provided for @pressing_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Dry Cleaning'**
+  String get pressing_title;
+
+  /// No description provided for @my_orders_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Mes Commandes'**
+  String get my_orders_title;
+
+  /// No description provided for @my_deliveries_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Mes Livraisons'**
+  String get my_deliveries_title;
+
+  /// No description provided for @profile_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profile_title;
+
+  /// No description provided for @navigation_menu_tooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Navigation Menu'**
+  String get navigation_menu_tooltip;
+
+  /// No description provided for @login_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get login_title;
+
+  /// No description provided for @register_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration'**
+  String get register_title;
+
+  /// No description provided for @forget_password_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgetten Password'**
+  String get forget_password_title;
+
+  /// No description provided for @label_login_forget_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgotten your password?'**
+  String get label_login_forget_password;
+
+  /// No description provided for @label_login.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get label_login;
+
+  /// No description provided for @label_login_connect_using.
+  ///
+  /// In en, this message translates to:
+  /// **'Or connect using'**
+  String get label_login_connect_using;
+
+  /// No description provided for @label_login_invite.
+  ///
+  /// In en, this message translates to:
+  /// **'Invité ?'**
+  String get label_login_invite;
+
+  /// No description provided for @label_login_new_user.
+  ///
+  /// In en, this message translates to:
+  /// **'Nouveau ?'**
+  String get label_login_new_user;
+
+  /// No description provided for @label_registration.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign-up'**
+  String get label_registration;
+
+  /// No description provided for @exception_login_message.
+  ///
+  /// In en, this message translates to:
+  /// **'The Supplied User credential is incorrect, Please check your email address and password'**
+  String get exception_login_message;
+
+  /// No description provided for @tooltip_sign_in_with_google.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Google'**
+  String get tooltip_sign_in_with_google;
+
+  /// No description provided for @tooltip_sign_in_with_facebook.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Facebook'**
+  String get tooltip_sign_in_with_facebook;
+
+  /// No description provided for @tooltip_sign_in.
+  ///
+  /// In en, this message translates to:
+  /// **'Clic here to Connect'**
+  String get tooltip_sign_in;
+
+  /// No description provided for @tooltip_forget_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Click here to reset password :)'**
+  String get tooltip_forget_password;
+
+  /// No description provided for @tooltip_registration.
+  ///
+  /// In en, this message translates to:
+  /// **'Cliquez ici pour vous enregistrer :)'**
+  String get tooltip_registration;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

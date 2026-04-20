@@ -1,43 +1,45 @@
+import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:movegui/consts/app_constants.dart';
-import 'package:movegui/models/restaurant_model.dart';
+import 'package:movegui/l10n/app_localizations.dart';
+import 'package:movegui/models/pressing_model.dart';
 import 'package:movegui/providers/shopping_provider.dart';
-import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:movegui/responsive.dart';
+import 'package:movegui/services/pressing_service.dart';
 import 'package:movegui/services/register_services.dart';
-import 'package:movegui/services/restaurants_service.dart';
-import 'package:movegui/widgets/menu/menu.dart';
+import 'package:movegui/services/title_manager.dart';
 import 'package:movegui/widgets/store/store_widget.dart';
 import 'package:provider/provider.dart';
 
-class RestoScreen extends StatefulWidget {
-  const RestoScreen({super.key, required this.navigatorKey});
-  final GlobalKey<NavigatorState> navigatorKey;
+class PressingScreen extends StatefulWidget {
+  final Function(String) onTitleChange;
+  const PressingScreen({super.key, required this.onTitleChange});
 
   @override
-  State<RestoScreen> createState() => _RestoScreenState();
+  State<StatefulWidget> createState() => PressingScreenState();
 }
 
-class _RestoScreenState extends State<RestoScreen> {
+class PressingScreenState extends State<PressingScreen> {
   late TextEditingController searchTextController;
-  List<RestaurantModel> restaurants = [];
-  late RestaurantsService restaurantsService;
-  final restaurantConstants = RestaurantConstants();
-  late int displayItem;
+  List<PressingModel> pressings = [];
+  late PressingService pressingService;
+  final pressingConstants = PressingConstants();
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.onTitleChange(AppLocalizations.of(context)!.pressing_title);
+    });
     searchTextController = TextEditingController();
-    restaurantsService = getIt<RestaurantsService>();
+    pressingService = getIt<PressingService>();
     initList();
     super.initState();
   }
 
   Future<void> initList() async {
-    final allRestaurants = await restaurantsService.allModels();
-    if (!mounted) return;
+    final allPressings = await pressingService.allModels();
     setState(() {
-      restaurants = allRestaurants;
+      pressings = allPressings;
     });
   }
 
@@ -45,11 +47,6 @@ class _RestoScreenState extends State<RestoScreen> {
   void dispose() {
     searchTextController.dispose();
     super.dispose();
-  }
-
-  getDistplayItemCount(BuildContext context) {
-    if (Responsive.isDesktop(context)) return 3;
-    return 1;
   }
 
   @override
@@ -60,20 +57,11 @@ class _RestoScreenState extends State<RestoScreen> {
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
-          //   appBar: MoveguiAppBar(title: restaurantConstants.getTitleName(), itemCount: shoppingProvider.itemCount, navigatorKey: ,),
-          drawer: MoveGuiMenu(navigatorKey: widget.navigatorKey),
           body: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Responsive.isDesktop(context) ? buildDesktop() : buildMobil()
+            child:
+                Responsive.isDesktop(context) ? buildDesktop() : buildMobil(),
           ),
-          /*
-        bottomNavigationBar:RootBottomNavigationBar(
-        currentIndex: 1,
-        onDestinationSelected: (index) {
-          Navigator.pop(context, index);
-        },
-      ),
-      */
         ),
       ),
     );
@@ -102,15 +90,15 @@ class _RestoScreenState extends State<RestoScreen> {
 
         Expanded(
           child: DynamicHeightGridView(
-            itemCount: restaurants.length,
+            itemCount: pressings.length,
             crossAxisCount: 1,
             mainAxisSpacing: 12,
             crossAxisSpacing: 12,
             builder: (context, index) {
               return StoreWidget(
-                model: restaurants[index],
-                catgory: AppConstants.CATEGORY_RESTAURANT,
-                navigatorKey: widget.navigatorKey,
+                model: pressings[index],
+                catgory: AppConstants.CATEGORY_PRESSING,
+                //      navigatorKey: widget.navigatorKey,
               );
             },
           ),
@@ -122,17 +110,18 @@ class _RestoScreenState extends State<RestoScreen> {
   Widget buildDesktop() {
     return Column(
       children: [
+        const SizedBox(height: 15),
         Expanded(
           child: DynamicHeightGridView(
-            itemCount: restaurants.length,
+            itemCount: pressings.length,
             crossAxisCount: 3,
             mainAxisSpacing: 12,
             crossAxisSpacing: 12,
             builder: (context, index) {
               return StoreWidget(
-                model: restaurants[index],
-                catgory: AppConstants.CATEGORY_RESTAURANT,
-                navigatorKey: widget.navigatorKey,
+                model: pressings[index],
+                catgory: AppConstants.CATEGORY_PRESSING,
+                // navigatorKey: widget.navigatorKey,
               );
             },
           ),

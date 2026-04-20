@@ -8,16 +8,17 @@ import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/services/pressing_service.dart';
 import 'package:movegui/services/register_services.dart';
 import 'package:movegui/widgets/custom_text_field.dart';
-import 'package:movegui/widgets/menu/menu.dart';
 import 'package:movegui/widgets/pressing/pressing_price_list.dart';
 import 'package:movegui/widgets/util/image_banner.dart';
 import 'package:provider/provider.dart';
 
 class PressingDetailScreen extends StatefulWidget {
   final PressingModel model;
-    final GlobalKey<NavigatorState> navigatorKey;
+   // final GlobalKey<NavigatorState> navigatorKey;
 
-  const PressingDetailScreen({super.key, required this.model, required this.navigatorKey});
+  const PressingDetailScreen({super.key, required this.model,
+ //  required this.navigatorKey
+   });
   @override
   State<StatefulWidget> createState() => PressingDetailScreenState();
 }
@@ -64,13 +65,6 @@ class PressingDetailScreenState extends State<PressingDetailScreen> {
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
-          /*
-          appBar: MoveguiAppBar(
-            title: widget.model.name,
-            itemCount: shoppingProvider.itemCount,
-          ),
-          */
-          drawer: MoveGuiMenu(navigatorKey: widget.navigatorKey,),
           body: Padding(
             padding: const EdgeInsets.all(8.0),
             child: SingleChildScrollView(

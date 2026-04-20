@@ -1,29 +1,25 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:movegui/consts/app_colors.dart';
+import 'package:movegui/consts/route_contants.dart';
 import 'package:movegui/consts/validator.dart';
-import 'package:movegui/screens/auth/forgot_password.dart';
-import 'package:movegui/screens/auth/register_screen.dart';
-import 'package:movegui/screens/main/home_screen.dart';
+import 'package:movegui/consts/widget_constants.dart';
+import 'package:movegui/l10n/app_localizations.dart';
+import 'package:movegui/models/button_item.dart';
 import 'package:movegui/services/my_app_functions.dart';
-import 'package:movegui/widgets/auth/google_btn.dart';
-import 'package:movegui/widgets/subtitle_text.dart';
+import 'package:movegui/widgets/app/separator_widget.dart';
+import 'package:movegui/widgets/auth/auth_link_widget.dart';
+import 'package:movegui/widgets/auth/other_registration_widget.dart';
+import 'package:movegui/widgets/auth/validation_button.dart';
+import 'package:movegui/widgets/util/input_email_widget.dart';
+import 'package:movegui/widgets/util/password_widget.dart';
 
 class LoginEmailPage extends StatefulWidget {
-  const LoginEmailPage({
-    super.key,
-    required this.onTitleChange,
-    required this.navigatorKey,
-  //  required this.observer,
-  //  required this.homeCanPop,
-  });
+  const LoginEmailPage({super.key, required this.onTitleChange});
 
   final Function(String) onTitleChange;
-  final GlobalKey<NavigatorState> navigatorKey;
- // final NavigatorObserver observer;
- // final ValueNotifier<bool> homeCanPop;
 
   @override
   State<StatefulWidget> createState() => LoginEmailPageState();
@@ -38,8 +34,7 @@ class LoginEmailPageState extends State<LoginEmailPage> {
 
   final _formkey = GlobalKey<FormState>();
   bool obscureText = true;
-  bool _isHoveringForgetText = false;
-  bool _isHoveringRegisterText = false;
+
   bool isloading = false;
   FirebaseAuth? auth;
 
@@ -47,9 +42,23 @@ class LoginEmailPageState extends State<LoginEmailPage> {
   void initState() {
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
-    // Focus Nodes
     _emailFocusNode = FocusNode();
     _passwordFocusNode = FocusNode();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.onTitleChange(AppLocalizations.of(context)!.login_title);
+    });
+    try {
+      auth = FirebaseAuth.instance;
+    } catch (e) {
+      MyAppFunctions.showErrorOrWarningDialog(
+        context: context,
+        subtitle:
+            AppLocalizations.of(
+              context,
+            )!.error_firebase_initialisation.toString(),
+        fct: () {},
+      );
+    }
     super.initState();
   }
 
@@ -58,46 +67,57 @@ class LoginEmailPageState extends State<LoginEmailPage> {
     if (mounted) {
       _emailController.dispose();
       _passwordController.dispose();
-      // Focus Nodes
       _emailFocusNode.dispose();
       _passwordFocusNode.dispose();
     }
     super.dispose();
   }
 
-  Future<void> _loginFct() async {
+  Future<void> _loginFct(BuildContext context, ButtonItem item) async {
     final isValid = _formkey.currentState!.validate();
     FocusScope.of(context).unfocus();
 
-    if (isValid) {
+    if (isValid && item.enabled) {
       try {
         setState(() {
           isloading = true;
         });
-        await auth?.signInWithEmailAndPassword(
+
+        final userCredential = await auth?.signInWithEmailAndPassword(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
         );
-        Fluttertoast.showToast(
-          msg: "An account has be created",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder:
-                (context) => HomeScreen(onTitleChange: widget.onTitleChange, navigatorKey: widget.navigatorKey,),
-          ),
-        );
-      } catch (error) {
+
+        if (userCredential?.user != null) {
+          Fluttertoast.showToast(
+            msg: AppLocalizations.of(context)!.success_login_message,
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ProfileScreen()),
+          );
+        } else {
+          Fluttertoast.showToast(
+            msg: AppLocalizations.of(context)!.error_login_message,
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
+        }
+      } on FirebaseAuthException {
         MyAppFunctions.showErrorOrWarningDialog(
           context: context,
-          subtitle: error.toString(),
+          subtitle: AppLocalizations.of(context)!.exception_login_message,
           fct: () {},
         );
       } finally {
@@ -112,203 +132,51 @@ class LoginEmailPageState extends State<LoginEmailPage> {
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      /*
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(0.0),
-          child: SingleChildScrollView(
-            */
       child: Column(
         children: [
-          //  AppImage(),
           Form(
             key: _formkey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TextFormField(
-                  controller: _emailController,
-                  focusNode: _emailFocusNode,
-                  textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                    hintText: "Email address",
-                    prefixIcon: Icon(IconlyLight.message),
-                  ),
-                  onFieldSubmitted: (value) {
-                    FocusScope.of(context).requestFocus(_passwordFocusNode);
-                  },
-                  validator: (value) {
-                    return MyValidators.emailValidator(value);
-                  },
-                ),
-                const SizedBox(height: 16.0),
-                TextFormField(
+                InputEmailWidget(nextFocusNode: _passwordFocusNode, emailController: _emailController, emailFocusNode: _emailFocusNode,),
+                SeparatorWidget(height: WidgetConstants.sepWidgetHeight * 2),
+                PasswordWidget(
+                  passwordController: _passwordController,
+                  passwordFocusNode: _passwordFocusNode,
                   obscureText: obscureText,
-                  controller: _passwordController,
-                  focusNode: _passwordFocusNode,
-                  textInputAction: TextInputAction.done,
-                  keyboardType: TextInputType.visiblePassword,
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          obscureText = !obscureText;
-                        });
-                      },
-                      icon: Icon(
-                        obscureText ? Icons.visibility : Icons.visibility_off,
-                      ),
-                    ),
-                    hintText: "***********",
-                    prefixIcon: const Icon(IconlyLight.lock),
-                  ),
-                  onFieldSubmitted: (value) async {
-                    await _loginFct();
-                  },
-                  validator: (value) {
-                    return MyValidators.passwordValidator(value);
+                  onPressObscur: () {
+                    setState(() {
+                      obscureText = !obscureText;
+                    });
                   },
                 ),
-                const SizedBox(height: 16.0),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: MouseRegion(
-                    onEnter:
-                        (_) => setState(() => _isHoveringForgetText = true),
-                    onExit:
-                        (_) => setState(() => _isHoveringForgetText = false),
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ForgotPasswordScreen(),
-                          ),
-                        );
-                      },
-                      child: SubtitleTextWidget(
-                        label: "Mot de pass oublier?",
-                        fontStyle: FontStyle.italic,
-                        textDecoration: TextDecoration.underline,
-                        color:
-                            _isHoveringForgetText
-                                ? AppColors.selectionColor
-                                : AppColors.backgroundColor,
-                      ),
+                SeparatorWidget(height: WidgetConstants.sepWidgetHeight * 0.5),
+                AuthLinkWidget(onTitleChange: widget.onTitleChange),
+                SeparatorWidget(height: WidgetConstants.sepWidgetHeight * 0.5),
+
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: WidgetConstants.sepWidgetHeight,
+                    right: WidgetConstants.sepWidgetHeight,
+                  ),
+                  child: ValidationButton(
+                    fn: _loginFct,
+                    buttonItem: ButtonItem(
+                      AppLocalizations.of(context)!.label_login,
+                      AppLocalizations.of(context)!.tooltip_sign_in,
+                      true,
+                      routeName: RouteContants.PROFILE_ROUTE,
                     ),
                   ),
                 ),
-                const SizedBox(height: 16.0),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.all(6.0),
-                      backgroundColor: AppColors.backgroundColor,
 
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6.0),
-                      ),
-                    ),
-                    icon: const Icon(Icons.login, color: AppColors.textColor),
-                    label: const Text(
-                      "Login",
-                      style: TextStyle(
-                        color: AppColors.textColor,
-                        fontSize: 18,
-                      ),
-                    ),
-                    onPressed: () async {
-                      await _loginFct();
-                    },
-                  ),
-                ),
-
-                const SizedBox(height: 16.0),
-
-                SubtitleTextWidget(label: "Or connect using".toUpperCase()),
-                const SizedBox(height: 4.0),
-                SizedBox(
-                  //     height: kBottomNavigationBarHeight + 10,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: FittedBox(child: GoogleButton()),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.all(6.0),
-                            backgroundColor: AppColors.backgroundColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
-                          ),
-                          child: const Text(
-                            "Invite ?",
-                            style: TextStyle(
-                              color: AppColors.textColor,
-                              fontSize: 14,
-                            ),
-                          ),
-                          onPressed: () async {},
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 16.0),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: const SubtitleTextWidget(label: "Nouveau ?"),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: MouseRegion(
-                    onEnter:
-                        (_) => setState(() => _isHoveringRegisterText = true),
-                    onExit:
-                        (_) => setState(() => _isHoveringRegisterText = false),
-                    child: TextButton(
-                      child: SubtitleTextWidget(
-                        label: "Enregistrement",
-                        fontStyle: FontStyle.italic,
-                        textDecoration: TextDecoration.underline,
-                        color:
-                            _isHoveringRegisterText
-                                ? AppColors.selectionColor
-                                : AppColors.backgroundColor,
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder:
-                                (context) => RegisterScreenMovgui(onTitleChange: widget.onTitleChange, navigatorKey: widget.navigatorKey,),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
+                OtherRegistrationWidget(),
               ],
             ),
           ),
         ],
       ),
     );
-    /*
-        ),
-      ),
-    );
-    */
   }
 }

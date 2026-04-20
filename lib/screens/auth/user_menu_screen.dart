@@ -6,23 +6,17 @@ import 'package:movegui/widgets/menu/menuitem.dart';
 class UserMenuScreen extends StatelessWidget {
   final GlobalKey<NavigatorState> navigatorKey;
   final Function(String) onTitleChange;
-  final ValueNotifier<bool> barCanPop;
 
   const UserMenuScreen({
     super.key,
     required this.navigatorKey,
     required this.onTitleChange,
-    required this.barCanPop,
   });
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<MenuItem>(
-      offset: const Offset(0, 50), 
-      icon: const Icon(
-        Icons.person,
-        // size: 50,
-        color: Color(0xFFFFFFFF),
-      ), //use this icon
+      offset: const Offset(0, 50),
+      icon: const Icon(Icons.person, color: Color(0xFFFFFFFF)),
       onSelected: (MenuItem item) {
         navigatorKey.currentState?.pushNamed(item.route);
       },
@@ -33,13 +27,18 @@ class UserMenuScreen extends StatelessWidget {
       itemBuilder:
           (BuildContext context) => <PopupMenuEntry<MenuItem>>[
             PopupMenuItem<MenuItem>(
-             // value: const MenuItem(title: 'Login', route: '/login'),
-               child: MenuItemWidget(title: 'Login', route: '/login', navigatorKey: navigatorKey, ),
-
+              child: MenuItemWidget(
+                title: 'Login',
+                route: '/login',
+                navigatorKey: navigatorKey,
+              ),
             ),
-             PopupMenuItem<MenuItem>(
-             // value: MenuItem(title: 'Enregistrer', route: '/register'),
-              child: MenuItemWidget(title: 'Enregistrer', route: 'register', navigatorKey: navigatorKey,),
+            PopupMenuItem<MenuItem>(
+              child: MenuItemWidget(
+                title: 'Enregistrer',
+                route: '/register',
+                navigatorKey: navigatorKey,
+              ),
             ),
           ],
     );

@@ -14,15 +14,19 @@ class StoreItem
         {
   final StoreModel model;
   final int category;
-    final GlobalKey<NavigatorState> navigatorKey;
-  const StoreItem({super.key, required this.model, required this.category, required this.navigatorKey});
+   // final GlobalKey<NavigatorState> navigatorKey;
+  const StoreItem({super.key, required this.model, required this.category, 
+  // required this.navigatorKey
+  });
 
   void _onPressedImage(BuildContext context, int category, String title) {
     switch (category) {
       case AppConstants.CATEGORY_RESTAURANT:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => RestoCategoryScreen(navigatorKey: navigatorKey,)),
+          MaterialPageRoute(builder: (context) => RestoCategoryScreen(
+          //  navigatorKey: navigatorKey,
+            )),
         );
         break;
       case AppConstants.CATEGORY_PRESSING:
@@ -31,7 +35,9 @@ class StoreItem
           MaterialPageRoute(
             builder:
                 (context) =>
-                    PressingDetailScreen(model: model as PressingModel, navigatorKey: navigatorKey,),
+                    PressingDetailScreen(model: model as PressingModel, 
+                  //  navigatorKey: navigatorKey,
+                    ),
           ),
         );
         break;

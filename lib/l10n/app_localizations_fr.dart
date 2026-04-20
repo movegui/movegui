@@ -27,6 +27,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get success_send_message_message => 'Merci pour votre message';
 
   @override
+  String get success_registration_new_user => 'Votre Compte a été créer avec succes';
+
+  @override
+  String get success_login_message => 'Connexion réussie';
+
+  @override
+  String get success_login_reset_password => 'Lien envoyé avec Succes';
+
+  @override
+  String get login_forget_password_txt => 'Saisissez votre adresse e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe ';
+
+  @override
   String get error_send_mail_title => 'Erreur d\'Authentification';
 
   @override
@@ -36,10 +48,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get error_input_hint_message => 'Veuillez entrer votre message.';
 
   @override
+  String get error_firebase_initialisation => 'Erreur Initialisation FirebaseAuth ';
+
+  @override
+  String get error_login_message => 'Échec de la connexion';
+
+  @override
+  String get label_login_facebook => 'Facebook';
+
+  @override
+  String get label_login_google => 'Google';
+
+  @override
   String get btn_close_label => 'Fermer';
 
   @override
   String get btn_send_label => 'Envoyer';
+
+  @override
+  String get btn_register_label => 'Enregistrer';
 
   @override
   String get form_contact_title => 'Formulaire de Contact:';
@@ -121,4 +148,79 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get category_fast_food_name => 'Fast Food';
+
+  @override
+  String get home_title => 'Accueil';
+
+  @override
+  String get movegui_title => 'Movegui';
+
+  @override
+  String get command_title => 'Commande';
+
+  @override
+  String get delivery_title => 'Livraison';
+
+  @override
+  String get courier_title => 'Courses';
+
+  @override
+  String get pressing_title => 'Pressing';
+
+  @override
+  String get my_orders_title => 'Mes Commandes';
+
+  @override
+  String get my_deliveries_title => 'Mes Livraisons';
+
+  @override
+  String get profile_title => 'Profil';
+
+  @override
+  String get navigation_menu_tooltip => 'Navigation Menu';
+
+  @override
+  String get login_title => 'Connexion';
+
+  @override
+  String get register_title => 'Enregistrement';
+
+  @override
+  String get forget_password_title => 'Mot de pass Oublié';
+
+  @override
+  String get label_login_forget_password => 'Mot de pass oublier?';
+
+  @override
+  String get label_login => 'se connecter';
+
+  @override
+  String get label_login_connect_using => 'Ou connectez-vous via';
+
+  @override
+  String get label_login_invite => 'Invité ?';
+
+  @override
+  String get label_login_new_user => 'Nouveau ?';
+
+  @override
+  String get label_registration => 'Enregistrez-vous';
+
+  @override
+  String get exception_login_message => 'Les identifiants utilisateur fournis sont incorrects, veuillez verifier votre email et mot de pass';
+
+  @override
+  String get tooltip_sign_in_with_google => 'Se connecter avec Google';
+
+  @override
+  String get tooltip_sign_in_with_facebook => 'Se connecter avec Facebook';
+
+  @override
+  String get tooltip_sign_in => 'Cliquez ici pour se connecter';
+
+  @override
+  String get tooltip_forget_password => 'Cliquez Ici pour réinitialiser votre mot de pass :)';
+
+  @override
+  String get tooltip_registration => 'Cliquez ici pour vous enregistrer :)';
 }

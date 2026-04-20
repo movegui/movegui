@@ -19,7 +19,6 @@ class MoveguiScreenState extends State<MoveguiScreen> {
   @override
   void initState() {
     super.initState();
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.onTitleChange(TitleManager.moveguiTitle);
     });

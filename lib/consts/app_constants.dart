@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movegui/l10n/app_localizations.dart';
-import 'package:movegui/widgets/category/category_item.dart';
+import 'package:movegui/models/category_item.dart';
 import 'package:movegui/widgets/web/tab_item.dart';
 
 import '../services/assets_manager.dart';
@@ -16,6 +16,7 @@ class AppConstants {
 
   static const name = "MoveGui";
   static const Adresse = "Ratoma";
+
   /*
   static const search = "Rechercher";
   static const LABEL_ADRESS = "Adresse";
@@ -70,20 +71,28 @@ class AppConstants {
     ),
   ];
 
-  static List<CategoryItem> categoriesItems(AppLocalizations localizations) => [
+  static List<CategoryItem> allCategoriesItems(
+    AppLocalizations localizations,
+  ) => [
     CategoryItem(
+      id: 'MOUV_001',
+      createdAt: DateTime.now(),
       name: localizations.category_pressing_name,
       imageUrl: AssetsManager.pressing1Image,
       routeName: '/pressing',
       enabled: true,
     ),
     CategoryItem(
+      id: 'MOUV_002',
+      createdAt: DateTime.now(),
       name: localizations.category_restaurant_name,
       imageUrl: AssetsManager.resto1Image,
       routeName: '/restaurant',
       enabled: false,
     ),
     CategoryItem(
+      id: 'MOUV_003',
+      createdAt: DateTime.now(),
       name: localizations.category_patisserie_name,
       imageUrl: AssetsManager.pastry,
       routeName: '/pastry',
@@ -91,51 +100,246 @@ class AppConstants {
     ),
 
     CategoryItem(
+      id: 'MOUV_004',
+      createdAt: DateTime.now(),
       name: localizations.category_supermarche_name,
       imageUrl: AssetsManager.super_market,
       routeName: '/super_markt',
       enabled: false,
     ),
     CategoryItem(
+      id: 'MOUV_005',
+      createdAt: DateTime.now(),
       name: localizations.category_pharmacy_name,
       imageUrl: AssetsManager.pharmacy,
       routeName: '/pharmacy',
       enabled: false,
     ),
     CategoryItem(
+      id: 'MOUV_006',
+      createdAt: DateTime.now(),
       name: localizations.category_beauty_name,
       imageUrl: AssetsManager.beauty,
       routeName: '/beauty',
       enabled: false,
     ),
     CategoryItem(
+      id: 'MOUV_007',
+      createdAt: DateTime.now(),
       name: localizations.categroy_store_name,
       imageUrl: AssetsManager.store,
       routeName: '/store',
       enabled: false,
     ),
     CategoryItem(
+      id: 'MOUV_008',
+      createdAt: DateTime.now(),
       name: localizations.category_shop_name,
       imageUrl: AssetsManager.shop,
       routeName: '/shop',
       enabled: false,
     ),
     CategoryItem(
+      id: 'MOUV_009',
+      createdAt: DateTime.now(),
       name: localizations.category_wholesaler_name,
       imageUrl: AssetsManager.wholesaler,
       routeName: '/wholesaler',
       enabled: false,
     ),
     CategoryItem(
+      id: 'MOUV_0010',
+      createdAt: DateTime.now(),
       name: localizations.category_profession_name,
       imageUrl: AssetsManager.Profession,
       routeName: '/profession',
       enabled: false,
     ),
     CategoryItem(
+      id: 'MOUV_0011',
+      createdAt: DateTime.now(),
       name: localizations.category_fast_food_name,
       imageUrl: AssetsManager.fast_food,
       routeName: '/fast_food',
+      enabled: false,
+    ),
+            CategoryItem(
+      id: 'MOUV_0011',
+      createdAt: DateTime.now(),
+      name: localizations.category_fast_food_name,
+      imageUrl: AssetsManager.fast_food,
+      routeName: '/fast_food',
+      enabled: false,
+    ),
+  ];
+
+  static List<CategoryItem> commadCategoriesItems(
+    AppLocalizations localizations,
+  ) => [
+    CategoryItem(
+      id: 'MOUV_002',
+      createdAt: DateTime.now(),
+      name: localizations.category_restaurant_name,
+      imageUrl: AssetsManager.resto1Image,
+      routeName: '/restaurant',
+      enabled: false,
+    ),
+    CategoryItem(
+      id: 'MOUV_003',
+      createdAt: DateTime.now(),
+      name: localizations.category_patisserie_name,
+      imageUrl: AssetsManager.pastry,
+      routeName: '/pastry',
+      enabled: false,
+    ),
+
+    CategoryItem(
+      id: 'MOUV_0011',
+      createdAt: DateTime.now(),
+      name: localizations.category_fast_food_name,
+      imageUrl: AssetsManager.fast_food,
+      routeName: '/fast_food',
+      enabled: false,
+    ),
+        CategoryItem(
+      id: 'MOUV_0011',
+      createdAt: DateTime.now(),
+      name: localizations.category_fast_food_name,
+      imageUrl: AssetsManager.fast_food,
+      routeName: '/fast_food',
+      enabled: false,
+    ),
+    
+  ];
+
+
+    static List<CategoryItem> deliveryCategoriesItems(
+    AppLocalizations localizations,
+  ) => [
+    CategoryItem(
+      id: 'MOUV_002',
+      createdAt: DateTime.now(),
+      name: localizations.category_restaurant_name,
+      imageUrl: AssetsManager.resto1Image,
+      routeName: '/restaurant',
+      enabled: false,
+    ),
+    CategoryItem(
+      id: 'MOUV_003',
+      createdAt: DateTime.now(),
+      name: localizations.category_patisserie_name,
+      imageUrl: AssetsManager.pastry,
+      routeName: '/pastry',
+      enabled: false,
+    ),
+    CategoryItem(
+      id: 'MOUV_0011',
+      createdAt: DateTime.now(),
+      name: localizations.category_fast_food_name,
+      imageUrl: AssetsManager.fast_food,
+      routeName: '/fast_food',
+      enabled: false,
+    ),
+    CategoryItem(
+      id: 'MOUV_005',
+      createdAt: DateTime.now(),
+      name: localizations.category_pharmacy_name,
+      imageUrl: AssetsManager.pharmacy,
+      routeName: '/pharmacy',
+      enabled: false,
+    ),
+    CategoryItem(
+      id: 'MOUV_006',
+      createdAt: DateTime.now(),
+      name: localizations.category_beauty_name,
+      imageUrl: AssetsManager.beauty,
+      routeName: '/beauty',
+      enabled: false,
+    ),
+    CategoryItem(
+      id: 'MOUV_007',
+      createdAt: DateTime.now(),
+      name: localizations.categroy_store_name,
+      imageUrl: AssetsManager.store,
+      routeName: '/store',
+      enabled: false,
+    ),
+    CategoryItem(
+      id: 'MOUV_008',
+      createdAt: DateTime.now(),
+      name: localizations.category_shop_name,
+      imageUrl: AssetsManager.shop,
+      routeName: '/shop',
+      enabled: false,
+    ),
+    CategoryItem(
+      id: 'MOUV_004',
+      createdAt: DateTime.now(),
+      name: localizations.category_supermarche_name,
+      imageUrl: AssetsManager.super_market,
+      routeName: '/super_markt',
+      enabled: false,
+    ),
+  ];
+
+  static List<CategoryItem> coursesCategoriesItems(
+    AppLocalizations localizations,
+  ) => [
+
+    CategoryItem(
+      id: 'MOUV_001',
+      createdAt: DateTime.now(),
+      name: localizations.category_pressing_name,
+      imageUrl: AssetsManager.pressing1Image,
+      routeName: '/pressing',
+      enabled: true,
+    ),
+        CategoryItem(
+      id: 'MOUV_005',
+      createdAt: DateTime.now(),
+      name: localizations.category_pharmacy_name,
+      imageUrl: AssetsManager.pharmacy,
+      routeName: '/pharmacy',
+      enabled: false,
+    ),
+        CategoryItem(
+      id: 'MOUV_006',
+      createdAt: DateTime.now(),
+      name: localizations.category_beauty_name,
+      imageUrl: AssetsManager.beauty,
+      routeName: '/beauty',
+      enabled: false,
+    ),
+        CategoryItem(
+      id: 'MOUV_007',
+      createdAt: DateTime.now(),
+      name: localizations.categroy_store_name,
+      imageUrl: AssetsManager.store,
+      routeName: '/store',
+      enabled: false,
+    ),
+    CategoryItem(
+      id: 'MOUV_008',
+      createdAt: DateTime.now(),
+      name: localizations.category_shop_name,
+      imageUrl: AssetsManager.shop,
+      routeName: '/shop',
+      enabled: false,
+    ),
+    CategoryItem(
+      id: 'MOUV_004',
+      createdAt: DateTime.now(),
+      name: localizations.category_supermarche_name,
+      imageUrl: AssetsManager.super_market,
+      routeName: '/super_markt',
+      enabled: false,
+    ),
+    CategoryItem(
+      id: 'MOUV_0010',
+      createdAt: DateTime.now(),
+      name: localizations.category_profession_name,
+      imageUrl: AssetsManager.Profession,
+      routeName: '/profession',
       enabled: false,
     ),
   ];

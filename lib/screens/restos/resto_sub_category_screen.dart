@@ -1,24 +1,38 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:movegui/screens/inner_screen/product_screen.dart';
+import 'package:movegui/consts/app_colors.dart';
+import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/services/assets_manager.dart';
+import 'package:movegui/widgets/error/message_widget.dart';
 import 'package:movegui/widgets/shared/widget_with_image.dart';
 
 class RestoSubCategoryScreen extends StatelessWidget {
-  const RestoSubCategoryScreen({super.key, required this.navigatorKey});
-  final GlobalKey<NavigatorState> navigatorKey;
+  const RestoSubCategoryScreen({super.key,
+   // required this.navigatorKey
+   });
+  // final GlobalKey<NavigatorState> navigatorKey;
 
   void _onPressedImage(
     BuildContext context,
     String routeName,
     String title,
     bool enabled,
+  //  final GlobalKey<NavigatorState>? navigatorkey
   ) {
     if (enabled)
-      Navigator.push(
+    /*
+      if(navigatorkey != null)
+        navigatorkey.currentState?.pushNamed(routeName);
+      else 
+      */
+        Navigator.pushNamed(context, routeName);
+    else
+      MessageWidget.errorMessage(
         context,
-        MaterialPageRoute(
-          builder: (context) => ProductScreen(navigatorKey: navigatorKey),
-        ),
+        AppLocalizations.of(context)!.deactivate_button_title,
+        AppLocalizations.of(context)!.deactivate_button_message,
+        Icon(Icons.error, color: AppColors.error),
+        FlushbarPosition.TOP,
       );
   }
 
@@ -36,6 +50,7 @@ class RestoSubCategoryScreen extends StatelessWidget {
               imagePath: AssetsManager.category1Image,
               action: _onPressedImage,
               enabled: false,
+            //  navigatorkey: null,
             ),
             WidgetWithImage(
               title: 'Burger',
@@ -43,6 +58,7 @@ class RestoSubCategoryScreen extends StatelessWidget {
               imagePath: AssetsManager.fast_food,
               action: _onPressedImage,
               enabled: false,
+             // navigatorkey: null,
             ),
             WidgetWithImage(
               title: 'Sandwisch',
@@ -50,6 +66,7 @@ class RestoSubCategoryScreen extends StatelessWidget {
               imagePath: AssetsManager.category3Image,
               action: _onPressedImage,
               enabled: false,
+            //  navigatorkey: null,
             ),
             WidgetWithImage(
               title: 'Vegan',
@@ -57,6 +74,7 @@ class RestoSubCategoryScreen extends StatelessWidget {
               imagePath: AssetsManager.category4Image,
               action: _onPressedImage,
               enabled: false,
+            //  navigatorkey: null,
             ),
             WidgetWithImage(
               title: 'BBQ',
@@ -64,6 +82,7 @@ class RestoSubCategoryScreen extends StatelessWidget {
               imagePath: AssetsManager.category5Image,
               action: _onPressedImage,
               enabled: false,
+           //   navigatorkey: null,
             ),
           ],
         ),

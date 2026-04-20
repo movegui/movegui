@@ -3,14 +3,15 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/screens/restos/resto_sub_category_screen.dart';
-import 'package:movegui/widgets/menu/menu.dart';
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:movegui/widgets/title_text.dart';
 import 'package:provider/provider.dart';
 
 class RestoCategoryScreen extends StatefulWidget {
-  const RestoCategoryScreen({super.key, required this.navigatorKey});
-    final GlobalKey<NavigatorState> navigatorKey;
+  const RestoCategoryScreen({super.key, 
+  // required this.navigatorKey
+  });
+  //  final GlobalKey<NavigatorState> navigatorKey;
 
   @override
   State<RestoCategoryScreen> createState() => _SearchScreenState();
@@ -41,8 +42,6 @@ class _SearchScreenState extends State<RestoCategoryScreen> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-       //      appBar: MoveguiAppBar(title: 'Search Category', itemCount: shoppingProvider.itemCount,),
-        drawer: MoveGuiMenu(navigatorKey: widget.navigatorKey,),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -83,7 +82,9 @@ class _SearchScreenState extends State<RestoCategoryScreen> {
                     mainAxisSpacing: 12,
                     crossAxisSpacing: 12,
                     builder: (context, index) {
-                      return RestoSubCategoryScreen(navigatorKey: widget.navigatorKey,);
+                      return RestoSubCategoryScreen(
+                    //  navigatorKey: widget.navigatorKey,
+                      );
                     },
                     itemCount: 3,
                     crossAxisCount: 1),

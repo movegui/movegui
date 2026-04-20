@@ -1,9 +1,20 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:movegui/consts/app_colors.dart';
-import 'package:movegui/consts/validator.dart';
+import 'package:movegui/consts/route_contants.dart';
+import 'package:movegui/consts/widget_constants.dart';
+import 'package:movegui/l10n/app_localizations.dart';
+import 'package:movegui/models/button_item.dart';
+import 'package:movegui/services/my_app_functions.dart';
+import 'package:movegui/widgets/auth/opt_screen.dart';
+import 'package:movegui/widgets/auth/validation_button.dart';
+import 'package:movegui/widgets/util/input_phone_widget.dart';
 
 class LoginPhoneNumberPage extends StatefulWidget {
-  const LoginPhoneNumberPage({super.key});
+  const LoginPhoneNumberPage({super.key, required this.onTitleChange});
+  
+  final Function(String) onTitleChange;
 
   @override
   State<LoginPhoneNumberPage> createState() => LoginPhoneNumberPageState();
@@ -14,12 +25,29 @@ class LoginPhoneNumberPageState extends State<LoginPhoneNumberPage> {
   late final FocusNode _phoneNumberFocusNode;
 
   final _formkey = GlobalKey<FormState>();
+  bool isloading = false;
+  FirebaseAuth? auth;
 
   @override
   void initState() {
     _phoneNumberController = TextEditingController();
-    // Focus Nodes
     _phoneNumberFocusNode = FocusNode();
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.onTitleChange(AppLocalizations.of(context)!.login_title);
+    });
+    try {
+      auth = FirebaseAuth.instance;
+    } catch (e) {
+      MyAppFunctions.showErrorOrWarningDialog(
+        context: context,
+        subtitle:
+            AppLocalizations.of(
+              context,
+            )!.error_firebase_initialisation.toString(),
+        fct: () {},
+      );
+    }
+
     super.initState();
   }
 
@@ -27,15 +55,74 @@ class LoginPhoneNumberPageState extends State<LoginPhoneNumberPage> {
   void dispose() {
     if (mounted) {
       _phoneNumberController.dispose();
-      // Focus Nodes
       _phoneNumberFocusNode.dispose();
     }
     super.dispose();
   }
 
-  Future<void> _loginFct() async {
-    //   final isValid = _formkey.currentState!.validate();
+  String? verificationId;
+
+  Future<void> _loginFct(BuildContext context, ButtonItem item) async {
+    final isValid = _formkey.currentState!.validate();
     FocusScope.of(context).unfocus();
+
+    if (isValid && item.enabled) {
+      try {
+        setState(() {
+          isloading = true;
+        });
+        if (kIsWeb) {
+          ConfirmationResult? confirmationResult = await auth
+              ?.signInWithPhoneNumber(_phoneNumberController.text);
+
+          final resultCode = await confirmationResult?.confirm('123456');
+          if (resultCode?.user != null) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => ProfileScreen()),
+            );
+          }
+        } else {
+          // 📱 MOBILE (ton code actuel)
+          final confirmationResult = await auth?.verifyPhoneNumber(
+            phoneNumber: _phoneNumberController.text,
+            verificationCompleted: (PhoneAuthCredential credential) async {
+              await auth?.signInWithCredential(credential);
+            },
+            verificationFailed: (FirebaseAuthException e) {
+              print("Error: ${e.message}");
+            },
+            codeSent: (String verId, int? resendToken) {
+              setState(() {
+                verificationId = verId;
+              });
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder:
+                      (_) => OTPScreen(
+                        verificationId: verId,
+                        confirmationResult: null,
+                      ),
+                ),
+              );
+            },
+            codeAutoRetrievalTimeout: (String verId) {
+              verificationId = verId;
+            },
+          );
+        }
+      } catch (error) {
+        MyAppFunctions.showErrorOrWarningDialog(
+          context: context,
+          subtitle: error.toString(),
+          fct: () {},
+        );
+      } finally {
+        isloading = false;
+      }
+    }
   }
 
   @override
@@ -44,74 +131,31 @@ class LoginPhoneNumberPageState extends State<LoginPhoneNumberPage> {
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      /*
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(0.0),
-          child: SingleChildScrollView(
-            */
       child: Column(
         children: [
-          /*
-                const AppNameTextWidget(
-                  fontSize: 40,
-                ),
-                */
-          //  AppImage(),
-
-          /*
-                const Align(
-                    alignment: Alignment.centerLeft,
-                    child: TitlesTextWidget(label: "Welcome back!")),
-                const SizedBox(
-                  height: 16,
-                ),
-                */
           Form(
             key: _formkey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TextFormField(
-                  controller: _phoneNumberController,
-                  focusNode: _phoneNumberFocusNode,
-                  textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.phone,
-                  decoration: const InputDecoration(
-                    hintText: "00224 68 214 ",
-                    prefixIcon: Icon(Icons.phone),
-                  ),
-                  onFieldSubmitted: (value) {
-                    FocusScope.of(context).requestFocus(_phoneNumberFocusNode);
-                  },
-                  validator: (value) {
-                    return MyValidators.phoneNumberValidator(value);
-                  },
+                InputPhoneWidget(
+                  phoneController: _phoneNumberController,
+                  phoneFocusNode: _phoneNumberFocusNode,
+                  nextFocusNode: _phoneNumberFocusNode,
                 ),
-                const SizedBox(height: 16.0),
-
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.all(6.0),
-                      backgroundColor: AppColors.backgroundColor,
-
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6.0),
-                      ),
+                              Padding(
+                  padding: const EdgeInsets.only(
+                    left: WidgetConstants.sepWidgetHeight,
+                    right: WidgetConstants.sepWidgetHeight,
+                  ),
+                  child: ValidationButton(
+                    fn: _loginFct,
+                    buttonItem: ButtonItem(
+                      AppLocalizations.of(context)!.label_login,
+                      AppLocalizations.of(context)!.tooltip_sign_in,
+                      true,
+                      routeName: RouteContants.PROFILE_ROUTE,
                     ),
-                    icon: const Icon(Icons.login, color: AppColors.textColor),
-                    label: const Text(
-                      "Login",
-                      style: TextStyle(
-                        color: AppColors.textColor,
-                        fontSize: 18,
-                      ),
-                    ),
-                    onPressed: () async {
-                      await _loginFct();
-                    },
                   ),
                 ),
               ],
@@ -120,10 +164,5 @@ class LoginPhoneNumberPageState extends State<LoginPhoneNumberPage> {
         ],
       ),
     );
-    /*
-        ),
-      ),
-    );
-  */
   }
 }

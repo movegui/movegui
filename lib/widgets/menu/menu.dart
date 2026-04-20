@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/services/title_manager.dart';
 import 'package:movegui/widgets/menu/menu_item_widget.dart';
 
 class MoveGuiMenu extends StatelessWidget {
-  const MoveGuiMenu({super.key, required this.navigatorKey});
+  const MoveGuiMenu({super.key,
+   required this.navigatorKey
+   });
   final GlobalKey<NavigatorState> navigatorKey;
 
   @override
@@ -21,35 +24,28 @@ class MoveGuiMenu extends StatelessWidget {
           ),
           ListTile(
             title: MenuItemWidget(
-              title: TitleManager.homeTitle,
+              title: AppLocalizations.of(context)!.home_title,
               route: '/',
               navigatorKey: navigatorKey,
             ),
           ),
           ListTile(
             title: MenuItemWidget(
-              title: TitleManager.reservationTitle,
-              route: 'reservation',
-              navigatorKey: navigatorKey,
-            ),
-          ),
-          ListTile(
-            title: MenuItemWidget(
-              title: TitleManager.commandTitle,
+              title: AppLocalizations.of(context)!.command_title,
               route: 'commande',
               navigatorKey: navigatorKey,
             ),
           ),
           ListTile(
             title: MenuItemWidget(
-              title: TitleManager.livraisonTitle,
+              title: AppLocalizations.of(context)!.delivery_title,
               route: 'to_deliver',
               navigatorKey: navigatorKey,
             ),
           ),
           ListTile(
             title: MenuItemWidget(
-              title: TitleManager.moveguiTitle,
+              title: AppLocalizations.of(context)!.movegui_title,
               route: 'movegui',
               navigatorKey: navigatorKey,
             ),
@@ -78,13 +74,17 @@ class SocialMenu extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: MenuItemWidget(title: 'Facebook', route: 'facebook', navigatorKey: navigatorKey,),
+            title: MenuItemWidget(title: 'Facebook', route: 'facebook', 
+            navigatorKey: navigatorKey
+            ),
             onTap: () {
               // Handle item tap
             },
           ),
           ListTile(
-            title: MenuItemWidget(title: 'Instagramm', route: 'instagramm', navigatorKey: navigatorKey,),
+            title: MenuItemWidget(title: 'Instagramm', route: 'instagramm', 
+            navigatorKey: navigatorKey,
+            ),
             onTap: () {
               // Handle item tap
             },
@@ -113,13 +113,17 @@ class InfoMenu extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: MenuItemWidget(title: 'Contact', route: 'contact', navigatorKey: navigatorKey,),
+            title: MenuItemWidget(title: 'Contact', route: 'contact',
+             navigatorKey: navigatorKey,
+             ),
             onTap: () {
               // Handle item tap
             },
           ),
           ListTile(
-            title: MenuItemWidget(title: 'AGB', route: 'agb', navigatorKey: navigatorKey,),
+            title: MenuItemWidget(title: 'AGB', route: 'agb', 
+            navigatorKey: navigatorKey,
+            ),
             onTap: () {
               // Handle item tap
             },
@@ -148,19 +152,25 @@ class UserMenu extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: MenuItemWidget(title: 'Se Connecter', route: 'connect', navigatorKey: navigatorKey,),
+            title: MenuItemWidget(title: 'Se Connecter', route: 'connect',
+             navigatorKey: navigatorKey,
+             ),
             onTap: () {
               // Handle item tap
             },
           ),
           ListTile(
-            title: MenuItemWidget(title: 'Deconnecter', route: 'deconnecter', navigatorKey: navigatorKey,),
+            title: MenuItemWidget(title: 'Deconnecter', route: 'deconnecter',
+             navigatorKey: navigatorKey,
+             ),
             onTap: () {
               // Handle item tap
             },
           ),
           ListTile(
-            title: MenuItemWidget(title: 'Compte', route: 'compte', navigatorKey: navigatorKey,),
+            title: MenuItemWidget(title: 'Compte', route: 'compte',
+             navigatorKey: navigatorKey,
+             ),
             onTap: () {
               // Handle item tap
             },

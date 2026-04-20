@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:movegui/consts/app_colors.dart';
+import 'package:movegui/consts/widget_constants.dart';
+import 'package:movegui/l10n/app_localizations.dart';
 
 class ToggleButtonExample extends StatefulWidget {
   const ToggleButtonExample({super.key, required this.onStateChanged});
@@ -7,62 +10,91 @@ class ToggleButtonExample extends StatefulWidget {
   final Function(int) onStateChanged;
 
   @override
-  // ignore: library_private_types_in_public_api
   _ToggleButtonExampleState createState() => _ToggleButtonExampleState();
 }
 
 class _ToggleButtonExampleState extends State<ToggleButtonExample> {
   List<bool> isSelected = [true, false];
   int _selectedIndex = 0;
+  bool _isHoveringEmailText = false;
+  bool _isHoveringPhoneText = false;
+  late Color backgroundColor;
+
+  @override
+  void initState() {
+    backgroundColor = AppColors.placeHolderText;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return  Center(
-        child: ToggleButtons(
-          isSelected: [ _selectedIndex == 0, _selectedIndex == 1 ],
-          onPressed: (int index) {
-            setState(() {
-              _selectedIndex = index;
-               widget.onStateChanged(index);
-            });
-           
-          },
-           color: Colors.grey, // text color when unselected
-          selectedColor: AppColors.textColor, // text color when selected
-         // fillColor: AppColors.selectionColor, // background color when selected
-         // borderColor: Colors.grey,
-        //  selectedBorderColor: AppColors.textColor,
-                children: <Widget>[
-                    MovguiToggleButton(title: "Telephone", iconData: Icons.phone,),
-                    MovguiToggleButton(title: "E-Mail", iconData: Icons.email,)
-          ],
-        ),
+    return Center(
+      child: ToggleButtons(
+        borderRadius: BorderRadius.circular(24),
+        fillColor: AppColors.backgroundColor, // 👈 selected background
+        selectedColor: AppColors.selectionColor, // text/icon when selected
+        color: AppColors.placeHolderText,
+        isSelected: [_selectedIndex == 0, _selectedIndex == 1],
+        onPressed: (int index) {
+          setState(() {
+            _selectedIndex = index;
+            widget.onStateChanged(index);
+          });
+        },
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: WidgetConstants.sepWidgetWidth * 0.3,
+                ),
+                child: Icon(
+                  Icons.phone,
+                  size: WidgetConstants.buttonFonsize * 1.5,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  right: WidgetConstants.sepWidgetWidth * 0.3,
+                ),
+                child: Text(
+                  AppLocalizations.of(context)!.company_label_phone,
+                  style: TextStyle(
+                    fontSize: WidgetConstants.buttonFonsize * 1.5,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: WidgetConstants.sepWidgetWidth * 0.3,
+                ),
+                child: Icon(
+                  IconlyLight.message,
+                  size: WidgetConstants.buttonFonsize * 1.5,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  right: WidgetConstants.sepWidgetWidth * 0.3,
+                  left: WidgetConstants.sepWidgetWidth * 0.6,
+                ),
+                child: Text(
+                  AppLocalizations.of(context)!.company_label_email,
+                  style: TextStyle(
+                    fontSize: WidgetConstants.buttonFonsize * 1.5,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
-}
-
-
-class MovguiToggleButton extends StatelessWidget {
-  const MovguiToggleButton({super.key, required this.title, required this.iconData});
-
-  final String title;
-  final IconData iconData;
-
-  @override
-  Widget build(BuildContext context) {
-    return                        Container(
-                    padding: const EdgeInsets.all(8.0),
-                    color: AppColors.backgroundColor,
-                    child: Row(
-                     mainAxisAlignment: MainAxisAlignment.center,                   
-                      children: [                               
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(iconData),
-                      ), 
-                      Text(title, style: TextStyle(fontSize: 18)),],
-                    ),
-                  );
-  }
-  
 }

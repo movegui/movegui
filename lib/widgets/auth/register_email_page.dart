@@ -1,6 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:movegui/consts/validator.dart';
+import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/screens/main/home_screen.dart';
 import 'package:movegui/services/my_app_functions.dart';
 import 'package:movegui/widgets/auth/button_validation_widget.dart';
@@ -8,16 +12,12 @@ import 'package:movegui/widgets/auth/other_registration_widget.dart';
 import 'package:movegui/widgets/auth/repeat_password_widget.dart';
 import 'package:movegui/widgets/person/birthdate_picker.dart';
 import 'package:movegui/widgets/person/gender_picker.dart';
-import 'package:movegui/widgets/person/personal_base_info_widget.dart';
 
 class RegisterEmailPage extends StatefulWidget {
   final ValueChanged<String?> onGenderChanged;
   final ValueChanged<DateTime?>? onBirthDateChanged;
   final String? selectedGender;
   final Function(String) onTitleChange;
-  final GlobalKey<NavigatorState> navigatorKey;
- // final NavigatorObserver observer;
- // final ValueNotifier<bool> homeCanPop;
 
   const RegisterEmailPage({
     super.key,
@@ -25,9 +25,6 @@ class RegisterEmailPage extends StatefulWidget {
     this.onBirthDateChanged,
     this.selectedGender,
     required this.onTitleChange,
-    required this.navigatorKey,
-  //  required this.observer,
-  //  required this.homeCanPop,
   });
 
   @override
@@ -36,16 +33,12 @@ class RegisterEmailPage extends StatefulWidget {
 
 class RegisterEmailPageState extends State<RegisterEmailPage> {
   bool obscureText = true;
-  late final TextEditingController _nameController,
-      _prenomController,
-      _adressController,
+  late final TextEditingController
       _emailController,
       _passwordController,
       _repeatPasswordController;
 
-  late final FocusNode _nameFocusNode,
-      _prenomFocusNode,
-      _adressFocusNode,
+  late final FocusNode
       _emailFocusNode,
       _passwordFocusNode,
       _repeatPasswordFocusNode;
@@ -56,23 +49,21 @@ class RegisterEmailPageState extends State<RegisterEmailPage> {
 
   @override
   void initState() {
-    _nameController = TextEditingController();
-    _prenomController = TextEditingController();
-    _adressController = TextEditingController();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
     _repeatPasswordController = TextEditingController();
-    // Focus Nodes
-    _nameFocusNode = FocusNode();
-    _prenomFocusNode = FocusNode();
-    _adressFocusNode = FocusNode();
     _emailFocusNode = FocusNode();
     _passwordFocusNode = FocusNode();
     _repeatPasswordFocusNode = FocusNode();
     try {
       auth = FirebaseAuth.instance;
     } catch (e) {
-      print('FirebaseAuth initialization failed: $e');
+              MyAppFunctions.showErrorOrWarningDialog(
+          context: context,
+          subtitle: AppLocalizations.of(context)!.error_firebase_initialisation.toString(), 
+          fct: () {},
+        );
+     
     }
     super.initState();
   }
@@ -80,12 +71,9 @@ class RegisterEmailPageState extends State<RegisterEmailPage> {
   @override
   void dispose() {
     if (mounted) {
-      _nameController.dispose();
       _emailController.dispose();
       _passwordController.dispose();
       _repeatPasswordController.dispose();
-      // Focus Nodes
-      _nameFocusNode.dispose();
       _emailFocusNode.dispose();
       _passwordFocusNode.dispose();
       _repeatPasswordFocusNode.dispose();
@@ -96,17 +84,16 @@ class RegisterEmailPageState extends State<RegisterEmailPage> {
   Future<void> _registerFCT() async {
     final isValid = _formkey.currentState!.validate();
     FocusScope.of(context).unfocus();
-    
 
     if (isValid) {
       try {
         setState(() {
           isloading = true;
         });
-        // await auth?.createUserWithEmailAndPassword(email: _emailController.text.trim(), password: _passwordController.text.trim());
-        //  OtpVerificationScreen(verificationId:  _emailController.text, );
+         await auth?.createUserWithEmailAndPassword(email: _emailController.text.trim(), password: _passwordController.text.trim());
+         // OtpVerificationScreen(verificationId:  _emailController.text, phoneNumber: '', );
         Fluttertoast.showToast(
-          msg: "Votre Compte a été créer avec succes",
+          msg: AppLocalizations.of(context)!.success_registration_new_user,
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 1,
@@ -118,11 +105,7 @@ class RegisterEmailPageState extends State<RegisterEmailPage> {
           context,
           MaterialPageRoute(
             builder:
-                (context) => HomeScreen(
-                  onTitleChange: widget.onTitleChange, navigatorKey: widget.navigatorKey,
-                  //navigatorKey: widget.navigatorKey,
-                 // observer: widget.observer, homeCanPop: widget.homeCanPop,
-                ),
+                (context) => auth?.currentUser != null? ProfileScreen() : HomeScreen(onTitleChange: widget.onTitleChange),
           ),
         );
       } catch (error) {
@@ -166,13 +149,21 @@ class RegisterEmailPageState extends State<RegisterEmailPage> {
             ],
           ),
           SizedBox(height: 6),
-          PersonalBaseInfoWidget(
-            nameController: _nameController,
-            prenomController: _prenomController,
-            addressController: _adressController,
-            nameFocus: _nameFocusNode,
-            prenomFocus: _prenomFocusNode,
-            addressFocus: _adressFocusNode,
+          TextFormField(
+            controller: _emailController,
+            focusNode: _emailFocusNode,
+            textInputAction: TextInputAction.next,
+            keyboardType: TextInputType.emailAddress,
+            decoration: InputDecoration(
+              hintText: AppLocalizations.of(context)!.input_hint_adress_email,
+              prefixIcon: const Icon(IconlyLight.message),
+            ),
+            onFieldSubmitted: (value) {
+              FocusScope.of(context).requestFocus(_passwordFocusNode);
+            },
+            validator: (value) {
+              return MyValidators.emailValidator(value);
+            },
           ),
 
           const SizedBox(height: 8.0),
@@ -184,33 +175,9 @@ class RegisterEmailPageState extends State<RegisterEmailPage> {
           ),
 
           const SizedBox(height: 18.0),
-          ButtonValidationWidget(title: 'Enregistrer', onPress:  _registerFCT),
+          ButtonValidationWidget(title: AppLocalizations.of(context)!.btn_register_label, onPress: _registerFCT),
           SizedBox(height: 16),
           OtherRegistrationWidget(),
-
-          /*
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.5,
-            child: ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.all(12.0),
-                backgroundColor: AppColors.backgroundColor,
-                // backgroundColor: Colors.red,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-              ),
-              icon: const Icon(IconlyLight.addUser, color: AppColors.textColor, ),
-              label: const Text(
-                "Enregister",
-                style: TextStyle(color: AppColors.textColor, fontSize: 28),
-              ),
-              onPressed: () async {
-                  await _registerFCT();
-              },
-            ),
-          ),
-          */
         ],
       ),
     );

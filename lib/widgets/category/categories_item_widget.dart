@@ -2,11 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:movegui/consts/app_constants.dart';
 import 'package:movegui/models/categories_model.dart';
-import 'package:movegui/screens/categories/patisserie_screen.dart';
-import 'package:movegui/screens/categories/pressing_screen.dart';
-import 'package:movegui/screens/categories/resto_screen.dart';
-import 'package:movegui/screens/categories/super_markt_screen.dart';
-import 'package:movegui/screens/categories/supplier_screen.dart';
+import 'package:movegui/screens/modules/patisserie_screen.dart';
+import 'package:movegui/screens/modules/pressing_screen.dart';
+import 'package:movegui/screens/modules/resto_screen.dart';
+import 'package:movegui/screens/modules/super_markt_screen.dart';
+import 'package:movegui/screens/modules/supplier_screen.dart';
 
 class CategoriesItemWidget extends StatelessWidget//extends MoveguiWidgetImage 
 {
@@ -60,7 +60,9 @@ Widget build(BuildContext context) {
                   Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => PressingScreen(navigatorKey: navigatorKey,),
+          builder: (context) => PressingScreen(onTitleChange: (String ) { 
+         
+           },),
         ),
       ),
     }

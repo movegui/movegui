@@ -6,7 +6,6 @@ import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/responsive.dart';
 import 'package:movegui/services/register_services.dart';
 import 'package:movegui/services/super_markts_service.dart';
-import 'package:movegui/widgets/menu/menu.dart';
 import 'package:movegui/widgets/store/store_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -53,21 +52,11 @@ class SuperMarktScreenState extends State<SuperMarktScreen> {
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
-          //  appBar: MoveguiAppBar(title: superMarktConstants.getTitleName(), itemCount: shoppingProvider.itemCount),
-          drawer: MoveGuiMenu(navigatorKey: widget.navigatorKey),
           body: Padding(
             padding: const EdgeInsets.all(8.0),
             child:
                 Responsive.isDesktop(context) ? buildDesktop() : buildMobil(),
           ),
-          /*
-        bottomNavigationBar:RootBottomNavigationBar(
-        currentIndex: 1,
-        onDestinationSelected: (index) {
-          Navigator.pop(context, index);
-        },
-      ),
-      */
         ),
       ),
     );
@@ -104,7 +93,7 @@ class SuperMarktScreenState extends State<SuperMarktScreen> {
               return StoreWidget(
                 model: superMarkts[index],
                 catgory: AppConstants.CATEGORY_SUPERMARKT,
-                navigatorKey: widget.navigatorKey,
+              //  navigatorKey: widget.navigatorKey,
               );
             },
           ),
@@ -126,7 +115,7 @@ class SuperMarktScreenState extends State<SuperMarktScreen> {
               return StoreWidget(
                 model: superMarkts[index],
                 catgory: AppConstants.CATEGORY_SUPERMARKT,
-                navigatorKey: widget.navigatorKey,
+             //   navigatorKey: widget.navigatorKey,
               );
             },
           ),

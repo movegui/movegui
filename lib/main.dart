@@ -4,12 +4,11 @@ import 'package:movegui/firebase_options.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/providers/theme_provider.dart';
-import 'package:movegui/screens/auth/login_screen.dart';
-import 'package:movegui/screens/auth/register_screen.dart';
-import 'package:movegui/screens/categories/patisserie_screen.dart';
-import 'package:movegui/screens/categories/pressing_screen.dart';
-import 'package:movegui/screens/categories/resto_screen.dart';
-import 'package:movegui/screens/categories/super_markt_screen.dart';
+import 'package:movegui/screens/auth/movegui_register_screen.dart';
+import 'package:movegui/screens/modules/patisserie_screen.dart';
+import 'package:movegui/screens/modules/pressing_screen.dart';
+import 'package:movegui/screens/modules/resto_screen.dart';
+import 'package:movegui/screens/modules/super_markt_screen.dart';
 import 'package:movegui/screens/root_screen.dart';
 import 'package:movegui/services/register_services.dart';
 import 'package:movegui/widgets/web/web_layout.dart';
@@ -48,6 +47,7 @@ class MyApp extends StatelessWidget {
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, child) {
           return MaterialApp(
+            debugShowCheckedModeBanner: false,
             localizationsDelegates: const [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
@@ -91,7 +91,9 @@ class MyApp extends StatelessWidget {
 
                 case '/pressing':
                   page = WebLayout(
-                    child: PressingScreen(navigatorKey: rootNavigatorKey),
+                    child: PressingScreen(
+                      onTitleChange: (_){},
+                      ),
                   );
                   break;
 
@@ -100,21 +102,22 @@ class MyApp extends StatelessWidget {
                     child: SuperMarktScreen(navigatorKey: rootNavigatorKey),
                   );
                   break;
-
+/*
                 case '/login':
                   page = WebLayout(
                     child: LoginScreen(
-                      onTitleChange: (_) {},
-                      navigatorKey: rootNavigatorKey,
+                      onTitleChange: (_) {
+
+                      },
                     ),
                   );
                   break;
+                  */
 
                 case '/register':
                   page = WebLayout(
-                    child: RegisterScreenMovgui(
+                    child: MoveguiRegisterScreen(
                       onTitleChange: (_) {},
-                      navigatorKey: rootNavigatorKey,
                     ),
                   );
                   break;

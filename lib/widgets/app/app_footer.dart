@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movegui/consts/app_colors.dart';
+import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/services/assets_manager.dart';
 
 
@@ -26,25 +27,25 @@ class AppFooter extends StatelessWidget {
       unselectedItemColor: AppColors.textColor,
       items: [
         BottomNavigationBarItem(
-          label: "Home",
+          label: AppLocalizations.of(context)!.home_title,
           icon:Icon(Icons.home, color: AppColors.textColor, size: iconSize,),
         ),
         BottomNavigationBarItem(
-          label: "Commande",
+          label: AppLocalizations.of(context)!.my_orders_title,
           icon: ImageIcon(
             AssetImage(AssetsManager.commandeIcon3), 
             size: iconSize,
           ),
         ),
         BottomNavigationBarItem(
-          label: "Livraison",
+          label: AppLocalizations.of(context)!.my_deliveries_title,
           icon: ImageIcon(
             AssetImage(AssetsManager.livraisonIcon3),
             size: iconSize,
           ),
         ),
         BottomNavigationBarItem(
-          label: "Courses",
+          label: AppLocalizations.of(context)!.profile_title,
           icon: ImageIcon(
             AssetImage(AssetsManager.reservationIcon3),
             size: iconSize,

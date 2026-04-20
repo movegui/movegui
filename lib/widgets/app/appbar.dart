@@ -1,75 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:movegui/consts/app_colors.dart';
-import 'package:movegui/screens/auth/user_menu_screen.dart';
+import 'package:movegui/l10n/app_localizations.dart';
+import 'package:movegui/screens/root_screen.dart';
 
 class MoveguiAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MoveguiAppBar({
     super.key,
     required this.title,
     required this.itemCount,
-    required this.navigatorKey,
+    required this.homenavigatorKey,
     required this.homeCanPop,
     required this.onTitleChange,
+    required this.activeNavigator,
   });
-  final GlobalKey<NavigatorState> navigatorKey;
+  final GlobalKey<NavigatorState> homenavigatorKey;
   final String title;
   final int itemCount;
   final ValueNotifier<bool> homeCanPop;
   final Function(String) onTitleChange;
+  final ValueNotifier<ActiveNavigator> activeNavigator;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(title),
-      titleTextStyle: TextStyle(
-        color: AppColors.textColor,
-        fontSize: 20,
-      ),
+      titleTextStyle: TextStyle(color: AppColors.textColor, fontSize: 20),
       leading: ValueListenableBuilder<bool>(
         valueListenable: homeCanPop,
-        builder: (context, canPop, _) {
-          if (canPop) {
-            return IconButton(
-              icon: const Icon(Icons.arrow_back),
-              color: AppColors.textColor,
-              hoverColor: AppColors.selectionColor,
-              onPressed: () {         
-                if (navigatorKey.currentState?.canPop() ?? false) {
-                  navigatorKey.currentState?.pop();
-                }   
-                         
-              },
-            );
-          } else {
+        builder: (context, homeCanPop, _) {
+          if (homeCanPop) {
+                 return IconButton(
+            icon: const Icon(Icons.arrow_back),
+            color: AppColors.textColor,
+            hoverColor: AppColors.selectionColor,
+            onPressed: () {
+              homenavigatorKey.currentState?.pop();
+            },
+          );
+          }
             return Builder(
               builder:
                   (context) => IconButton(
                     icon: const Icon(Icons.menu),
                     color: AppColors.textColor,
-                    tooltip: 'Navigation menu',
+                    tooltip: AppLocalizations.of(context)!.navigation_menu_tooltip,
                     hoverColor: AppColors.selectionColor,
                     onPressed: () => Scaffold.of(context).openDrawer(),
                   ),
             );
-          }
         },
       ),
-      backgroundColor: AppColors.backgroundColor, 
+      backgroundColor: AppColors.backgroundColor,
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.search),
           color: AppColors.textColor,
           hoverColor: AppColors.selectionColor,
           onPressed: () {
-            navigatorKey.currentState?.pushNamed('/search');
-          },
-        ),
-        IconButton(
-          icon: Icon(Icons.notifications),
-          color: AppColors.textColor,
-          hoverColor: AppColors.selectionColor,
-          onPressed: () {
-            navigatorKey.currentState?.pushNamed('/notifation');
+            homenavigatorKey.currentState?.pushNamed('/search');
           },
         ),
         Stack(
@@ -79,7 +67,7 @@ class MoveguiAppBar extends StatelessWidget implements PreferredSizeWidget {
               color: AppColors.textColor,
               hoverColor: AppColors.selectionColor,
               onPressed: () {
-                navigatorKey.currentState?.pushNamed('/shopping');
+                homenavigatorKey.currentState?.pushNamed('/shopping');
               },
             ),
             Positioned(
@@ -102,14 +90,14 @@ class MoveguiAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ],
         ),
-        
-        UserMenuScreen(
-          navigatorKey: navigatorKey,
-          onTitleChange: onTitleChange,
-        //  observer: observer,
-          barCanPop: homeCanPop,
+        IconButton(
+          icon: Icon(Icons.notifications),
+          color: AppColors.textColor,
+          hoverColor: AppColors.selectionColor,
+          onPressed: () {
+            homenavigatorKey.currentState?.pushNamed('/notification');
+          },
         ),
-        
       ],
     );
   }

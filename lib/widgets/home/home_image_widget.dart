@@ -9,6 +9,8 @@ class ImageWidget extends StatelessWidget {
     required this.action,
     required this.routeName,
     required this.enabled,
+ //   required this.navigatorkey
+
   });
   final String title;
   final String imagePath;
@@ -17,10 +19,12 @@ class ImageWidget extends StatelessWidget {
     String routeName,
     String title,
     bool enabled,
+   // GlobalKey<NavigatorState>? navigatorkey
   )
   action;
   final String routeName;
   final bool enabled;
+//  final GlobalKey<NavigatorState>? navigatorkey;
 
   @override
   Widget build(BuildContext context) {

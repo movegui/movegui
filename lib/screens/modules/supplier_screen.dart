@@ -6,7 +6,6 @@ import 'package:movegui/models/supplier_model.dart';
 import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/services/register_services.dart';
 import 'package:movegui/services/suppliers_service.dart';
-import 'package:movegui/widgets/menu/menu.dart';
 import 'package:movegui/widgets/store/store_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -59,8 +58,6 @@ Widget build(BuildContext context) {
     child: GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-       // appBar: MoveguiAppBar(title: supplierConstants.getTitleName(), itemCount: shoppingProvider.itemCount),
-        drawer: MoveGuiMenu(navigatorKey: widget.navigatorKey,),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -90,14 +87,16 @@ Widget build(BuildContext context) {
                   mainAxisSpacing: 12,
                   crossAxisSpacing: 12,
                   builder: (context, index) {
-                    return StoreWidget(model: suppliers[index], catgory: AppConstants.CATEGORY_SUPPLIER, navigatorKey: widget.navigatorKey,);
+                    return StoreWidget(model: suppliers[index], catgory: AppConstants.CATEGORY_SUPPLIER, 
+                 //   navigatorKey: widget.navigatorKey,
+                    );
                   },
                 ),
               ),
             ],
           ),
         ),
-        /*
+        /*r
         bottomNavigationBar:RootBottomNavigationBar(
         currentIndex: 1,
         onDestinationSelected: (index) {
