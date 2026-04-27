@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 
 abstract class Model extends HiveObject {
   final String id;
-  final String name;
+     String name;
   final DateTime createdAt;
 
   Model({

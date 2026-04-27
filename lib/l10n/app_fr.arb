@@ -52,14 +52,16 @@
      "form_contact_title":"Formulaire de Contact:",
     "@form_contact_title": {},
 
-    "input_hint_name": "Nom",
-    "@input_hint_name": {},
-    "input_hint_prenom": "Prénom",
-    "@input_hint_prenom": {},
+    "input_hint_first_name": "Nom",
+    "@input_hint_first_name": {},
+    "input_hint_last_name": "Prénom",
+    "@input_hint_last_name": {},
     "input_hint_adress_email": "Adresse Email",
     "@input_hint_adress_email": {},
     "input_hint_message": "Votre Message...",
     "@input_hint_message": {},
+    "input_hint_adress": "Adresse",
+    "@input_hint_adress": {},
 
     "movegui_info_title":"MoveGui – Livraison & Transport à Moto en Guinée",
     "@movegui_info_title": {},
@@ -169,7 +171,33 @@
     "tooltip_forget_password": "Cliquez Ici pour réinitialiser votre mot de pass :)",
     "@tooltip_forget_password": {},
     "tooltip_registration": "Cliquez ici pour vous enregistrer :)",
-    "@tooltip_registration": {}
+    "@tooltip_registration": {},
+
+    "profile_menu_invite_people": "Inviter un proche",
+    "@profile_menu_invite_people": {},
+    "profile_menu_orders": "Commades",
+    "@profile_menu_orders": {},
+    "profile_menu_message": "Messages de diffusion",
+    "@profile_menu_message": {},
+    "profile_menu_important": "Important",
+    "@profile_menu_important": {},
+    "profile_menu_devices": "Appareils connectés",
+    "@profile_menu_devices": {},
+    "profile_menu_account": "Compte",
+    "@profile_menu_account": {},
+    "profile_menu_confidentiality":"Confidentialité",
+    "@profile_menu_confidentiality": {},
+    "profile_menu_discussions": "Discussions",
+    "@profile_menu_discussions": {},
+    "profile_menu_notification": "Notifications",
+    "@profile_menu_notification": {},
+    "profile_menu_delete_account": "Supprimer Compte",
+    "@profile_menu_delete_account": {},
+    "profile_menu_logout":"Deconnexion",
+    "@profile_menu_logout": {},
+    "profile_menu_login":"Connexion",
+    "@profile_menu_login": {}
+
 
 
     

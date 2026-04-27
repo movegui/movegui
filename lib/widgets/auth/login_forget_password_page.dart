@@ -7,13 +7,11 @@ import 'package:movegui/consts/validator.dart';
 import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/button_item.dart';
-import 'package:movegui/providers/appbar_title_provider.dart';
 import 'package:movegui/services/my_app_functions.dart';
 import 'package:movegui/widgets/app/separator_widget.dart';
 import 'package:movegui/widgets/auth/validation_button.dart';
 import 'package:movegui/widgets/subtitle_text.dart';
 import 'package:movegui/widgets/title_text.dart';
-import 'package:provider/provider.dart';
 
 class LoginForgetPasswordPage extends StatefulWidget {
 

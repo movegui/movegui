@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:movegui/models/button_item.dart';
 import 'package:movegui/widgets/util/button_widget.dart';
 
@@ -16,31 +17,8 @@ class ValidationButton extends StatelessWidget {
         Expanded(
           child: SizedBox(
             width: double.infinity,
-            child: ButtonWidget(onPressed: fn, buttonItem: buttonItem, icon: icon)
+            child: ButtonWidget(onPressed: fn, buttonItem: buttonItem, icon: IconlyLight.send)
             
-            /*
-             ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.all(6.0),
-                backgroundColor: AppColors.backgroundColor,
-
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6.0),
-                ),
-              ),
-              icon: const Icon(Icons.login, color: AppColors.textColor),
-              label: Text(
-                title,
-                style: const TextStyle(
-                  color: AppColors.textColor,
-                  fontSize: 18,
-                ),
-              ),
-              onPressed: () async {
-                await fn;
-              },
-            ),
-*/
           ),
         ),
       ],

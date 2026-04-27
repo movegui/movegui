@@ -1,25 +1,19 @@
-import 'package:hive/hive.dart';
 import 'package:movegui/models/model.dart';
 import 'package:movegui/models/person_model.dart';
-part 'user_model.g.dart';
 
-@HiveType(typeId: 0)
 class UserModel extends Model {
-  @HiveField(0)
-  final String username;
-  @HiveField(1)
-  final String password;
-  @HiveField(2)
-  final int pinCode;
+  final String? username;
+  final DateTime? updatedAt;
   final PersonModel? personModel;
+  final String? password;
 
   UserModel({
+    this.password,
+    required this.updatedAt,
     required super.id,
     required super.name,
     required super.createdAt,
     required this.username,
-    required this.password,
-    required this.pinCode,
     this.personModel,
   });
 
@@ -27,8 +21,7 @@ class UserModel extends Model {
   Map<String, dynamic> toJson() => {
     ...super.toJson(),
     'username': username,
-    'password': password,
-    'pinCode': pinCode,
+    'updatedAt': updatedAt!,
     'person': personModel!.toJson(),
   };
 
@@ -37,8 +30,7 @@ class UserModel extends Model {
     name: json['name'],
     createdAt: json['createdAt'].toDate(),
     username: json['username'],
-    password: json['password'],
-    pinCode: json['pinCode'],
+    updatedAt: json['updateAt'],
     personModel: PersonModel.fromJson(json['person']),
   );
 }

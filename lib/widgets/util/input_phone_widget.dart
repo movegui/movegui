@@ -11,26 +11,6 @@ class InputPhoneWidget extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-
-/*
-  return  Padding(
-        padding: EdgeInsets.all(16),
-        child: InternationalPhoneNumberInput(
-          onInputChanged: (number) {
-            print(number.phoneNumber);
-          },
-          selectorConfig: SelectorConfig(
-            selectorType: PhoneInputSelectorType.DROPDOWN,
-          ),
-          textFieldController: phoneController,
-          inputDecoration: InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: 'Phone Number',
-          ),
-        ),
-      ),
-*/
-
     return  InputWidget(
       controller: phoneController,
       focusNode: phoneFocusNode,

@@ -106,7 +106,7 @@ class CategoriesScreenState extends State<CategoriesScreen>{
                   ),
                 ),
                 onChanged: (value) {
-                  print("value of the text is $value");
+
                 },
                 onSubmitted: (value) {
                   // log("value of the text is $value");

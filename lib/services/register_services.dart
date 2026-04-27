@@ -3,6 +3,7 @@
 
 import 'package:get_it/get_it.dart';
 import 'package:movegui/services/categories_service.dart';
+import 'package:movegui/services/image_service.dart';
 import 'package:movegui/services/ingredients_service.dart';
 import 'package:movegui/services/patisseries_service.dart';
 import 'package:movegui/services/pressing_service.dart';
@@ -11,6 +12,7 @@ import 'package:movegui/services/restaurant_type_service.dart';
 import 'package:movegui/services/restaurants_service.dart';
 import 'package:movegui/services/super_markts_service.dart';
 import 'package:movegui/services/suppliers_service.dart';
+import 'package:movegui/services/user_service.dart';
 
 final getIt = GetIt.instance;
 
@@ -24,4 +26,6 @@ void initServices(){
   getIt.registerLazySingleton<SuperMarktsService>(() => SuperMarktsService());
   getIt.registerLazySingleton<PressingService>(() => PressingService());
   getIt.registerLazySingleton<ProfessionnelService>(() => ProfessionnelService());
+   getIt.registerLazySingleton<UserService>(() => UserService());
+   getIt.registerLazySingleton<ImageService>(() => ImageService());
 }

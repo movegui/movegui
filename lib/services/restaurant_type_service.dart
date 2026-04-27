@@ -35,4 +35,17 @@ class RestaurantTypeService extends ModelService<RestaurantTypeModel>{
       .map((doc) => RestaurantTypeModel.fromJson(doc.data()))
       .toList();
   }
+
+      Future<RestaurantTypeModel> getById(String id) async {
+  final snapshot = await FirebaseFirestore.instance
+      .collection(getCollectionName())
+      .doc(id)
+      .get();
+
+  if (!snapshot.exists || snapshot.data() == null) {
+     throw Exception("type Restaurant not found");
+  }
+
+  return RestaurantTypeModel.fromJson(snapshot.data()!);
+}
 }

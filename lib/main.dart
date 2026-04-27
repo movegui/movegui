@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:movegui/firebase_options.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/providers/appbar_title_provider.dart';
+import 'package:movegui/providers/login_mod_provider.dart';
 import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/providers/theme_provider.dart';
 import 'package:movegui/screens/auth/movegui_register_screen.dart';
@@ -15,17 +16,18 @@ import 'package:movegui/services/register_services.dart';
 import 'package:movegui/widgets/web/web_layout.dart';
 import 'package:provider/provider.dart';
 import 'consts/theme_data.dart';
-import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  /*
   FirebaseUIAuth.configureProviders([
     EmailAuthProvider(),
 
     // ... other providers
   ]);
+  */
   initServices();
   runApp(MyApp());
 }
@@ -45,6 +47,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => ShoppingProvider()),
         ChangeNotifierProvider(create: (_) => AppbarTitleProvider()),
+        ChangeNotifierProvider(create: (_) => LoginModProvider()),
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, child) {
@@ -73,11 +76,6 @@ class MyApp extends StatelessWidget {
             onGenerateRoute: (settings) {
               Widget page;
               switch (settings.name) {
-                /*
-                case '/':
-                  page = WebLayout(child: RootScreen());
-                  break;
-                  */
 
                 case '/pastry':
                   page = WebLayout(
@@ -102,18 +100,6 @@ class MyApp extends StatelessWidget {
                     child: SuperMarktScreen(navigatorKey: rootNavigatorKey),
                   );
                   break;
-/*
-                case '/login':
-                  page = WebLayout(
-                    child: LoginScreen(
-                      onTitleChange: (_) {
-
-                      },
-                    ),
-                  );
-                  break;
-                  */
-
                 case '/register':
                   page = WebLayout(
                     child: MoveguiRegisterScreen(),
@@ -122,46 +108,12 @@ class MyApp extends StatelessWidget {
 
                 default:
                   page = RootScreen();
-                /*
-                  StartScreen(onTitleChange: (_) {},
-                      navigatorKey: rootNavigatorKey,)
-                      */ //RootScreen();
               }
 
               return MaterialPageRoute(
                 builder: (_) => page,
                 settings: settings,
               );
-
-              /*
-              switch (settings.name) {
-                case '/':
-                  page = RootScreen();
-                  break;
-
-                case '/login':
-                  page = LoginScreen(
-                    onTitleChange: (_) {},
-                    navigatorKey: rootNavigatorKey,
-                  );
-                  break;
-
-                case '/restaurant':
-                  page = RestoScreen(navigatorKey: rootNavigatorKey);
-                  break;
-
-                default:
-                  page = RootScreen();
-              }
-
-              return MaterialPageRoute(
-                builder: (_) => page,
-                settings: settings,
-              );
-            },
-            */
-
-              //     home: RootScreen(),
             },
           );
         },

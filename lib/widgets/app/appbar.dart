@@ -37,14 +37,8 @@ class MoveguiAppBar extends StatelessWidget implements PreferredSizeWidget {
       titleTextStyle: TextStyle(color: AppColors.textColor, fontSize: 20),
       leading: Builder(
         builder: (context) {
-          /*
-          final canPop =
-              homeCanPop.value  ||
-              orderCanPop.value; ||
-              deliveryCanPop.value ||
-              profileCanPop.value; // Navigator.of(context).canPop();
-              */
-              print("aciive value is ${activeNavigator.value}");
+
+
           final currentNavigator = switch (activeNavigator.value) {
             ActiveNavigator.home => homeNavigatorKey,
             ActiveNavigator.order => orderNavigatorKey,
@@ -52,22 +46,6 @@ class MoveguiAppBar extends StatelessWidget implements PreferredSizeWidget {
             ActiveNavigator.profile => profileNavigatorKey,
           };
           final canPop = currentNavigator.currentState?.canPop() ?? false;
-          /*
-          final canPop = switch (activeNavigator.value) {
-            ActiveNavigator.home =>
-              homeNavigatorKey.currentState?.canPop() ?? false,
-
-            ActiveNavigator.order =>
-              orderNavigatorKey.currentState?.canPop() ?? false,
-
-            ActiveNavigator.delivery =>
-              deliveryNavigatorKey.currentState?.canPop() ?? false,
-
-            ActiveNavigator.profile =>
-              profileNavigatorKey.currentState?.canPop() ?? false,
-          };
-          */
-          print('i can pop: $canPop');
           if (canPop) {
             return IconButton(
               icon: const Icon(Icons.arrow_back),
@@ -89,65 +67,6 @@ class MoveguiAppBar extends StatelessWidget implements PreferredSizeWidget {
           );
         },
       ),
-      /*
-      leading: ValueListenableBuilder<bool>( 
-        valueListenable: homeCanPop,
-        builder: (context, homeCanPop, _) {
-          if (homeCanPop) {
-                 return IconButton(
-            icon: const Icon(Icons.arrow_back),
-            color: AppColors.textColor,
-            hoverColor: AppColors.selectionColor,
-            onPressed: () {
-              homenavigatorKey.currentState?.pop();
-            },
-          );
-          }
-            return Builder(
-              builder:
-                  (context) => IconButton(
-                    icon: const Icon(Icons.menu),
-                    color: AppColors.textColor,
-                    tooltip: AppLocalizations.of(context)!.navigation_menu_tooltip,
-                    hoverColor: AppColors.selectionColor,
-                    onPressed: () => Scaffold.of(context).openDrawer(),
-                  ),
-            );
-        },
-      ),
-      */
-
-      /*
-      leading: Builder(
-  builder: (context) {
-    final isOrders = activeNavigator.value == ActiveNavigator.orders;
-
-    final canPop = isOrders
-        ? (orderNavigatorKey.currentState?.canPop() ?? false)
-        : (homeNavigatorKey.currentState?.canPop() ?? false);
-
-    if (canPop) {
-      return IconButton(
-        icon: const Icon(Icons.arrow_back),
-        color: AppColors.textColor,
-        onPressed: () {
-          if (isOrders) {
-            orderNavigatorKey.currentState?.pop();
-          } else {
-            homeNavigatorKey.currentState?.pop();
-          }
-        },
-      );
-    }
-
-    return IconButton(
-      icon: const Icon(Icons.menu),
-      color: AppColors.textColor,
-      onPressed: () => Scaffold.of(context).openDrawer(),
-    );
-  },
-),
-      */
       backgroundColor: AppColors.backgroundColor,
       actions: <Widget>[
         IconButton(

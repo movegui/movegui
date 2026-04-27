@@ -1,21 +1,27 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+//import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:movegui/consts/app_constants.dart';
 import 'package:movegui/consts/route_contants.dart';
 import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/button_item.dart';
 import 'package:movegui/providers/appbar_title_provider.dart';
+import 'package:movegui/providers/login_mod_provider.dart';
+import 'package:movegui/screens/main/movegui_profile_screen.dart';
 import 'package:movegui/services/my_app_functions.dart';
 import 'package:movegui/widgets/app/separator_widget.dart';
+import 'package:movegui/widgets/auth/auth_link_widget.dart';
 import 'package:movegui/widgets/auth/opt_screen.dart';
+import 'package:movegui/widgets/auth/other_registration_widget.dart';
 import 'package:movegui/widgets/auth/validation_button.dart';
 import 'package:movegui/widgets/util/input_phone_widget.dart';
 import 'package:provider/provider.dart';
 
 class LoginPhoneNumberPage extends StatefulWidget {
-  const LoginPhoneNumberPage({super.key,});
+  const LoginPhoneNumberPage({super.key});
 
   @override
   State<LoginPhoneNumberPage> createState() => LoginPhoneNumberPageState();
@@ -28,12 +34,12 @@ class LoginPhoneNumberPageState extends State<LoginPhoneNumberPage> {
   final _formkey = GlobalKey<FormState>();
   bool isloading = false;
   FirebaseAuth? auth;
-  
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+       if (!mounted) return;
       context.read<AppbarTitleProvider>().setTitle(
         AppLocalizations.of(context)!.login_title,
       );
@@ -86,10 +92,14 @@ class LoginPhoneNumberPageState extends State<LoginPhoneNumberPage> {
 
           final resultCode = await confirmationResult?.confirm('123456');
           if (resultCode?.user != null) {
+            context.read<LoginModProvider>().setLoginMod(AppConstants.LOGIN_PHONE_MODE);
+             Navigator.pushNamed(context, item.routeName!);
+             /*
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => ProfileScreen()),
+              MaterialPageRoute(builder: (_) => MoveguiProfileScreen(loginMode: AppConstants.LOGIN_PHONE_MODE)),
             );
+            */
           }
         } else {
           // 📱 MOBILE (ton code actuel)
@@ -152,12 +162,11 @@ class LoginPhoneNumberPageState extends State<LoginPhoneNumberPage> {
                   phoneFocusNode: _phoneNumberFocusNode,
                   nextFocusNode: _phoneNumberFocusNode,
                 ),
-                SeparatorWidget(height: WidgetConstants.sepWidgetHeight * 1.5),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: WidgetConstants.sepWidgetHeight,
-                    right: WidgetConstants.sepWidgetHeight,
-                  ),
+                SeparatorWidget(height: WidgetConstants.sepWidgetHeight * 0.5),
+                AuthLinkWidget(),
+             //   SeparatorWidget(height: WidgetConstants.sepWidgetHeight * 0.5),
+                  Padding(
+                  padding: const EdgeInsets.all(WidgetConstants.sepWidget),
                   child: ValidationButton(
                     fn: _loginFct,
                     buttonItem: ButtonItem(
@@ -166,8 +175,11 @@ class LoginPhoneNumberPageState extends State<LoginPhoneNumberPage> {
                       true,
                       routeName: RouteContants.PROFILE_ROUTE,
                     ),
+                    icon: IconlyLight.send,
                   ),
                 ),
+                OtherRegistrationWidget(),
+              
               ],
             ),
           ),

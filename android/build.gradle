@@ -10,12 +10,13 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:7.2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.google.gms:google-services:4.4.0'
             // Import the BoM for the Firebase platform
-    implementation(platform("com.google.firebase:firebase-bom:34.12.0"))
+   // implementation(platform("com.google.firebase:firebase-bom:34.12.0"))
 
     // Add the dependency for the Firebase Authentication library
     // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation("com.google.firebase:firebase-auth")
+  //  implementation("com.google.firebase:firebase-auth")
     }
 }
 
@@ -26,11 +27,14 @@ allprojects {
     }
 }
 
-val newBuildDir: Directory = rootProject.layout.buildDirectory.dir("../../build").get()
+// val newBuildDir: Directory = rootProject.layout.buildDirectory.dir("../../build").get()
+/*
+newBuildDir = "../../build"
 rootProject.layout.buildDirectory.value(newBuildDir)
 
 subprojects {
-    val newSubprojectBuildDir: Directory = newBuildDir.dir(project.name)
+ //   val newSubprojectBuildDir: Directory = newBuildDir.dir(project.name)
+ newSubprojectBuildDir = newBuildDir.dir(project.name)
     project.layout.buildDirectory.value(newSubprojectBuildDir)
 }
 subprojects {
@@ -39,5 +43,10 @@ subprojects {
 
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
+}
+*/
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
 }
 

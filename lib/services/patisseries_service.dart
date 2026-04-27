@@ -39,4 +39,21 @@ class PatisseriesService extends ModelService<PatisserieModel>{
   String getCollectionName() {
     return "patisseries_model";
   }
+
+  
+  Future<PatisserieModel> getById(String id) async {
+  final snapshot = await FirebaseFirestore.instance
+      .collection(getCollectionName())
+      .doc(id)
+      .get();
+
+  if (!snapshot.exists || snapshot.data() == null) {
+     throw Exception("Patisserie not found");
+  }
+
+  return PatisserieModel.fromJson(snapshot.data()!);
+}
+
+
+
 }

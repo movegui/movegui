@@ -38,4 +38,18 @@ class PressingService extends ModelService<PressingModel>{
   String getCollectionName() {
     return "pressings_model";
   }
+
+    
+  Future<PressingModel> getById(String id) async {
+  final snapshot = await FirebaseFirestore.instance
+      .collection(getCollectionName())
+      .doc(id)
+      .get();
+
+  if (!snapshot.exists || snapshot.data() == null) {
+     throw Exception("Pressing not found");
+  }
+
+  return PressingModel.fromJson(snapshot.data()!);
+}
 }

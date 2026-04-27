@@ -4,8 +4,7 @@ import 'package:movegui/providers/appbar_title_provider.dart';
 import 'package:provider/provider.dart';
 
 class OrderScreen extends StatefulWidget {
-  final Function(String) onTitleChange;
-  const OrderScreen({super.key, required this.onTitleChange});
+  const OrderScreen({super.key,});
 
   @override
   State<StatefulWidget> createState() => MyOrderScreenState();

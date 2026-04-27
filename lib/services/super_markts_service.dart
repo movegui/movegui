@@ -36,4 +36,17 @@ class SuperMarktsService extends ModelService<SuperMarktModel> {
   String getCollectionName() {
     return "superMarkts_model";
   }
+
+    Future<SuperMarktModel> getById(String id) async {
+  final snapshot = await FirebaseFirestore.instance
+      .collection(getCollectionName())
+      .doc(id)
+      .get();
+
+  if (!snapshot.exists || snapshot.data() == null) {
+     throw Exception("Super Markt not found");
+  }
+
+  return SuperMarktModel.fromJson(snapshot.data()!);
+}
 }

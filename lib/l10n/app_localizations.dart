@@ -221,17 +221,17 @@ abstract class AppLocalizations {
   /// **'Contact Form:'**
   String get form_contact_title;
 
-  /// No description provided for @input_hint_name.
+  /// No description provided for @input_hint_first_name.
   ///
   /// In en, this message translates to:
   /// **'Firstname'**
-  String get input_hint_name;
+  String get input_hint_first_name;
 
-  /// No description provided for @input_hint_prenom.
+  /// No description provided for @input_hint_last_name.
   ///
   /// In en, this message translates to:
   /// **'Lastname'**
-  String get input_hint_prenom;
+  String get input_hint_last_name;
 
   /// No description provided for @input_hint_adress_email.
   ///
@@ -244,6 +244,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your Message...'**
   String get input_hint_message;
+
+  /// No description provided for @input_hint_adress.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get input_hint_adress;
 
   /// No description provided for @movegui_info_title.
   ///
@@ -526,6 +532,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cliquez ici pour vous enregistrer :)'**
   String get tooltip_registration;
+
+  /// No description provided for @profile_menu_invite_people.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite a Friend'**
+  String get profile_menu_invite_people;
+
+  /// No description provided for @profile_menu_orders.
+  ///
+  /// In en, this message translates to:
+  /// **'Orders'**
+  String get profile_menu_orders;
+
+  /// No description provided for @profile_menu_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get profile_menu_message;
+
+  /// No description provided for @profile_menu_important.
+  ///
+  /// In en, this message translates to:
+  /// **'Important'**
+  String get profile_menu_important;
+
+  /// No description provided for @profile_menu_devices.
+  ///
+  /// In en, this message translates to:
+  /// **'Devices'**
+  String get profile_menu_devices;
+
+  /// No description provided for @profile_menu_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get profile_menu_account;
+
+  /// No description provided for @profile_menu_confidentiality.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get profile_menu_confidentiality;
+
+  /// No description provided for @profile_menu_discussions.
+  ///
+  /// In en, this message translates to:
+  /// **'Discussions'**
+  String get profile_menu_discussions;
+
+  /// No description provided for @profile_menu_notification.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get profile_menu_notification;
+
+  /// No description provided for @profile_menu_delete_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get profile_menu_delete_account;
+
+  /// No description provided for @profile_menu_logout.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get profile_menu_logout;
+
+  /// No description provided for @profile_menu_login.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get profile_menu_login;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

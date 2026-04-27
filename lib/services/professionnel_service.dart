@@ -40,5 +40,19 @@ class ProfessionnelService extends ModelService<ProfessionnelModel>{
     return "professionnels_model";
   }
 
+
+    Future<ProfessionnelModel> getById(String id) async {
+  final snapshot = await FirebaseFirestore.instance
+      .collection(getCollectionName())
+      .doc(id)
+      .get();
+
+  if (!snapshot.exists || snapshot.data() == null) {
+     throw Exception("Restaurant not found");
+  }
+
+  return ProfessionnelModel.fromJson(snapshot.data()!);
+}
+
   
 }

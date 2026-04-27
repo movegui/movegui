@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:movegui/consts/app_colors.dart';
 
-class ButtonValidationWidget extends StatelessWidget {
+class ButtonValidationWidgetOld extends StatelessWidget {
   final String title;
   final Future<void> Function() onPress;
   final Icon? icon;
 
-  const ButtonValidationWidget({
+  const ButtonValidationWidgetOld({
     super.key,
     required this.title,
     required this.onPress,

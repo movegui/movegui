@@ -6,10 +6,8 @@ import 'package:movegui/consts/route_contants.dart';
 import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/button_item.dart';
-import 'package:movegui/providers/appbar_title_provider.dart';
 import 'package:movegui/widgets/error/message_widget.dart';
 import 'package:movegui/widgets/util/button_widget.dart';
-import 'package:provider/provider.dart';
 
 class AuthLinkWidget extends StatefulWidget {
   final String? email;
@@ -57,6 +55,7 @@ class AuthLinkWidgetState extends State<AuthLinkWidget> {
               routeName: RouteContants.FORGET_PASSWORD_ROUTE,
             ),
             icon: Ionicons.key_outline,
+            fontSize: WidgetConstants.buttonFonsize * 0.8,
           ),
         ),
         Padding(
@@ -72,6 +71,7 @@ class AuthLinkWidgetState extends State<AuthLinkWidget> {
               routeName: RouteContants.REGISTER_ROUTE,
             ),
             icon: Ionicons.person,
+            fontSize: WidgetConstants.buttonFonsize * 0.8,
           ),
         ),
       ],

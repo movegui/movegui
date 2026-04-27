@@ -31,14 +31,14 @@ class AppFooter extends StatelessWidget {
           icon:Icon(Icons.home, color: AppColors.textColor, size: iconSize,),
         ),
         BottomNavigationBarItem(
-          label: AppLocalizations.of(context)!.my_orders_title,
+          label: AppLocalizations.of(context)!.command_title,
           icon: ImageIcon(
             AssetImage(AssetsManager.commandeIcon3), 
             size: iconSize,
           ),
         ),
         BottomNavigationBarItem(
-          label: AppLocalizations.of(context)!.my_deliveries_title,
+          label: AppLocalizations.of(context)!.delivery_title,
           icon: ImageIcon(
             AssetImage(AssetsManager.livraisonIcon3),
             size: iconSize,

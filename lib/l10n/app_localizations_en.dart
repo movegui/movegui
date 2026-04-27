@@ -72,16 +72,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get form_contact_title => 'Contact Form:';
 
   @override
-  String get input_hint_name => 'Firstname';
+  String get input_hint_first_name => 'Firstname';
 
   @override
-  String get input_hint_prenom => 'Lastname';
+  String get input_hint_last_name => 'Lastname';
 
   @override
   String get input_hint_adress_email => 'Email Adress';
 
   @override
   String get input_hint_message => 'Your Message...';
+
+  @override
+  String get input_hint_adress => 'Address';
 
   @override
   String get movegui_info_title => 'MoveGui – Motorcycle Delivery & Transport in Guinea';
@@ -223,4 +226,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tooltip_registration => 'Cliquez ici pour vous enregistrer :)';
+
+  @override
+  String get profile_menu_invite_people => 'Invite a Friend';
+
+  @override
+  String get profile_menu_orders => 'Orders';
+
+  @override
+  String get profile_menu_message => 'Messages';
+
+  @override
+  String get profile_menu_important => 'Important';
+
+  @override
+  String get profile_menu_devices => 'Devices';
+
+  @override
+  String get profile_menu_account => 'Account';
+
+  @override
+  String get profile_menu_confidentiality => 'Privacy';
+
+  @override
+  String get profile_menu_discussions => 'Discussions';
+
+  @override
+  String get profile_menu_notification => 'Notifications';
+
+  @override
+  String get profile_menu_delete_account => 'Delete Account';
+
+  @override
+  String get profile_menu_logout => 'Logout';
+
+  @override
+  String get profile_menu_login => 'Login';
 }

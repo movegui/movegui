@@ -28,20 +28,21 @@ import 'package:movegui/consts/widget_constants.dart';
         left: WidgetConstants.sepWidgetHeight * 1.5,
         right: WidgetConstants.sepWidgetHeight * 1.5,
       ),
-      child: TextFormField(
-        controller: controller,
-        focusNode: focusNode,
-        textInputAction: TextInputAction.next,
-        keyboardType: textInputType,
-        decoration: InputDecoration(
-          hintText: hinterText,
-          prefixIcon: Icon(icon),
+        child: TextFormField(
+          controller: controller,
+          focusNode: focusNode,
+          textInputAction: TextInputAction.next,
+          keyboardType: textInputType,
+          decoration: InputDecoration(
+            hintText: hinterText,
+            prefixIcon: Icon(icon),
+          ),
+          onFieldSubmitted: (value) {
+            FocusScope.of(context).requestFocus(nextFocusNode!);
+          },
+          validator: validator,
         ),
-        onFieldSubmitted: (value) {
-          FocusScope.of(context).requestFocus(nextFocusNode!);
-        },
-        validator: validator,
-      ),
+      
     );
   }
 }

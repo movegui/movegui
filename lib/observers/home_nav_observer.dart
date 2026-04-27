@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 
 class HomeNavObserver extends NavigatorObserver {
   final ValueNotifier<bool> canPopNotifier;
-   final Function(String routeName)? onRouteChanged;
-
-  HomeNavObserver(this.canPopNotifier, {this.onRouteChanged});
+  final Function(String routeName)? onRouteChanged;
+  HomeNavObserver(this.canPopNotifier, {this.onRouteChanged,});
 
   void _update(Route<dynamic>? route) {
     canPopNotifier.value = navigator?.canPop() ?? false;
-        if (route != null && onRouteChanged != null) {
+    if (route != null && onRouteChanged != null) {
       onRouteChanged!(route.settings.name ?? '');
     }
   }
@@ -17,12 +16,14 @@ class HomeNavObserver extends NavigatorObserver {
   void didPush(Route route, Route? previousRoute) {
     _update(route);
     super.didPush(route, previousRoute);
+
   }
 
   @override
   void didPop(Route route, Route? previousRoute) {
     _update(previousRoute);
     super.didPop(route, previousRoute);
+
   }
 
   @override
@@ -36,5 +37,5 @@ class HomeNavObserver extends NavigatorObserver {
     _update(newRoute);
     super.didReplace(newRoute: newRoute, oldRoute: oldRoute);
   }
-  
+
 }

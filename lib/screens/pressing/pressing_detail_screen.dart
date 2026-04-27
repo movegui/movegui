@@ -4,6 +4,7 @@ import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/app_constants.dart';
 import 'package:movegui/consts/validator.dart';
 import 'package:movegui/models/pressing_model.dart';
+import 'package:movegui/providers/appbar_title_provider.dart';
 import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/services/pressing_service.dart';
 import 'package:movegui/services/register_services.dart';
@@ -32,6 +33,15 @@ class PressingDetailScreenState extends State<PressingDetailScreen> {
   late FocusNode adresseFocus;
  
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<AppbarTitleProvider>().setTitle(
+        widget.model.name,
+      );
+    });
+  }
 
 
   @override

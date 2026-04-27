@@ -1,12 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+// import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:movegui/consts/app_constants.dart';
 import 'package:movegui/consts/route_contants.dart';
 import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/button_item.dart';
 import 'package:movegui/providers/appbar_title_provider.dart';
+import 'package:movegui/providers/login_mod_provider.dart';
 import 'package:movegui/services/my_app_functions.dart';
 import 'package:movegui/widgets/app/separator_widget.dart';
 import 'package:movegui/widgets/auth/auth_link_widget.dart';
@@ -105,11 +107,15 @@ class LoginEmailPageState extends State<LoginEmailPage> {
             textColor: Colors.white,
             fontSize: 16.0,
           );
+           context.read<LoginModProvider>().setLoginMod(AppConstants.LONGIN_EMAIL_MODE);
+           Navigator.pushNamed(context, item.routeName!);
 
+/*
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ProfileScreen()),
+            MaterialPageRoute(builder: (context) => SizedBox()),
           );
+          */
         } else {
           Fluttertoast.showToast(
             msg: AppLocalizations.of(context)!.error_login_message,
@@ -147,7 +153,7 @@ class LoginEmailPageState extends State<LoginEmailPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 InputEmailWidget(nextFocusNode: _passwordFocusNode, emailController: _emailController, emailFocusNode: _emailFocusNode,),
-                SeparatorWidget(height: WidgetConstants.sepWidgetHeight * 2),
+              //  SeparatorWidget(height: WidgetConstants.sepWidgetHeight * 2),
                 PasswordWidget(
                   passwordController: _passwordController,
                   passwordFocusNode: _passwordFocusNode,

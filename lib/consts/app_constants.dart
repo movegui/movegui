@@ -16,6 +16,8 @@ class AppConstants {
 
   static const name = "MoveGui";
   static const Adresse = "Ratoma";
+  static const LOGIN_PHONE_MODE = 1;
+  static const LONGIN_EMAIL_MODE = 2;
 
   /*
   static const search = "Rechercher";

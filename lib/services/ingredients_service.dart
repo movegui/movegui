@@ -37,5 +37,18 @@ class IngredientsService  extends ModelService<IngredientModel>{
       .map((doc) => IngredientModel.fromJson(doc.data()))
       .toList();
   }
+
+   Future<IngredientModel> getById(String id) async {
+  final snapshot = await FirebaseFirestore.instance
+      .collection(getCollectionName())
+      .doc(id)
+      .get();
+
+  if (!snapshot.exists || snapshot.data() == null) {
+     throw Exception("Ingredient not found");
+  }
+
+  return IngredientModel.fromJson(snapshot.data()!);
+}
   
 }

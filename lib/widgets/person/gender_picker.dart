@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/validator.dart';
+import 'package:movegui/consts/widget_constants.dart';
 
 
 class GenderPicker extends StatefulWidget {
@@ -35,28 +36,16 @@ class _GenderAndBirthdatePickerState extends State<GenderPicker> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-          //  const SizedBox(height: 12),
-            // Gender dropdown
             DropdownButtonFormField<String>(
               decoration: const InputDecoration(
                 filled: true,
                 fillColor: AppColors.backgroundColor,
                 labelText: 'Genre',
-                labelStyle: TextStyle(color: AppColors.textColor , fontSize: 18),
+                labelStyle: TextStyle(color: AppColors.textColor , fontSize: WidgetConstants.subTitleFontSize),
                 border: InputBorder.none,
-  
-                /*
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: AppColors.textColor, // Set your desired border color
-                    width: 1.0,
-                  ),
-                ),
-                */
               ),
-             style: TextStyle(color: AppColors.textColor, fontSize: 18),
+             style: TextStyle(color: AppColors.textColor, fontSize: WidgetConstants.subTitleFontSize * 0.8),
               dropdownColor: AppColors.backgroundColor,
-           //   focusColor: AppColors.selectionColor,
               iconEnabledColor: AppColors.textColor,
               value: _selectedGender,
               items: const [
@@ -72,8 +61,6 @@ class _GenderAndBirthdatePickerState extends State<GenderPicker> {
                 return MyValidators.textValidator(value);
               },
             ),
-
-         //   const SizedBox(height: 16),
           ],
         ),
       ),

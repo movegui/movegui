@@ -6,11 +6,11 @@ class PersonModel extends Model {
   final String lastName;
   final String? middleName;
   final String? profileImageUrl;
-  final String email;
-  final String phone;
+  final String? email;
+  final String? phone;
   final String gender;
   final DateTime? birthDate;
-  final String address;
+  final List<String?> addresses;
   final String? nationality;
 
   PersonModel({
@@ -25,7 +25,7 @@ class PersonModel extends Model {
     required this.phone,
     required this.gender,
     required this.birthDate,
-    required this.address,
+    required this.addresses,
     this.nationality
   });
 
@@ -39,8 +39,8 @@ class PersonModel extends Model {
     'email': email,
     'phone': phone,
     'gender': gender,
-    'birthDate': birthDate!.toIso8601String(),
-    'address': address,
+    'birthDate': birthDate?.toIso8601String() ?? '',
+    'addresses': addresses,
     'nationality': nationality,
 
   };
@@ -59,7 +59,7 @@ class PersonModel extends Model {
     birthDate: json['birthDate'] != null
     ? DateTime.parse(json['birthDate'])
     : null,
-    address: json['address'],
+    addresses: json['address'],
     nationality: json['nationality']
   );
 
@@ -76,13 +76,13 @@ class PersonModel extends Model {
     phone: '',
     gender: '',
     birthDate: DateTime(1800, 1, 1),
-    address: '',
+    addresses: [],
     nationality: ''
   );
 
   @override
   String toString() {
     
-    return super.toString() + firstName + ' ' + lastName + ' '+ email + ' ' + phone;
+    return super.toString() + firstName + ' ' + lastName + ' '+ email! + ' ' + phone!;
   }
 }

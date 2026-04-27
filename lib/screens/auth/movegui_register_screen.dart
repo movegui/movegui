@@ -1,18 +1,20 @@
+
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:movegui/consts/app_colors.dart';
+import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
+import 'package:movegui/platform_widget.dart';
 import 'package:movegui/providers/appbar_title_provider.dart';
 import 'package:movegui/responsive.dart';
-import 'package:movegui/services/my_app_functions.dart';
 import 'package:movegui/widgets/app/app_image.dart';
+import 'package:movegui/widgets/app/separator_widget.dart';
 import 'package:movegui/widgets/auth/register_email_page.dart';
 import 'package:movegui/widgets/auth/register_phone_page.dart';
 import 'package:movegui/widgets/util/toogle_buttons.dart';
 import 'package:provider/provider.dart';
 
 class MoveguiRegisterScreen extends StatefulWidget {
-  const MoveguiRegisterScreen({super.key, });
+  const MoveguiRegisterScreen({super.key});
 
   @override
   State<MoveguiRegisterScreen> createState() => _RegisterScreenState();
@@ -25,16 +27,13 @@ class _RegisterScreenState extends State<MoveguiRegisterScreen> {
   int currentLoginScreen = 0;
 
   bool showFirst = true;
-  XFile? _pickedImage;
-  late String gender;
-  late DateTime birthdate;
+
 
   @override
   void initState() {
     super.initState();
   }
 
-  
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -45,25 +44,8 @@ class _RegisterScreenState extends State<MoveguiRegisterScreen> {
     });
   }
 
-  Future<void> localImagePicker() async {
-    final ImagePicker imagePicker = ImagePicker();
-    await MyAppFunctions.imagePickerDialog(
-      context: context,
-      cameraFCT: () async {
-        _pickedImage = await imagePicker.pickImage(source: ImageSource.camera);
-        setState(() {});
-      },
-      galleryFCT: () async {
-        _pickedImage = await imagePicker.pickImage(source: ImageSource.gallery);
-        setState(() {});
-      },
-      removeFCT: () {
-        setState(() {
-          _pickedImage = null;
-        });
-      },
-    );
-  }
+
+
 
   void updateState(int state) {
     setState(() {
@@ -86,19 +68,23 @@ class _RegisterScreenState extends State<MoveguiRegisterScreen> {
   }
 
   Widget buildMobil() {
+    var Size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(0.0),
       child: SingleChildScrollView(
         child: Column(
           children: [
-            AppImage(),
-            ToggleButtonExample(onStateChanged: updateState),
-            SizedBox(height: 8),
+            AppImage(heightScale: 0.10),
+            PlatformWidget.isAndroid(context) ||
+                    PlatformWidget.isIos(context) ||
+                    PlatformWidget.isWeb(context)
+                ? ToggleButtonExample(onStateChanged: updateState)
+                : const SizedBox(),
+            SeparatorWidget(height: WidgetConstants.sepWidgetHeight),
             currentLoginScreen == 0
-                ? RegisterPhonePage(onGenderChanged: (String? value) {})
-                : RegisterEmailPage(
-                  onGenderChanged: (String? value) {gender = value!;},
-                ),
+                ? RegisterPhonePage(
+                )
+                : RegisterEmailPage(),
           ],
         ),
       ),
@@ -123,10 +109,8 @@ class _RegisterScreenState extends State<MoveguiRegisterScreen> {
             ToggleButtonExample(onStateChanged: updateState),
             SizedBox(height: 8),
             currentLoginScreen == 0
-                ? RegisterPhonePage(onGenderChanged: (String? value) { gender = value!;})
-                : RegisterEmailPage(
-                  onGenderChanged: (String? value) { gender = value!;},
-                ),
+                ? RegisterPhonePage()
+                : RegisterEmailPage(),
           ],
         ),
       ),

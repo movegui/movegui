@@ -1,15 +1,18 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:another_flushbar/flushbar.dart';
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+//import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as context;
+import 'package:image_picker/image_picker.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/app_constants.dart';
 import 'package:movegui/consts/route_contants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/observers/home_nav_observer.dart';
 import 'package:movegui/providers/appbar_title_provider.dart';
+import 'package:movegui/providers/login_mod_provider.dart';
 import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/responsive.dart';
 import 'package:movegui/screens/auth/login_screen.dart';
@@ -17,8 +20,10 @@ import 'package:movegui/screens/auth/movegui_forgot_password_screen.dart';
 import 'package:movegui/screens/auth/movegui_register_screen.dart';
 import 'package:movegui/screens/main/delivery_screen.dart';
 import 'package:movegui/screens/main/home_screen.dart';
+import 'package:movegui/screens/main/movegui_profile_screen.dart';
 import 'package:movegui/screens/modules/pressing_screen.dart';
 import 'package:movegui/screens/main/order_screen.dart';
+import 'package:movegui/services/my_app_functions.dart';
 import 'package:movegui/widgets/app/app_footer.dart';
 import 'package:movegui/widgets/app/app_footer_web.dart';
 import 'package:movegui/widgets/app/appbar.dart';
@@ -68,6 +73,13 @@ class _RootScreenState extends State<RootScreen> {
     ActiveNavigator.home,
   );
 
+  XFile? _pickedImage;
+  File? pickedImage;
+  Uint8List? webImage;
+
+  late String gender;
+  late DateTime birthdate;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -86,77 +98,96 @@ class _RootScreenState extends State<RootScreen> {
     */
 
     //     String title = AppLocalizations.of(context)!.home_title;
-    homeObserver = HomeNavObserver(
-      homeCanPop,
-      /*
-      onRouteChanged: (route) {
-        switch (route) {
-          case '/home':
-            updateTitle(AppLocalizations.of(context)!.home_title);
-            activeNavigator.value = ActiveNavigator.home;
-            break;
-          case '/command':
-            updateTitle(AppLocalizations.of(context)!.my_orders_title);
-            break;
-          case '/delivery':
-            updateTitle(AppLocalizations.of(context)!.my_deliveries_title);
-            break;
-          case '/profile':
-            updateTitle(AppLocalizations.of(context)!.profile_title);
-            activeNavigator.value = ActiveNavigator.courier;
-            break;
-          default:
-            updateTitle(AppLocalizations.of(context)!.home_title);
-            activeNavigator.value = ActiveNavigator.home;
-        }
-      },
-      */
-    );
+
+    homeObserver = HomeNavObserver(homeCanPop);
     commandObserver = HomeNavObserver(commandCanPop);
     deliveryObserver = HomeNavObserver(deliveryanPop);
     profileObserver = HomeNavObserver(profileCanPop);
   }
 
-  void updateTitle(String newTitle) {
+  Future<void> localImagePicker(BuildContext context) async {
+    final ImagePicker imagePicker = ImagePicker();
+    await MyAppFunctions.imagePickerDialog(
+      context: context,
+      cameraFCT: () async {
+        final XFile? file = await imagePicker.pickImage(
+          source: ImageSource.camera,
+        );
+        if (file == null) return;
+        final bytes = await file.readAsBytes();
+        setState(() {
+          webImage = bytes;
+        });
+      },
+      galleryFCT: () async {
+        final XFile? file = await imagePicker.pickImage(
+          source: ImageSource.gallery,
+        );
+        if (file == null) return;
+        final bytes = await file.readAsBytes();
+        setState(() {
+          webImage = bytes;
+        });
+      },
+      removeFCT: () {
+        setState(() {
+          webImage = null;
+        });
+      },
+    );
+  }
+
+  void updateTitle(String routeName, BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
-
-      /*
-      setState(() {
-        print('Hallo $newTitle');
-        switch (currentScreen) {
-          case 0:
-            title = AppLocalizations.of(context)!.home_title;
-            break;
-          case 1:
-            title = AppLocalizations.of(context)!.my_orders_title;
-            break;
-          case 2:
-            title = AppLocalizations.of(context)!.my_deliveries_title;
-            break;
-          case 3:
-            title = newTitle;
-            /*
-            if (title == AppLocalizations.of(context)!.profile_title &&
-                newTitle == AppLocalizations.of(context)!.login_title)
-              title = AppLocalizations.of(context)!.login_title;
-            else if (title == AppLocalizations.of(context)!.profile_title &&
-                newTitle == AppLocalizations.of(context)!.register_title)
-              title = AppLocalizations.of(context)!.register_title;
-            else if (title == AppLocalizations.of(context)!.profile_title &&
-                newTitle == AppLocalizations.of(context)!.forget_password_title)
-              title = AppLocalizations.of(context)!.forget_password_title;
-            else if (title == AppLocalizations.of(context)!.profile_title &&
-                newTitle == AppLocalizations.of(context)!.pressing_title)
-              title = AppLocalizations.of(context)!.pressing_title;
-            else
-              title = AppLocalizations.of(context)!.profile_title;
-              */
-
-            break;
-        }
-      });
-      */
+      switch (routeName) {
+        case RouteContants.HOME_ROUTE:
+          context.read<AppbarTitleProvider>().setTitle(
+            AppLocalizations.of(context)!.home_title,
+          );
+          activeNavigator.value = ActiveNavigator.home;
+          break;
+        case RouteContants.MY_ORDERS_ROUTE:
+          context.read<AppbarTitleProvider>().setTitle(
+            AppLocalizations.of(context)!.my_orders_title,
+          );
+          activeNavigator.value = ActiveNavigator.order;
+          break;
+        case RouteContants.MY_DELIVERIS_ROUTE:
+          context.read<AppbarTitleProvider>().setTitle(
+            AppLocalizations.of(context)!.my_deliveries_title,
+          );
+          activeNavigator.value = ActiveNavigator.delivery;
+          break;
+        case RouteContants.PROFILE_ROUTE:
+          context.read<AppbarTitleProvider>().setTitle(
+            AppLocalizations.of(context)!.profile_title,
+          );
+          activeNavigator.value = ActiveNavigator.profile;
+          break;
+        case RouteContants.REGISTER_ROUTE:
+          context.read<AppbarTitleProvider>().setTitle(
+            AppLocalizations.of(context)!.register_title,
+          );
+          activeNavigator.value = ActiveNavigator.profile;
+          break;
+        case RouteContants.LOGIN_ROUTE:
+          context.read<AppbarTitleProvider>().setTitle(
+            AppLocalizations.of(context)!.login_title,
+          );
+          break;
+        case RouteContants.PRESSING_ROUTE:
+          context.read<AppbarTitleProvider>().setTitle(
+            AppLocalizations.of(context)!.pressing_title,
+          );
+          break;
+        case RouteContants.FORGET_PASSWORD_ROUTE:
+          context.read<AppbarTitleProvider>().setTitle(
+            AppLocalizations.of(context)!.forget_password_title,
+          );
+          break;
+      }
+      //     context.read<AppbarTitleProvider>().setTitle(newTitle);
     });
   }
 
@@ -198,10 +229,10 @@ class _RootScreenState extends State<RootScreen> {
               : IndexedStack(
                 index: currentScreen,
                 children: [
-                  _buildHomeNavigator(),
-                  _buildMyOrdersNavigator(),
-                  _buildMyDeliveriesNavigator(),
-                  _buildProfileNavigator(),
+                  _buildHomeNavigator(context),
+                  _buildMyOrdersNavigator(context),
+                  _buildMyDeliveriesNavigator(context),
+                  _buildProfileNavigator(context),
                 ],
               ),
 
@@ -246,7 +277,7 @@ class _RootScreenState extends State<RootScreen> {
     );
   }
 
-  Widget _buildHomeNavigator() {
+  Widget _buildHomeNavigator(BuildContext context) {
     return Navigator(
       key: homeNavigatorKey,
       initialRoute: '/',
@@ -254,6 +285,10 @@ class _RootScreenState extends State<RootScreen> {
       onGenerateRoute: (settings) {
         Widget page;
         switch (settings.name) {
+          case '/home':
+            page = HomeScreen();
+            break;
+
           case '/':
             page = HomeScreen();
             break;
@@ -270,7 +305,7 @@ class _RootScreenState extends State<RootScreen> {
     );
   }
 
-  Widget _buildMyOrdersNavigator() {
+  Widget _buildMyOrdersNavigator(BuildContext context) {
     return Navigator(
       key: commandNavigatorKey,
       initialRoute: '/myOrders',
@@ -279,26 +314,18 @@ class _RootScreenState extends State<RootScreen> {
         Widget page;
         switch (settings.name) {
           case '/myOrders':
-            page = OrderScreen(
-              onTitleChange: (value) {
-                updateTitle(value);
-              },
-            );
+            page = OrderScreen();
             break;
 
           default:
-            page = OrderScreen(
-              onTitleChange: (value) {
-                updateTitle(value);
-              },
-            );
+            page = OrderScreen();
         }
         return MaterialPageRoute(builder: (_) => page, settings: settings);
       },
     );
   }
 
-  Widget _buildMyDeliveriesNavigator() {
+  Widget _buildMyDeliveriesNavigator(BuildContext context) {
     return Navigator(
       key: deliveryNavigatorKey,
       initialRoute: '/myDeliveries',
@@ -310,6 +337,10 @@ class _RootScreenState extends State<RootScreen> {
             page = DeliveryScreen();
             break;
 
+          case '/':
+            page = HomeScreen();
+            break;
+
           default:
             page = DeliveryScreen();
         }
@@ -318,47 +349,42 @@ class _RootScreenState extends State<RootScreen> {
     );
   }
 
-  Widget _buildProfileNavigator() {
+  Widget _buildProfileNavigator(BuildContext context) {
     return Navigator(
-       key: profileNavigatorKey,
+      key: profileNavigatorKey,
       initialRoute: '/profile',
-      observers: [profileObserver],
+      observers: [
+        HomeNavObserver(
+          profileCanPop,
+          onRouteChanged: (routeName) => updateTitle(routeName, context),
+        ),
+      ],
       onGenerateRoute: (settings) {
         Widget page;
 
         switch (settings.name) {
           case RouteContants.PROFILE_ROUTE:
-            page =
-                FirebaseAuth.instance.currentUser == null
-                    ? LoginScreen()
-                    : const ProfileScreen();
+            page = MoveguiProfileScreen();
             break;
+
+          case '/':
+            page = MoveguiProfileScreen();
+            break;
+
           case RouteContants.REGISTER_ROUTE:
-            page =
-                FirebaseAuth.instance.currentUser == null
-                    ? MoveguiRegisterScreen()
-                    : const ProfileScreen();
+            page = MoveguiRegisterScreen();
+            break;
+          case RouteContants.LOGIN_ROUTE:
+            page = LoginScreen();
             break;
           case RouteContants.FORGET_PASSWORD_ROUTE:
             final args = settings.arguments as Map<String, dynamic>;
-            page =
-                FirebaseAuth.instance.currentUser == null
-                    ? MoveguiForgotPasswordScreen()
-                    /*
-                    ForgotPasswordScreen(
-                      email: args['email'],
-                      // subtitleBuilder: (context) => Text('test'),
-                      headerBuilder: (context, constraints, shrinkOffset) => AppImage(),
-                    )
-                    */
-                    : const ProfileScreen();
+            page = MoveguiForgotPasswordScreen();
             break;
 
           default:
-            page =
-                FirebaseAuth.instance.currentUser == null
-                    ? LoginScreen()
-                    : const ProfileScreen();
+            page = MoveguiProfileScreen();
+            ;
         }
 
         return MaterialPageRoute(settings: settings, builder: (_) => page);

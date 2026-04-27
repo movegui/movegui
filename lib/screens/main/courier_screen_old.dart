@@ -35,15 +35,11 @@ class CourierScreenState extends State<CourierScreen> {
     String routeName,
     String title,
     bool enabled,
- //   final GlobalKey<NavigatorState>? navigatorkey,
+
   ) {
-   // print('the navi is $navigatorkey, route is : $routeName');
+
     if (enabled)
-    /*
-      if (navigatorkey != null)
-        navigatorkey.currentState?.pushNamed(routeName);
-      else
-      */
+
         Navigator.pushNamed(context, routeName);
     else
       MessageWidget.errorMessage(

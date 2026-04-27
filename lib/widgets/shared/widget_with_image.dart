@@ -13,7 +13,6 @@ class WidgetWithImage extends ImageWidget {
     required super.enabled,
   });
 
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -31,12 +30,12 @@ class WidgetWithImage extends ImageWidget {
               width: MediaQuery.of(context).size.width,
               margin: const EdgeInsets.all(0),
               padding: const EdgeInsets.all(0),
-              height: 180,
+              height: MediaQuery.of(context).size.height * 0.2,
               decoration: BoxDecoration(
                 color: AppColors.textColor,
                 image: DecorationImage(
                   image: AssetImage(imagePath),
-                  fit: BoxFit.fitHeight, 
+                  fit: BoxFit.fitHeight,
                 ),
               ),
             ),
@@ -44,7 +43,7 @@ class WidgetWithImage extends ImageWidget {
               color: Color(0xFF871A1C),
               padding: EdgeInsets.only(top: 2),
               width: MediaQuery.of(context).size.width,
-              height: 30,
+            //  height: 30,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -60,16 +59,24 @@ class WidgetWithImage extends ImageWidget {
               ),
             ),
             if (!enabled)
-              Padding(
-                padding: const EdgeInsets.only(top: 6),
-                child: Text(
-                  AppLocalizations.of(
-                    context,
-                  )!.deactivate_button_attach_message,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: AppColors.placeHolderText,
-                  ),
+              Container(
+                color: AppColors.textColor,
+                padding: EdgeInsets.only(top: 2),
+                width: MediaQuery.of(context).size.width,
+               // height: 20,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      AppLocalizations.of(
+                        context,
+                      )!.deactivate_button_attach_message,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: AppColors.placeHolderText,
+                      ),
+                    ),
+                  ],
                 ),
               ),
           ],

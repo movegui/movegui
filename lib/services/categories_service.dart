@@ -73,4 +73,18 @@ class CategoriesService extends ModelService<CategoriesModel>
         FlushbarPosition.TOP,
       );
   }
+
+    Future<CategoriesModel> getById(String id) async {
+  final snapshot = await FirebaseFirestore.instance
+      .collection(getCollectionName())
+      .doc(id)
+      .get();
+
+  if (!snapshot.exists || snapshot.data() == null) {
+     throw Exception("Categorie not found");
+  }
+
+  return CategoriesModel.fromJson(snapshot.data()!);
+}
+
 }

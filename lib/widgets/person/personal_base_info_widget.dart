@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:movegui/consts/validator.dart';
+import 'package:movegui/l10n/app_localizations.dart';
+import 'package:movegui/widgets/util/input_adress_widget.dart';
+import 'package:movegui/widgets/util/input_name_widget.dart';
 
 class PersonalBaseInfoWidget extends StatelessWidget {
-  final TextEditingController nameController;
-  final TextEditingController prenomController;
+  final TextEditingController firstNameController;
+  final TextEditingController lastNameController;
   final TextEditingController addressController;
-  final FocusNode nameFocus;
-  final FocusNode prenomFocus;
+  final FocusNode firstNameFocus;
+  final FocusNode lastnameFocus;
   final FocusNode addressFocus;
 
   const PersonalBaseInfoWidget({
     super.key,
-    required this.nameController,
-    required this.prenomController,
+    required this.firstNameController,
+    required this.lastNameController,
     required this.addressController,
-    required this.nameFocus,
-    required this.prenomFocus,
+    required this.firstNameFocus,
+    required this.lastnameFocus,
     required this.addressFocus,
   });
 
@@ -23,39 +25,21 @@ class PersonalBaseInfoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TextFormField(
-          controller: nameController,
-          focusNode: nameFocus,
-          textInputAction: TextInputAction.next,
-          decoration: const InputDecoration(
-            hintText: 'Nom',
-            prefixIcon: Icon(Icons.person),
-          ),
-          onFieldSubmitted: (_) =>
-              FocusScope.of(context).requestFocus(prenomFocus),
-          validator: MyValidators.displayNamevalidator,
+        InputNameWidget(
+          nameController: firstNameController,
+          nameFocusNode: firstNameFocus,
+          hinterText: AppLocalizations.of(context)!.input_hint_first_name,
+          nextFocusNode: lastnameFocus,
         ),
-        TextFormField(
-          controller: prenomController,
-          focusNode: prenomFocus,
-          textInputAction: TextInputAction.next,
-          decoration: const InputDecoration(
-            hintText: 'Prénom',
-            prefixIcon: Icon(Icons.person),
-          ),
-          onFieldSubmitted: (_) =>
-              FocusScope.of(context).requestFocus(addressFocus),
-          validator: MyValidators.displayNamevalidator,
+        InputNameWidget(
+          nameController: lastNameController,
+          nameFocusNode: lastnameFocus,
+          hinterText: AppLocalizations.of(context)!.input_hint_last_name,
+          nextFocusNode: lastnameFocus,
         ),
-        TextFormField(
-          controller: addressController,
-          focusNode: addressFocus,
-          textInputAction: TextInputAction.next,
-          decoration: const InputDecoration(
-            hintText: 'Adresse',
-            prefixIcon: Icon(Icons.home),
-          ),
-          validator: MyValidators.displayNamevalidator,
+        InputAdressWidget(
+          adressController: addressController,
+          adressFocusNode: addressFocus,
         ),
       ],
     );

@@ -72,16 +72,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get form_contact_title => 'Formulaire de Contact:';
 
   @override
-  String get input_hint_name => 'Nom';
+  String get input_hint_first_name => 'Nom';
 
   @override
-  String get input_hint_prenom => 'Prénom';
+  String get input_hint_last_name => 'Prénom';
 
   @override
   String get input_hint_adress_email => 'Adresse Email';
 
   @override
   String get input_hint_message => 'Votre Message...';
+
+  @override
+  String get input_hint_adress => 'Adresse';
 
   @override
   String get movegui_info_title => 'MoveGui – Livraison & Transport à Moto en Guinée';
@@ -223,4 +226,40 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tooltip_registration => 'Cliquez ici pour vous enregistrer :)';
+
+  @override
+  String get profile_menu_invite_people => 'Inviter un proche';
+
+  @override
+  String get profile_menu_orders => 'Commades';
+
+  @override
+  String get profile_menu_message => 'Messages de diffusion';
+
+  @override
+  String get profile_menu_important => 'Important';
+
+  @override
+  String get profile_menu_devices => 'Appareils connectés';
+
+  @override
+  String get profile_menu_account => 'Compte';
+
+  @override
+  String get profile_menu_confidentiality => 'Confidentialité';
+
+  @override
+  String get profile_menu_discussions => 'Discussions';
+
+  @override
+  String get profile_menu_notification => 'Notifications';
+
+  @override
+  String get profile_menu_delete_account => 'Supprimer Compte';
+
+  @override
+  String get profile_menu_logout => 'Deconnexion';
+
+  @override
+  String get profile_menu_login => 'Connexion';
 }

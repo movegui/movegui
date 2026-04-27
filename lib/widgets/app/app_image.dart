@@ -5,7 +5,7 @@ class AppImage extends StatelessWidget {
   final num? heightScale;
   final num? widthScale;
 
-  const AppImage({super.key, this.heightScale=0.3, this.widthScale=0.5}); 
+  const AppImage({super.key, this.heightScale=0.1, this.widthScale=0.5}); 
   
   @override
   Widget build(BuildContext context) {

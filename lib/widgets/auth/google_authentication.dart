@@ -35,6 +35,7 @@ class GoogleAuthentication extends StatelessWidget {
         _onPressed(context, buttonItem);
       },
       icon: Ionicons.logo_google,
+      fontSize: 13,
     );
   }
 }
