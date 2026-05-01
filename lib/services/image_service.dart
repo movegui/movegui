@@ -1,8 +1,13 @@
 import 'dart:io';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:movegui/consts/app_colors.dart';
+import 'package:movegui/l10n/app_localizations.dart';
+import 'package:movegui/widgets/error/message_widget.dart';
 
 class ImageService {
 
@@ -54,6 +59,24 @@ class ImageService {
       };
       }
 
+  }
+
+   static Future<void> onPressedCategoryImage(
+    BuildContext context,
+    String routeName,
+    String title,
+    bool enabled,
+  ) async {
+    if (enabled)
+      Navigator.pushNamed(context, routeName);
+    else
+      MessageWidget.errorMessage(
+        context,
+        AppLocalizations.of(context)!.deactivate_button_title,
+        AppLocalizations.of(context)!.deactivate_button_message,
+        Icon(Icons.error, color: AppColors.error),
+        FlushbarPosition.TOP,
+      );
   }
 
   

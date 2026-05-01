@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movegui/consts/app_constants.dart';
+import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/services/categories_service.dart';
 import 'package:movegui/services/register_services.dart';
@@ -27,32 +28,33 @@ class HomePageContentWidgetState extends State<HomePageContentWidget> {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+        crossAxisCount: WidgetConstants.crossAxisCountMobil,
+        childAspectRatio: WidgetConstants.childAspectRatio,
+        mainAxisSpacing: WidgetConstants.mainAxisSpacing,
+        crossAxisSpacing: WidgetConstants.mainAxisSpacing,
       ),
       itemBuilder: (context, index) {
         final item =
             AppConstants.allCategoriesItems(
               AppLocalizations.of(context)!,
             )[index];
-        return  WidgetWithImage(
-            title: item.name,
-            imagePath: item.imageUrl,
-            action:
-                (context, routeName, title, enabled) =>
-                    categoriesService.onPressedImage(
-                      context,
-                      item.routeName,
-                      item.name,
-                      item.enabled,
-                    ),
-            routeName: item.routeName,
-            enabled: item.enabled,
-          );
+        return WidgetWithImage(
+          title: item.name,
+          imagePath: item.imageUrl,
+          action:
+              (context, routeName, title, enabled) =>
+                  categoriesService.onPressedImage(
+                    context,
+                    item.routeName,
+                    item.name,
+                    item.enabled,
+                  ),
+          routeName: item.routeName,
+          enabled: item.enabled,
+        );
       },
       itemCount:
           AppConstants.allCategoriesItems(AppLocalizations.of(context)!).length,
     );
   }
 }
-
-

@@ -120,6 +120,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deactivate_button_attach_message => 'Coming soon';
 
   @override
+  String get activate_button_attach_message => 'Enabled';
+
+  @override
   String get category_courses_name => 'Races';
 
   @override

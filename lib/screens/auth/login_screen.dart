@@ -5,7 +5,6 @@ import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/platform_widget.dart';
 import 'package:movegui/providers/appbar_title_provider.dart';
 import 'package:movegui/responsive.dart';
-import 'package:movegui/widgets/app/app_image.dart';
 import 'package:movegui/widgets/app/separator_widget.dart';
 import 'package:movegui/widgets/auth/login_email_page.dart';
 import 'package:movegui/widgets/auth/login_phone_page.dart';

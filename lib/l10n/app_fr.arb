@@ -88,6 +88,8 @@
     "@deactivate_button_message": {},
     "deactivate_button_attach_message": "Bientôt disponible",
     "@deactivate_button_attach_message": {},
+    "activate_button_attach_message": "Disponible",
+    "@activate_button_attach_message": {},
 
     "category_courses_name": "Courses",
     "@category_courses_name": {},

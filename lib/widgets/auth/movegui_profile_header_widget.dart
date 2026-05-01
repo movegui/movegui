@@ -1,17 +1,13 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/widget_constants.dart';
-import 'package:movegui/l10n/app_localizations.dart';
-import 'package:movegui/models/button_item.dart';
 import 'package:movegui/models/user_model.dart';
 import 'package:movegui/widgets/auth/movegui_profile_default_image.dart';
 import 'package:movegui/widgets/auth/movegui_profile_header_update_name.dart';
-import 'package:movegui/widgets/error/message_widget.dart';
 import 'package:movegui/widgets/subtitle_text.dart';
 
 class MoveguiProfileHeaderWidget extends StatefulWidget {

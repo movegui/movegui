@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:movegui/consts/app_colors.dart';
+import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
+import 'package:movegui/responsive.dart';
 import 'package:movegui/widgets/home/home_image_widget.dart';
 
 class WidgetWithImage extends ImageWidget {
@@ -16,69 +18,84 @@ class WidgetWithImage extends ImageWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(6),
+      padding: const EdgeInsets.all(6),
       child: ElevatedButton(
         onPressed: () => action(context, routeName, title, enabled),
         style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(),
-          padding: EdgeInsets.all(1),
+          padding: EdgeInsets.zero,
+          minimumSize: Size.zero,
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          shape: const RoundedRectangleBorder(),
           backgroundColor: AppColors.textColor,
         ),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            SizedBox(
+              height: Responsive.isDesktop(context) ? 210 : 120,
+              width: double.infinity,
+              child: Image.asset(imagePath, fit: BoxFit.cover),
+            ),
+
             Container(
-              width: MediaQuery.of(context).size.width,
-              margin: const EdgeInsets.all(0),
-              padding: const EdgeInsets.all(0),
-              height: MediaQuery.of(context).size.height * 0.2,
-              decoration: BoxDecoration(
-                color: AppColors.textColor,
-                image: DecorationImage(
-                  image: AssetImage(imagePath),
-                  fit: BoxFit.fitHeight,
+              color: const Color(0xFF871A1C),
+              padding: const EdgeInsets.symmetric(
+                vertical: WidgetConstants.sepWidget,
+              ),
+              child: Text(
+                title,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textColor,
                 ),
               ),
             ),
             Container(
-              color: Color(0xFF871A1C),
-              padding: EdgeInsets.only(top: 2),
-              width: MediaQuery.of(context).size.width,
-            //  height: 30,
+              color: AppColors.textColor,
+              padding: const EdgeInsets.symmetric(
+                vertical: WidgetConstants.sepWidget,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textColor,
+                  if (enabled) ...[
+                    Container(
+                      width: WidgetConstants.sepWidgetHeight,
+                      height: WidgetConstants.sepWidgetHeight,
+                      decoration: const BoxDecoration(
+                        color: AppColors.activeColor,
+                        shape: BoxShape.circle,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            if (!enabled)
-              Container(
-                color: AppColors.textColor,
-                padding: EdgeInsets.only(top: 2),
-                width: MediaQuery.of(context).size.width,
-               // height: 20,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      AppLocalizations.of(
-                        context,
-                      )!.deactivate_button_attach_message,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: AppColors.placeHolderText,
+                    const SizedBox(width: WidgetConstants.sepWidget),
+                    Flexible(
+                      // 👈 prevents text overflow
+                      child: Text(
+                        AppLocalizations.of(
+                          context,
+                        )!.activate_button_attach_message,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(color: AppColors.activeColor,),
+                      ),
+                    ),
+                  ] else ...[
+                    Flexible(
+                      child: Text(
+                        AppLocalizations.of(
+                          context,
+                        )!.deactivate_button_attach_message,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(color: AppColors.placeHolderText),
+                        
                       ),
                     ),
                   ],
-                ),
+                ],
               ),
+            ),
           ],
         ),
       ),

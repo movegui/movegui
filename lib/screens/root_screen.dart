@@ -218,7 +218,9 @@ class _RootScreenState extends State<RootScreen> {
       drawer: MoveGuiMenu(navigatorKey: homeNavigatorKey),
       body:
           Responsive.isDesktop(context)
-              ? SafeArea(
+              ? HomeScreen(selectedTabIndex: selectedTabIndex, onTabChange: (int index) { selectedTabIndex = index; }, )
+              /*
+              SafeArea(
                 child: Column(
                   children: [
                     _buildWebTabs(context),
@@ -228,6 +230,7 @@ class _RootScreenState extends State<RootScreen> {
                   ],
                 ),
               )
+              */
               : IndexedStack(
                 index: currentScreen,
                 children: [
@@ -288,11 +291,11 @@ class _RootScreenState extends State<RootScreen> {
         Widget page;
         switch (settings.name) {
           case '/home':
-            page = HomeScreen();
+            page = HomeScreen(currentScreen: currentScreen,);
             break;
 
           case '/':
-            page = HomeScreen();
+            page = HomeScreen(currentScreen: currentScreen,);
             break;
 
           case '/pressing':
@@ -300,7 +303,7 @@ class _RootScreenState extends State<RootScreen> {
             break;
 
           default:
-            page = HomeScreen();
+            page = HomeScreen(currentScreen: currentScreen,);
         }
         return MaterialPageRoute(builder: (_) => page, settings: settings);
       },
@@ -516,109 +519,6 @@ Widget _buildProfileNavigator() {
   }
   */
 
-  Widget _buildWebTabs(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(
-        AppConstants.menuTabs(AppLocalizations.of(context)!).length,
-        (index) {
-          final tab =
-              AppConstants.menuTabs(AppLocalizations.of(context)!)[index];
 
-          return Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TabButton(
-                selected: selectedTabIndex == index,
-                onTap: () {
-                  setState(() {
-                    selectedTabIndex = index;
-                    _onPressedImage(
-                      context,
-                      tab.routeName,
-                      title,
-                      tab.enabled,
-                      // null,
-                    );
-                    /*
-                  if(tab.enabled)
-                    Navigator.pushNamed(context, tab.routeName);
-                    else
-                    */
-                  });
-                  //   webNavigatorKey.currentState!.pushNamed(tab.routeName);
-                },
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(tab.icon, size: 18),
-                    const SizedBox(width: 6),
-                    Text(tab.title),
-                  ],
-                ),
-              ),
-              if (index !=
-                  AppConstants.menuTabs(AppLocalizations.of(context)!).length -
-                      1)
-                const SizedBox(width: 20),
-            ],
-          );
-        },
-      ),
-    );
-  }
 
-  void _onPressedImage(
-    BuildContext context,
-    String routeName,
-    String title,
-    bool enabled,
-  ) {
-    if (enabled)
-      Navigator.pushNamed(context, routeName);
-    else
-      MessageWidget.errorMessage(
-        context,
-        AppLocalizations.of(context)!.deactivate_button_title,
-        AppLocalizations.of(context)!.deactivate_button_message,
-        Icon(Icons.error, color: AppColors.error),
-        FlushbarPosition.TOP,
-      );
-  }
-
-  Widget _builWebdCategoriesWidget(BuildContext context) {
-    return Expanded(
-      child: DynamicHeightGridView(
-        mainAxisSpacing: 12,
-        crossAxisSpacing: 12,
-        builder: (context, index) {
-          return WidgetWithImage(
-            title:
-                AppConstants.allCategoriesItems(
-                  AppLocalizations.of(context)!,
-                )[index].name,
-            imagePath:
-                AppConstants.allCategoriesItems(
-                  AppLocalizations.of(context)!,
-                )[index].imageUrl,
-            action: _onPressedImage,
-            routeName:
-                AppConstants.allCategoriesItems(
-                  AppLocalizations.of(context)!,
-                )[index].routeName,
-            enabled:
-                AppConstants.allCategoriesItems(
-                  AppLocalizations.of(context)!,
-                )[index].enabled,
-            //navigatorkey: null,
-          );
-        },
-        itemCount:
-            AppConstants.allCategoriesItems(
-              AppLocalizations.of(context)!,
-            ).length,
-        crossAxisCount: 5,
-      ),
-    );
-  }
 }

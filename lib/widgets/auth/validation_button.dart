@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:http/http.dart';
 import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/models/button_item.dart';
 import 'package:movegui/responsive.dart';

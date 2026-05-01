@@ -27,6 +27,8 @@
     "@success_login_message": {},
     "success_login_reset_password": "Lien envoyé avec Succes",
     "@success_login_reset_password": {},
+
+
     "login_forget_password_txt": "Enter your email address and we will send you a link to reset your password ",
     "@login_forget_password_txt": {},
 
@@ -93,6 +95,8 @@
     "@deactivate_button_message": {},
     "deactivate_button_attach_message": "Coming soon",
     "@deactivate_button_attach_message": {},
+      "activate_button_attach_message": "Enabled",
+    "@activate_button_attach_message": {},
 
      "category_courses_name": "Races",
     "@category_courses_name": {},

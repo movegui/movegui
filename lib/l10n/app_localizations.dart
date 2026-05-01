@@ -317,6 +317,12 @@ abstract class AppLocalizations {
   /// **'Coming soon'**
   String get deactivate_button_attach_message;
 
+  /// No description provided for @activate_button_attach_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Enabled'**
+  String get activate_button_attach_message;
+
   /// No description provided for @category_courses_name.
   ///
   /// In en, this message translates to:

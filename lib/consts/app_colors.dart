@@ -13,4 +13,5 @@ class AppColors {
   static const Color disabled = Colors.grey;
     static const Color placeHolderText = Colors.grey;
       static const Color validColor = Colors.lightGreen;
+      static const activeColor = Color.fromARGB(255, 7, 145, 12);
 }

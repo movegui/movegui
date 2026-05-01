@@ -50,7 +50,7 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
 
   Future<void> onNameUpdate(String? value) async {
     nameController.text = value!;
-    if (!value.isEmpty) {
+    if (!value.isEmpty && currentUser != null) {
       UserModel updatedUser = UserModel(
         updatedAt: DateTime.now(),
         id: currentUser!.id,
@@ -74,6 +74,14 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
         );
         isEditing = false;
       });
+    } else {
+      MessageWidget.errorMessage(
+        context,
+        AppLocalizations.of(context)!.error_send_mail_title,
+        AppLocalizations.of(context)!.error_send_mail_message,
+        Icon(Icons.error, color: AppColors.error),
+        FlushbarPosition.TOP,
+      );
     }
   }
 
@@ -114,7 +122,7 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
 
   Future<void> updloadImage(Uint8List? bytes) async {
     FirebaseAuth.instance.authStateChanges().listen((user) async {
-      if (user != null) {
+      if (user != null && currentUser != null) {
         String? url = await imageService.uploadImage(
           file: null,
           webBytes: bytes,
@@ -153,6 +161,14 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
             currentUser = updatedUser;
           });
         }
+      } else {
+        MessageWidget.errorMessage(
+          context,
+          AppLocalizations.of(context)!.error_send_mail_title,
+          AppLocalizations.of(context)!.error_send_mail_message,
+          Icon(Icons.error, color: AppColors.error),
+          FlushbarPosition.TOP,
+        );
       }
     });
   }

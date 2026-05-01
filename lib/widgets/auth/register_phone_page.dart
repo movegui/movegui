@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:movegui/consts/route_contants.dart';
-import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/button_item.dart';
 import 'package:movegui/models/user_model.dart';
@@ -9,7 +8,6 @@ import 'package:movegui/responsive.dart';
 import 'package:movegui/services/register_services.dart';
 import 'package:movegui/services/user_service.dart';
 import 'package:movegui/widgets/app/separator_widget.dart';
-import 'package:movegui/widgets/auth/auth_link_widget.dart';
 import 'package:movegui/widgets/auth/other_registration_widget.dart';
 import 'package:movegui/widgets/auth/validation_button.dart';
 import 'package:movegui/widgets/util/input_phone_widget.dart';

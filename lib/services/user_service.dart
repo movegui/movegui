@@ -83,7 +83,7 @@ class UserService extends ModelService<UserModel> implements IUserService {
       }
       await addModel(model);
       return model;
-    } on FirebaseException catch (e) {
+    } on FirebaseException {
       MessageWidget.errorMessage(
         context,
         AppLocalizations.of(context)!.error_register_with_phone_title,
