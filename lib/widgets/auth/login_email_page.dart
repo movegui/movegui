@@ -9,6 +9,7 @@ import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/button_item.dart';
 import 'package:movegui/providers/appbar_title_provider.dart';
 import 'package:movegui/providers/login_mod_provider.dart';
+import 'package:movegui/responsive.dart';
 import 'package:movegui/services/my_app_functions.dart';
 import 'package:movegui/widgets/app/separator_widget.dart';
 import 'package:movegui/widgets/auth/auth_link_widget.dart';
@@ -109,13 +110,6 @@ class LoginEmailPageState extends State<LoginEmailPage> {
           );
            context.read<LoginModProvider>().setLoginMod(AppConstants.LONGIN_EMAIL_MODE);
            Navigator.pushNamed(context, item.routeName!);
-
-/*
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => SizedBox()),
-          );
-          */
         } else {
           Fluttertoast.showToast(
             msg: AppLocalizations.of(context)!.error_login_message,
@@ -164,9 +158,9 @@ class LoginEmailPageState extends State<LoginEmailPage> {
                     });
                   },
                 ),
-                SeparatorWidget(height: WidgetConstants.sepWidgetHeight * 0.5),
+                 Responsive.isDesktop(context) ? SeparatorWidget(height: 20,) : SizedBox(),
                 AuthLinkWidget(),
-                SeparatorWidget(height: WidgetConstants.sepWidgetHeight * 0.5),
+                Responsive.isDesktop(context) ? SeparatorWidget(height: 20,) : SizedBox(),
 
                 Padding(
                   padding: const EdgeInsets.only(
@@ -183,6 +177,7 @@ class LoginEmailPageState extends State<LoginEmailPage> {
                     ),
                   ),
                 ),
+                 Responsive.isDesktop(context) ? SeparatorWidget(height: 20,) : SizedBox(),
 
                 OtherRegistrationWidget(),
               ],

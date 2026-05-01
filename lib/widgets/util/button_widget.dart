@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/models/button_item.dart';
@@ -20,28 +19,38 @@ class ButtonWidget extends StatelessWidget {
     this.backgroundColor,
     this.fontStyle,
     this.textDecoration,
-    this.fontSize = 14.0
+    this.fontSize = 14.0,
   });
-  
+
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
-      style: ElevatedButton.styleFrom(
-       // padding: const EdgeInsets.all(12.0),
-        backgroundColor: AppColors.backgroundColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0),
+      style: ButtonStyle(
+        padding: WidgetStateProperty.all(const EdgeInsets.all(3.0)),
+        shape: WidgetStateProperty.all(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
+        backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
+          if (states.contains(WidgetState.hovered)) {
+            return AppColors.selectionColor; // hover color
+          }
+          if (states.contains(WidgetState.pressed)) {
+            return AppColors.selectionColor;
+          }
+          return AppColors.backgroundColor;
+        }),
+        foregroundColor: WidgetStateProperty.resolveWith<Color>((states) {
+          if (states.contains(WidgetState.hovered)) {
+            return AppColors.textColor;
+          }
+          return AppColors.textColor;
+        }),
       ),
       icon:
           icon != null
-              ? Icon(icon!,  color: AppColors.textColor,)
-              : const SizedBox(), 
-      label: Text(
-        buttonItem.title!,
-        style: TextStyle(color: AppColors.textColor, fontSize: fontSize),
-      ),
-
+              ? Icon(icon!, color: AppColors.textColor)
+              : const SizedBox(),
+      label: Text(buttonItem.title!, style: TextStyle(fontSize: fontSize)),
       onPressed: () async {
         await onPressed(context, buttonItem);
       },

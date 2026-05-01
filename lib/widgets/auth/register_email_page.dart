@@ -7,8 +7,12 @@ import 'package:movegui/consts/validator.dart';
 import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/button_item.dart';
-import 'package:movegui/screens/main/home_screen.dart';
+import 'package:movegui/models/user_model.dart';
+import 'package:movegui/responsive.dart';
 import 'package:movegui/services/my_app_functions.dart';
+import 'package:movegui/services/register_services.dart';
+import 'package:movegui/services/user_service.dart';
+import 'package:movegui/widgets/app/separator_widget.dart';
 import 'package:movegui/widgets/auth/other_registration_widget.dart';
 import 'package:movegui/widgets/auth/repeat_password_widget.dart';
 import 'package:movegui/widgets/auth/validation_button.dart';
@@ -33,6 +37,7 @@ class RegisterEmailPageState extends State<RegisterEmailPage> {
   final _formkey = GlobalKey<FormState>();
   bool isloading = false;
   FirebaseAuth? auth;
+  late UserService userService;
 
   @override
   void initState() {
@@ -42,6 +47,7 @@ class RegisterEmailPageState extends State<RegisterEmailPage> {
     _emailFocusNode = FocusNode();
     _passwordFocusNode = FocusNode();
     _repeatPasswordFocusNode = FocusNode();
+    userService = getIt<UserService>();
     try {
       auth = FirebaseAuth.instance;
     } catch (e) {
@@ -70,7 +76,7 @@ class RegisterEmailPageState extends State<RegisterEmailPage> {
     super.dispose();
   }
 
-  Future<void> _registerFCT() async {
+  Future<void> _registerFCT(BuildContext context, ButtonItem item) async {
     final isValid = _formkey.currentState!.validate();
     FocusScope.of(context).unfocus();
 
@@ -79,11 +85,16 @@ class RegisterEmailPageState extends State<RegisterEmailPage> {
         setState(() {
           isloading = true;
         });
-        await auth?.createUserWithEmailAndPassword(
-          email: _emailController.text.trim(),
-          password: _passwordController.text.trim(),
+        UserModel initUser = await userService.initializeUserWithEmail(
+          _emailController.text.trim(),
         );
-        // OtpVerificationScreen(verificationId:  _emailController.text, phoneNumber: '', );
+
+        UserModel? createUser = await userService.registerWithEmail(
+          context,
+          initUser,
+          _passwordController.text.trim(),
+        );
+        Navigator.pushNamed(context, item.routeName!, arguments: createUser);
         Fluttertoast.showToast(
           msg: AppLocalizations.of(context)!.success_registration_new_user,
           toastLength: Toast.LENGTH_SHORT,
@@ -92,14 +103,6 @@ class RegisterEmailPageState extends State<RegisterEmailPage> {
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0,
-        );
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder:
-                (context) =>
-                    auth?.currentUser != null ? SizedBox() : HomeScreen(),
-          ),
         );
       } catch (error) {
         MyAppFunctions.showErrorOrWarningDialog(
@@ -144,20 +147,24 @@ class RegisterEmailPageState extends State<RegisterEmailPage> {
             passwordFocusNode: _passwordFocusNode,
             repeatPasswordFocusNode: _repeatPasswordFocusNode,
           ),
+          Responsive.isDesktop(context)
+              ? SeparatorWidget(height: 20)
+              : SizedBox(),
           Padding(
             padding: const EdgeInsets.all(WidgetConstants.sepWidget),
             child: ValidationButton(
-              fn: (BuildContext context, ButtonItem item) async {
-                _registerFCT();
-              },
+              fn: _registerFCT,
               buttonItem: ButtonItem(
                 AppLocalizations.of(context)!.btn_register_label,
                 AppLocalizations.of(context)!.tooltip_registration,
                 true,
-                routeName: RouteContants.REGISTER_ROUTE,
+                routeName: RouteContants.PROFILE_ROUTE,
               ),
             ),
           ),
+          Responsive.isDesktop(context)
+              ? SeparatorWidget(height: 20)
+              : SizedBox(),
           OtherRegistrationWidget(),
         ],
       ),

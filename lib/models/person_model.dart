@@ -26,7 +26,7 @@ class PersonModel extends Model {
     required this.gender,
     required this.birthDate,
     required this.addresses,
-    this.nationality
+    this.nationality,
   });
 
   @override
@@ -42,7 +42,6 @@ class PersonModel extends Model {
     'birthDate': birthDate?.toIso8601String() ?? '',
     'addresses': addresses,
     'nationality': nationality,
-
   };
 
   factory PersonModel.fromJson(Map<String, dynamic> json) => PersonModel(
@@ -56,13 +55,14 @@ class PersonModel extends Model {
     email: json['email'],
     phone: json['phone'],
     gender: json['gender'],
-    birthDate: json['birthDate'] != null
-    ? DateTime.parse(json['birthDate'])
-    : null,
-    addresses: json['address'],
-    nationality: json['nationality']
+    birthDate:
+        json['birthDate'] != null && !json['birthDate'].isEmpty
+            ? DateTime.parse(json['birthDate'])
+            : null,
+    addresses:
+        json['addresses'] != null ? List<String?>.from(json['addresses']) : [],
+    nationality: json['nationality'],
   );
-
 
   factory PersonModel.empty() => PersonModel(
     id: Uuid().v4(),
@@ -77,12 +77,18 @@ class PersonModel extends Model {
     gender: '',
     birthDate: DateTime(1800, 1, 1),
     addresses: [],
-    nationality: ''
+    nationality: '',
   );
 
   @override
   String toString() {
-    
-    return super.toString() + firstName + ' ' + lastName + ' '+ email! + ' ' + phone!;
+    return super.toString() +
+        firstName +
+        ' ' +
+        lastName +
+        ' ' +
+        email! +
+        ' ' +
+        phone!;
   }
 }

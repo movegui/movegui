@@ -54,6 +54,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get error_login_message => 'Login failed';
 
   @override
+  String get error_register_with_phone_title => 'Registration Error';
+
+  @override
+  String get error_register_with_phone_message => 'We were unable to register your phone number. Please try again !';
+
+  @override
   String get label_login_facebook => 'Facebook';
 
   @override
@@ -67,6 +73,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get btn_register_label => 'Register';
+
+  @override
+  String get verify_otp => 'Send Code';
+
+  @override
+  String get resend_code => 'Resend Code';
 
   @override
   String get form_contact_title => 'Contact Form:';
@@ -210,6 +222,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get label_registration => 'Sign-up';
 
   @override
+  String get label_enter_your_code => 'Enter your Code:';
+
+  @override
   String get exception_login_message => 'The Supplied User credential is incorrect, Please check your email address and password';
 
   @override
@@ -226,6 +241,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tooltip_registration => 'Cliquez ici pour vous enregistrer :)';
+
+  @override
+  String get tooltip_btn_send => 'Click here to submit your code';
 
   @override
   String get profile_menu_invite_people => 'Invite a Friend';

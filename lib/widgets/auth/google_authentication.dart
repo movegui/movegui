@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/route_contants.dart';
+import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/button_item.dart';
+import 'package:movegui/responsive.dart';
 import 'package:movegui/widgets/error/message_widget.dart';
 import 'package:movegui/widgets/util/button_widget.dart';
 
@@ -35,7 +37,7 @@ class GoogleAuthentication extends StatelessWidget {
         _onPressed(context, buttonItem);
       },
       icon: Ionicons.logo_google,
-      fontSize: 13,
+      fontSize: Responsive.isMobile(context) ? WidgetConstants.buttonFonsize * 1.8 : WidgetConstants.buttonFonsize * 2.3,
     );
   }
 }

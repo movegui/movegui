@@ -54,6 +54,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get error_login_message => 'Échec de la connexion';
 
   @override
+  String get error_register_with_phone_title => 'Erreur d\'enregistrement';
+
+  @override
+  String get error_register_with_phone_message => 'Echec d\'enregistrement de votre numéro de téléphone, Veuillez réessayer svp !';
+
+  @override
   String get label_login_facebook => 'Facebook';
 
   @override
@@ -67,6 +73,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get btn_register_label => 'Enregistrer';
+
+  @override
+  String get verify_otp => 'Envoyer Code';
+
+  @override
+  String get resend_code => 'Renvoyer Code';
 
   @override
   String get form_contact_title => 'Formulaire de Contact:';
@@ -210,6 +222,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get label_registration => 'Enregistrez-vous';
 
   @override
+  String get label_enter_your_code => 'Entrez votre Code:';
+
+  @override
   String get exception_login_message => 'Les identifiants utilisateur fournis sont incorrects, veuillez verifier votre email et mot de pass';
 
   @override
@@ -226,6 +241,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tooltip_registration => 'Cliquez ici pour vous enregistrer :)';
+
+  @override
+  String get tooltip_btn_send => 'Cliquez ici pour envoyer votre code';
 
   @override
   String get profile_menu_invite_people => 'Inviter un proche';

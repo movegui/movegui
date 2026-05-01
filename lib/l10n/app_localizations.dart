@@ -185,6 +185,18 @@ abstract class AppLocalizations {
   /// **'Login failed'**
   String get error_login_message;
 
+  /// No description provided for @error_register_with_phone_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration Error'**
+  String get error_register_with_phone_title;
+
+  /// No description provided for @error_register_with_phone_message.
+  ///
+  /// In en, this message translates to:
+  /// **'We were unable to register your phone number. Please try again !'**
+  String get error_register_with_phone_message;
+
   /// No description provided for @label_login_facebook.
   ///
   /// In en, this message translates to:
@@ -214,6 +226,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Register'**
   String get btn_register_label;
+
+  /// No description provided for @verify_otp.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Code'**
+  String get verify_otp;
+
+  /// No description provided for @resend_code.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend Code'**
+  String get resend_code;
 
   /// No description provided for @form_contact_title.
   ///
@@ -497,6 +521,12 @@ abstract class AppLocalizations {
   /// **'Sign-up'**
   String get label_registration;
 
+  /// No description provided for @label_enter_your_code.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your Code:'**
+  String get label_enter_your_code;
+
   /// No description provided for @exception_login_message.
   ///
   /// In en, this message translates to:
@@ -532,6 +562,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cliquez ici pour vous enregistrer :)'**
   String get tooltip_registration;
+
+  /// No description provided for @tooltip_btn_send.
+  ///
+  /// In en, this message translates to:
+  /// **'Click here to submit your code'**
+  String get tooltip_btn_send;
 
   /// No description provided for @profile_menu_invite_people.
   ///

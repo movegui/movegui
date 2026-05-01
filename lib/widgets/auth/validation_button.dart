@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:http/http.dart';
+import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/models/button_item.dart';
+import 'package:movegui/responsive.dart';
 import 'package:movegui/widgets/util/button_widget.dart';
 
 class ValidationButton extends StatelessWidget {
@@ -8,17 +11,32 @@ class ValidationButton extends StatelessWidget {
   final ButtonItem buttonItem;
   final IconData? icon;
 
-  const ValidationButton({super.key, required this.fn, required this.buttonItem, this.icon, });
+  const ValidationButton({
+    super.key,
+    required this.fn,
+    required this.buttonItem,
+    this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final Size _size = MediaQuery.of(context).size;
     return Row(
       children: [
-        Expanded(
-          child: SizedBox(
-            width: double.infinity,
-            child: ButtonWidget(onPressed: fn, buttonItem: buttonItem, icon: IconlyLight.send)
-            
+        Flexible(
+          child: Center(
+            child: SizedBox(
+              width: Responsive.isMobile(context) ? _size.width * 0.5 : 300,
+              child: ButtonWidget(
+                onPressed: fn,
+                buttonItem: buttonItem,
+                icon: IconlyLight.send,
+                fontSize:
+                    Responsive.isMobile(context)
+                        ? WidgetConstants.buttonFonsize * 2
+                        : WidgetConstants.buttonFonsize * 2.5,
+              ),
+            ),
           ),
         ),
       ],

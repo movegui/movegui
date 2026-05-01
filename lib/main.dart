@@ -1,12 +1,16 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:movegui/consts/route_contants.dart';
 import 'package:movegui/firebase_options.dart';
 import 'package:movegui/l10n/app_localizations.dart';
+import 'package:movegui/models/user_model.dart';
 import 'package:movegui/providers/appbar_title_provider.dart';
 import 'package:movegui/providers/login_mod_provider.dart';
 import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/providers/theme_provider.dart';
+import 'package:movegui/screens/auth/login_screen.dart';
 import 'package:movegui/screens/auth/movegui_register_screen.dart';
+import 'package:movegui/screens/main/movegui_profile_screen.dart';
 import 'package:movegui/screens/modules/patisserie_screen.dart';
 import 'package:movegui/screens/modules/pressing_screen.dart';
 import 'package:movegui/screens/modules/resto_screen.dart';
@@ -100,11 +104,26 @@ class MyApp extends StatelessWidget {
                     child: SuperMarktScreen(navigatorKey: rootNavigatorKey),
                   );
                   break;
-                case '/register':
+                case RouteContants.REGISTER_ROUTE:
                   page = WebLayout(
                     child: MoveguiRegisterScreen(),
                   );
                   break;
+
+                   case RouteContants.LOGIN_ROUTE:
+                  page = WebLayout(
+                    child: LoginScreen(),
+                  );
+                  break;
+
+                   case RouteContants.PROFILE_ROUTE:
+            final args = settings.arguments;
+            if (args != null) {
+              page = MoveguiProfileScreen(currentUser: args as UserModel);
+            } else {
+              page = MoveguiProfileScreen();
+            }
+            break;
 
                 default:
                   page = RootScreen();

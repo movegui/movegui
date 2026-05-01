@@ -9,4 +9,5 @@ class RouteContants {
   static const MY_ORDERS_ROUTE = '/myOrders';
   static const MY_DELIVERIS_ROUTE = '/myDeliveries';
   static const PRESSING_ROUTE = '/pressing';
+  static const OTP_SCREEN_ROUTE = '/otp';
 }

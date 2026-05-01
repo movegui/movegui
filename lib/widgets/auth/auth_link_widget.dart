@@ -6,6 +6,7 @@ import 'package:movegui/consts/route_contants.dart';
 import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/button_item.dart';
+import 'package:movegui/responsive.dart';
 import 'package:movegui/widgets/error/message_widget.dart';
 import 'package:movegui/widgets/util/button_widget.dart';
 
@@ -42,36 +43,40 @@ class AuthLinkWidgetState extends State<AuthLinkWidget> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: WidgetConstants.sepWidgetHeight, right: WidgetConstants.sepWidgetHeight,),
-          child: ButtonWidget(
-            onPressed: (context, buttomItem) async {
-              _onPressed(context, buttomItem);
-            },
-            buttonItem: ButtonItem(
-              AppLocalizations.of(context)!.label_login_forget_password,
-              AppLocalizations.of(context)!.tooltip_forget_password,
-              true,
-              routeName: RouteContants.FORGET_PASSWORD_ROUTE,
+        Flexible(
+          child: Padding(
+            padding: const EdgeInsets.all(6),
+            child: ButtonWidget(
+              onPressed: (context, buttomItem) async {
+                _onPressed(context, buttomItem);
+              },
+              buttonItem: ButtonItem(
+                AppLocalizations.of(context)!.label_login_forget_password,
+                AppLocalizations.of(context)!.tooltip_forget_password,
+                true,
+                routeName: RouteContants.FORGET_PASSWORD_ROUTE,
+              ),
+              icon: Ionicons.key_outline,
+              fontSize: Responsive.isMobile(context) ? WidgetConstants.buttonFonsize * 1.4 : WidgetConstants.buttonFonsize * 2,
             ),
-            icon: Ionicons.key_outline,
-            fontSize: WidgetConstants.buttonFonsize * 0.8,
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: WidgetConstants.sepWidgetHeight, right: WidgetConstants.sepWidgetHeight,),
-          child: ButtonWidget(
-            onPressed: (context, buttomItem) async {
-              _onPressed(context, buttomItem);
-            },
-            buttonItem: ButtonItem(
-              AppLocalizations.of(context)!.label_registration,
-              AppLocalizations.of(context)!.tooltip_registration,
-              true,
-              routeName: RouteContants.REGISTER_ROUTE,
+        Flexible(
+          child: Padding(
+            padding: const EdgeInsets.only(left: WidgetConstants.sepWidgetHeight, right: WidgetConstants.sepWidgetHeight,),
+            child: ButtonWidget(
+              onPressed: (context, buttomItem) async {
+                _onPressed(context, buttomItem);
+              },
+              buttonItem: ButtonItem(
+                AppLocalizations.of(context)!.label_registration,
+                AppLocalizations.of(context)!.tooltip_registration,
+                true,
+                routeName: RouteContants.REGISTER_ROUTE,
+              ),
+              icon: Ionicons.person,
+              fontSize: Responsive.isMobile(context) ? WidgetConstants.buttonFonsize * 1.4 : WidgetConstants.buttonFonsize * 2,
             ),
-            icon: Ionicons.person,
-            fontSize: WidgetConstants.buttonFonsize * 0.8,
           ),
         ),
       ],

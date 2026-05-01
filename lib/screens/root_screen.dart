@@ -10,14 +10,16 @@ import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/app_constants.dart';
 import 'package:movegui/consts/route_contants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
+import 'package:movegui/models/opt_args_model.dart';
+import 'package:movegui/models/user_model.dart';
 import 'package:movegui/observers/home_nav_observer.dart';
 import 'package:movegui/providers/appbar_title_provider.dart';
-import 'package:movegui/providers/login_mod_provider.dart';
 import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/responsive.dart';
 import 'package:movegui/screens/auth/login_screen.dart';
 import 'package:movegui/screens/auth/movegui_forgot_password_screen.dart';
 import 'package:movegui/screens/auth/movegui_register_screen.dart';
+import 'package:movegui/screens/auth/otp_verification_scxreen.dart';
 import 'package:movegui/screens/main/delivery_screen.dart';
 import 'package:movegui/screens/main/home_screen.dart';
 import 'package:movegui/screens/main/movegui_profile_screen.dart';
@@ -364,11 +366,29 @@ class _RootScreenState extends State<RootScreen> {
 
         switch (settings.name) {
           case RouteContants.PROFILE_ROUTE:
-            page = MoveguiProfileScreen();
+            final args = settings.arguments;
+            if (args != null) {
+              page = MoveguiProfileScreen(currentUser: args as UserModel);
+            } else {
+              page = MoveguiProfileScreen();
+            }
             break;
 
           case '/':
             page = MoveguiProfileScreen();
+            break;
+
+          case RouteContants.OTP_SCREEN_ROUTE:
+            final args = settings.arguments;
+            if (args is OptArgsModel) {
+              page = OtpVerificationScreen(
+                verificationId: args.verificationId,
+                currentUser: args.currentUser,
+                confirmationResult: args.confirmationResult,
+              );
+            } else {
+              page = LoginScreen();
+            }
             break;
 
           case RouteContants.REGISTER_ROUTE:

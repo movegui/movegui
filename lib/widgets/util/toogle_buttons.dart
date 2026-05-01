@@ -3,6 +3,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
+import 'package:movegui/responsive.dart';
 
 class ToggleButtonExample extends StatefulWidget {
   const ToggleButtonExample({super.key, required this.onStateChanged});
@@ -61,7 +62,7 @@ class _ToggleButtonExampleState extends State<ToggleButtonExample> {
                 child: Text(
                   AppLocalizations.of(context)!.company_label_phone,
                   style: TextStyle(
-                    fontSize: WidgetConstants.buttonFonsize * 1.5,
+                    fontSize:Responsive.isMobile(context) ? WidgetConstants.buttonFonsize * 1.5 : WidgetConstants.buttonFonsize * 2.5,
                   ),
                 ),
               ),
@@ -87,7 +88,7 @@ class _ToggleButtonExampleState extends State<ToggleButtonExample> {
                 child: Text(
                   AppLocalizations.of(context)!.company_label_email,
                   style: TextStyle(
-                    fontSize: WidgetConstants.buttonFonsize * 1.5,
+                    fontSize:Responsive.isMobile(context) ? WidgetConstants.buttonFonsize * 1.5 : WidgetConstants.buttonFonsize * 2.5,
                   ),
                 ),
               ),

@@ -9,6 +9,10 @@ import 'package:movegui/consts/widget_constants.dart';
   final TextInputType? textInputType;
   final String? hinterText;
   final String? Function(String?)? validator;
+  final double? fontSize;
+  final String? fontFamily;
+  final Color? textColor;
+
 
   const InputWidget({
     super.key,
@@ -18,7 +22,7 @@ import 'package:movegui/consts/widget_constants.dart';
     required this.icon,
     this.textInputType,
     this.hinterText,
-    this.validator,
+    this.validator, this.fontSize, this.fontFamily, this.textColor,
   });
 
   @override
@@ -37,10 +41,12 @@ import 'package:movegui/consts/widget_constants.dart';
             hintText: hinterText,
             prefixIcon: Icon(icon),
           ),
+          style: TextStyle(fontSize: fontSize, fontFamily: fontFamily, color: textColor),
           onFieldSubmitted: (value) {
             FocusScope.of(context).requestFocus(nextFocusNode!);
           },
           validator: validator,
+       
         ),
       
     );

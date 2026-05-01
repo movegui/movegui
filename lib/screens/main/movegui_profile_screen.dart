@@ -1,10 +1,13 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/app_constants.dart';
+import 'package:movegui/consts/route_contants.dart';
 import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/person_model.dart';
@@ -15,14 +18,15 @@ import 'package:movegui/services/image_service.dart';
 import 'package:movegui/services/my_app_functions.dart';
 import 'package:movegui/services/register_services.dart';
 import 'package:movegui/services/user_service.dart';
-import 'package:movegui/widgets/auth/movegui_full_profile_widget.dart';
-import 'package:movegui/widgets/auth/movegui_header_un_full_widget.dart';
+import 'package:movegui/widgets/auth/movegui_profile_header_widget.dart';
+import 'package:movegui/widgets/error/message_widget.dart';
 import 'package:movegui/widgets/util/profile_menu_title.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 class MoveguiProfileScreen extends StatefulWidget {
-  const MoveguiProfileScreen({super.key});
+  const MoveguiProfileScreen({super.key, this.currentUser});
+  final UserModel? currentUser;
 
   @override
   State<StatefulWidget> createState() => MoveguiProfileScreenState();
@@ -42,25 +46,35 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
   XFile? _pickedImage;
   late bool isNew;
   late int loginMode = -1;
+  late bool isEditing;
 
   Future<void> onNameUpdate(String? value) async {
-    setState(() async {
-      nameController.text = value!;
-      if (value != null && !value.isEmpty) {
-        UserModel updatedUser = UserModel(
-          updatedAt: DateTime.now(),
-          id: currentUser!.id,
-          name: nameController.text,
-          createdAt: currentUser!.createdAt,
-          username: currentUser!.username,
-          personModel: currentUser!.personModel,
+    nameController.text = value!;
+    if (!value.isEmpty) {
+      UserModel updatedUser = UserModel(
+        updatedAt: DateTime.now(),
+        id: currentUser!.id,
+        name: nameController.text,
+        createdAt: currentUser!.createdAt,
+        username: currentUser!.username,
+        personModel: currentUser!.personModel,
+        isVerified: currentUser!.isVerified,
+      );
+      await userService.update(updatedUser);
+      setState(() {
+        currentUser = updatedUser;
+        Fluttertoast.showToast(
+          msg: AppLocalizations.of(context)!.success_login_message,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
-        await userService.update(updatedUser);
-        setState(() {
-          currentUser = updatedUser;
-        });
-      }
-    });
+        isEditing = false;
+      });
+    }
   }
 
   Future<void> localImagePicker() async {
@@ -113,6 +127,7 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
             name: currentUser!.name,
             createdAt: currentUser!.createdAt,
             username: currentUser!.username,
+            isVerified: currentUser!.isVerified,
 
             personModel: PersonModel(
               id: currentUser!.personModel!.id,
@@ -128,12 +143,12 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
               addresses: currentUser!.personModel!.addresses,
             ),
           );
-
           if (isNew)
             await userService.addModel(updatedUser);
-          else
+          else {
             await userService.update(updatedUser);
-          isNew = false;
+            isNew = false;
+          }
           setState(() {
             currentUser = updatedUser;
           });
@@ -151,6 +166,7 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
     nameController = TextEditingController();
     nameFocusNode = FocusNode();
     isNew = false;
+    isEditing = false;
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await _initialize();
@@ -159,6 +175,7 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
 
   Future<void> _initialize() async {
     loginMode = context.read<LoginModProvider>().loginMode;
+    if (widget.currentUser != null) currentUser = widget.currentUser;
 
     if (auth?.currentUser != null) {
       if (auth?.currentUser?.email != null) {
@@ -166,53 +183,96 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
           loginMode = AppConstants.LONGIN_EMAIL_MODE;
           context.read<LoginModProvider>().setLoginMod(loginMode);
         }
-        currentUser = await userService.getByEmail(
-          auth?.currentUser?.email ?? '',
-        );
+        setState(() {
+          WidgetsBinding.instance.addPostFrameCallback((_) async {
+            currentUser = await userService.getByEmail(
+              auth?.currentUser?.email ?? '',
+            );
+            isNew = false;
+            setState(() {});
+          });
+        });
       } else if (auth?.currentUser?.phoneNumber != null) {
         if (loginMode != AppConstants.LOGIN_PHONE_MODE) {
           loginMode = AppConstants.LOGIN_PHONE_MODE;
           context.read<LoginModProvider>().setLoginMod(loginMode);
         }
-        currentUser = await userService.getByPhone(
-          auth?.currentUser?.phoneNumber ?? '',
-        );
+        setState(() {
+          WidgetsBinding.instance.addPostFrameCallback((_) async {
+            currentUser = await userService.getByPhone(
+              auth?.currentUser?.phoneNumber ?? '',
+            );
+            isNew = false;
+            setState(() {});
+          });
+        });
       }
       if (currentUser == null) {
         isNew = true;
-        setState(() {
-          currentUser = UserModel(
-            updatedAt: DateTime.now(),
-            id: auth?.currentUser?.uid ?? '',
-            name: auth?.currentUser?.displayName ?? '',
-            createdAt: DateTime.now(),
-            username:
-                loginMode == AppConstants.LONGIN_EMAIL_MODE
-                    ? auth?.currentUser?.email
-                    : loginMode == AppConstants.LOGIN_PHONE_MODE
-                    ? auth?.currentUser?.phoneNumber
-                    : null,
-            personModel: PersonModel(
-              id: Uuid().v4(),
+        if (loginMode == AppConstants.LOGIN_PHONE_MODE) {
+          {
+            setState(() {
+              WidgetsBinding.instance.addPostFrameCallback((_) async {
+                currentUser =
+                    await userService.initializeUserWithPhone(
+                          auth!.currentUser!.phoneNumber!,
+                        )
+                        as UserModel?;
+                ;
+              });
+            });
+          }
+        } else if (loginMode == AppConstants.LONGIN_EMAIL_MODE) {
+          setState(() {
+            WidgetsBinding.instance.addPostFrameCallback((_) async {
+              currentUser =
+                  await userService.initializeUserWithEmail(
+                        auth!.currentUser!.email!,
+                      )
+                      as UserModel?;
+            });
+          });
+        } else {
+          setState(() {
+            currentUser = UserModel(
+              updatedAt: DateTime.now(),
+              id: auth?.currentUser?.uid ?? '',
               name: auth?.currentUser?.displayName ?? '',
               createdAt: DateTime.now(),
-              firstName: '',
-              lastName: auth?.currentUser?.displayName ?? '',
-              profileImageUrl: null,
-              email:
+              username:
                   loginMode == AppConstants.LONGIN_EMAIL_MODE
                       ? auth?.currentUser?.email
-                      : null,
-              phone:
-                  loginMode == AppConstants.LOGIN_PHONE_MODE
+                      : loginMode == AppConstants.LOGIN_PHONE_MODE
                       ? auth?.currentUser?.phoneNumber
                       : null,
-              gender: '',
-              birthDate: null,
-              addresses: [],
-            ),
-          );
-        });
+              isVerified:
+                  loginMode == AppConstants.LONGIN_EMAIL_MODE
+                      ? auth!.currentUser!.emailVerified
+                      : loginMode == AppConstants.LOGIN_PHONE_MODE
+                      ? true
+                      : false,
+              personModel: PersonModel(
+                id: Uuid().v4(),
+                name: auth?.currentUser?.displayName ?? '',
+                createdAt: DateTime.now(),
+                firstName: '',
+                lastName: auth?.currentUser?.displayName ?? '',
+                profileImageUrl: null,
+                email:
+                    loginMode == AppConstants.LONGIN_EMAIL_MODE
+                        ? auth?.currentUser?.email
+                        : null,
+                phone:
+                    loginMode == AppConstants.LOGIN_PHONE_MODE
+                        ? auth?.currentUser?.phoneNumber
+                        : null,
+                gender: '',
+                birthDate: null,
+                addresses: [],
+              ),
+            );
+          });
+        }
       }
     }
   }
@@ -244,10 +304,7 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
                   WidgetConstants.sepWidgetHeight * 2,
                 ),
                 children: [
-                  currentUser?.name == null ||
-                          currentUser?.personModel?.profileImageUrl == null
-                      ? unFullHeaderProfile()
-                      : fullProfile(),
+                  headerProfile(),
                   const SizedBox(height: WidgetConstants.sepWidgetHeight * 2),
                   _buildFirstSection(),
                   const SizedBox(height: WidgetConstants.sepWidgetHeight * 2),
@@ -271,32 +328,51 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
           ? ProfileMenuTitle(
             icon: Icons.logout,
             title: AppLocalizations.of(context)!.profile_menu_logout,
-            onTap: () async => {await userService.signOut()},
+            onTap: () async {
+              await userService.signOut();
+              setState(() {
+                currentUser == null;
+              });
+            },
+            enabled: true,
           )
           : ProfileMenuTitle(
-            icon: Icons.logout,
-            title: AppLocalizations.of(context)!.profile_menu_logout,
+            icon: Icons.login,
+            title: AppLocalizations.of(context)!.profile_menu_login,
+            onTap:
+                () => Navigator.pushNamed(context, RouteContants.LOGIN_ROUTE),
+            enabled: true,
           ),
 
       ProfileMenuTitle(
         icon: Icons.person_add,
         title: AppLocalizations.of(context)!.profile_menu_invite_people,
+        onTap: () => notImplemented(),
+        enabled: false,
       ),
       ProfileMenuTitle(
         icon: Icons.list,
         title: AppLocalizations.of(context)!.profile_menu_orders,
+        onTap: () => notImplemented(),
+        enabled: false,
       ),
       ProfileMenuTitle(
         icon: Icons.campaign,
         title: AppLocalizations.of(context)!.profile_menu_message,
+        onTap: () => notImplemented(),
+        enabled: false,
       ),
       ProfileMenuTitle(
         icon: Icons.star_border,
         title: AppLocalizations.of(context)!.profile_menu_important,
+        onTap: () => notImplemented(),
+        enabled: false,
       ),
       ProfileMenuTitle(
         icon: Icons.devices,
         title: AppLocalizations.of(context)!.profile_menu_devices,
+        onTap: () => notImplemented(),
+        enabled: false,
       ),
     ]);
   }
@@ -306,18 +382,26 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
       ProfileMenuTitle(
         icon: Icons.key,
         title: AppLocalizations.of(context)!.profile_menu_account,
+        onTap: () => notImplemented(),
+        enabled: false,
       ),
       ProfileMenuTitle(
         icon: Icons.lock_outline,
         title: AppLocalizations.of(context)!.profile_menu_confidentiality,
+        onTap: () => notImplemented(),
+        enabled: false,
       ),
       ProfileMenuTitle(
         icon: Icons.chat_bubble_outline,
         title: AppLocalizations.of(context)!.profile_menu_discussions,
+        onTap: () => notImplemented(),
+        enabled: false,
       ),
       ProfileMenuTitle(
         icon: Icons.notifications_none,
         title: AppLocalizations.of(context)!.profile_menu_notification,
+        onTap: () => notImplemented(),
+        enabled: false,
       ),
     ]);
   }
@@ -325,8 +409,10 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
   Widget _buildThirdSection() {
     return _sectionCard([
       ProfileMenuTitle(
-        icon: Icons.key,
+        icon: Icons.delete,
         title: AppLocalizations.of(context)!.profile_menu_delete_account,
+        onTap: () => notImplemented(),
+        enabled: false,
       ),
     ]);
   }
@@ -352,12 +438,8 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
     );
   }
 
-  Widget fullProfile() {
-    return MoveguiFullProfileWidget();
-  }
-
-  Widget unFullHeaderProfile() {
-    return MoveguiHeaderUnFullWidget(
+  Widget headerProfile() {
+    return MoveguiProfileHeaderWidget(
       onNameUpdate: (value) async {
         onNameUpdate(value);
       },
@@ -369,6 +451,22 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
       nameFocusNode: nameFocusNode,
       pickedImage: pickedImage,
       webImage: webImage,
+      isEditing: isEditing,
+      onChangeEditing: (value) async {
+        setState(() {
+          isEditing = !value;
+        });
+      },
+    );
+  }
+
+  Future<dynamic> notImplemented() {
+    return MessageWidget.errorMessage(
+      context,
+      AppLocalizations.of(context)!.deactivate_button_title,
+      AppLocalizations.of(context)!.deactivate_button_message,
+      Icon(Icons.error, color: AppColors.error),
+      FlushbarPosition.TOP,
     );
   }
 }

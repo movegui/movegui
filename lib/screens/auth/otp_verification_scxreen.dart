@@ -1,15 +1,31 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:movegui/consts/app_colors.dart';
+import 'package:movegui/consts/app_constants.dart';
+import 'package:movegui/consts/route_contants.dart';
+import 'package:movegui/consts/widget_constants.dart';
+import 'package:movegui/l10n/app_localizations.dart';
+import 'package:movegui/models/button_item.dart';
+import 'package:movegui/models/user_model.dart';
+import 'package:movegui/providers/login_mod_provider.dart';
+import 'package:movegui/services/register_services.dart';
+import 'package:movegui/services/user_service.dart';
+import 'package:movegui/widgets/auth/validation_button.dart';
 import 'package:pinput/pinput.dart';
+import 'package:provider/provider.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
   final String verificationId;
-  final String phoneNumber;
+  final UserModel currentUser;
+  final ConfirmationResult? confirmationResult;
 
-  const OtpVerificationScreen({
+  OtpVerificationScreen({
     super.key,
     required this.verificationId,
-    required this.phoneNumber,
+    required this.currentUser,
+    this.confirmationResult,
   });
 
   @override
@@ -17,31 +33,64 @@ class OtpVerificationScreen extends StatefulWidget {
 }
 
 class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   String otpCode = "";
   bool isLoading = false;
+  late UserService userService;
 
-  Future<void> verifyOtp() async {
-    if (otpCode.length != 4) return;
+  @override
+  void initState() {
+    userService = getIt<UserService>();
+    super.initState();
+  }
+
+  Future<void> verifyOtp(BuildContext context, ButtonItem item) async {
+    if (otpCode.length != 6) return;
 
     setState(() => isLoading = true);
 
     try {
-      final credential = PhoneAuthProvider.credential(
-        verificationId: widget.verificationId,
-        smsCode: otpCode,
+      if (kIsWeb || widget.confirmationResult != null)
+        await widget.confirmationResult?.confirm(otpCode);
+      else
+        await userService.verifyOtp(widget.verificationId, otpCode);
+      Fluttertoast.showToast(
+        msg: AppLocalizations.of(context)!.success_registration_new_user,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
-
-      await _auth.signInWithCredential(credential);
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Code verifier avec Succès")),
+      context.read<LoginModProvider>().setLoginMod(
+        AppConstants.LOGIN_PHONE_MODE,
       );
-
-      // Navigate to Home
+      widget.currentUser.isVerified = true;
+      UserModel? savedUser = await userService.getByUsername(
+        widget.currentUser.username ?? '',
+      );
+      if (savedUser != null) {
+        if (savedUser.isVerified == false){
+            savedUser.isVerified = true;
+            await userService.update(savedUser);
+        } 
+        Navigator.pushNamed(context, item.routeName!, arguments: savedUser);
+      } else {
+        Navigator.pushNamed(
+          context,
+          item.routeName!,
+          arguments: widget.currentUser,
+        );
+      }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Code non Valid")),
+      Fluttertoast.showToast(
+        msg: AppLocalizations.of(context)!.error_register_with_phone_message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
     }
 
@@ -54,7 +103,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
       width: 55,
       height: 55,
       textStyle: const TextStyle(
-        fontSize: 20,
+        fontSize: WidgetConstants.subTitleFontSize,
         fontWeight: FontWeight.bold,
       ),
       decoration: BoxDecoration(
@@ -64,74 +113,63 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     );
 
     return Scaffold(
-      backgroundColor: const Color(0xFF4A73F3),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(WidgetConstants.sepWidgetHeight * 2),
           child: Container(
-            padding: const EdgeInsets.all(24),
+            padding: const EdgeInsets.all(WidgetConstants.sepWidgetHeight * 3),
             width: double.infinity,
             constraints: const BoxConstraints(maxWidth: 380),
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
+              color: AppColors.textColor,
+              borderRadius: BorderRadius.circular(
+                WidgetConstants.sepWidgetHeight * 2,
+              ),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 const CircleAvatar(
                   radius: 28,
-                  backgroundColor: Color(0xFF4A73F3),
-                  child: Icon(Icons.verified, color: Colors.white),
+                  backgroundColor:
+                      AppColors.backgroundColor, //Color(0xFF4A73F3),
+                  child: Icon(Icons.verified, color: AppColors.textColor),
                 ),
-                const SizedBox(height: 16),
-
-                const Text(
-                  "Entrz votre Code:",
+                const SizedBox(height: WidgetConstants.sepWidgetHeight * 2),
+                Text(
+                  AppLocalizations.of(context)!.label_enter_your_code,
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: WidgetConstants.sepWidgetHeight * 2.5,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-
-                const SizedBox(height: 20),
-
+                const SizedBox(height: WidgetConstants.sepWidgetHeight * 3),
                 Pinput(
-                  length: 4,
+                  length: 6,
                   defaultPinTheme: defaultPinTheme,
                   onCompleted: (value) => otpCode = value,
                 ),
-
-                const SizedBox(height: 24),
-
+                const SizedBox(height: WidgetConstants.sepWidgetHeight * 3),
                 SizedBox(
                   width: double.infinity,
                   height: 48,
-                  child: ElevatedButton(
-                    onPressed: isLoading ? null : verifyOtp,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF4A73F3),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
+                  child: ValidationButton(
+                    fn: isLoading ? (context, item) async {} : verifyOtp,
+                    buttonItem: ButtonItem(
+                      AppLocalizations.of(context)!.btn_send_label,
+                      AppLocalizations.of(context)!.tooltip_btn_send,
+                      true,
+                      routeName: RouteContants.PROFILE_ROUTE,
                     ),
-                    child: isLoading
-                        ? const CircularProgressIndicator(color: Colors.white)
-                        : const Text(
-                            "Verify OTP",
-                            style: TextStyle(fontSize: 16),
-                          ),
                   ),
                 ),
-
                 const SizedBox(height: 12),
-
                 TextButton(
                   onPressed: () {
-                    // TODO: Resend OTP
+                    userService.registerWithPhone(context, widget.currentUser);
                   },
-                  child: const Text("Resend Code"),
-                )
+                  child: Text(AppLocalizations.of(context)!.resend_code),
+                ),
               ],
             ),
           ),

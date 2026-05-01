@@ -10,6 +10,7 @@ import 'package:movegui/widgets/app/app_image.dart';
 import 'package:movegui/widgets/app/separator_widget.dart';
 import 'package:movegui/widgets/auth/register_email_page.dart';
 import 'package:movegui/widgets/auth/register_phone_page.dart';
+import 'package:movegui/widgets/subtitle_text.dart';
 import 'package:movegui/widgets/util/toogle_buttons.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +26,6 @@ class _RegisterScreenState extends State<MoveguiRegisterScreen> {
   int currentScreen = 0;
   late PageController controller;
   int currentLoginScreen = 0;
-
   bool showFirst = true;
 
 
@@ -74,7 +74,8 @@ class _RegisterScreenState extends State<MoveguiRegisterScreen> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            AppImage(heightScale: 0.10),
+           // AppImage(heightScale: 0.10),
+           SeparatorWidget(),
             PlatformWidget.isAndroid(context) ||
                     PlatformWidget.isIos(context) ||
                     PlatformWidget.isWeb(context)
@@ -92,6 +93,64 @@ class _RegisterScreenState extends State<MoveguiRegisterScreen> {
   }
 
   Widget buildDesktop() {
+
+    return Center(
+      child: Container(
+        width: 700,
+        height: 600,
+        decoration: BoxDecoration(
+          color: AppColors.textColor,
+          border: Border.all(color: AppColors.backgroundColor, width: 10),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                width: double.infinity,
+                color: AppColors.backgroundColor,
+                margin: EdgeInsets.only(left: 100, right: 100),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 35 , right: 30),
+                  child: SubtitleTextWidget(
+                    label: AppLocalizations.of(context)!.register_title,
+                    fontSize: WidgetConstants.subTitleFontSize * 3,
+                    color: AppColors.textColor,
+                  ),
+                ),
+              ),
+              SeparatorWidget(height: 30,),
+
+              ToggleButtonExample(onStateChanged: updateState),
+
+             SeparatorWidget(height: 20,),
+
+              currentLoginScreen == 0
+                ? RegisterPhonePage()
+                : RegisterEmailPage(),
+            ],
+          ),
+        ),
+      ),
+    );
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
     return Center(
       child: Container(
         width: 500,
@@ -115,5 +174,6 @@ class _RegisterScreenState extends State<MoveguiRegisterScreen> {
         ),
       ),
     );
+    */
   }
 }

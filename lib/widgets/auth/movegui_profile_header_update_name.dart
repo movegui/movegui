@@ -9,6 +9,7 @@ class MoveguiProfileHeaderUpdateName extends StatelessWidget{
   final TextEditingController nameController;
   final FocusNode nameFocusNode;
   final Future<void> Function(String?) onNameUpdate;
+  
 
    MoveguiProfileHeaderUpdateName({super.key, required this.nameController, required this.nameFocusNode, required this.onNameUpdate});
 
@@ -35,18 +36,6 @@ class MoveguiProfileHeaderUpdateName extends StatelessWidget{
                       onTap: (){
                         onNameUpdate(nameController.text);
                       },
-                      /*
-                      () {
-                        final newName = nameController.text.trim();
-                        if (newName.isEmpty) return;
-                        if (!mounted) return;
-                        setState(() {});
-                        /*
-                        if (!currentUser!.name.isEmpty)
-                          userService.update(currentUser!);
-                          */
-                      },
-                      */
                       child: const CircleAvatar(
                         radius: 16,
                         backgroundColor: AppColors.backgroundColor,

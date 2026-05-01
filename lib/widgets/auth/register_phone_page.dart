@@ -1,10 +1,15 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:movegui/consts/route_contants.dart';
 import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/button_item.dart';
+import 'package:movegui/models/user_model.dart';
+import 'package:movegui/responsive.dart';
+import 'package:movegui/services/register_services.dart';
+import 'package:movegui/services/user_service.dart';
+import 'package:movegui/widgets/app/separator_widget.dart';
+import 'package:movegui/widgets/auth/auth_link_widget.dart';
 import 'package:movegui/widgets/auth/other_registration_widget.dart';
 import 'package:movegui/widgets/auth/validation_button.dart';
 import 'package:movegui/widgets/util/input_phone_widget.dart';
@@ -21,6 +26,8 @@ class RegisterPhonePageState extends State<RegisterPhonePage> {
 
   late final TextEditingController _phoneNumberController;
   late final FocusNode _phoneNumberFocusNode;
+  late UserService userService;
+  late UserModel currentUser;
 
   final _formkey = GlobalKey<FormState>();
 
@@ -29,6 +36,7 @@ class RegisterPhonePageState extends State<RegisterPhonePage> {
     _phoneNumberController = TextEditingController();
     _phoneNumberFocusNode = FocusNode();
     auth = FirebaseAuth.instance;
+    userService = getIt<UserService>();
     super.initState();
   }
 
@@ -41,8 +49,12 @@ class RegisterPhonePageState extends State<RegisterPhonePage> {
     super.dispose();
   }
 
-  Future<void> _registerFCT() async {
-    FocusScope.of(context).unfocus();
+  Future<void> _registerFCT(BuildContext context, ButtonItem item) async {
+    currentUser = await userService.initializeUserWithPhone(
+      _phoneNumberController.text,
+    );
+    print(currentUser.toJson());
+    await userService.registerWithPhone(context, currentUser);
   }
 
   @override
@@ -59,21 +71,24 @@ class RegisterPhonePageState extends State<RegisterPhonePage> {
                 phoneController: _phoneNumberController,
                 phoneFocusNode: _phoneNumberFocusNode,
               ),
-
-              Padding(
-                padding: const EdgeInsets.all(WidgetConstants.sepWidget),
-                child: ValidationButton(
-                  fn: (BuildContext context, ButtonItem item) async {
-                    _registerFCT();
-                  },
-                  buttonItem: ButtonItem(
-                    AppLocalizations.of(context)!.btn_register_label,
-                    AppLocalizations.of(context)!.tooltip_registration,
-                    true,
-                    routeName: RouteContants.REGISTER_ROUTE,
-                  ),
+              Responsive.isDesktop(context)
+                  ? SeparatorWidget(height: 20)
+                  : SizedBox(),
+              ValidationButton(
+                fn: (BuildContext context, ButtonItem item) async {
+                  ;
+                  await _registerFCT(context, item);
+                },
+                buttonItem: ButtonItem(
+                  AppLocalizations.of(context)!.btn_register_label,
+                  AppLocalizations.of(context)!.tooltip_registration,
+                  true,
+                  routeName: RouteContants.REGISTER_ROUTE,
                 ),
               ),
+              Responsive.isDesktop(context)
+                  ? SeparatorWidget(height: 20)
+                  : SizedBox(),
               OtherRegistrationWidget(),
             ],
           ),

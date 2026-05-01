@@ -41,6 +41,13 @@
     "@error_firebase_initialisation": {},
     "error_login_message": "Login failed",
     "@error_login_message": {},
+     "error_register_with_phone_title": "Registration Error",
+    "@error_register_with_phone_title": {},
+    "error_register_with_phone_message": "We were unable to register your phone number. Please try again !",
+    "@error_register_with_phone_message": {},
+
+
+
     "label_login_facebook": "Facebook",
     "@label_login_facebook": {},
     "label_login_google": "Google",
@@ -52,6 +59,10 @@
     "@btn_send_label": {},
     "btn_register_label": "Register",
     "@btn_register_label": {},
+     "verify_otp": "Send Code",
+    "@verify_otp": {},
+    "resend_code": "Resend Code",
+    "@resend_code": {},
 
     "form_contact_title":"Contact Form:",
     "@form_contact_title": {},
@@ -153,6 +164,10 @@
     "@label_login_new_user": {},
     "label_registration": "Sign-up",
     "@label_registration": {},
+      "label_enter_your_code": "Enter your Code:",
+    "@label_enter_your_code": {},
+
+
     "exception_login_message": "The Supplied User credential is incorrect, Please check your email address and password",
     "@exception_login_message": {},
 
@@ -166,6 +181,8 @@
     "@tooltip_forget_password": {},
     "tooltip_registration": "Cliquez ici pour vous enregistrer :)",
     "@tooltip_registration": {},
+        "tooltip_btn_send": "Click here to submit your code",
+    "@tooltip_btn_send": {},
 
     "profile_menu_invite_people": "Invite a Friend",
     "@profile_menu_invite_people": {},

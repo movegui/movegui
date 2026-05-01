@@ -39,6 +39,10 @@
     "@error_firebase_initialisation": {},
     "error_login_message": "Échec de la connexion",
     "@error_login_message": {},
+    "error_register_with_phone_title": "Erreur d'enregistrement",
+    "@error_register_with_phone_title": {},
+    "error_register_with_phone_message": "Echec d'enregistrement de votre numéro de téléphone, Veuillez réessayer svp !",
+    "@error_register_with_phone_message": {},
 
     
     
@@ -48,6 +52,10 @@
     "@btn_send_label": {},
     "btn_register_label": "Enregistrer",
     "@btn_register_label": {},
+    "verify_otp": "Envoyer Code",
+    "@verify_otp": {},
+    "resend_code": "Renvoyer Code",
+    "@resend_code": {},
 
      "form_contact_title":"Formulaire de Contact:",
     "@form_contact_title": {},
@@ -157,6 +165,8 @@
     "@label_login_facebook": {},
     "label_login_google": "Google",
     "@label_login_google": {},
+    "label_enter_your_code": "Entrez votre Code:",
+    "@label_enter_your_code": {},
     
 
     "exception_login_message": "Les identifiants utilisateur fournis sont incorrects, veuillez verifier votre email et mot de pass",
@@ -172,6 +182,8 @@
     "@tooltip_forget_password": {},
     "tooltip_registration": "Cliquez ici pour vous enregistrer :)",
     "@tooltip_registration": {},
+    "tooltip_btn_send": "Cliquez ici pour envoyer votre code",
+    "@tooltip_btn_send": {},
 
     "profile_menu_invite_people": "Inviter un proche",
     "@profile_menu_invite_people": {},
