@@ -1,7 +1,16 @@
 {
-    
-
-    
+    "max_delivery_time": "48h maximum",
+    "@max_delivery_time": {},
+    "fast_and_efficient": "Rapide et Efficace",
+    "@fast_and_efficient": {},
+    "collect_delivery": "Ramassage & Livraison",
+    "@collect_delivery": {},
+    "delivery": "Livraison",
+    "@delivery": {},
+    "store_open": "Ouvert",
+    "@store_open": {},
+    "store_closed": "Fermé",
+    "@store_closed": {},
     "search": "Rechercher",
     "@search": {
         "description": "Text pour le Button de recherche"

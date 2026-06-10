@@ -9,6 +9,24 @@ class AppLocalizationsFr extends AppLocalizations {
   AppLocalizationsFr([String locale = 'fr']) : super(locale);
 
   @override
+  String get max_delivery_time => '48h maximum';
+
+  @override
+  String get fast_and_efficient => 'Rapide et Efficace';
+
+  @override
+  String get collect_delivery => 'Ramassage & Livraison';
+
+  @override
+  String get delivery => 'Livraison';
+
+  @override
+  String get store_open => 'Ouvert';
+
+  @override
+  String get store_closed => 'Fermé';
+
+  @override
   String get search => 'Rechercher';
 
   @override

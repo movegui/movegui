@@ -1,5 +1,6 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/route_contants.dart';
@@ -29,11 +30,7 @@ class AuthLinkWidgetState extends State<AuthLinkWidget> {
         FlushbarPosition.TOP,
       );
     else {
-      Navigator.pushNamed(
-        context,
-        item.routeName!,
-        arguments: {'item': item, 'email': widget.email},
-      );
+      context.push(item.routeName!);
     }
     ;
   }
@@ -54,7 +51,7 @@ class AuthLinkWidgetState extends State<AuthLinkWidget> {
                 AppLocalizations.of(context)!.label_login_forget_password,
                 AppLocalizations.of(context)!.tooltip_forget_password,
                 true,
-                routeName: RouteContants.FORGET_PASSWORD_ROUTE,
+                routeName: RouteConstants.FORGET_PASSWORD_ROUTE,
               ),
               icon: Ionicons.key_outline,
               fontSize: Responsive.isMobile(context) ? WidgetConstants.buttonFonsize * 1.4 : WidgetConstants.buttonFonsize * 2,
@@ -72,7 +69,7 @@ class AuthLinkWidgetState extends State<AuthLinkWidget> {
                 AppLocalizations.of(context)!.label_registration,
                 AppLocalizations.of(context)!.tooltip_registration,
                 true,
-                routeName: RouteContants.REGISTER_ROUTE,
+                routeName: RouteConstants.REGISTER_ROUTE,
               ),
               icon: Ionicons.person,
               fontSize: Responsive.isMobile(context) ? WidgetConstants.buttonFonsize * 1.4 : WidgetConstants.buttonFonsize * 2,

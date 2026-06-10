@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:movegui/consts/app_colors.dart';
@@ -130,10 +131,9 @@ class MoveguiProfileScreenState extends State<MoveguiUnFullProfileWidget> {
         Icon(Icons.error, color: AppColors.error),
         FlushbarPosition.TOP,
       );
-    else
-      Navigator.pushNamed(context, item.routeName!);
-
-    ;
+    else{
+        context.push(item.routeName!);
+    }
   }
 
   @override

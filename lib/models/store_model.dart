@@ -1,68 +1,56 @@
+
+
+import 'package:movegui/models/adress_model.dart';
 import 'package:movegui/models/model.dart';
 import 'package:movegui/models/open_hours_model.dart';
-import 'package:movegui/models/person_model.dart';
+import 'package:movegui/models/user_model.dart';
 
 abstract class StoreModel extends Model {
 
-  final String adresse, telephon, email, imageUrl, description;
-  final double? longitude;
-  final double? latitude;
-  final List<PersonModel> contacts;
-  final List<OpenHours> weeklyHours;
-  final StoreTypeModel storeType;
+  final String  phone, email, imageUrl, description;
+  final AdressModel address; 
+  final List<UserModel> staff;
+  final List<OpenHoursModel> weeklyHours;
+  final StoreTypeModel? storeType;
+  double rating ;
+  int reviewCount;
 
   StoreModel({
     required super.id,
     required super.name,
     required super.createdAt,
     required this.description,
-    required this.adresse,
     required this.email,
     required this.imageUrl,
-    required this.telephon,
-    required this.contacts,
+    required this.phone,
+    required this.staff,
     required this.weeklyHours,
     required this.storeType,
-    this.longitude,
-    this.latitude,
-    
+    required this.address,
+    this.rating = 0.0,
+    this.reviewCount = 0,
   });
 
   @override
   Map<String, dynamic> toJson() => {
+    
     ...super.toJson(),
     'description': description,
-    'adresse': adresse,
-    'contacts': contacts.map((contact) {
-      return contact.toJson();
+    'staff': staff.map((user) {
+      return user.toJson();
     }).toList(),
     'email': email,
     'imageUrl': imageUrl,
-    'telephon': telephon,
-    'longitude': longitude,
-    'latitude': latitude,
+    'telephon': phone,
     'weeklyHours': weeklyHours.map((weekHour){
       return (weekHour.closeTime != null && weekHour.openTime != null) ?
          weekHour.toJson() : {};
     }).toList(),
-    'storeType': storeType.toJson()
-    
+    'storeType': storeType?.toJson(),
+    'address': address.toJson(), 
+    'rating': rating,
+    'reviewCount': reviewCount,
   };
-
-
-/*
-      factory StoreModel.fromJson(Map<String, dynamic> json) => StoreModel (
-      id: json['id'],
-      name: json['name'],
-      description: json['description'],
-      adresse: json['adresse'],
-      contact: json['contact'],
-      email: json['email'],
-      imageUrl: json['imageUrl'],
-      telephon: json['telephon'],
-    );
-    */
-
 }
 
 
@@ -80,19 +68,6 @@ abstract class StoreModel extends Model {
     'createdAt': createdAt,
   };
 
-/*
-  factory StoreTypeModel.fromJson(Map<String, dynamic> json) =>
-      StoreTypeModel(
-        id: json['id'],
-        name: json['name'],
-        createdAt: json['createdAt'] != null
-            ? json['createdAt'].toDate()
-            : DateTime.now(),
-      );
-      */
-        
-      
-     
 
   @override
   String toString() {

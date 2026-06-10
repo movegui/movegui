@@ -2,19 +2,18 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:go_router/go_router.dart';
 import 'package:movegui/consts/app_colors.dart';
-import 'package:movegui/consts/app_constants.dart';
 import 'package:movegui/consts/route_contants.dart';
 import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/button_item.dart';
 import 'package:movegui/models/user_model.dart';
-import 'package:movegui/providers/login_mod_provider.dart';
 import 'package:movegui/services/register_services.dart';
 import 'package:movegui/services/user_service.dart';
 import 'package:movegui/widgets/auth/validation_button.dart';
 import 'package:pinput/pinput.dart';
-import 'package:provider/provider.dart';
+
 
 class OtpVerificationScreen extends StatefulWidget {
   final String verificationId;
@@ -62,9 +61,11 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
+      /*
       context.read<LoginModProvider>().setLoginMod(
         AppConstants.LOGIN_PHONE_MODE,
       );
+      */
       widget.currentUser.isVerified = true;
       UserModel? savedUser = await userService.getByUsername(
         widget.currentUser.username ?? '',
@@ -74,13 +75,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
             savedUser.isVerified = true;
             await userService.update(savedUser);
         } 
-        Navigator.pushNamed(context, item.routeName!, arguments: savedUser);
+        context.push(item.routeName!, extra: savedUser);
       } else {
-        Navigator.pushNamed(
-          context,
-          item.routeName!,
-          arguments: widget.currentUser,
-        );
+        context.push(item.routeName!, extra: widget.currentUser);
       }
     } catch (e) {
       Fluttertoast.showToast(
@@ -159,7 +156,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       AppLocalizations.of(context)!.btn_send_label,
                       AppLocalizations.of(context)!.tooltip_btn_send,
                       true,
-                      routeName: RouteContants.PROFILE_ROUTE,
+                      routeName: RouteConstants.PROFILE_ROUTE,
                     ),
                   ),
                 ),

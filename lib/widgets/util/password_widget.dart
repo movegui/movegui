@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/validator.dart';
 import 'package:movegui/consts/widget_constants.dart';
 
@@ -8,12 +8,18 @@ class PasswordWidget extends StatefulWidget {
   final FocusNode passwordFocusNode;
   final bool obscureText;
   final VoidCallback onPressObscur;
+  final Color? textColor;
+  final double? fontSize;
+  final FontWeight? fontweight;
   const PasswordWidget({
     super.key,
     required this.passwordController,
     required this.passwordFocusNode,
     required this.obscureText,
     required this.onPressObscur,
+    this.textColor = AppColors.textColor,
+    this.fontSize = 14,
+    this.fontweight = FontWeight.normal,
   });
   @override
   State<StatefulWidget> createState() => PasswordWidgetState();
@@ -45,14 +51,20 @@ class PasswordWidgetState extends State<PasswordWidget> {
                         */
             icon: Icon(
               widget.obscureText ? Icons.visibility : Icons.visibility_off,
+              color: widget.textColor,
             ),
           ),
           hintText: "***********",
-          prefixIcon: const Icon(IconlyLight.lock),
+          prefixIcon: Icon(Icons.lock, color: widget.textColor),
         ),
         validator: (value) {
           return MyValidators.passwordValidator(value);
         },
+        style: TextStyle(
+          fontSize: widget.fontSize,
+          color: widget.textColor,
+          fontWeight: widget.fontweight ?? FontWeight.normal,
+        ),
       ),
     );
   }

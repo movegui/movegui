@@ -1,23 +1,27 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:movegui/models/restaurant_model.dart';
 import 'package:movegui/services/model_service.dart';
 
-
 class RestaurantsService extends ModelService<RestaurantModel> {
+  RestaurantsService({required super.api});
 
   @override
-  Future<void> addModel(RestaurantModel model) async {
+  Future<RestaurantModel> addModel(RestaurantModel model) async {
     await FirebaseFirestore.instance
-            .collection(getCollectionName())
-            .doc(model.id)
-            .set(model.toJson());
+        .collection(getCollectionName())
+        .doc(model.id)
+        .set(model.toJson());
+
+    return model;
   }
 
   @override
   Future<List<RestaurantModel>> allModels() async {
-    final snapshot = await FirebaseFirestore.instance.collection(getCollectionName()).get();
-    return snapshot.docs.map((doc) => RestaurantModel.fromJson(doc.data())).toList();
+    final snapshot =
+        await FirebaseFirestore.instance.collection(getCollectionName()).get();
+    return snapshot.docs
+        .map((doc) => RestaurantModel.fromJson(doc.data()))
+        .toList();
   }
 
   @override
@@ -25,30 +29,40 @@ class RestaurantsService extends ModelService<RestaurantModel> {
     return "restaurants_model";
   }
 
-    
-    @override
+  @override
   Future<List<RestaurantModel>> getByName(String name) async {
-      final snapshot = await FirebaseFirestore.instance
-      .collection(getCollectionName())
-      .where('name', isEqualTo: name) 
-      .get();
+    final snapshot =
+        await FirebaseFirestore.instance
+            .collection(getCollectionName())
+            .where('name', isEqualTo: name)
+            .get();
 
-  return snapshot.docs
-      .map((doc) => RestaurantModel.fromJson(doc.data()))
-      .toList();
+    return snapshot.docs
+        .map((doc) => RestaurantModel.fromJson(doc.data()))
+        .toList();
   }
 
   Future<RestaurantModel> getById(String id) async {
-  final snapshot = await FirebaseFirestore.instance
-      .collection(getCollectionName())
-      .doc(id)
-      .get();
+    final snapshot =
+        await FirebaseFirestore.instance
+            .collection(getCollectionName())
+            .doc(id)
+            .get();
 
-  if (!snapshot.exists || snapshot.data() == null) {
-     throw Exception("Restaurant not found");
+    if (!snapshot.exists || snapshot.data() == null) {
+      throw Exception("Restaurant not found");
+    }
+
+    return RestaurantModel.fromJson(snapshot.data()!);
   }
 
-  return RestaurantModel.fromJson(snapshot.data()!);
-}
-
+  @override
+  Future<RestaurantModel> getModelById(String id) async {
+    final snapshot =
+        await FirebaseFirestore.instance
+            .collection(getCollectionName())
+            .doc(id)
+            .get();
+    return RestaurantModel.fromJson(snapshot.data()!);
+  }
 }

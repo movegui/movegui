@@ -1,7 +1,10 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/person_model.dart';
@@ -14,12 +17,15 @@ import 'package:uuid/uuid.dart';
 
 class UserService extends ModelService<UserModel> implements IUserService {
   final auth = FirebaseAuth.instance;
+
+  UserService({required super.api});
   @override
-  Future<void> addModel(UserModel model) async {
+  Future<UserModel> addModel(UserModel model) async {
     await FirebaseFirestore.instance
         .collection(getCollectionName())
         .doc(model.id)
         .set(model.toJson());
+    return model;
   }
 
   @override
@@ -67,7 +73,11 @@ class UserService extends ModelService<UserModel> implements IUserService {
   }
 
   @override
-  Future<UserModel?> registerWithEmail(BuildContext context, UserModel model, String password) async {
+  Future<UserModel?> registerWithEmail(
+    BuildContext context,
+    UserModel model,
+    String password,
+  ) async {
     try {
       UserCredential credential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
@@ -78,7 +88,7 @@ class UserService extends ModelService<UserModel> implements IUserService {
       if (user != null && !user.emailVerified) {
         await user.sendEmailVerification();
       }
-      if(user!.emailVerified){
+      if (user!.emailVerified) {
         model.isVerified = true;
       }
       await addModel(model);
@@ -95,9 +105,187 @@ class UserService extends ModelService<UserModel> implements IUserService {
     return null;
   }
 
+  static const String _googleSignInClientId =
+      String.fromEnvironment('GOOGLE_SIGN_IN_CLIENT_ID');
+
   @override
-  Future<void> registerWithGoogle(UserModel model) {
-    throw UnimplementedError();
+  Future<UserModel?> registerWithGoogle(BuildContext context) async {
+    try {
+      final GoogleSignIn googleSignIn = kIsWeb && _googleSignInClientId.isNotEmpty
+          ? GoogleSignIn(clientId: _googleSignInClientId)
+          : GoogleSignIn();
+
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      if (googleUser == null) {
+        return null; // User cancelled sign-in
+      }
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      final UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithCredential(credential);
+      final User? firebaseUser = userCredential.user;
+
+      if (firebaseUser == null) {
+        throw Exception("Firebase user is null");
+      }
+
+      // Check if user exists in Firestore
+      UserModel? existingUser = await getByEmail(firebaseUser.email ?? '');
+
+      if (existingUser != null) {
+        return existingUser;
+      }
+
+      // Create new user if doesn't exist
+      final UserModel newUser = await initializeUserWithAuthenticateUser(firebaseUser);
+      /*
+       UserModel(
+        updatedAt: DateTime.now(),
+        id: firebaseUser.uid,
+        name: firebaseUser.displayName ?? firebaseUser.email ?? 'Google User',
+        createdAt: DateTime.now(),
+        username: firebaseUser.email ?? '',
+        isVerified: firebaseUser.emailVerified,
+        role: '',
+        personModel: PersonModel(
+          id: firebaseUser.uid,
+          name: firebaseUser.displayName ?? '',
+          createdAt: DateTime.now(),
+          firstName: firebaseUser.displayName?.split(' ').first ?? '',
+          lastName:
+              firebaseUser.displayName?.split(' ').skip(1).join(' ') ?? '',
+          profileImageUrl: firebaseUser.photoURL,
+          email: firebaseUser.email,
+          phone: null,
+          gender: '',
+          birthDate: null,
+          addresses: [],
+        ),
+      );
+      */
+
+      await addModel(newUser);
+      return newUser;
+    } on FirebaseException catch (e) {
+      print(e.message);
+      MessageWidget.errorMessage(
+        context,
+        AppLocalizations.of(context)!.error_register_with_phone_title,
+        'Google Sign-In Error: ${e.message}',
+        const Icon(Icons.error, color: AppColors.error),
+        FlushbarPosition.TOP,
+      );
+    } catch (e) {
+      print(e);
+      MessageWidget.errorMessage(
+        context,
+        AppLocalizations.of(context)!.error_register_with_phone_title,
+        'Error: $e',
+        const Icon(Icons.error, color: AppColors.error),
+        FlushbarPosition.TOP,
+      );
+    }
+    return null;
+  }
+
+  Future<UserModel?> registerWithFacebook(BuildContext context) async {
+final LoginResult result = await FacebookAuth.instance.login();
+
+    try {
+      final LoginResult result = await FacebookAuth.instance.login(
+        permissions: ['email', 'public_profile'],
+      );
+
+      if (result.status == LoginStatus.cancelled) {
+        return null; // User cancelled sign-in
+      }
+
+      if (result.status == LoginStatus.failed) {
+        throw Exception(result.message ?? 'Facebook login failed');
+      }
+
+      final AccessToken? accessToken = result.accessToken;
+      if (accessToken == null) {
+        throw Exception('Access token is null');
+      }
+
+      final credential = FacebookAuthProvider.credential(
+        accessToken.tokenString,
+      );
+      final UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithCredential(credential);
+      final User? firebaseUser = userCredential.user;
+
+      if (firebaseUser == null) {
+        throw Exception("Firebase user is null");
+      }
+
+      // Check if user exists in Firestore
+      UserModel? existingUser = await getByEmail(firebaseUser.email ?? '');
+
+      if (existingUser != null) {
+        return existingUser;
+      }
+
+      // Create new user if doesn't exist
+      final UserModel newUser = await initializeUserWithAuthenticateUser(firebaseUser);
+      
+      /*
+       UserModel(
+        updatedAt: DateTime.now(),
+        id: firebaseUser.uid,
+        name: firebaseUser.displayName ?? firebaseUser.email ?? 'Facebook User',
+        createdAt: DateTime.now(),
+        username: firebaseUser.email ?? '',
+        isVerified: firebaseUser.emailVerified,
+        role: '',
+        personModel: PersonModel(
+          id: firebaseUser.uid,
+          name: firebaseUser.displayName ?? '',
+          createdAt: DateTime.now(),
+          firstName: firebaseUser.displayName?.split(' ').first ?? '',
+          lastName:
+              firebaseUser.displayName?.split(' ').skip(1).join(' ') ?? '',
+          profileImageUrl: firebaseUser.photoURL,
+          email: firebaseUser.email,
+          phone: null,
+          gender: '',
+          birthDate: null,
+          addresses: [],
+        ),
+      );
+      */
+
+      await addModel(newUser);
+      return newUser;
+    } on FirebaseException catch (e) {
+      print(e.message);
+      MessageWidget.errorMessage(
+        context,
+        AppLocalizations.of(context)!.error_register_with_phone_title,
+        'Facebook Sign-In Error: ${e.message}',
+        const Icon(Icons.error, color: AppColors.error),
+        FlushbarPosition.TOP,
+      );
+    } catch (e) {
+      print(e);
+      MessageWidget.errorMessage(
+        context,
+        AppLocalizations.of(context)!.error_register_with_phone_title,
+        'Error: $e',
+        const Icon(Icons.error, color: AppColors.error),
+        FlushbarPosition.TOP,
+      );
+    }
+    return null;
+    
   }
 
   @override
@@ -206,6 +394,7 @@ class UserService extends ModelService<UserModel> implements IUserService {
       createdAt: DateTime.now(),
       username: phoneNumber,
       isVerified: false,
+      role: '',
       personModel: PersonModel(
         id: Uuid().v4(),
         name: phoneNumber,
@@ -233,6 +422,7 @@ class UserService extends ModelService<UserModel> implements IUserService {
       createdAt: DateTime.now(),
       username: email,
       isVerified: false,
+      role: '',
       personModel: PersonModel(
         id: Uuid().v4(),
         name: '',
@@ -248,5 +438,37 @@ class UserService extends ModelService<UserModel> implements IUserService {
       ),
     );
     return currentUser;
+  }
+
+  Future<UserModel> initializeUserWithAuthenticateUser(
+    User firebaseUser,
+  ) async {
+    return UserModel(
+      updatedAt: DateTime.now(),
+      id: firebaseUser.uid,
+      name: firebaseUser.displayName ?? firebaseUser.email ?? 'Google User',
+      createdAt: DateTime.now(),
+      username: firebaseUser.email ?? '',
+      isVerified: firebaseUser.emailVerified,
+      role: '',
+      personModel: PersonModel(
+        id: firebaseUser.uid,
+        name: firebaseUser.displayName ?? '',
+        createdAt: DateTime.now(),
+        firstName: firebaseUser.displayName?.split(' ').first ?? '',
+        lastName: firebaseUser.displayName?.split(' ').skip(1).join(' ') ?? '',
+        profileImageUrl: firebaseUser.photoURL,
+        email: firebaseUser.email,
+        phone: null,
+        gender: '',
+        birthDate: null,
+        addresses: [],
+      ),
+    );
+  }
+  
+  @override
+  Future<UserModel> getModelById(String id) {
+    return getById(id);
   }
 }

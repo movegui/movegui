@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:movegui/l10n/app_localizations.dart';
-import 'package:movegui/providers/appbar_title_provider.dart';
-import 'package:provider/provider.dart';
 
 class OrderScreen extends StatefulWidget {
   const OrderScreen({super.key,});
@@ -16,6 +13,7 @@ class MyOrderScreenState extends State<OrderScreen> {
     super.initState();
   }
 
+/*
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -25,6 +23,7 @@ class MyOrderScreenState extends State<OrderScreen> {
       );
     });
   }
+  */
 
   @override
   Widget build(BuildContext context) {

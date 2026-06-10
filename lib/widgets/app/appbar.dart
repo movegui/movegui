@@ -1,34 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:movegui/consts/app_colors.dart';
+import 'package:movegui/consts/route_contants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
-import 'package:movegui/screens/root_screen.dart';
+
 
 class MoveguiAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const MoveguiAppBar({
-    super.key,
-    required this.title,
-    required this.itemCount,
-    required this.homeCanPop,
-    required this.activeNavigator,
-    required this.homeNavigatorKey,
-    required this.orderNavigatorKey,
-    required this.deliveryNavigatorKey,
-    required this.profileNavigatorKey,
-    required this.orderCanPop,
-    required this.deliveryCanPop,
-    required this.profileCanPop,
-  });
-  final GlobalKey<NavigatorState> homeNavigatorKey;
-  final GlobalKey<NavigatorState> orderNavigatorKey;
-  final GlobalKey<NavigatorState> deliveryNavigatorKey;
-  final GlobalKey<NavigatorState> profileNavigatorKey;
+  const MoveguiAppBar({super.key, required this.title, this.itemCount});
   final String title;
-  final int itemCount;
-  final ValueNotifier<bool> homeCanPop;
-  final ValueNotifier<bool> orderCanPop;
-  final ValueNotifier<bool> deliveryCanPop;
-  final ValueNotifier<bool> profileCanPop;
-  final ValueNotifier<ActiveNavigator> activeNavigator;
+  final int? itemCount;
 
   @override
   Widget build(BuildContext context) {
@@ -37,36 +17,32 @@ class MoveguiAppBar extends StatelessWidget implements PreferredSizeWidget {
       titleTextStyle: TextStyle(color: AppColors.textColor, fontSize: 20),
       leading: Builder(
         builder: (context) {
-
-
-          final currentNavigator = switch (activeNavigator.value) {
-            ActiveNavigator.home => homeNavigatorKey,
-            ActiveNavigator.order => orderNavigatorKey,
-            ActiveNavigator.delivery => deliveryNavigatorKey,
-            ActiveNavigator.profile => profileNavigatorKey,
-          };
-          final canPop = currentNavigator.currentState?.canPop() ?? false;
+          final canPop = context.canPop() || false;
           if (canPop) {
             return IconButton(
               icon: const Icon(Icons.arrow_back),
               color: AppColors.textColor,
               hoverColor: AppColors.selectionColor,
-              onPressed: () {
-               // Navigator.of(context).maybePop();
-               currentNavigator.currentState?.maybePop();
-              },
+              onPressed: () => context.pop(),
             );
           }
 
-          return IconButton(
-            icon: const Icon(Icons.menu),
-            color: AppColors.textColor,
-            tooltip: AppLocalizations.of(context)!.navigation_menu_tooltip,
-            hoverColor: AppColors.selectionColor,
-            onPressed: () => Scaffold.of(context).openDrawer(),
-          );
+          final scaffold = Scaffold.maybeOf(context);
+          final hasDrawer = scaffold?.widget.drawer != null;
+          if (hasDrawer) {
+            return IconButton(
+              icon: const Icon(Icons.menu),
+              color: AppColors.textColor,
+              tooltip: AppLocalizations.of(context)!.navigation_menu_tooltip,
+              hoverColor: AppColors.selectionColor,
+              onPressed: () => scaffold?.openDrawer(),
+            );
+          }
+
+          return const SizedBox.shrink();
         },
       ),
+      
       backgroundColor: AppColors.backgroundColor,
       actions: <Widget>[
         IconButton(
@@ -74,7 +50,7 @@ class MoveguiAppBar extends StatelessWidget implements PreferredSizeWidget {
           color: AppColors.textColor,
           hoverColor: AppColors.selectionColor,
           onPressed: () {
-            Navigator.pushNamed(context, '/search');
+            context.push(RouteConstants.SEARCH_ROUTE);
           },
         ),
         Stack(
@@ -84,27 +60,27 @@ class MoveguiAppBar extends StatelessWidget implements PreferredSizeWidget {
               color: AppColors.textColor,
               hoverColor: AppColors.selectionColor,
               onPressed: () {
-                Navigator.pushNamed(context, '/shopping');
+                context.push(RouteConstants.SHOPPING_ROUTE);
               },
             ),
-            Positioned(
-              right: 6,
-              top: 6,
-              child: Container(
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  color: AppColors.selectionColor,
-                  shape: BoxShape.circle,
-                ),
-                child: Text(
-                  '$itemCount',
-                  style: const TextStyle(
-                    color: AppColors.backgroundColor,
-                    fontSize: 10,
+              Positioned(
+                right: 6,
+                top: 6,
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: AppColors.selectionColor,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Text(
+                    '$itemCount',
+                    style: const TextStyle(
+                      color: AppColors.backgroundColor,
+                      fontSize: 10,
+                    ),
                   ),
                 ),
               ),
-            ),
           ],
         ),
         IconButton(
@@ -112,7 +88,7 @@ class MoveguiAppBar extends StatelessWidget implements PreferredSizeWidget {
           color: AppColors.textColor,
           hoverColor: AppColors.selectionColor,
           onPressed: () {
-            Navigator.pushNamed(context, '/notification');
+            context.push(RouteConstants.NOTIFICATIONS_ROUTE);
           },
         ),
       ],

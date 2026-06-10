@@ -1,29 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/app_constants.dart';
+import 'package:movegui/consts/route_contants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 
-class MenuBarWeb extends StatefulWidget implements PreferredSizeWidget {
-  @override
-  State<StatefulWidget> createState() => MenuBarWebState();
+class MenuBarWeb extends ConsumerWidget implements PreferredSizeWidget {
+  final String title;
+
+  MenuBarWeb({super.key, required this.title});
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
-}
-
-class MenuBarWebState extends State<MenuBarWeb> {
-  final loginConstatnts = LoginConstatnts();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final loginConstatnts = LoginConstatnts();
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
         color: AppColors.backgroundColor,
         child: Row(
-           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-                   Padding(
+            Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -33,19 +35,26 @@ class MenuBarWebState extends State<MenuBarWeb> {
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                 ),
-                child:        const Text(
-              AppConstants.name,
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: AppColors.textColor),
-            ),
+                child: const Text(
+                  AppConstants.name,
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textColor,
+                  ),
+                ),
                 onPressed: () async {
-                   Navigator.pushNamed(context, '/home');
+                  context.push(RouteConstants.HOME_ROUTE);
                 },
               ),
             ),
-      
+
             const SizedBox(width: 50),
             const Icon(Icons.location_on, color: AppColors.textColor),
-            const Text(AppConstants.Adresse, style: TextStyle(color: AppColors.textColor),),
+            const Text(
+              AppConstants.Adresse,
+              style: TextStyle(color: AppColors.textColor),
+            ),
             const SizedBox(width: 80),
             Expanded(
               child: Container(
@@ -60,8 +69,8 @@ class MenuBarWebState extends State<MenuBarWeb> {
                     const Icon(Icons.search, color: Colors.grey),
                     const SizedBox(width: 10),
                     Text(
-                     AppLocalizations.of(context)!.search,
-                      style: const TextStyle(color: Colors.grey, ),
+                      AppLocalizations.of(context)!.search,
+                      style: const TextStyle(color: Colors.grey),
                     ),
                   ],
                 ),
@@ -78,12 +87,12 @@ class MenuBarWebState extends State<MenuBarWeb> {
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                 ),
-                child:  Text(
+                child: Text(
                   loginConstatnts.getLoginTitle(),
                   style: TextStyle(color: AppColors.textColor, fontSize: 14),
                 ),
                 onPressed: () async {
-                  Navigator.pushNamed(context, '/login');
+                  context.push(RouteConstants.LOGIN_ROUTE);
                 },
               ),
             ),
@@ -97,12 +106,12 @@ class MenuBarWebState extends State<MenuBarWeb> {
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                 ),
-                child:  Text(
+                child: Text(
                   loginConstatnts.getRegisterTitle(),
                   style: TextStyle(color: AppColors.textColor, fontSize: 14),
                 ),
                 onPressed: () async {
-                   Navigator.pushNamed(context, '/register');
+                 context.push(RouteConstants.REGISTER_ROUTE);
                 },
               ),
             ),

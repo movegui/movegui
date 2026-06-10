@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class MenuItem  {
   const MenuItem({ 
@@ -8,31 +9,6 @@ class MenuItem  {
    });
    final String title;
    final String route;
-   
-/*
-   @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(route);
-      },
-       child: Card(
-        color: Color(0xFF871A1C),
-        margin: const EdgeInsets.all(6.0),
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: ListTile(title: Text(title,
-          style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                ),)
-          ),
-           
-        ),
-      ),
-    );
-  }
-  */
 }
 
 
@@ -50,7 +26,7 @@ class FooterItem extends StatelessWidget{
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(route);
+        context.push(route);
       },
        child: Card(
         margin: const EdgeInsets.all(6.0),

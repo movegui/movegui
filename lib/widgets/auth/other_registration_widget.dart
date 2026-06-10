@@ -12,38 +12,45 @@ class OtherRegistrationWidget extends StatelessWidget {
   const OtherRegistrationWidget({super.key});
   @override
   Widget build(BuildContext context) {
-    return 
-          PlatformWidget.isAndroid(context) || PlatformWidget.isWeb(context)
-              ? Column(
-                 mainAxisAlignment: MainAxisAlignment.center,
+    return PlatformWidget.isAndroid(context) || PlatformWidget.isWeb(context)
+        ? Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 2.0),
+              child: Row(
                 children: [
-                  SubtitleTextWidget(
-                    label:
-                        AppLocalizations.of(
-                          context,
-                        )!.label_login_connect_using.toUpperCase(),
-                        fontSize: Responsive.isMobile(context) ? WidgetConstants.subtitle_line : WidgetConstants.subtitle_line * 1.5,
-                  ),
-                  Responsive.isDesktop(context) ? SeparatorWidget(height: 20,) : SizedBox(),
-                  SizedBox(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: WidgetConstants.sepWidgetWidth),
-                          child: FittedBox(child: GoogleAuthentication()),
-                        ),
-
-                        Padding(
-                          padding: const EdgeInsets.only(left: WidgetConstants.sepWidgetWidth),
-                          child: FittedBox(child: FacebookAuthentication()),
-                        ),
-                      ],
+                  const Expanded(child: Divider(thickness: 1)),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: SubtitleTextWidget(
+                      label:
+                          AppLocalizations.of(
+                            context,
+                          )!.label_login_connect_using.toUpperCase(),
+                      fontSize:
+                          Responsive.isMobile(context)
+                              ? WidgetConstants.subtitle_line
+                              : WidgetConstants.subtitle_line * 1.5,
                     ),
                   ),
+                  const Expanded(child: Divider(thickness: 1)),
                 ],
-              )
-              : SizedBox();
+              ),
+            ),
+
+            Responsive.isDesktop(context)
+                ? SeparatorWidget(height: 20)
+                : SizedBox(),
+            SizedBox(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+              children: [ Expanded(child: Padding(padding: const EdgeInsets.all(8.0), child: GoogleAuthentication())), Expanded(child: Padding(padding: const EdgeInsets.all(8.0), child: FacebookAuthentication()))],
+              ),
+            ),
+          ],
+        )
+        : SizedBox();
   }
 }

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:go_router/go_router.dart';
 import 'package:movegui/consts/route_contants.dart';
 import 'package:movegui/consts/validator.dart';
 import 'package:movegui/consts/widget_constants.dart';
@@ -94,7 +95,7 @@ class RegisterEmailPageState extends State<RegisterEmailPage> {
           initUser,
           _passwordController.text.trim(),
         );
-        Navigator.pushNamed(context, item.routeName!, arguments: createUser);
+        context.push(item.routeName!, extra: createUser);
         Fluttertoast.showToast(
           msg: AppLocalizations.of(context)!.success_registration_new_user,
           toastLength: Toast.LENGTH_SHORT,
@@ -158,7 +159,7 @@ class RegisterEmailPageState extends State<RegisterEmailPage> {
                 AppLocalizations.of(context)!.btn_register_label,
                 AppLocalizations.of(context)!.tooltip_registration,
                 true,
-                routeName: RouteContants.PROFILE_ROUTE,
+                routeName: RouteConstants.PROFILE_ROUTE,
               ),
             ),
           ),

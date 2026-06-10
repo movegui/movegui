@@ -1,16 +1,19 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:movegui/models/pressing_model.dart';
+import 'package:movegui/models/pressing/pressing_model.dart';
 import 'package:movegui/services/model_service.dart';
 
 class PressingService extends ModelService<PressingModel>{
+  PressingService({required super.api});
+
   
   @override
-  Future<void> addModel(PressingModel pressing) async{
+  Future<PressingModel> addModel(PressingModel pressing) async{
         await FirebaseFirestore.instance
           .collection(getCollectionName())
           .doc(pressing.id)
           .set(pressing.toJson());
+          return pressing;
   }
 
   @override
@@ -52,4 +55,13 @@ class PressingService extends ModelService<PressingModel>{
 
   return PressingModel.fromJson(snapshot.data()!);
 }
+
+  @override
+  Future<PressingModel> getModelById(String id) async {
+           final snapshot = await FirebaseFirestore.instance
+        .collection(getCollectionName())
+        .doc(id)
+        .get();
+    return PressingModel.fromJson(snapshot.data()!);
+  }
 }

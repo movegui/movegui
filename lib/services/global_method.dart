@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:movegui/widgets/util/text_widget.dart';
 
 
 
 class GlobalMethods {
   static navigateTo({required BuildContext ctx, required String routeName}) {
-    Navigator.pushNamed(ctx, routeName);
+    ctx.push(routeName);
   }
 
   static Future<void> warningDialog({

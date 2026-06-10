@@ -1,11 +1,15 @@
 
 
 import 'package:movegui/models/model.dart';
+import 'package:movegui/services/api_service.dart';
 
 abstract class ModelService<T extends Model> {
-  Future<void> addModel(T model);
+  final ApiService api;
+
+  ModelService({required this.api});
+  Future<T> addModel(T model);
   Future<List<T>> allModels();
   Future<List<T>> getByName(String name);
   String getCollectionName();
-  Future<T> getById(String id);
+  Future<T> getModelById(String id);
 }

@@ -3,7 +3,7 @@ import 'package:movegui/consts/app_colors.dart';
 
 class Styles {
   Color? appBackgroundColor;
-  static ThemeData themeData({
+  static ThemeData themeData(getDarkTheme, {
     required bool isDarkTheme,
     required BuildContext context,
   }) {

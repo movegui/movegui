@@ -81,7 +81,7 @@ class RegisterPhonePageState extends State<RegisterPhonePage> {
                   AppLocalizations.of(context)!.btn_register_label,
                   AppLocalizations.of(context)!.tooltip_registration,
                   true,
-                  routeName: RouteContants.REGISTER_ROUTE,
+                  routeName: RouteConstants.REGISTER_ROUTE,
                 ),
               ),
               Responsive.isDesktop(context)

@@ -1,8 +1,11 @@
+
+
+import 'package:movegui/models/adress_model.dart';
 import 'package:movegui/models/categories_model.dart';
 import 'package:movegui/models/open_hours_model.dart';
-import 'package:movegui/models/person_model.dart';
 import 'package:movegui/models/restaurant_model.dart';
 import 'package:movegui/models/store_model.dart';
+import 'package:movegui/models/user_model.dart';
 
 class ProfessionnelModel extends StoreModel {
   final List<String> professions;
@@ -14,17 +17,15 @@ class ProfessionnelModel extends StoreModel {
     required super.name,
     required super.createdAt,
     required super.description,
-    required super.adresse,
-    required super.contacts,
+    required super.address,
+    required super.staff,
     required super.email,
     required super.imageUrl,
-    required super.telephon,
+    required super.phone,
     required super.weeklyHours,
     required super.storeType,
     required this.professions,
     required this.category,
-    super.longitude,
-    super.latitude,
   });
 
   @override
@@ -40,15 +41,15 @@ class ProfessionnelModel extends StoreModel {
         name: json['name'],
         description: json['description'],
         imageUrl: json['imageUrl'],
-        adresse: json['adresse'],
+        address: AdressModel.fromJson(json['adresse']),
         email: json['email'],
-        telephon: json['telephon'],
-        contacts: (json['contacts'] as List? ?? [])
-            .map((e) => PersonModel.fromJson(e))
+        phone: json['telephon'],
+        staff: (json['staff'] as List? ?? [])
+            .map((e) => UserModel.fromJson(e))
             .toList(),
         category: CategoriesModel.fromJson(json['category']),
         createdAt: json['createdAt'] != null ? json['createdAt'].toDate() : DateTime.now(),
-        weeklyHours: (json['weeklyHours'] as List? ?? []).map((e) => OpenHours.fromJson(e)).toList(),
+        weeklyHours: (json['weeklyHours'] as List? ?? []).map((e) => OpenHoursModel.fromJson(e)).toList(),
         storeType: RestaurantTypeModel.fromJson(json['storeType']),
          professions: (json['professions'] as List<String>) ,
   
@@ -56,7 +57,7 @@ class ProfessionnelModel extends StoreModel {
 
   @override
   String toString() {
-    return 'Profession(name: $name, professions: ${professions[0].toString()}, persons: ${contacts.toList().toString()})';
+    return 'Profession(name: $name, professions: ${professions[0].toString()}, persons: ${staff.toList().toString()})';
   }
 }
 

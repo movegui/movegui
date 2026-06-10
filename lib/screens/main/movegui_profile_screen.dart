@@ -4,6 +4,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/app_constants.dart';
@@ -12,7 +13,6 @@ import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/person_model.dart';
 import 'package:movegui/models/user_model.dart';
-import 'package:movegui/providers/login_mod_provider.dart';
 import 'package:movegui/screens/auth/login_screen.dart';
 import 'package:movegui/services/image_service.dart';
 import 'package:movegui/services/my_app_functions.dart';
@@ -21,7 +21,6 @@ import 'package:movegui/services/user_service.dart';
 import 'package:movegui/widgets/auth/movegui_profile_header_widget.dart';
 import 'package:movegui/widgets/error/message_widget.dart';
 import 'package:movegui/widgets/util/profile_menu_title.dart';
-import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 class MoveguiProfileScreen extends StatefulWidget {
@@ -58,7 +57,8 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
         createdAt: currentUser!.createdAt,
         username: currentUser!.username,
         personModel: currentUser!.personModel,
-        isVerified: currentUser!.isVerified,
+        isVerified: currentUser!.isVerified, 
+        role: '',
       );
       await userService.update(updatedUser);
       setState(() {
@@ -149,7 +149,7 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
               gender: currentUser!.personModel!.gender,
               birthDate: currentUser!.personModel!.birthDate,
               addresses: currentUser!.personModel!.addresses,
-            ),
+            ), role: '',
           );
           if (isNew)
             await userService.addModel(updatedUser);
@@ -190,14 +190,14 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
   }
 
   Future<void> _initialize() async {
-    loginMode = context.read<LoginModProvider>().loginMode;
+  //  loginMode = context.read<LoginModProvider>().loginMode;
     if (widget.currentUser != null) currentUser = widget.currentUser;
 
     if (auth?.currentUser != null) {
       if (auth?.currentUser?.email != null) {
         if (loginMode != AppConstants.LONGIN_EMAIL_MODE) {
           loginMode = AppConstants.LONGIN_EMAIL_MODE;
-          context.read<LoginModProvider>().setLoginMod(loginMode);
+     //     context.read<LoginModProvider>().setLoginMod(loginMode);
         }
         setState(() {
           WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -211,7 +211,7 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
       } else if (auth?.currentUser?.phoneNumber != null) {
         if (loginMode != AppConstants.LOGIN_PHONE_MODE) {
           loginMode = AppConstants.LOGIN_PHONE_MODE;
-          context.read<LoginModProvider>().setLoginMod(loginMode);
+      //    context.read<LoginModProvider>().setLoginMod(loginMode);
         }
         setState(() {
           WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -285,7 +285,7 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
                 gender: '',
                 birthDate: null,
                 addresses: [],
-              ),
+              ), role: '',
             );
           });
         }
@@ -295,13 +295,17 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
 
   void chekLoginMode() {
     if (FirebaseAuth.instance.currentUser?.email != null) {
+      /*
       context.read<LoginModProvider>().setLoginMod(
         AppConstants.LONGIN_EMAIL_MODE,
       );
+      */
     } else if (FirebaseAuth.instance.currentUser?.phoneNumber != null) {
+      /*
       context.read<LoginModProvider>().setLoginMod(
         AppConstants.LOGIN_PHONE_MODE,
       );
+      */
     }
   }
 
@@ -356,7 +360,7 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
             icon: Icons.login,
             title: AppLocalizations.of(context)!.profile_menu_login,
             onTap:
-                () => Navigator.pushNamed(context, RouteContants.LOGIN_ROUTE),
+                () => context.push(RouteConstants.LOGIN_ROUTE),
             enabled: true,
           ),
 

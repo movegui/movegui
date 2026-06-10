@@ -1,5 +1,6 @@
 
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 class ShoppingProvider with ChangeNotifier{
 int _itemCount = 0;
@@ -24,3 +25,8 @@ void addItem(){
   }
 
 }
+
+final shoppingProvider =
+    ChangeNotifierProvider<ShoppingProvider>((ref) {
+  return ShoppingProvider();
+});

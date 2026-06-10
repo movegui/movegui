@@ -15,10 +15,7 @@ import 'package:movegui/screens/modules/patisserie_screen.dart';
 import 'package:movegui/screens/modules/pressing_screen.dart';
 import 'package:movegui/screens/modules/resto_screen.dart';
 import 'package:movegui/screens/modules/super_markt_screen.dart';
-import 'package:movegui/screens/root_screen.dart';
 import 'package:movegui/services/register_services.dart';
-import 'package:movegui/widgets/web/web_layout.dart';
-import 'package:provider/provider.dart';
 import 'consts/theme_data.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -104,19 +101,19 @@ class MyApp extends StatelessWidget {
                     child: SuperMarktScreen(navigatorKey: rootNavigatorKey),
                   );
                   break;
-                case RouteContants.REGISTER_ROUTE:
+                case RouteConstants.REGISTER_ROUTE:
                   page = WebLayout(
                     child: MoveguiRegisterScreen(),
                   );
                   break;
 
-                   case RouteContants.LOGIN_ROUTE:
+                   case RouteConstants.LOGIN_ROUTE:
                   page = WebLayout(
                     child: LoginScreen(),
                   );
                   break;
 
-                   case RouteContants.PROFILE_ROUTE:
+                   case RouteConstants.PROFILE_ROUTE:
             final args = settings.arguments;
             if (args != null) {
               page = MoveguiProfileScreen(currentUser: args as UserModel);

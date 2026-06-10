@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:movegui/screens/auth/login_screen.dart';
-import 'package:movegui/screens/root_screen.dart';
 
 class StartScreen extends StatelessWidget {
 

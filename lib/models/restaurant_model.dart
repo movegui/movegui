@@ -1,6 +1,9 @@
+
+
+import 'package:movegui/models/adress_model.dart';
 import 'package:movegui/models/open_hours_model.dart';
-import 'package:movegui/models/person_model.dart';
 import 'package:movegui/models/store_model.dart';
+import 'package:movegui/models/user_model.dart';
 
 class RestaurantModel extends StoreModel {
   //  final RestaurantTypeModel restaurantType;
@@ -11,13 +14,11 @@ class RestaurantModel extends StoreModel {
     required super.createdAt,
     required super.description,
     required super.imageUrl,
-    required super.adresse,
+    required super.address,
     required super.email,
-    required super.telephon,
-    required super.contacts,
+    required super.phone,
+    required super.staff,
     required super.weeklyHours,
-    super.longitude,
-    super.latitude,
     required super.storeType,
   });
 
@@ -33,34 +34,25 @@ class RestaurantModel extends StoreModel {
         name: json['name'],
         description: json['description'],
         imageUrl: json['imageUrl'],
-        adresse: json['adresse'],
+        address: AdressModel.fromJson(json['adresse']),
         email: json['email'],
-        telephon: json['telephon'],
-        contacts: (json['contacts'] as List? ?? [])
-            .map((e) => PersonModel.fromJson(e))
+        phone: json['telephon'],
+        staff: (json['staff'] as List? ?? [])
+            .map((e) => UserModel.fromJson(e))
             .toList(),
         createdAt: json['createdAt'] != null
             ? json['createdAt'].toDate()
             : DateTime.now(),
         storeType: RestaurantTypeModel.fromJson(json['storeType']),
-        longitude: json['longitude'],
-        latitude: json['latitude'],
-
         weeklyHours: (json['weeklyHours'] as List? ?? [])
             .map(
               (e) => (e != null && e['openTime'] != null && e['closeTime'] != null && e['day'] != null)
-                  ? OpenHours.fromJson(e)
+                  ? OpenHoursModel.fromJson(e)
                   : null,
             )
             .where((e) => e != null)
-            .cast<OpenHours>()
+            .cast<OpenHoursModel>()
             .toList(),
-
-        /*
-        weeklyHours: (json['weeklyHours'] as List? ?? [])
-            .map((e) => (e.openTime != null && e.closeTime != null)? OpenHours.fromJson(e) : )
-            .toList(),
-            */
       );
 }
 

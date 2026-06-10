@@ -9,6 +9,7 @@ class InputPhoneWidget extends StatelessWidget {
   final double? fontSize;
   final String? fontFamily;
   final Color? textColor;
+  final FontWeight? fontweight;
 
   const InputPhoneWidget({
     super.key,
@@ -18,6 +19,7 @@ class InputPhoneWidget extends StatelessWidget {
     this.fontSize,
     this.fontFamily,
     this.textColor,
+    this.fontweight,
   });
 
   @override
@@ -35,6 +37,7 @@ class InputPhoneWidget extends StatelessWidget {
       fontSize: fontSize,
       fontFamily: fontFamily,
       textColor: textColor,
+      fontweight: fontweight,
     );
   }
 }

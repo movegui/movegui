@@ -3,23 +3,22 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:go_router/go_router.dart';
+import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/route_contants.dart';
 import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/button_item.dart';
 import 'package:movegui/models/opt_args_model.dart';
 import 'package:movegui/models/user_model.dart';
-import 'package:movegui/providers/appbar_title_provider.dart';
 import 'package:movegui/responsive.dart';
 import 'package:movegui/services/my_app_functions.dart';
 import 'package:movegui/services/register_services.dart';
 import 'package:movegui/services/user_service.dart';
-import 'package:movegui/widgets/app/separator_widget.dart';
 import 'package:movegui/widgets/auth/auth_link_widget.dart';
 import 'package:movegui/widgets/auth/other_registration_widget.dart';
 import 'package:movegui/widgets/auth/validation_button.dart';
 import 'package:movegui/widgets/util/input_phone_widget.dart';
-import 'package:provider/provider.dart';
 
 class LoginPhoneNumberPage extends StatefulWidget {
   const LoginPhoneNumberPage({super.key});
@@ -36,17 +35,6 @@ class LoginPhoneNumberPageState extends State<LoginPhoneNumberPage> {
   final _formkey = GlobalKey<FormState>();
   bool isloading = false;
   FirebaseAuth? auth;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted) return;
-      context.read<AppbarTitleProvider>().setTitle(
-        AppLocalizations.of(context)!.login_title,
-      );
-    });
-  }
 
   @override
   void initState() {
@@ -101,7 +89,7 @@ class LoginPhoneNumberPageState extends State<LoginPhoneNumberPage> {
             currentUser: user,
             confirmationResult: confirmationResult,
           );
-          Navigator.pushNamed(context, item.routeName!, arguments: args);
+          context.push(item.routeName!, extra: args);
         } else {
           userService.registerWithPhone(
             context,
@@ -132,29 +120,33 @@ class LoginPhoneNumberPageState extends State<LoginPhoneNumberPage> {
           Form(
             key: _formkey,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InputPhoneWidget(
                   phoneController: _phoneNumberController,
                   phoneFocusNode: _phoneNumberFocusNode,
                   nextFocusNode: _phoneNumberFocusNode,
-                  fontSize: Responsive.isDesktop(context) ? WidgetConstants.subTitleFontSize : 14
+                  fontSize:
+                      Responsive.isDesktop(context)
+                          ? WidgetConstants.subTitleFontSize
+                          : 16,
+                textColor: AppColors.backgroundColor,
+                fontweight: FontWeight.bold,
                 ),
-                Responsive.isDesktop(context) ? SeparatorWidget(height: 20,) : SizedBox(),
                 AuthLinkWidget(),
-                Responsive.isDesktop(context) ? SeparatorWidget(height: 20,) : SizedBox(),
-                ValidationButton(
-                  fn: _loginFct,
-                  buttonItem: ButtonItem(
-                    AppLocalizations.of(context)!.label_login,
-                    AppLocalizations.of(context)!.tooltip_sign_in,
-                    true,
-                    routeName: RouteContants.OTP_SCREEN_ROUTE,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ValidationButton(
+                    fn: _loginFct,
+                    buttonItem: ButtonItem(
+                      AppLocalizations.of(context)!.label_login,
+                      AppLocalizations.of(context)!.tooltip_sign_in,
+                      true,
+                      routeName: RouteConstants.OTP_SCREEN_ROUTE,
+                    ),
+                    icon: IconlyLight.send,
                   ),
-                  icon: IconlyLight.send,
-              
                 ),
-                Responsive.isDesktop(context) ? SeparatorWidget(height: 20,) : SizedBox(),
                 OtherRegistrationWidget(),
               ],
             ),

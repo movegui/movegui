@@ -9,6 +9,24 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get max_delivery_time => '48h maximum';
+
+  @override
+  String get fast_and_efficient => 'Fast and Efficient';
+
+  @override
+  String get collect_delivery => 'Collection & Delivery';
+
+  @override
+  String get delivery => 'Delivery';
+
+  @override
+  String get store_open => 'Open';
+
+  @override
+  String get store_closed => 'Closed';
+
+  @override
   String get search => 'Search';
 
   @override

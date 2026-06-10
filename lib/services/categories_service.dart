@@ -1,6 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/categories_model.dart';
@@ -10,12 +11,15 @@ import 'package:movegui/widgets/error/message_widget.dart';
 
 class CategoriesService extends ModelService<CategoriesModel>
     implements ICategories {
+  CategoriesService({required super.api});
+
   @override
-  Future<void> addModel(CategoriesModel ingredient) async {
+  Future<CategoriesModel> addModel(CategoriesModel catogry) async {
     await FirebaseFirestore.instance
         .collection(getCollectionName())
-        .doc(ingredient.id)
-        .set(ingredient.toJson());
+        .doc(catogry.id)
+        .set(catogry.toJson());
+    return catogry;
   }
 
   @override
@@ -62,9 +66,10 @@ class CategoriesService extends ModelService<CategoriesModel>
     String title,
     bool enabled,
   ) async {
-    if (enabled)
-      Navigator.pushNamed(context, routeName);
-    else
+    if (enabled) {
+     // print('da bin ich');
+      context.push(routeName);
+    } else
       MessageWidget.errorMessage(
         context,
         AppLocalizations.of(context)!.deactivate_button_title,
@@ -74,17 +79,27 @@ class CategoriesService extends ModelService<CategoriesModel>
       );
   }
 
-    Future<CategoriesModel> getById(String id) async {
-  final snapshot = await FirebaseFirestore.instance
-      .collection(getCollectionName())
-      .doc(id)
-      .get();
+  Future<CategoriesModel> getById(String id) async {
+    final snapshot =
+        await FirebaseFirestore.instance
+            .collection(getCollectionName())
+            .doc(id)
+            .get();
 
-  if (!snapshot.exists || snapshot.data() == null) {
-     throw Exception("Categorie not found");
+    if (!snapshot.exists || snapshot.data() == null) {
+      throw Exception("Categorie not found");
+    }
+
+    return CategoriesModel.fromJson(snapshot.data()!);
   }
 
-  return CategoriesModel.fromJson(snapshot.data()!);
-}
-
+  @override
+  Future<CategoriesModel> getModelById(String id) async {
+    final snapshot =
+        await FirebaseFirestore.instance
+            .collection(getCollectionName())
+            .doc(id)
+            .get();
+    return CategoriesModel.fromJson(snapshot.data()!);
+  }
 }

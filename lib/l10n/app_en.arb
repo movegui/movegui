@@ -1,4 +1,16 @@
 {
+        "max_delivery_time": "48h maximum",
+    "@max_delivery_time": {},
+    "fast_and_efficient": "Fast and Efficient",
+    "@fast_and_efficient": {},
+    "collect_delivery": "Collection & Delivery",
+    "@collect_delivery": {},
+    "delivery": "Delivery",
+    "@delivery": {},
+    "store_open": "Open",
+    "@store_open": {},
+    "store_closed": "Closed",
+    "@store_closed": {},
     "search": "Search",
     "@search": {
         "description": "Text for search Button"

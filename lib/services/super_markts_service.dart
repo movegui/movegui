@@ -3,12 +3,15 @@ import 'package:movegui/models/super_markt_model.dart';
 import 'package:movegui/services/model_service.dart';
 
 class SuperMarktsService extends ModelService<SuperMarktModel> {
+  SuperMarktsService({required super.api});
+
   @override
-  Future<void> addModel(SuperMarktModel superMarkt) async {
+  Future<SuperMarktModel> addModel(SuperMarktModel superMarkt) async {
     await FirebaseFirestore.instance
         .collection(getCollectionName())
         .doc(superMarkt.id)
         .set(superMarkt.toJson());
+        return superMarkt;
   }
 
   @override
@@ -49,4 +52,13 @@ class SuperMarktsService extends ModelService<SuperMarktModel> {
 
   return SuperMarktModel.fromJson(snapshot.data()!);
 }
+
+  @override
+  Future<SuperMarktModel> getModelById(String id) async {
+          final snapshot = await FirebaseFirestore.instance
+        .collection(getCollectionName())
+        .doc(id)
+        .get();
+    return SuperMarktModel.fromJson(snapshot.data()!);
+  }
 }

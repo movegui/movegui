@@ -4,6 +4,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/l10n/app_localizations.dart';
@@ -67,9 +68,9 @@ class ImageService {
     String title,
     bool enabled,
   ) async {
-    if (enabled)
-      Navigator.pushNamed(context, routeName);
-    else
+    if (enabled) {
+      context.push(routeName);
+    } else {
       MessageWidget.errorMessage(
         context,
         AppLocalizations.of(context)!.deactivate_button_title,
@@ -77,6 +78,7 @@ class ImageService {
         Icon(Icons.error, color: AppColors.error),
         FlushbarPosition.TOP,
       );
+    }
   }
 
   

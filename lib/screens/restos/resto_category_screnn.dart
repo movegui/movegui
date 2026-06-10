@@ -1,11 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/screens/restos/resto_sub_category_screen.dart';
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:movegui/widgets/title_text.dart';
-import 'package:provider/provider.dart';
 
 class RestoCategoryScreen extends StatefulWidget {
   const RestoCategoryScreen({super.key, 
@@ -36,7 +34,7 @@ class _SearchScreenState extends State<RestoCategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final shoppingProvider = Provider.of<ShoppingProvider>(context);
+  //  final shoppingProvider = Provider.of<ShoppingProvider>(context);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();

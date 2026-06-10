@@ -2,6 +2,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:go_router/go_router.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/validator.dart';
 import 'package:movegui/l10n/app_localizations.dart';
@@ -94,7 +95,7 @@ class _ContactScreenState extends State<ContactScreen> {
               actions: [
                 TextButton(
                   child: Text(AppLocalizations.of(context)!.btn_close_label),
-                  onPressed: () => Navigator.of(context).pop(),
+                  onPressed: () =>  context.pop()  
                 ),
               ],
             ),

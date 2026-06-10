@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:go_router/go_router.dart';
 import 'package:movegui/consts/route_contants.dart';
 import 'package:movegui/consts/validator.dart';
 import 'package:movegui/consts/widget_constants.dart';
@@ -52,7 +53,7 @@ class LoginForgetPasswordPageState extends State<LoginForgetPasswordPage> {
           textColor: Colors.white,
           fontSize: 16.0,
         );
-        Navigator.pushNamed(context, item.routeName!);
+        context.push(item.routeName!);
       } on FirebaseAuthException {
         MyAppFunctions.showErrorOrWarningDialog(
           context: context,
@@ -148,7 +149,7 @@ class LoginForgetPasswordPageState extends State<LoginForgetPasswordPage> {
                     AppLocalizations.of(context)!.label_login,
                     AppLocalizations.of(context)!.tooltip_sign_in,
                     true,
-                    routeName: RouteContants.LOGIN_ROUTE,
+                    routeName: RouteConstants.LOGIN_ROUTE,
                   ),
                 ),
               ],

@@ -1,6 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/app_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
@@ -37,13 +38,9 @@ class CommandScreenState extends State<Commandscreen> {
     bool enabled,
   //  final GlobalKey<NavigatorState>? navigatorkey,
   ) {
-    if (enabled)
-    /*
-      if (navigatorkey != null)
-        navigatorkey.currentState?.pushNamed(routeName);
-      else
-      */
-        Navigator.pushNamed(context, routeName);
+    if (enabled){
+        context.push(routeName);
+    }   
     else
       MessageWidget.errorMessage(
         context,

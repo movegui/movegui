@@ -1,5 +1,6 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/services/assets_manager.dart';
@@ -19,13 +20,10 @@ class RestoSubCategoryScreen extends StatelessWidget {
     bool enabled,
   //  final GlobalKey<NavigatorState>? navigatorkey
   ) {
-    if (enabled)
-    /*
-      if(navigatorkey != null)
-        navigatorkey.currentState?.pushNamed(routeName);
-      else 
-      */
-        Navigator.pushNamed(context, routeName);
+    if (enabled){
+      context.push(routeName);
+    }
+    
     else
       MessageWidget.errorMessage(
         context,

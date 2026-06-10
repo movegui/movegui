@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 
 class ReklamationWidget extends StatelessWidget {
@@ -37,7 +38,7 @@ class _ReclamationScreenState extends State<ReclamationScreen> {
           actions: [
             TextButton(
               child: Text('Fermer'),
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () =>    context.pop()      
             )
           ],
         ),

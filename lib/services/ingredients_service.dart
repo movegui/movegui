@@ -3,14 +3,15 @@ import 'package:movegui/models/ingredient_model.dart';
 import 'package:movegui/services/model_service.dart';
 
 class IngredientsService  extends ModelService<IngredientModel>{
+  IngredientsService({required super.api});
 
-  
   @override
-  Future<void> addModel(IngredientModel ingredient) async {
+  Future<IngredientModel> addModel(IngredientModel ingredient) async {
     await FirebaseFirestore.instance
     .collection(getCollectionName())
     .doc(ingredient.id)
     .set(ingredient.toJson());
+    return ingredient;
   }
 
   @override
@@ -50,5 +51,14 @@ class IngredientsService  extends ModelService<IngredientModel>{
 
   return IngredientModel.fromJson(snapshot.data()!);
 }
+
+  @override
+  Future<IngredientModel> getModelById(String id) async {
+       final snapshot = await FirebaseFirestore.instance
+        .collection(getCollectionName())
+        .doc(id)
+        .get();
+    return IngredientModel.fromJson(snapshot.data()!);
+  }
   
 }

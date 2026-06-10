@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:movegui/l10n/app_localizations.dart';
-import 'package:movegui/providers/appbar_title_provider.dart';
-import 'package:provider/provider.dart';
+
+
 
 class DeliveryScreen extends StatefulWidget{
 
@@ -21,6 +20,7 @@ class MyDeliveryScreenState extends State<DeliveryScreen>{
     super.initState();
   }
 
+/*
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -30,6 +30,7 @@ class MyDeliveryScreenState extends State<DeliveryScreen>{
       );
     });
   }
+  */
 
   @override
   Widget build(BuildContext context) {

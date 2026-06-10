@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/platform_widget.dart';
-import 'package:movegui/providers/appbar_title_provider.dart';
+import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/responsive.dart';
+import 'package:movegui/widgets/app/appbar.dart';
 import 'package:movegui/widgets/app/separator_widget.dart';
 import 'package:movegui/widgets/auth/login_email_page.dart';
 import 'package:movegui/widgets/auth/login_phone_page.dart';
 import 'package:movegui/widgets/subtitle_text.dart';
 import 'package:movegui/widgets/util/toogle_buttons.dart';
-import 'package:provider/provider.dart';
+import 'package:movegui/widgets/web/menu_bar_web.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   late List<Widget> screens;
   int currentScreen = 0;
   late PageController controller;
@@ -30,18 +32,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted) return;
-      context.read<AppbarTitleProvider>().setTitle(
-        AppLocalizations.of(context)!.login_title,
-      );
-    });
   }
 
   void updateState(int state) {
@@ -58,6 +48,13 @@ class _LoginScreenState extends State<LoginScreen> {
         setState(() {});
       },
       child: Scaffold(
+        appBar:
+            Responsive.isDesktop(context)
+                ? MenuBarWeb(title: AppLocalizations.of(context)!.login_title)
+                : MoveguiAppBar(
+                  title: AppLocalizations.of(context)!.login_title,
+                  itemCount: ref.watch(shoppingProvider).itemCount,
+                ),
         body: Responsive.isDesktop(context) ? buildDeskop() : buildMobil(),
         resizeToAvoidBottomInset: true,
       ),
@@ -65,26 +62,32 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget buildMobil() {
-    return Padding(
-      padding: const EdgeInsets.all(0.0),
-      child: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              //  AppImage(heightScale: 0.10),
-              SeparatorWidget(),
-              PlatformWidget.isAndroid(context) ||
-                      PlatformWidget.isIos(context) ||
-                      PlatformWidget.isWeb(context)
-                  ? ToggleButtonExample(onStateChanged: updateState)
-                  : const SizedBox(),
-              SizedBox(height: 6.0),
-              currentLoginScreen == 0
-                  ? LoginPhoneNumberPage()
-                  : LoginEmailPage(),
-            ],
+    return Center(
+      child: Card(
+        color: const Color.fromARGB(255, 238, 230, 196),
+        elevation: 6,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SeparatorWidget(),
+                  PlatformWidget.isAndroid(context) ||
+                          PlatformWidget.isIos(context) ||
+                          PlatformWidget.isWeb(context)
+                      ? ToggleButtonExample(onStateChanged: updateState)
+                      : const SizedBox(),
+                  SizedBox(height: 6.0),
+                  currentLoginScreen == 0
+                      ? LoginPhoneNumberPage()
+                      : LoginEmailPage(),
+                ],
+              ),
+            ),
           ),
         ),
       ),
@@ -95,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Center(
       child: Container(
         width: 700,
-        height: 600,
+        height: 700,
         decoration: BoxDecoration(
           color: AppColors.textColor,
           border: Border.all(color: AppColors.backgroundColor, width: 10),
@@ -103,37 +106,35 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                width: double.infinity,
-                color: AppColors.backgroundColor,
-                margin: EdgeInsets.only(left: 100, right: 100),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 90 , right: 80),
-                  child: SubtitleTextWidget(
-                    label: AppLocalizations.of(context)!.login_title,
-                    fontSize: WidgetConstants.subTitleFontSize * 3,
-                    color: AppColors.textColor,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: double.infinity,
+                  color: AppColors.backgroundColor,
+                  margin: EdgeInsets.only(left: 100, right: 100),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 90, right: 80),
+                    child: SubtitleTextWidget(
+                      label: AppLocalizations.of(context)!.login_title,
+                      fontSize: WidgetConstants.subTitleFontSize * 3,
+                      color: AppColors.textColor,
+                    ),
                   ),
                 ),
-              ),
-              SeparatorWidget(height: 30,),
-
-              ToggleButtonExample(onStateChanged: updateState),
-
-             SeparatorWidget(height: 20,),
-
-              currentLoginScreen == 0 
-                  ? LoginPhoneNumberPage()
-                  : LoginEmailPage(),
-            ],
+                SeparatorWidget(height: 30),
+                ToggleButtonExample(onStateChanged: updateState),
+                SeparatorWidget(height: 20),
+                currentLoginScreen == 0
+                    ? LoginPhoneNumberPage()
+                    : LoginEmailPage(),
+              ],
+            ),
           ),
         ),
       ),
     );
-
   }
 }

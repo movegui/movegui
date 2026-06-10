@@ -6,12 +6,15 @@ import 'package:movegui/services/model_service.dart';
 
 
 class PatisseriesService extends ModelService<PatisserieModel>{
+  PatisseriesService({required super.api});
+
   @override
-  Future<void> addModel(PatisserieModel patisserie) async {
+  Future<PatisserieModel> addModel(PatisserieModel patisserie) async {
        await FirebaseFirestore.instance
           .collection(getCollectionName())
           .doc(patisserie.id)
           .set(patisserie.toJson());
+          return patisserie;
   }
 
   @override
@@ -53,6 +56,15 @@ class PatisseriesService extends ModelService<PatisserieModel>{
 
   return PatisserieModel.fromJson(snapshot.data()!);
 }
+
+  @override
+  Future<PatisserieModel> getModelById(String id) async {
+           final snapshot = await FirebaseFirestore.instance
+        .collection(getCollectionName())
+        .doc(id)
+        .get();
+    return PatisserieModel.fromJson(snapshot.data()!);
+  }
 
 
 

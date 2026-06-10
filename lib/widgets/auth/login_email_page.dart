@@ -1,14 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:movegui/consts/app_constants.dart';
+import 'package:go_router/go_router.dart';
+import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/route_contants.dart';
 import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/button_item.dart';
-import 'package:movegui/providers/appbar_title_provider.dart';
-import 'package:movegui/providers/login_mod_provider.dart';
 import 'package:movegui/responsive.dart';
 import 'package:movegui/services/my_app_functions.dart';
 import 'package:movegui/widgets/app/separator_widget.dart';
@@ -17,10 +15,9 @@ import 'package:movegui/widgets/auth/other_registration_widget.dart';
 import 'package:movegui/widgets/auth/validation_button.dart';
 import 'package:movegui/widgets/util/input_email_widget.dart';
 import 'package:movegui/widgets/util/password_widget.dart';
-import 'package:provider/provider.dart';
 
 class LoginEmailPage extends StatefulWidget {
-  const LoginEmailPage({super.key,});
+  const LoginEmailPage({super.key});
 
   @override
   State<StatefulWidget> createState() => LoginEmailPageState();
@@ -38,18 +35,6 @@ class LoginEmailPageState extends State<LoginEmailPage> {
 
   bool isloading = false;
   FirebaseAuth? auth;
-
-
-  
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<AppbarTitleProvider>().setTitle(
-        AppLocalizations.of(context)!.login_title,
-      );
-    });
-  }
 
   @override
   void initState() {
@@ -108,8 +93,7 @@ class LoginEmailPageState extends State<LoginEmailPage> {
             textColor: Colors.white,
             fontSize: 16.0,
           );
-           context.read<LoginModProvider>().setLoginMod(AppConstants.LONGIN_EMAIL_MODE);
-           Navigator.pushNamed(context, item.routeName!);
+          context.go(item.routeName!);
         } else {
           Fluttertoast.showToast(
             msg: AppLocalizations.of(context)!.error_login_message,
@@ -146,8 +130,17 @@ class LoginEmailPageState extends State<LoginEmailPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                InputEmailWidget(nextFocusNode: _passwordFocusNode, emailController: _emailController, emailFocusNode: _emailFocusNode,),
-              //  SeparatorWidget(height: WidgetConstants.sepWidgetHeight * 2),
+                InputEmailWidget(
+                  nextFocusNode: _passwordFocusNode,
+                  emailController: _emailController,
+                  emailFocusNode: _emailFocusNode,
+                  fontSize:
+                      Responsive.isDesktop(context)
+                          ? WidgetConstants.subTitleFontSize
+                          : 16,
+                  textColor: AppColors.backgroundColor,
+                  fontweight: FontWeight.bold,
+                ),
                 PasswordWidget(
                   passwordController: _passwordController,
                   passwordFocusNode: _passwordFocusNode,
@@ -157,28 +150,33 @@ class LoginEmailPageState extends State<LoginEmailPage> {
                       obscureText = !obscureText;
                     });
                   },
+                  fontSize:
+                      Responsive.isDesktop(context)
+                          ? WidgetConstants.subTitleFontSize
+                          : 16,
+                  textColor: AppColors.backgroundColor,
+                  fontweight: FontWeight.bold,
                 ),
-                 Responsive.isDesktop(context) ? SeparatorWidget(height: 20,) : SizedBox(),
+                Responsive.isDesktop(context)
+                    ? SeparatorWidget(height: 20)
+                    : SizedBox(),
                 AuthLinkWidget(),
-                Responsive.isDesktop(context) ? SeparatorWidget(height: 20,) : SizedBox(),
+                Responsive.isDesktop(context)
+                    ? SeparatorWidget(height: 20)
+                    : SizedBox(),
 
                 Padding(
-                  padding: const EdgeInsets.only(
-                    left: WidgetConstants.sepWidgetHeight,
-                    right: WidgetConstants.sepWidgetHeight,
-                  ),
+                  padding: const EdgeInsets.all(8.0),
                   child: ValidationButton(
                     fn: _loginFct,
                     buttonItem: ButtonItem(
                       AppLocalizations.of(context)!.label_login,
                       AppLocalizations.of(context)!.tooltip_sign_in,
                       true,
-                      routeName: RouteContants.PROFILE_ROUTE,
+                      routeName: RouteConstants.PROFILE_ROUTE,
                     ),
                   ),
                 ),
-                 Responsive.isDesktop(context) ? SeparatorWidget(height: 20,) : SizedBox(),
-
                 OtherRegistrationWidget(),
               ],
             ),

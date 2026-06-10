@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/widget_constants.dart';
-import 'package:movegui/l10n/app_localizations.dart';
-import 'package:movegui/providers/appbar_title_provider.dart';
 import 'package:movegui/responsive.dart';
 import 'package:movegui/widgets/app/app_image.dart';
 import 'package:movegui/widgets/app/separator_widget.dart';
 import 'package:movegui/widgets/auth/login_forget_password_page.dart';
-import 'package:provider/provider.dart';
+
 
 
 class MoveguiForgotPasswordScreen extends StatefulWidget {
@@ -28,7 +26,7 @@ class _ForgotPasswordScreenState extends State<MoveguiForgotPasswordScreen> {
     super.initState();
   }
 
-  
+  /*
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -38,6 +36,7 @@ class _ForgotPasswordScreenState extends State<MoveguiForgotPasswordScreen> {
       );
     });
   }
+  */
 
   @override
   void dispose() {

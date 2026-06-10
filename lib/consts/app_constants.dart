@@ -81,7 +81,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.category_pressing_name,
       imageUrl: AssetsManager.pressing1Image,
-      routeName: '/pressing',
+      routeName: '/home/pressing',
       enabled: true,
     ),
     CategoryItem(
@@ -89,7 +89,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.category_restaurant_name,
       imageUrl: AssetsManager.resto1Image,
-      routeName: '/restaurant',
+      routeName: '/home/restaurant',
       enabled: false,
     ),
     CategoryItem(
@@ -97,7 +97,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.category_patisserie_name,
       imageUrl: AssetsManager.pastry,
-      routeName: '/pastry',
+      routeName: '/home/pastry',
       enabled: false,
     ),
 
@@ -106,7 +106,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.category_supermarche_name,
       imageUrl: AssetsManager.super_market,
-      routeName: '/super_markt',
+      routeName: '/home/super_markt',
       enabled: false,
     ),
     CategoryItem(
@@ -114,7 +114,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.category_pharmacy_name,
       imageUrl: AssetsManager.pharmacy,
-      routeName: '/pharmacy',
+      routeName: '/home/pharmacy',
       enabled: false,
     ),
     CategoryItem(
@@ -122,7 +122,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.category_beauty_name,
       imageUrl: AssetsManager.beauty,
-      routeName: '/beauty',
+      routeName: '/home/beauty',
       enabled: false,
     ),
     CategoryItem(
@@ -130,7 +130,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.categroy_store_name,
       imageUrl: AssetsManager.store,
-      routeName: '/store',
+      routeName: '/home/store',
       enabled: false,
     ),
     CategoryItem(
@@ -138,7 +138,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.category_shop_name,
       imageUrl: AssetsManager.shop,
-      routeName: '/shop',
+      routeName: '/home/shop',
       enabled: false,
     ),
     CategoryItem(
@@ -146,7 +146,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.category_wholesaler_name,
       imageUrl: AssetsManager.wholesaler,
-      routeName: '/wholesaler',
+      routeName: '/home/wholesaler',
       enabled: false,
     ),
     CategoryItem(
@@ -154,7 +154,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.category_profession_name,
       imageUrl: AssetsManager.Profession,
-      routeName: '/profession',
+      routeName: '/home/profession',
       enabled: false,
     ),
     CategoryItem(
@@ -162,7 +162,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.category_fast_food_name,
       imageUrl: AssetsManager.fast_food,
-      routeName: '/fast_food',
+      routeName: '/home/fast_food',
       enabled: false,
     ),
             CategoryItem(
@@ -170,7 +170,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.category_fast_food_name,
       imageUrl: AssetsManager.fast_food,
-      routeName: '/fast_food',
+      routeName: '/home/fast_food',
       enabled: false,
     ),
   ];
@@ -183,7 +183,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.category_restaurant_name,
       imageUrl: AssetsManager.resto1Image,
-      routeName: '/restaurant',
+      routeName: '/command/restaurant',
       enabled: false,
     ),
     CategoryItem(
@@ -191,7 +191,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.category_patisserie_name,
       imageUrl: AssetsManager.pastry,
-      routeName: '/pastry',
+      routeName: '/command/pastry',
       enabled: false,
     ),
 
@@ -200,7 +200,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.category_fast_food_name,
       imageUrl: AssetsManager.fast_food,
-      routeName: '/fast_food',
+      routeName: '/command/fast_food',
       enabled: false,
     ),
         CategoryItem(
@@ -208,7 +208,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.category_fast_food_name,
       imageUrl: AssetsManager.fast_food,
-      routeName: '/fast_food',
+      routeName: '/command/fast_food',
       enabled: false,
     ),
     
@@ -223,7 +223,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.category_restaurant_name,
       imageUrl: AssetsManager.resto1Image,
-      routeName: '/restaurant',
+      routeName: '/delivery/restaurant',
       enabled: false,
     ),
     CategoryItem(
@@ -231,7 +231,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.category_patisserie_name,
       imageUrl: AssetsManager.pastry,
-      routeName: '/pastry',
+      routeName: '/delivery/pastry',
       enabled: false,
     ),
     CategoryItem(
@@ -239,7 +239,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.category_fast_food_name,
       imageUrl: AssetsManager.fast_food,
-      routeName: '/fast_food',
+      routeName: '/delivery/fast_food',
       enabled: false,
     ),
     CategoryItem(
@@ -247,7 +247,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.category_pharmacy_name,
       imageUrl: AssetsManager.pharmacy,
-      routeName: '/pharmacy',
+      routeName: '/delivery/pharmacy',
       enabled: false,
     ),
     CategoryItem(
@@ -255,7 +255,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.category_beauty_name,
       imageUrl: AssetsManager.beauty,
-      routeName: '/beauty',
+      routeName: '/delivery/beauty',
       enabled: false,
     ),
     CategoryItem(
@@ -263,7 +263,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.categroy_store_name,
       imageUrl: AssetsManager.store,
-      routeName: '/store',
+      routeName: '/delivery/store',
       enabled: false,
     ),
     CategoryItem(
@@ -271,7 +271,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.category_shop_name,
       imageUrl: AssetsManager.shop,
-      routeName: '/shop',
+      routeName: '/delivery/shop',
       enabled: false,
     ),
     CategoryItem(
@@ -279,7 +279,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.category_supermarche_name,
       imageUrl: AssetsManager.super_market,
-      routeName: '/super_markt',
+      routeName: '/delivery/super_market',
       enabled: false,
     ),
   ];
@@ -293,7 +293,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.category_pressing_name,
       imageUrl: AssetsManager.pressing1Image,
-      routeName: '/pressing',
+      routeName: '/courses/pressing',
       enabled: true,
     ),
         CategoryItem(
@@ -301,7 +301,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.category_pharmacy_name,
       imageUrl: AssetsManager.pharmacy,
-      routeName: '/pharmacy',
+      routeName: '/courses/pharmacy',
       enabled: false,
     ),
         CategoryItem(
@@ -309,7 +309,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.category_beauty_name,
       imageUrl: AssetsManager.beauty,
-      routeName: '/beauty',
+      routeName: '/courses/beauty',
       enabled: false,
     ),
         CategoryItem(
@@ -317,7 +317,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.categroy_store_name,
       imageUrl: AssetsManager.store,
-      routeName: '/store',
+      routeName: '/courses/store',
       enabled: false,
     ),
     CategoryItem(
@@ -325,7 +325,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.category_shop_name,
       imageUrl: AssetsManager.shop,
-      routeName: '/shop',
+      routeName: '/courses/shop',
       enabled: false,
     ),
     CategoryItem(
@@ -333,7 +333,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.category_supermarche_name,
       imageUrl: AssetsManager.super_market,
-      routeName: '/super_markt',
+      routeName: '/courses/super_market',
       enabled: false,
     ),
     CategoryItem(
@@ -341,7 +341,7 @@ class AppConstants {
       createdAt: DateTime.now(),
       name: localizations.category_profession_name,
       imageUrl: AssetsManager.Profession,
-      routeName: '/profession',
+      routeName: '/courses/profession',
       enabled: false,
     ),
   ];

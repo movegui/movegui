@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/widget_constants.dart';
 
-  class InputWidget extends StatelessWidget {
+class InputWidget extends StatelessWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
   final FocusNode? nextFocusNode;
@@ -12,7 +13,7 @@ import 'package:movegui/consts/widget_constants.dart';
   final double? fontSize;
   final String? fontFamily;
   final Color? textColor;
-
+  final FontWeight? fontweight;
 
   const InputWidget({
     super.key,
@@ -22,7 +23,11 @@ import 'package:movegui/consts/widget_constants.dart';
     required this.icon,
     this.textInputType,
     this.hinterText,
-    this.validator, this.fontSize, this.fontFamily, this.textColor,
+    this.validator,
+    this.fontSize = 14,
+    this.fontFamily,
+    this.textColor = AppColors.textColor,
+    this.fontweight = FontWeight.normal,
   });
 
   @override
@@ -32,23 +37,26 @@ import 'package:movegui/consts/widget_constants.dart';
         left: WidgetConstants.sepWidgetHeight * 1.5,
         right: WidgetConstants.sepWidgetHeight * 1.5,
       ),
-        child: TextFormField(
-          controller: controller,
-          focusNode: focusNode,
-          textInputAction: TextInputAction.next,
-          keyboardType: textInputType,
-          decoration: InputDecoration(
-            hintText: hinterText,
-            prefixIcon: Icon(icon),
-          ),
-          style: TextStyle(fontSize: fontSize, fontFamily: fontFamily, color: textColor),
-          onFieldSubmitted: (value) {
-            FocusScope.of(context).requestFocus(nextFocusNode!);
-          },
-          validator: validator,
-       
+      child: TextFormField(
+        controller: controller,
+        focusNode: focusNode,
+        textInputAction: TextInputAction.next,
+        keyboardType: textInputType,
+        decoration: InputDecoration(
+          hintText: hinterText,
+          prefixIcon: Icon(icon, color: textColor),
         ),
-      
+        style: TextStyle(
+          fontSize: fontSize,
+          fontFamily: fontFamily,
+          color: textColor,
+          fontWeight: fontweight ?? FontWeight.normal,
+        ),
+        onFieldSubmitted: (value) {
+          FocusScope.of(context).requestFocus(nextFocusNode!);
+        },
+        validator: validator,
+      ),
     );
   }
 }

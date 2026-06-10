@@ -1,5 +1,6 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/services/assets_manager.dart';
@@ -87,8 +88,9 @@ class HomePageContentOldWidget extends StatelessWidget {
     String routeName,
     bool enabled,
   ) {
-    if (enabled)
-     Navigator.of(context).pushNamed(routeName);
+    if (enabled){
+      context.push(routeName);
+    }
     else
       MessageWidget.errorMessage(
         context,

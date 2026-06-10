@@ -3,15 +3,12 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/app_constants.dart';
 import 'package:movegui/consts/validator.dart';
-import 'package:movegui/models/pressing_model.dart';
-import 'package:movegui/providers/appbar_title_provider.dart';
-import 'package:movegui/providers/shopping_provider.dart';
+import 'package:movegui/models/pressing/pressing_model.dart';
 import 'package:movegui/services/pressing_service.dart';
 import 'package:movegui/services/register_services.dart';
 import 'package:movegui/widgets/custom_text_field.dart';
 import 'package:movegui/widgets/pressing/pressing_price_list.dart';
 import 'package:movegui/widgets/util/image_banner.dart';
-import 'package:provider/provider.dart';
 
 class PressingDetailScreen extends StatefulWidget {
   final PressingModel model;
@@ -32,7 +29,7 @@ class PressingDetailScreenState extends State<PressingDetailScreen> {
   late TextEditingController adresseController ;
   late FocusNode adresseFocus;
  
-
+/*
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -42,6 +39,7 @@ class PressingDetailScreenState extends State<PressingDetailScreen> {
       );
     });
   }
+  */
 
 
   @override
@@ -69,7 +67,7 @@ class PressingDetailScreenState extends State<PressingDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final shoppingProvider = Provider.of<ShoppingProvider>(context);
+ //   final shoppingProvider = Provider.of<ShoppingProvider>(context);
     return Material(
       color: Colors.transparent, // or Colors.white
       child: GestureDetector(

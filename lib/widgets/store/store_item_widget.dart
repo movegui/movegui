@@ -2,31 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/app_constants.dart';
-import 'package:movegui/models/pressing_model.dart';
+import 'package:movegui/l10n/app_localizations.dart';
+import 'package:movegui/models/pressing/pressing_model.dart';
 import 'package:movegui/models/store_model.dart';
 import 'package:movegui/screens/pressing/pressing_detail_screen.dart';
 import 'package:movegui/screens/restos/resto_category_screnn.dart';
 import 'package:movegui/services/assets_manager.dart';
 
-class StoreItem
-    extends
-        StatelessWidget //extends MoveguiWidgetImage
-        {
+class StoreItem extends StatelessWidget {
   final StoreModel model;
   final int category;
-   // final GlobalKey<NavigatorState> navigatorKey;
-  const StoreItem({super.key, required this.model, required this.category, 
-  // required this.navigatorKey
-  });
+  const StoreItem({super.key, required this.model, required this.category});
 
   void _onPressedImage(BuildContext context, int category, String title) {
     switch (category) {
       case AppConstants.CATEGORY_RESTAURANT:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => RestoCategoryScreen(
-          //  navigatorKey: navigatorKey,
-            )),
+          MaterialPageRoute(builder: (context) => RestoCategoryScreen()),
         );
         break;
       case AppConstants.CATEGORY_PRESSING:
@@ -35,9 +28,7 @@ class StoreItem
           MaterialPageRoute(
             builder:
                 (context) =>
-                    PressingDetailScreen(model: model as PressingModel, 
-                  //  navigatorKey: navigatorKey,
-                    ),
+                    PressingDetailScreen(model: model as PressingModel),
           ),
         );
         break;
@@ -51,7 +42,7 @@ class StoreItem
   bool isOpen() {
     final now = DateTime.now();
     final int dayNumber = now.weekday;
-    final  today = AppConstants.daysOfWeek[dayNumber - 1] ;
+    final today = AppConstants.daysOfWeek[dayNumber - 1];
     int nowMinutes = -1;
     int openMinutes = -1;
     int closeMinutes = -1;
@@ -76,8 +67,8 @@ class StoreItem
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton(
         onPressed:
-        //  isOpen() ? 
-           () async => _onPressedImage(
+            //  isOpen() ?
+            () async => _onPressedImage(
               context,
               category,
               model.name,
@@ -107,24 +98,25 @@ class StoreItem
 
             // Text Section
             Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding: const EdgeInsets.all(6.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Title
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         model.name,
                         style: TextStyle(
-                          fontSize: 22,
+                          fontSize: 28,
                           fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 145, 8, 10),
+                          color: AppColors.backgroundColor,
                         ),
                       ),
                       SizedBox(width: 6),
                       Text(
-                        open ? 'OUVERT' : 'FERME',
+                        open
+                            ? AppLocalizations.of(context)!.store_open
+                            : AppLocalizations.of(context)!.store_closed,
                         style: TextStyle(
                           color: open ? Colors.green : Colors.red,
                           fontWeight: FontWeight.bold,
@@ -136,21 +128,20 @@ class StoreItem
                   SizedBox(height: 6),
 
                   // Description
-                  Text(
-                    model.description ?? "No description available.",
-                    style: TextStyle(fontSize: 16, color: Colors.grey[800]),
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-
                   SizedBox(height: 6),
 
-                  isPressing()
-                      ? Text(
-                        isPressing() ? "À partir de 5 000 GNF / vêtement" : "",
-                        style: TextStyle(fontSize: 14, color: Colors.grey[700]),
-                      )
-                      : SizedBox(height: 8),
+                  /*
+                  Row(
+                    children: [
+                      isPressing()
+                          ? Text(
+                            isPressing() ? "À partir de 5 000 GNF / vêtement" : "",
+                            style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+                          )
+                          : SizedBox(height: 8),
+                    ],
+                  ),
+                  */
 
                   // Open Hours
                   /*
@@ -170,6 +161,16 @@ class StoreItem
                   ],
                 ),
                 */
+                  Row(
+                    children: [
+                      Text(
+                        model.description ?? "No description available.",
+                        style: TextStyle(fontSize: 16, color: Colors.grey[800]),
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
 
                   // Contact
                   Row(
@@ -187,7 +188,7 @@ class StoreItem
                                 ),
                                 SizedBox(width: 6),
                                 Text(
-                                  model.contacts[0].name ??
+                                  model.staff[0].personModel?.name ??
                                       "Contact not available",
                                   style: TextStyle(
                                     fontSize: 14,
@@ -214,8 +215,10 @@ class StoreItem
                                 SizedBox(width: 6),
                                 Text(
                                   isPressing()
-                                      ? "Ramassage & livraison"
-                                      : "Livraison",
+                                      ? AppLocalizations.of(
+                                        context,
+                                      )!.collect_delivery
+                                      : AppLocalizations.of(context)!.delivery,
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.grey[700],
@@ -247,7 +250,8 @@ class StoreItem
                                 SizedBox(width: 6),
                                 Expanded(
                                   child: Text(
-                                    model.adresse ?? "Address not available",
+                                    model.address.address ??
+                                        "Address not available",
                                     style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.grey[700],
@@ -275,8 +279,12 @@ class StoreItem
                                 Expanded(
                                   child: Text(
                                     isPressing()
-                                        ? "48h maximum"
-                                        : "Rapid et efficace",
+                                        ? AppLocalizations.of(
+                                          context,
+                                        )!.max_delivery_time
+                                        : AppLocalizations.of(
+                                          context,
+                                        )!.fast_and_efficient,
                                     style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.grey[700],
@@ -310,7 +318,7 @@ class StoreItem
                                 SizedBox(width: 6),
                                 Expanded(
                                   child: Text(
-                                    model.contacts[0].phone ??
+                                    model.staff[0].personModel?.phone ??
                                         "phone not available",
                                     style: TextStyle(
                                       fontSize: 14,
@@ -325,50 +333,127 @@ class StoreItem
                       ),
 
                       Expanded(
+                        child:
+                            isPressing()
+                                ? Text(
+                                  isPressing()
+                                      ? "À partir de 5 000 GNF / vêtement"
+                                      : "",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.grey[700],
+                                  ),
+                                )
+                                : SizedBox(height: 8),
+                      ),
+                    ],
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          //  crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               children: [
-                                Image.asset(
-                                  AssetsManager.cashIcon,
-                                  width: 28,
-                                  height: 28,
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(6.0),
+                                    child: Row(
+                                      children: [
+                                        Image.asset(
+                                          AssetsManager.cashIcon,
+                                          width: 28,
+                                          height: 28,
+                                        ),
+                                        Flexible(
+                                          child: Text(
+                                            "Cash on Delivery",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.grey[700],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                                SizedBox(width: 6),
-                                Image.asset(
-                                  AssetsManager.orangeIcon,
-                                  width: 28,
-                                  height: 28,
+
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(6.0),
+                                    child: Row(
+                                      children: [
+                                        Image.asset(
+                                          AssetsManager.orangeIcon,
+                                          width: 28,
+                                          height: 28,
+                                        ),
+                                        Flexible(
+                                          child: Text(
+                                            "Orange Money",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.grey[700],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
+                                /*
+                                                                            SizedBox(width: 6),
+                                                                            
+                                                                            Image.asset(
+                                                                              AssetsManager.paypalIcon,
+                                                                              width: 28,
+                                                                              height: 28,
+                                                                            ),
+                                                                            SizedBox(width: 6),
+                                                                            Image.asset(
+                                                                              AssetsManager.masterCardIcon,
+                                                                              width: 28,
+                                                                              height: 28,
+                                                                            ),
+                                                                            */
                                 SizedBox(width: 6),
-                                Image.asset(
-                                  AssetsManager.paypalIcon,
-                                  width: 28,
-                                  height: 28,
-                                ),
-                                SizedBox(width: 6),
-                                Image.asset(
-                                  AssetsManager.masterCardIcon,
-                                  width: 28,
-                                  height: 28,
-                                ),
-                                SizedBox(width: 6),
-                                Image.asset(
-                                  AssetsManager.ymoIcon,
-                                  width: 28,
-                                  height: 28,
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(6.0),
+                                    child: Row(
+                                      children: [
+                                        Image.asset(
+                                          AssetsManager.ymoIcon,
+                                          width: 28,
+                                          height: 28,
+                                        ),
+                                        Flexible(
+                                          child: Text(
+                                            "Mobile Money",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.grey[700],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
 
                                 /*
-                                      Text(
-                                        "Paiement cash ou Orange Money",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.grey[700],
-                                        ),
-                                      ),
-                                      */
+                                                                                  Text(
+                                            "Paiement cash ou Orange Money",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.grey[700],
+                                            ),
+                                                                                  ),
+                                                                                  */
                               ],
                             ),
                           ],
@@ -376,7 +461,7 @@ class StoreItem
                       ),
                     ],
                   ),
-                   SizedBox(height: 8),
+                  SizedBox(height: 8),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton.icon(
@@ -399,13 +484,14 @@ class StoreItem
                           fontSize: 18,
                         ),
                       ),
-                      onPressed: isOpen() ? () async {
-                        
-                        _onPressedImage(context, category, model.name);
-                      }: null,
+                      onPressed:
+                          isOpen()
+                              ? () async {
+                                _onPressedImage(context, category, model.name);
+                              }
+                              : null,
                     ),
                   ),
-                  
                 ],
               ),
             ),

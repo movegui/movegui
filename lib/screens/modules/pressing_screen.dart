@@ -1,15 +1,12 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:movegui/consts/app_constants.dart';
-import 'package:movegui/l10n/app_localizations.dart';
-import 'package:movegui/models/pressing_model.dart';
-import 'package:movegui/providers/appbar_title_provider.dart';
-import 'package:movegui/providers/shopping_provider.dart';
+import 'package:movegui/models/pressing/pressing_model.dart';
 import 'package:movegui/responsive.dart';
 import 'package:movegui/services/pressing_service.dart';
 import 'package:movegui/services/register_services.dart';
 import 'package:movegui/widgets/store/store_widget.dart';
-import 'package:provider/provider.dart';
+
 
 class PressingScreen extends StatefulWidget {
   const PressingScreen({super.key,});
@@ -32,18 +29,6 @@ class PressingScreenState extends State<PressingScreen> {
     super.initState();
   }
 
-  
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-       WidgetsBinding.instance.addPostFrameCallback((_) {
-    context.read<AppbarTitleProvider>().setTitle(
-      AppLocalizations.of(context)!.pressing_title,
-    );
-  });
-  }
-
-
   Future<void> initList() async {
     final allPressings = await pressingService.allModels();
     setState(() {
@@ -59,7 +44,6 @@ class PressingScreenState extends State<PressingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final shoppingProvider = Provider.of<ShoppingProvider>(context);
     return Material(
       color: Colors.transparent, // or Colors.white
       child: GestureDetector(

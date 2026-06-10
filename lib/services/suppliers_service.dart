@@ -3,12 +3,15 @@ import 'package:movegui/models/supplier_model.dart';
 import 'package:movegui/services/model_service.dart';
 
 class SuppliersService extends ModelService<SupplierModel> {
+  SuppliersService({required super.api});
+
   @override
-  Future<void> addModel(SupplierModel model) async {
+  Future<SupplierModel> addModel(SupplierModel model) async {
     await FirebaseFirestore.instance
         .collection(getCollectionName())
         .doc(model.id)
         .set(model.toJson());
+    return model;
   }
 
   @override
@@ -50,6 +53,15 @@ class SuppliersService extends ModelService<SupplierModel> {
       throw Exception("Supplier not found");
     }
 
+    return SupplierModel.fromJson(snapshot.data()!);
+  }
+  
+  @override
+  Future<SupplierModel> getModelById(String id) async {
+        final snapshot = await FirebaseFirestore.instance
+        .collection(getCollectionName())
+        .doc(id)
+        .get();
     return SupplierModel.fromJson(snapshot.data()!);
   }
 }

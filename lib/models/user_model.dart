@@ -6,6 +6,9 @@ class UserModel extends Model {
   final DateTime? updatedAt;
   final PersonModel? personModel;
   late bool isVerified;
+  late String role;
+  String? resetLink;
+  bool isActive;
 
   UserModel({
     required this.updatedAt,
@@ -14,25 +17,32 @@ class UserModel extends Model {
     required super.createdAt,
     required this.username,
     this.personModel,
-    required this.isVerified
+    required this.isVerified,
+    required this.role,
+    this.resetLink = '',
+    this.isActive = true,
   });
 
   @override
   Map<String, dynamic> toJson() => {
     ...super.toJson(),
     'username': username,
-    'updatedAt': updatedAt != null? updatedAt : null,
+    'updatedAt': updatedAt,
     'person': personModel!.toJson(),
-    'isVerified': isVerified
+    'isVerified': isVerified,
+    'role': role,
+    'isActive': isActive
   };
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-    id: json['id'],
-    name: json['name'],
-    createdAt: json['createdAt'].toDate(),
-    username: json['username'],
-    updatedAt: json['updateAt'],
+    id: json['id'] ?? '',
+    name: json['name'] ?? '',
+    createdAt: json['createdAt'].toDate() ?? '',
+    username: json['username'] ?? '',
+    updatedAt: json['updatedAt'].toDate() ?? '',
     personModel: PersonModel.fromJson(json['person']),
-    isVerified: json['isVerified'],
+    isVerified: json['isVerified'] ?? false,
+    role: json['role'] ?? '',
+    isActive: json['isActive'] ?? false
   );
 }

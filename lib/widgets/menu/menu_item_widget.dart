@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class MenuItemWidget extends StatelessWidget {
   const MenuItemWidget({
     super.key,
     required this.title,
     required this.route,
-    required this.navigatorKey,
+  //  required this.navigatorKey,
   });
   final String title;
   final String route;
-  final GlobalKey<NavigatorState> navigatorKey;
+ // final GlobalKey<NavigatorState> navigatorKey;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        navigatorKey.currentState?.pushNamed(route);
+        context.push(route);
       },
       child: Card(
         color: Color(0xFF871A1C),

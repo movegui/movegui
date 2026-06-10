@@ -4,14 +4,12 @@ import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/platform_widget.dart';
-import 'package:movegui/providers/appbar_title_provider.dart';
 import 'package:movegui/responsive.dart';
 import 'package:movegui/widgets/app/separator_widget.dart';
 import 'package:movegui/widgets/auth/register_email_page.dart';
 import 'package:movegui/widgets/auth/register_phone_page.dart';
 import 'package:movegui/widgets/subtitle_text.dart';
 import 'package:movegui/widgets/util/toogle_buttons.dart';
-import 'package:provider/provider.dart';
 
 class MoveguiRegisterScreen extends StatefulWidget {
   const MoveguiRegisterScreen({super.key});
@@ -33,6 +31,7 @@ class _RegisterScreenState extends State<MoveguiRegisterScreen> {
     super.initState();
   }
 
+/*
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -42,6 +41,7 @@ class _RegisterScreenState extends State<MoveguiRegisterScreen> {
       );
     });
   }
+  */
 
 
 

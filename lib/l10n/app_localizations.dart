@@ -95,6 +95,42 @@ abstract class AppLocalizations {
     Locale('fr')
   ];
 
+  /// No description provided for @max_delivery_time.
+  ///
+  /// In en, this message translates to:
+  /// **'48h maximum'**
+  String get max_delivery_time;
+
+  /// No description provided for @fast_and_efficient.
+  ///
+  /// In en, this message translates to:
+  /// **'Fast and Efficient'**
+  String get fast_and_efficient;
+
+  /// No description provided for @collect_delivery.
+  ///
+  /// In en, this message translates to:
+  /// **'Collection & Delivery'**
+  String get collect_delivery;
+
+  /// No description provided for @delivery.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery'**
+  String get delivery;
+
+  /// No description provided for @store_open.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get store_open;
+
+  /// No description provided for @store_closed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get store_closed;
+
   /// Text for search Button
   ///
   /// In en, this message translates to:
