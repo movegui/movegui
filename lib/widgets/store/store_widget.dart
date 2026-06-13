@@ -15,11 +15,11 @@ class StoreWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(6),
+      padding: EdgeInsets.all(2),
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [StoreItem(model: this.model, category: catgory)],
+          children: [StoreItemWidget(model: this.model, category: catgory)],
         ),
       ),
     );

@@ -25,8 +25,3 @@ void addItem(){
   }
 
 }
-
-final shoppingProvider =
-    ChangeNotifierProvider<ShoppingProvider>((ref) {
-  return ShoppingProvider();
-});

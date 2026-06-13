@@ -267,6 +267,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tooltip_btn_send => 'Click here to submit your code';
 
   @override
+  String get tooltip_btn_order => 'Click here to Order';
+
+  @override
   String get profile_menu_invite_people => 'Invite a Friend';
 
   @override
@@ -301,4 +304,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profile_menu_login => 'Login';
+
+  @override
+  String get payement_cash => 'Cash';
+
+  @override
+  String get payement_from => 'From 5 000 GNF / Clothing';
+
+  @override
+  String get order_now => 'Order now';
+
+  @override
+  String get order_after => 'Order for tomorrow';
 }

@@ -10,6 +10,7 @@ class RouteConstants {
   static const ORDERS_ROUTE = '/orders';
   static const DELIVERIES_ROUTE = '/deliveries';
   static const PRESSING_ROUTE = '/pressing';
+  static const PRESSING_DETAILS_ROUTE = '/pressingDetail';
   static const OTP_SCREEN_ROUTE = '/otp';
   static const PATRY_ROUTE = '/pastry';
   static const RESTAURANT_ROUTE = '/restaurant';

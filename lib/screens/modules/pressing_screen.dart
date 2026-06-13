@@ -78,14 +78,14 @@ class PressingScreenState extends State<PressingScreen> {
           ),
         ),
 
-        const SizedBox(height: 15),
+        const SizedBox(height: 4),
 
         Expanded(
           child: DynamicHeightGridView(
             itemCount: pressings.length,
             crossAxisCount: 1,
-            mainAxisSpacing: 12,
-            crossAxisSpacing: 12,
+            mainAxisSpacing: 2,
+            crossAxisSpacing: 2,
             builder: (context, index) {
               return StoreWidget(
                 model: pressings[index],
@@ -107,8 +107,8 @@ class PressingScreenState extends State<PressingScreen> {
           child: DynamicHeightGridView(
             itemCount: pressings.length,
             crossAxisCount: 3,
-            mainAxisSpacing: 12,
-            crossAxisSpacing: 12,
+            mainAxisSpacing: 2,
+            crossAxisSpacing: 2,
             builder: (context, index) {
               return StoreWidget(
                 model: pressings[index],

@@ -4,6 +4,7 @@ import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/platform_widget.dart';
+import 'package:movegui/providers/providers.dart';
 import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/responsive.dart';
 import 'package:movegui/widgets/app/appbar.dart';
@@ -53,7 +54,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ? MenuBarWeb(title: AppLocalizations.of(context)!.login_title)
                 : MoveguiAppBar(
                   title: AppLocalizations.of(context)!.login_title,
-                  itemCount: ref.watch(shoppingProvider).itemCount,
+                  itemCount: ref.watch(shoppingProviderState).itemCount,
                 ),
         body: Responsive.isDesktop(context) ? buildDeskop() : buildMobil(),
         resizeToAvoidBottomInset: true,

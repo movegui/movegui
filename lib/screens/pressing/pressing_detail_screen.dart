@@ -1,62 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/app_constants.dart';
 import 'package:movegui/consts/validator.dart';
 import 'package:movegui/models/pressing/pressing_model.dart';
+import 'package:movegui/providers/providers.dart';
 import 'package:movegui/services/pressing_service.dart';
 import 'package:movegui/services/register_services.dart';
 import 'package:movegui/widgets/custom_text_field.dart';
 import 'package:movegui/widgets/pressing/pressing_price_list.dart';
 import 'package:movegui/widgets/util/image_banner.dart';
 
-class PressingDetailScreen extends StatefulWidget {
-  final PressingModel model;
-   // final GlobalKey<NavigatorState> navigatorKey;
+class PressingDetailScreen extends ConsumerStatefulWidget {
+  final String pressingId;
 
-  const PressingDetailScreen({super.key, required this.model,
- //  required this.navigatorKey
+  const PressingDetailScreen({super.key,required this.pressingId, 
    });
-  @override
-  State<StatefulWidget> createState() => PressingDetailScreenState();
+   
+     @override
+     ConsumerState<ConsumerStatefulWidget> createState()  => PressingDetailScreenState();
+ 
 }
 
-class PressingDetailScreenState extends State<PressingDetailScreen> {
+class PressingDetailScreenState extends ConsumerState<PressingDetailScreen> {
   late TextEditingController searchTextController;
   List<PressingModel> pressings = [];
   late PressingService pressingService;
   final pressingConstants = PressingConstants();
   late TextEditingController adresseController ;
   late FocusNode adresseFocus;
+  PressingModel? model;
  
-/*
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<AppbarTitleProvider>().setTitle(
-        widget.model.name,
-      );
-    });
-  }
-  */
-
-
   @override
   void initState() {
     searchTextController = TextEditingController();
     pressingService = getIt<PressingService>();
     adresseController = TextEditingController();
     adresseFocus = FocusNode();
-    initList();
+  //  initModel();
     super.initState();
   }
 
-  Future<void> initList() async {
-    final allPressings = await pressingService.allModels();
-    setState(() {
-      pressings = allPressings;
-    });
+@override
+  didChangeDependencies() {
+    super.didChangeDependencies();
+    initModel();
+  }
+
+  Future<void> initModel() async {
+  final store = ref.watch(storeProviderState);
+  model = store.store as PressingModel?;
+  if (model == null) {
+    model = await pressingService.getModelById(widget.pressingId);
+    store.setStore(model!);
+  }
+  if (mounted) {
+    setState(() {});
+  }
   }
 
   @override
@@ -67,7 +68,6 @@ class PressingDetailScreenState extends State<PressingDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
- //   final shoppingProvider = Provider.of<ShoppingProvider>(context);
     return Material(
       color: Colors.transparent, // or Colors.white
       child: GestureDetector(
@@ -81,7 +81,7 @@ class PressingDetailScreenState extends State<PressingDetailScreen> {
                   ImageBanner(),
                   const SizedBox(height: 6),
                   Text(
-                    widget.model.name,
+                    model?.name ?? "Pressing Detail",
                     style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
@@ -90,7 +90,7 @@ class PressingDetailScreenState extends State<PressingDetailScreen> {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    widget.model.description ?? "No description available.",
+                    model?.description ?? "No description available.",
                     style: TextStyle(fontSize: 16, color: Colors.grey[800]),
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,

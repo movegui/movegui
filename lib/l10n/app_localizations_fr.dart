@@ -267,6 +267,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tooltip_btn_send => 'Cliquez ici pour envoyer votre code';
 
   @override
+  String get tooltip_btn_order => 'Cliquez ici pour Commander';
+
+  @override
   String get profile_menu_invite_people => 'Inviter un proche';
 
   @override
@@ -301,4 +304,16 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get profile_menu_login => 'Connexion';
+
+  @override
+  String get payement_cash => 'Espèce';
+
+  @override
+  String get payement_from => 'À partir de 5 000 GNF / vêtement';
+
+  @override
+  String get order_now => 'Commander Maintenant';
+
+  @override
+  String get order_after => 'Commader pour demain';
 }

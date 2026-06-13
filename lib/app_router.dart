@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:movegui/consts/route_contants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/providers/auth_provider.dart';
+import 'package:movegui/providers/providers.dart';
 import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/responsive.dart';
 import 'package:movegui/screens/auth/login_screen.dart';
@@ -15,6 +16,7 @@ import 'package:movegui/screens/main/home_screen.dart';
 import 'package:movegui/screens/main/order_screen.dart';
 import 'package:movegui/screens/main/delivery_screen.dart';
 import 'package:movegui/screens/modules/pressing_screen.dart';
+import 'package:movegui/screens/pressing/pressing_detail_screen.dart';
 import 'package:movegui/screens/search_screen.dart';
 import 'package:movegui/screens/shopping_cart_screen.dart';
 import 'package:movegui/widgets/app/appbar.dart';
@@ -90,7 +92,7 @@ class AppRouter {
                           ? MenuBarWeb(title: title)
                           : MoveguiAppBar(
                             title: title,
-                            itemCount: ref.watch(shoppingProvider).itemCount,
+                            itemCount: ref.watch(shoppingProviderState).itemCount,
                           ),
                   drawer: Responsive.isMobile(context) ? MoveGuiMenu() : null,
                   body: child,
@@ -116,6 +118,15 @@ class AppRouter {
                   path: RouteConstants.PRESSING_ROUTE,
                   builder:
                       (context, state) => const Center(child: PressingScreen()),
+                  routes:[
+                    GoRoute(
+                      path: '${RouteConstants.PRESSING_DETAILS_ROUTE}/:id',
+                      builder: (context, state) {
+                        final id = state.pathParameters['id']!;
+                        return PressingDetailScreen(pressingId: id);
+                      },
+                    )
+                  ]
                 ),
               ],
             ),

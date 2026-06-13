@@ -14,7 +14,7 @@ class ValidationButton extends StatelessWidget {
     super.key,
     required this.fn,
     required this.buttonItem,
-    this.icon,
+    this.icon = IconlyLight.send,
   });
 
   @override
@@ -25,15 +25,15 @@ class ValidationButton extends StatelessWidget {
         Flexible(
           child: Center(
             child: SizedBox(
-              width: Responsive.isMobile(context) ? _size.width * 0.5 : 300,
+              width: double.infinity, //Responsive.isMobile(context) ? _size.width * 0.5 : 300,
               child: ButtonWidget(
                 onPressed: fn,
                 buttonItem: buttonItem,
-                icon: IconlyLight.send,
+                icon: icon ,
                 fontSize:
                     Responsive.isMobile(context)
-                        ? WidgetConstants.buttonFonsize * 2
-                        : WidgetConstants.buttonFonsize * 2.5,
+                        ? WidgetConstants.buttonFonsize  * 1.5
+                        : WidgetConstants.buttonFonsize * 2,
               ),
             ),
           ),

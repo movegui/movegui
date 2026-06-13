@@ -611,6 +611,12 @@ abstract class AppLocalizations {
   /// **'Click here to submit your code'**
   String get tooltip_btn_send;
 
+  /// No description provided for @tooltip_btn_order.
+  ///
+  /// In en, this message translates to:
+  /// **'Click here to Order'**
+  String get tooltip_btn_order;
+
   /// No description provided for @profile_menu_invite_people.
   ///
   /// In en, this message translates to:
@@ -682,6 +688,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Login'**
   String get profile_menu_login;
+
+  /// No description provided for @payement_cash.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get payement_cash;
+
+  /// No description provided for @payement_from.
+  ///
+  /// In en, this message translates to:
+  /// **'From 5 000 GNF / Clothing'**
+  String get payement_from;
+
+  /// No description provided for @order_now.
+  ///
+  /// In en, this message translates to:
+  /// **'Order now'**
+  String get order_now;
+
+  /// No description provided for @order_after.
+  ///
+  /// In en, this message translates to:
+  /// **'Order for tomorrow'**
+  String get order_after;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

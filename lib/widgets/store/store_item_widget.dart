@@ -1,20 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/app_constants.dart';
+import 'package:movegui/consts/route_contants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
-import 'package:movegui/models/pressing/pressing_model.dart';
+import 'package:movegui/models/button_item.dart';
 import 'package:movegui/models/store_model.dart';
-import 'package:movegui/screens/pressing/pressing_detail_screen.dart';
+import 'package:movegui/providers/providers.dart';
 import 'package:movegui/screens/restos/resto_category_screnn.dart';
-import 'package:movegui/services/assets_manager.dart';
+import 'package:movegui/widgets/auth/validation_button.dart';
+import 'package:movegui/widgets/shared/payement_widget.dart';
 
-class StoreItem extends StatelessWidget {
+class StoreItemWidget extends ConsumerWidget {
   final StoreModel model;
   final int category;
-  const StoreItem({super.key, required this.model, required this.category});
-
-  void _onPressedImage(BuildContext context, int category, String title) {
+  final Color? textColor;
+  final Color? backgroundColor;
+  const StoreItemWidget({
+    super.key,
+    required this.model,
+    required this.category,
+    this.textColor = AppColors.textColor,
+    this.backgroundColor = AppColors.backgroundColor,
+  });
+  void _onPressedImage(
+    BuildContext context,
+    WidgetRef ref,
+    int category,
+    String title,
+  ) {
     switch (category) {
       case AppConstants.CATEGORY_RESTAURANT:
         Navigator.push(
@@ -23,13 +38,9 @@ class StoreItem extends StatelessWidget {
         );
         break;
       case AppConstants.CATEGORY_PRESSING:
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder:
-                (context) =>
-                    PressingDetailScreen(model: model as PressingModel),
-          ),
+        ref.read(storeProviderState).setStore(model);
+        context.push(
+          '${RouteConstants.HOME_ROUTE}${RouteConstants.PRESSING_ROUTE}${RouteConstants.PRESSING_DETAILS_ROUTE}/${model.id}',
         );
         break;
     }
@@ -60,33 +71,29 @@ class StoreItem extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final open = isOpen();
 
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(1.0),
       child: ElevatedButton(
         onPressed:
-            //  isOpen() ?
-            () async => _onPressedImage(
-              context,
-              category,
-              model.name,
-            ), //:null, // Add your action here
+            () async => _onPressedImage(context, ref, category, model.name),
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
           padding: EdgeInsets.zero,
-          backgroundColor: Colors.white,
+          backgroundColor: backgroundColor,
           elevation: 4,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Image Section
+            /*
             Container(
-              height: 200,
+              height: 180,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
                 image: DecorationImage(
@@ -95,82 +102,125 @@ class StoreItem extends StatelessWidget {
                 ),
               ),
             ),
+            */
 
             // Text Section
             Padding(
               padding: const EdgeInsets.all(6.0),
               child: Column(
                 children: [
+                  
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      CircleAvatar(
+                        radius: 50,
+                        backgroundImage: NetworkImage(model.imageUrl ?? ''),
+                      ),
+                      SizedBox(width: 15),
+                      Flexible(
+                        child: Text(
+                          model.name,
+                          style: TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: textColor,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(6.0),
+                        child: SizedBox(
+                          width: 10,
+                          child: Icon(
+                            Icons.circle,
+                            size: 12, // smaller size for status
+                            color: open ? Colors.green : Colors.red,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  
+                  SizedBox(height: 6,),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        model.name,
-                        style: TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.backgroundColor,
-                        ),
-                      ),
-                      SizedBox(width: 6),
-                      Text(
-                        open
-                            ? AppLocalizations.of(context)!.store_open
-                            : AppLocalizations.of(context)!.store_closed,
-                        style: TextStyle(
-                          color: open ? Colors.green : Colors.red,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 6),
-
-                  // Description
-                  SizedBox(height: 6),
-
-                  /*
-                  Row(
-                    children: [
-                      isPressing()
-                          ? Text(
-                            isPressing() ? "À partir de 5 000 GNF / vêtement" : "",
-                            style: TextStyle(fontSize: 14, color: Colors.grey[700]),
-                          )
-                          : SizedBox(height: 8),
-                    ],
-                  ),
-                  */
-
-                  // Open Hours
-                  /*
-                Row(
-                  children: [
-                    Icon(Icons.access_time, size: 18, color: Colors.grey[700]),
-                    SizedBox(width: 6),
-                    Expanded(
-                      child: Text(
-                        model.openHours ?? "Open hours not available",
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey[700],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                */
-                  Row(
-                    children: [
-                      Text(
                         model.description ?? "No description available.",
-                        style: TextStyle(fontSize: 16, color: Colors.grey[800]),
+                        style: TextStyle(fontSize: 16, color: textColor),
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),
+
+                  SizedBox(height: 4),
+                  // open Hours
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(
+                                  open ? Icons.access_time : Icons.lock,
+                                  size: 12, // smaller size for status
+                                  color: open ? Colors.green : Colors.red,
+                                ),
+                                SizedBox(width: 6),
+                                Text(
+                                  open
+                                      ? AppLocalizations.of(context)!.store_open
+                                      : AppLocalizations.of(
+                                        context,
+                                      )!.store_closed,
+                                  style: TextStyle(
+                                    color: open ? Colors.green : Colors.red,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Row(
+                                  children: List.generate(
+                                    5,
+                                    (index) => Icon(
+                                      index <
+                                              (model.reviewCount > 0
+                                                  ? model.rating /
+                                                      model.reviewCount
+                                                  : model.rating)
+                                          ? Icons.star
+                                          : Icons.star_border,
+                                      color: open ? Colors.green : Colors.red,
+                                      size: 16,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  //       SizedBox(height: 4),
 
                   // Contact
                   Row(
@@ -181,18 +231,14 @@ class StoreItem extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                Icon(
-                                  Icons.person,
-                                  size: 18,
-                                  color: Colors.grey[700],
-                                ),
+                                Icon(Icons.person, size: 18, color: textColor),
                                 SizedBox(width: 6),
                                 Text(
                                   model.staff[0].personModel?.name ??
                                       "Contact not available",
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color: Colors.grey[700],
+                                    color: textColor,
                                   ),
                                 ),
                               ],
@@ -210,7 +256,7 @@ class StoreItem extends StatelessWidget {
                                 Icon(
                                   Icons.car_crash_rounded,
                                   size: 18,
-                                  color: Colors.grey[700],
+                                  color: textColor,
                                 ),
                                 SizedBox(width: 6),
                                 Text(
@@ -221,7 +267,7 @@ class StoreItem extends StatelessWidget {
                                       : AppLocalizations.of(context)!.delivery,
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color: Colors.grey[700],
+                                    color: textColor,
                                   ),
                                 ),
                               ],
@@ -232,8 +278,7 @@ class StoreItem extends StatelessWidget {
                     ],
                   ),
 
-                  SizedBox(height: 4),
-
+                  //       SizedBox(height: 4),
                   Row(
                     children: [
                       Expanded(
@@ -245,7 +290,7 @@ class StoreItem extends StatelessWidget {
                                 Icon(
                                   Icons.location_on,
                                   size: 18,
-                                  color: Colors.grey[700],
+                                  color: textColor,
                                 ),
                                 SizedBox(width: 6),
                                 Expanded(
@@ -254,7 +299,7 @@ class StoreItem extends StatelessWidget {
                                         "Address not available",
                                     style: TextStyle(
                                       fontSize: 14,
-                                      color: Colors.grey[700],
+                                      color: textColor,
                                     ),
                                   ),
                                 ),
@@ -270,11 +315,7 @@ class StoreItem extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                Icon(
-                                  Icons.timer,
-                                  size: 18,
-                                  color: Colors.grey[700],
-                                ),
+                                Icon(Icons.timer, size: 18, color: textColor),
                                 SizedBox(width: 6),
                                 Expanded(
                                   child: Text(
@@ -287,7 +328,7 @@ class StoreItem extends StatelessWidget {
                                         )!.fast_and_efficient,
                                     style: TextStyle(
                                       fontSize: 14,
-                                      color: Colors.grey[700],
+                                      color: textColor,
                                     ),
                                   ),
                                 ),
@@ -300,8 +341,7 @@ class StoreItem extends StatelessWidget {
                   ),
 
                   // Address
-                  SizedBox(height: 4),
-
+                  //          SizedBox(height: 4),
                   Row(
                     children: [
                       Expanded(
@@ -310,11 +350,7 @@ class StoreItem extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                Icon(
-                                  Icons.phone,
-                                  size: 18,
-                                  color: Colors.grey[700],
-                                ),
+                                Icon(Icons.phone, size: 18, color: textColor),
                                 SizedBox(width: 6),
                                 Expanded(
                                   child: Text(
@@ -322,7 +358,7 @@ class StoreItem extends StatelessWidget {
                                         "phone not available",
                                     style: TextStyle(
                                       fontSize: 14,
-                                      color: Colors.grey[700],
+                                      color: textColor,
                                     ),
                                   ),
                                 ),
@@ -337,160 +373,35 @@ class StoreItem extends StatelessWidget {
                             isPressing()
                                 ? Text(
                                   isPressing()
-                                      ? "À partir de 5 000 GNF / vêtement"
+                                      ? AppLocalizations.of(
+                                        context,
+                                      )!.payement_from
                                       : "",
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color: Colors.grey[700],
+                                    color: textColor,
                                   ),
                                 )
                                 : SizedBox(height: 8),
                       ),
                     ],
                   ),
+                  PayementWidget(),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          //  crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(6.0),
-                                    child: Row(
-                                      children: [
-                                        Image.asset(
-                                          AssetsManager.cashIcon,
-                                          width: 28,
-                                          height: 28,
-                                        ),
-                                        Flexible(
-                                          child: Text(
-                                            "Cash on Delivery",
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.grey[700],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(6.0),
-                                    child: Row(
-                                      children: [
-                                        Image.asset(
-                                          AssetsManager.orangeIcon,
-                                          width: 28,
-                                          height: 28,
-                                        ),
-                                        Flexible(
-                                          child: Text(
-                                            "Orange Money",
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.grey[700],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                /*
-                                                                            SizedBox(width: 6),
-                                                                            
-                                                                            Image.asset(
-                                                                              AssetsManager.paypalIcon,
-                                                                              width: 28,
-                                                                              height: 28,
-                                                                            ),
-                                                                            SizedBox(width: 6),
-                                                                            Image.asset(
-                                                                              AssetsManager.masterCardIcon,
-                                                                              width: 28,
-                                                                              height: 28,
-                                                                            ),
-                                                                            */
-                                SizedBox(width: 6),
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(6.0),
-                                    child: Row(
-                                      children: [
-                                        Image.asset(
-                                          AssetsManager.ymoIcon,
-                                          width: 28,
-                                          height: 28,
-                                        ),
-                                        Flexible(
-                                          child: Text(
-                                            "Mobile Money",
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.grey[700],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
-                                /*
-                                                                                  Text(
-                                            "Paiement cash ou Orange Money",
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.grey[700],
-                                            ),
-                                                                                  ),
-                                                                                  */
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 8),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.all(12.0),
-                        backgroundColor: AppColors.backgroundColor,
-                        // backgroundColor: Colors.red,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                      ),
-                      icon: const Icon(
-                        IconlyLight.send,
-                        color: AppColors.textColor,
-                      ),
-                      label: const Text(
-                        "Commander Maintenant",
-                        style: TextStyle(
-                          color: AppColors.textColor,
-                          fontSize: 18,
-                        ),
-                      ),
-                      onPressed:
-                          isOpen()
-                              ? () async {
-                                _onPressedImage(context, category, model.name);
-                              }
-                              : null,
+                  //      SizedBox(height: 8),
+                  ValidationButton(
+                    fn: (context, item) async {
+                      _onPressedImage(context, ref, category, model.name);
+                    },
+                    buttonItem: ButtonItem(
+                      open
+                          ? AppLocalizations.of(context)!.order_now
+                          : AppLocalizations.of(context)!.order_after,
+                      AppLocalizations.of(context)!.tooltip_btn_order,
+                      true,
+                      routeName: RouteConstants.PRESSING_DETAILS_ROUTE,
                     ),
+                    icon: Icons.shopping_cart,
                   ),
                 ],
               ),
@@ -500,63 +411,4 @@ class StoreItem extends StatelessWidget {
       ),
     );
   }
-
-  /*
- 
-  @override
-  Widget build(BuildContext context) {
-     return Padding(
-      padding: EdgeInsets.all(6),
-      child: ElevatedButton(
-          onPressed: () => {}, //action(context, index, title),
-          style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(),
-            padding: EdgeInsets.all(1),
-            backgroundColor: Color(0xFFFFFFFF),
-            //  backgroundColor: Color(0xFF871A1C)
-          ),
-          child: Column(children: [
-            Container(
-                width: MediaQuery.of(context).size.width ,
-                margin: const EdgeInsets.all(0),
-                padding: const EdgeInsets.all(0),
-                height: 200,
-                decoration: BoxDecoration(
-                  color: Color(0xFFFFFFFF),
-                  image: DecorationImage(
-                    image:  NetworkImage(model.imageUrl),//AssetImage(model.imageUrl), // or NetworkImage
-                    fit: BoxFit.fitHeight, // covers entire container
-                    /*
-                    colorFilter: ColorFilter.mode(
-                      Color(
-                          0xFF871A1C), // Change this to your desired color and opacity
-                      BlendMode.color, // Other modes: overlay, multiply, etc.
-                    ),
-                    */
-                  ),
-                )),
-            Container(
-              color: Color(0xFF871A1C),
-              padding: EdgeInsets.only(top: 2),
-              width: MediaQuery.of(context).size.width,
-              height: 50,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    model.name,
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFFFFFFFF),
-                      //   backgroundColor: Colors.black)
-                    ),
-                  )
-                ],
-              ),
-            )
-          ])),
-    );
-  }
-  */
 }
