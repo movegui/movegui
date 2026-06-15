@@ -78,6 +78,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get error_register_with_phone_message => 'Echec d\'enregistrement de votre numéro de téléphone, Veuillez réessayer svp !';
 
   @override
+  String get error_order_minimum_title => 'Minimum Commande';
+
+  @override
+  String get error_order_minimum_message => 'Veuillez ajouter des articles pour continuer votre commande.';
+
+  @override
   String get label_login_facebook => 'Facebook';
 
   @override
@@ -91,6 +97,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get btn_register_label => 'Enregistrer';
+
+  @override
+  String get btn_order_label => 'Commander';
+
+  @override
+  String get btn_call_label => 'Appeler';
 
   @override
   String get verify_otp => 'Envoyer Code';
@@ -204,6 +216,81 @@ class AppLocalizationsFr extends AppLocalizations {
   String get pressing_title => 'Pressing';
 
   @override
+  String get pressing_service_washing => 'Lavage';
+
+  @override
+  String get pressing_service_dry_cleaning => 'Nettoyage à sec';
+
+  @override
+  String get pressing_service_ironing => 'Repassage';
+
+  @override
+  String get pressing_service_laundry => 'Blanchisserie';
+
+  @override
+  String get pressing_service_folding => 'Pliage';
+
+  @override
+  String get pressing_service_stain_removal => 'Détachage';
+
+  @override
+  String get pressing_service_service_express => 'Service express';
+
+  @override
+  String get pressing_service_home_laundry => 'Nettoyage du linge de maison';
+
+  @override
+  String get pressing_service_work_clothing => 'Entretien des vêtements professionnels';
+
+  @override
+  String get pressing_service_delicate_fabrics => 'Traitement des textiles délicats';
+
+  @override
+  String get pressing_service_washing_descrip => 'Nettoyage des vêtements à l’eau';
+
+  @override
+  String get pressing_service_dry_cleaning_descrip => 'Nettoyage spécial pour tissus délicats';
+
+  @override
+  String get pressing_service_ironing_descrip => ' Enlever les plis avec un fer ou une presse';
+
+  @override
+  String get pressing_service_laundry_descrip => 'Service complet de lavage et séchage';
+
+  @override
+  String get pressing_service_folding_descrip => ' Vêtements pliés après lavage';
+
+  @override
+  String get pressing_service_stain_removal_descrip => 'Enlèvement des taches';
+
+  @override
+  String get pressing_service_service_express_descrip => 'Nettoyage rapide le jour même';
+
+  @override
+  String get pressing_service_home_laundry_descrip => 'Draps, Couvertures, Rideaux, etc...';
+
+  @override
+  String get pressing_service_work_clothing_descrip => 'Uniformes, Costumes, Vêtements de travail';
+
+  @override
+  String get pressing_service_delicate_fabrics_descrip => 'Soie, Laine, Cuir, Robes de soirée, etc...';
+
+  @override
+  String get pressing_service_article_title => 'Article';
+
+  @override
+  String get pressing_service_article_qty => 'Qté';
+
+  @override
+  String get pressing_service_article_price => 'Prix';
+
+  @override
+  String get pressing_detail_text_1 => 'Attention: Prix confirmé par SMS avant lavage !!!';
+
+  @override
+  String get pressing_detail_text_2 => 'Le prix final peut varier selon l’état des vêtements.Le lavage commence après confirmation par SMS.';
+
+  @override
   String get my_orders_title => 'Mes Commandes';
 
   @override
@@ -268,6 +355,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tooltip_btn_order => 'Cliquez ici pour Commander';
+
+  @override
+  String get tooltip_btn_call => 'Cliquez ici pour appeler';
 
   @override
   String get profile_menu_invite_people => 'Inviter un proche';

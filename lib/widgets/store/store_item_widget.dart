@@ -109,7 +109,6 @@ class StoreItemWidget extends ConsumerWidget {
               padding: const EdgeInsets.all(6.0),
               child: Column(
                 children: [
-                  
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -141,8 +140,8 @@ class StoreItemWidget extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  
-                  SizedBox(height: 6,),
+
+                  SizedBox(height: 6),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

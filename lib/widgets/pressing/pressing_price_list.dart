@@ -1,28 +1,76 @@
 import 'package:flutter/material.dart';
 
 import 'package:movegui/consts/app_colors.dart';
+import 'package:movegui/l10n/app_localizations.dart';
+import 'package:movegui/models/pressing/pressing_service_model.dart';
+import 'package:movegui/models/pressing/pressing_service_type_model.dart';
+import 'package:movegui/widgets/util/display_widget_title.dart';
 
 class PressingPriceList extends StatefulWidget {
-  const PressingPriceList({Key? key}) : super(key: key);
+  final List<PressingServiceModel> allServices;
+  final PressingServiceTypeModel serviceType;
+  final String? currency;
+  final Color? backgroundColor;
+  final Color? textColor;
+  final Color? selectionColor;
+  final Future<void> Function(
+    List<PressingServiceModel> services,
+    List<int> qtys,
+  )
+  onServicesChanged;
+  const PressingPriceList({
+    Key? key,
+    required this.allServices,
+    required this.serviceType,
+    this.currency = 'GNF',
+    required this.onServicesChanged,
+    this.backgroundColor = AppColors.backgroundColor,
+    this.textColor = AppColors.textColor,
+    this.selectionColor = AppColors.selectionColor,
+  });
 
   @override
   State<PressingPriceList> createState() => _PressingPriceListState();
 }
 
 class _PressingPriceListState extends State<PressingPriceList> {
-  final List<Map<String, dynamic>> prices = [
-    {'service': 'Chemise', 'prix': 10000, 'qty': 1},
-    {'service': 'Pantalon', 'prix': 15000, 'qty': 1},
-    {'service': 'Robe', 'prix': 20000, 'qty': 1},
-    {'service': 'Costume complet', 'prix': 40000, 'qty': 1},
-    {'service': 'Couvre-lit', 'prix': 30000, 'qty': 1},
-  ];
+  final List<PressingServiceModel> actuelServices = [];
+  List<int> qtys = [];
+  bool _initialized = false;
+
+  @override
+  Future<void> didChangeDependencies() async {
+    super.didChangeDependencies();
+    if (!_initialized) {
+      _initialized = true;
+      await initServices();
+      widget.onServicesChanged.call(actuelServices, qtys);
+    }
+  }
+
+  Future<void> initServices() async {
+    if (mounted) {
+      actuelServices.clear();
+      actuelServices.addAll(
+        widget.allServices
+            .where((service) => service.serviceType == widget.serviceType)
+            .toList(),
+      );
+      qtys = List<int>.filled(actuelServices.length, 0);
+
+      setState(() {});
+    }
+  }
 
   int get total {
-    return prices.fold(
-      0,
-      (sum, item) => sum + (item['prix'] * item['qty']) as int,
-    );
+    int sum = 0;
+    for (var i = 0; i < actuelServices.length; i++) {
+      final service = actuelServices[i];
+      final qty = i < qtys.length ? qtys[i] : 0;
+      final pricePerUnit = (service.basePrice ?? 0);
+      sum += (pricePerUnit * qty).toInt();
+    }
+    return sum;
   }
 
   @override
@@ -36,16 +84,17 @@ class _PressingPriceListState extends State<PressingPriceList> {
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: prices.length,
+          itemCount: actuelServices.length,
           itemBuilder: (context, index) {
-            final item = prices[index];
+            final item = actuelServices[index];
+            final qty = index < qtys.length ? qtys[index] : 0;
 
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               child: Row(
                 children: [
                   // Service
-                  Expanded(flex: 3, child: Text(item['service'])),
+                  Expanded(flex: 3, child: Text(item.article.name)),
 
                   // Quantité
                   Expanded(
@@ -54,47 +103,42 @@ class _PressingPriceListState extends State<PressingPriceList> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Material(
-                          color:  item['qty'] > 0 ? AppColors.backgroundColor : AppColors.disabled,
+                          color:
+                              qty > 0
+                                  ? widget.backgroundColor
+                                  : AppColors.disabled,
                           elevation: 2,
                           borderRadius: BorderRadius.circular(8),
                           child: IconButton(
-                            icon: const Icon(
+                            icon:  Icon(
                               Icons.remove,
                               size: 14,
-                              color: AppColors.textColor,
+                              color: qty > 0 ? widget.textColor : AppColors.darkScaffoldColor,
                             ),
                             onPressed:
-                                item['qty'] > 0
-                                    ? () => setState(() => item['qty']--)
+                                qty > 0
+                                    ? () => setState(() {
+                                      if (qtys[index] > 0) qtys[index]--;
+                                    })
                                     : null,
                           ),
                         ),
-                        /*
-                        IconButton(
-                          icon: const Icon(Icons.remove, size: 18, color: AppColors.backgroundColor,),
-                          onPressed: item['qty'] > 1
-                              ? () => setState(() => item['qty']--)
-                              : null,
-                        ),
-                        */
-                        SizedBox(width: 6,),
-                        Text(item['qty'].toString()),
-                        SizedBox(width: 6,),
-                         Material(
-                          color:  AppColors.backgroundColor,
+                        SizedBox(width: 8),
+                        Text(qty.toString()),
+                        SizedBox(width: 8),
+                        Material(
+                          color: widget.backgroundColor,
                           elevation: 3,
                           borderRadius: BorderRadius.circular(8),
-                          child:      IconButton(
-                          icon: const Icon(Icons.add, size: 14, color: AppColors.textColor,),
-                          onPressed: () => setState(() => item['qty']++),
+                          child: IconButton(
+                            icon:  Icon(
+                              Icons.add,
+                              size: 14,
+                              color: widget.textColor,
+                            ),
+                            onPressed: () => setState(() => qtys[index]++),
+                          ),
                         ),
-                        ),
-                        /*
-                        IconButton(
-                          icon: const Icon(Icons.add, size: 18),
-                          onPressed: () => setState(() => item['qty']++),
-                        ),
-                        */
                       ],
                     ),
                   ),
@@ -103,7 +147,7 @@ class _PressingPriceListState extends State<PressingPriceList> {
                   Expanded(
                     flex: 2,
                     child: Text(
-                      '${item['prix'] * item['qty']} GNF',
+                      '${((item.basePrice ?? 0) * qty).toInt()} ${widget.currency}',
                       textAlign: TextAlign.end,
                     ),
                   ),
@@ -113,7 +157,7 @@ class _PressingPriceListState extends State<PressingPriceList> {
           },
         ),
 
-        const Divider(thickness: 1.5),
+        const Divider(thickness: 0.5),
 
         _buildTotal(),
       ],
@@ -124,26 +168,33 @@ class _PressingPriceListState extends State<PressingPriceList> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Row(
-        children: const [
+        children: [
           Expanded(
             flex: 3,
-            child: Text(
-              'Service',
-              style: TextStyle(fontWeight: FontWeight.bold),
+            child: DisplayWidgetTitle(
+              text:
+                  AppLocalizations.of(context)!.pressing_service_article_title,
+              textAlign: TextAlign.start,
+              textColor: widget.backgroundColor,
             ),
           ),
           Expanded(
             flex: 2,
             child: Center(
-              child: Text('Qté', style: TextStyle(fontWeight: FontWeight.bold)),
+              child: DisplayWidgetTitle(
+                text:
+                    AppLocalizations.of(context)!.pressing_service_article_qty,
+                textColor: widget.backgroundColor,
+              ),
             ),
           ),
           Expanded(
             flex: 2,
-            child: Text(
-              'Prix',
+            child: DisplayWidgetTitle(
+              text:
+                  AppLocalizations.of(context)!.pressing_service_article_price,
               textAlign: TextAlign.end,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              textColor: AppColors.backgroundColor,
             ),
           ),
         ],
@@ -153,26 +204,25 @@ class _PressingPriceListState extends State<PressingPriceList> {
 
   Widget _buildTotal() {
     return Padding(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(2),
       child: Row(
         children: [
           const Expanded(
             flex: 5,
-            child: Text(
-              'TOTAL',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            child: DisplayWidgetTitle(
+              text: 'TOTAL',
+              textAlign: TextAlign.left,
+              textColor: AppColors.backgroundColor,
+              fontSize: 24,
             ),
           ),
           Expanded(
             flex: 2,
-            child: Text(
-              '$total GNF',
+            child: DisplayWidgetTitle(
+              text: '$total ${widget.currency}',
               textAlign: TextAlign.end,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.green,
-              ),
+              textColor: AppColors.backgroundColor,
+              fontSize: 24,
             ),
           ),
         ],
@@ -180,40 +230,3 @@ class _PressingPriceListState extends State<PressingPriceList> {
     );
   }
 }
-
-
-
-/*
-class PressingPriceList extends StatelessWidget {
-  const PressingPriceList({Key? key}) : super(key: key);
-
-  final List<Map<String, String>> prices = const [
-    {'service': 'Chemise', 'prix': '10 000 GNF'},
-    {'service': 'Pantalon', 'prix': '15 000 GNF'},
-    {'service': 'Robe', 'prix': '20 000 GNF'},
-    {'service': 'Costume complet', 'prix': '40 000 GNF'},
-    {'service': 'Couvre-lit', 'prix': '30 000 GNF'},
-  //  {'service': 'Nettoyage à sec (kg)', 'prix': '25 000 GNF'},
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return  ListView.builder(
-      shrinkWrap: true,
-  physics: NeverScrollableScrollPhysics(),
-            itemCount: prices.length,
-            itemBuilder: (context, index) {
-              final item = prices[index];
-              return ListTile(
-                leading: const Icon(Icons.local_laundry_service),
-                title: Text(item['service']!),
-                trailing: Text(item['prix']!),
-              );
-            },
-        );
-
-
-  }
-}
-
-*/

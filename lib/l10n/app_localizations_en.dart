@@ -78,6 +78,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get error_register_with_phone_message => 'We were unable to register your phone number. Please try again !';
 
   @override
+  String get error_order_minimum_title => 'Minimum Order';
+
+  @override
+  String get error_order_minimum_message => 'Please add items to proceed with your order.';
+
+  @override
   String get label_login_facebook => 'Facebook';
 
   @override
@@ -91,6 +97,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get btn_register_label => 'Register';
+
+  @override
+  String get btn_order_label => 'Order';
+
+  @override
+  String get btn_call_label => 'Appeler';
 
   @override
   String get verify_otp => 'Send Code';
@@ -204,6 +216,81 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pressing_title => 'Dry Cleaning';
 
   @override
+  String get pressing_service_washing => 'Washing';
+
+  @override
+  String get pressing_service_dry_cleaning => 'Dry Cleaning';
+
+  @override
+  String get pressing_service_ironing => 'Ironing';
+
+  @override
+  String get pressing_service_laundry => 'Laundry ';
+
+  @override
+  String get pressing_service_folding => 'Folding';
+
+  @override
+  String get pressing_service_stain_removal => 'Stain Removal';
+
+  @override
+  String get pressing_service_service_express => 'Service express';
+
+  @override
+  String get pressing_service_home_laundry => 'Home Laundry';
+
+  @override
+  String get pressing_service_work_clothing => 'Care of Work Clothing';
+
+  @override
+  String get pressing_service_delicate_fabrics => 'Care of Delicate Fabrics';
+
+  @override
+  String get pressing_service_washing_descrip => 'Washing clothes with water';
+
+  @override
+  String get pressing_service_dry_cleaning_descrip => 'Special cleaning for delicate fabrics';
+
+  @override
+  String get pressing_service_ironing_descrip => 'Remove wrinkles with an iron or a press';
+
+  @override
+  String get pressing_service_laundry_descrip => 'Full-service laundry and dry cleaning';
+
+  @override
+  String get pressing_service_folding_descrip => 'Clothes folded after washing';
+
+  @override
+  String get pressing_service_stain_removal_descrip => 'Stain removal';
+
+  @override
+  String get pressing_service_service_express_descrip => 'Same-day express cleaning';
+
+  @override
+  String get pressing_service_home_laundry_descrip => 'Sheets, blankets, curtains, etc...';
+
+  @override
+  String get pressing_service_work_clothing_descrip => 'Uniforms, Suits, Work Clothes';
+
+  @override
+  String get pressing_service_delicate_fabrics_descrip => 'Silk, Wool, Leather, Evening gowns, etc...';
+
+  @override
+  String get pressing_service_article_title => 'Article';
+
+  @override
+  String get pressing_service_article_qty => 'Qté';
+
+  @override
+  String get pressing_service_article_price => 'Prix';
+
+  @override
+  String get pressing_detail_text_1 => 'Please note: Price to be confirmed by text message before washing!!!';
+
+  @override
+  String get pressing_detail_text_2 => 'The final price may vary depending on the condition of the clothes. Washing will begin once confirmation has been received via text message';
+
+  @override
   String get my_orders_title => 'Mes Commandes';
 
   @override
@@ -268,6 +355,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tooltip_btn_order => 'Click here to Order';
+
+  @override
+  String get tooltip_btn_call => 'Click here to call';
 
   @override
   String get profile_menu_invite_people => 'Invite a Friend';

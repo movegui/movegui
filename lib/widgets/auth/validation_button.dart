@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/models/button_item.dart';
 import 'package:movegui/responsive.dart';
@@ -9,12 +10,22 @@ class ValidationButton extends StatelessWidget {
   final Future<void> Function(BuildContext context, ButtonItem item) fn;
   final ButtonItem buttonItem;
   final IconData? icon;
+  final double? padding;
+  final double? fontSize;
+  final Color? backgroundColor;
+  final Color? textColor;
+    final Color? selectionColor;
 
   const ValidationButton({
     super.key,
     required this.fn,
     required this.buttonItem,
     this.icon = IconlyLight.send,
+    this.padding=3.0,
+    this.fontSize = WidgetConstants.buttonFonsize,
+    this.backgroundColor = AppColors.backgroundColor,
+    this.textColor = AppColors.textColor,
+    this.selectionColor = AppColors.selectionColor
   });
 
   @override
@@ -32,8 +43,12 @@ class ValidationButton extends StatelessWidget {
                 icon: icon ,
                 fontSize:
                     Responsive.isMobile(context)
-                        ? WidgetConstants.buttonFonsize  * 1.5
-                        : WidgetConstants.buttonFonsize * 2,
+                        ? fontSize!  * 1.5
+                        : fontSize! * 2,
+              padding: padding,
+              backgroundColor: buttonItem.enabled ? backgroundColor : AppColors.placeHolderText,
+              textColor: buttonItem.enabled ? textColor : AppColors.darkScaffoldColor,
+              selectionColor: buttonItem.enabled ? selectionColor : AppColors.placeHolderText,
               ),
             ),
           ),
