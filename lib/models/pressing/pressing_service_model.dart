@@ -5,21 +5,17 @@ import 'package:movegui/services/service_model.dart';
 class PressingServiceModel extends ServiceModel {
   final PressingArticleModel article;
   final PressingServiceTypeModel serviceType;
-  final double? minPrice;
-  final double? maxPrice;
-  final double? basePrice;
-  final bool? active;
-  final Duration? estimatedDuration;
+
 
   PressingServiceModel({
     required super.id,
     required this.article,
     required this.serviceType,
-    required this.minPrice,
-    required this.maxPrice,
-    required this.basePrice,
-    this.active = true,
-    required this.estimatedDuration,
+    required super.minPrice,
+    required super.maxPrice,
+    required super.basePrice,
+    super.active = true,
+    super.estimatedDuration,
     required super.name,
     required super.createdAt,
   });
@@ -59,4 +55,6 @@ class PressingServiceModel extends ServiceModel {
     basePrice: json['basePrice'] ?? 0.0,
     estimatedDuration: json['estimatedDuration'] == 0 ? Duration() : Duration(),
   );
+
+
 }

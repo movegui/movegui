@@ -287,6 +287,12 @@ abstract class AppLocalizations {
   /// **'Appeler'**
   String get btn_call_label;
 
+  /// No description provided for @btn_add_cart.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to Cart'**
+  String get btn_add_cart;
+
   /// No description provided for @verify_otp.
   ///
   /// In en, this message translates to:
@@ -796,6 +802,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Click here to call'**
   String get tooltip_btn_call;
+
+  /// No description provided for @tooltip_btn_add_cart.
+  ///
+  /// In en, this message translates to:
+  /// **'Cliquez ici pour ajouter au panier'**
+  String get tooltip_btn_add_cart;
 
   /// No description provided for @profile_menu_invite_people.
   ///

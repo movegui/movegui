@@ -1,9 +1,11 @@
 
 
 
+import 'package:dio/dio.dart';
 import 'package:faker/faker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:movegui/config/env.dart';
+import 'package:movegui/models/pricing_config_model.dart';
 import 'package:movegui/services/address_service.dart';
 import 'package:movegui/services/api_service.dart';
 import 'package:movegui/services/categories_service.dart';
@@ -11,6 +13,7 @@ import 'package:movegui/services/image_service.dart';
 import 'package:movegui/services/ingredients_service.dart';
 import 'package:movegui/services/patisseries_service.dart';
 import 'package:movegui/services/pressing_service.dart';
+import 'package:movegui/services/pricing_service.dart';
 import 'package:movegui/services/professionnel_service.dart';
 import 'package:movegui/services/restaurant_type_service.dart';
 import 'package:movegui/services/restaurants_service.dart';
@@ -23,7 +26,7 @@ final getIt = GetIt.instance;
 
 void initServices(Env env){
  // getIt.registerLazySingleton<CategoriesService>(() => CategoriesService());
- final api = ApiService(env);
+ final api = ApiService(env: env, currency: 'GNF', dio: Dio(BaseOptions(baseUrl: env.baseUrl)));
  // getIt.registerLazySingleton<StoreCategoriesService>(() => StoreCategoriesService(api: api));
   getIt.registerLazySingleton<SuppliersService>(() => SuppliersService(api: api));
   getIt.registerLazySingleton<IngredientsService>(() => IngredientsService(api: api));
@@ -39,6 +42,7 @@ void initServices(Env env){
  // getIt.registerLazySingleton<PressingFormService>(() => PressingFormService(api: api));
   getIt.registerLazySingleton<SeedService>(() =>  SeedService(api: api, faker: Faker()));
   getIt.registerLazySingleton<CategoriesService> (() => CategoriesService(api: api));
+  getIt.registerLazySingleton<PricingService>(() => PricingService( api: api , config: PricingConfigModel.fromRemote(),));
 
 
   //

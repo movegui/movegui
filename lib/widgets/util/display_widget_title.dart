@@ -9,20 +9,25 @@ class DisplayWidgetTitle extends StatelessWidget {
     this.textAlign = TextAlign.center,
     this.fontSize = 18.0,
      this.textColor = AppColors.textColor,
+     this.backgroundColor = AppColors.backgroundColor,
+     this.fontWeight = FontWeight.bold
   });
   final String? text;
   final TextAlign? textAlign;
   final double? fontSize;
   final Color? textColor;
+  final Color? backgroundColor;
+  final FontWeight? fontWeight;
 
   @override
   Widget build(BuildContext context) {
     return Text(
         text ?? '',
         style: TextStyle(
-          fontWeight: FontWeight.bold,
+          fontWeight: fontWeight,
           color: textColor,
           fontSize: fontSize,
+          backgroundColor: backgroundColor!
         ),
         textAlign: textAlign,
     );

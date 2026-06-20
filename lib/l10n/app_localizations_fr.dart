@@ -105,6 +105,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get btn_call_label => 'Appeler';
 
   @override
+  String get btn_add_cart => 'Ajouter au Panier';
+
+  @override
   String get verify_otp => 'Envoyer Code';
 
   @override
@@ -358,6 +361,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tooltip_btn_call => 'Cliquez ici pour appeler';
+
+  @override
+  String get tooltip_btn_add_cart => 'Cliquez ici pour ajouter au panier';
 
   @override
   String get profile_menu_invite_people => 'Inviter un proche';

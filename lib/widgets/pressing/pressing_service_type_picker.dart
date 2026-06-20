@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movegui/consts/app_colors.dart';
-import 'package:movegui/consts/app_constants.dart';
 import 'package:movegui/consts/validator.dart';
 import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/models/pressing/pressing_model.dart';
@@ -45,19 +44,8 @@ class _GenderAndBirthdatePickerState
   @override
   didChangeDependencies() {
     super.didChangeDependencies();
-    //  initServices();
   }
 
-  Future<void> initServices() async {
-    if (mounted) {
-      setState(() {
-        pressingServices = AppConstants.getPressingServices(context);
-        if (pressingServices.isNotEmpty) {
-          _selectedServiceType = pressingServices[0];
-        }
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

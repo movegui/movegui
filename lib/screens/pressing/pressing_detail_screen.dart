@@ -1,10 +1,8 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/app_constants.dart';
-import 'package:movegui/consts/validator.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/button_item.dart';
 import 'package:movegui/models/pressing/pressing_model.dart';
@@ -12,13 +10,14 @@ import 'package:movegui/models/pressing/pressing_service_model.dart';
 import 'package:movegui/models/pressing/pressing_service_type_model.dart';
 import 'package:movegui/providers/providers.dart';
 import 'package:movegui/services/pressing_service.dart';
+import 'package:movegui/services/pricing_service.dart';
 import 'package:movegui/services/register_services.dart';
+import 'package:movegui/services/remote_config_service.dart';
 import 'package:movegui/widgets/auth/validation_button.dart';
-import 'package:movegui/widgets/custom_text_field.dart';
 import 'package:movegui/widgets/error/message_widget.dart';
-import 'package:movegui/widgets/pressing/pressing_price_list.dart';
+import 'package:movegui/widgets/pressing/pressing_service_list_widget.dart';
 import 'package:movegui/widgets/pressing/pressing_service_type_picker.dart';
-import 'package:movegui/widgets/util/image_banner.dart';
+import 'package:movegui/widgets/price_total_widget.dart';
 
 class PressingDetailScreen extends ConsumerStatefulWidget {
   final String pressingId;
@@ -32,33 +31,56 @@ class PressingDetailScreen extends ConsumerStatefulWidget {
 
 class PressingDetailScreenState extends ConsumerState<PressingDetailScreen> {
   late PressingService pressingService;
+  late PricingService pricingService;
   final pressingConstants = PressingConstants();
   PressingModel? model;
-  List<PressingServiceTypeModel> serviceTypes = [];
+  Set<PressingServiceTypeModel> serviceTypes = {};
   List<PressingServiceModel> services = [];
   PressingServiceTypeModel? serviceType;
   bool _initialized = false;
   List<int> selectedQtys = [];
   List<PressingServiceModel> selectedServices = [];
+  Map<String, List<int>> orderedQtys = {};
+  Map<String, List<PressingServiceModel>> orderedServices = {};
+  double totlaServices = 0;
+  double totalPerService = 0;
 
   @override
   void initState() {
     pressingService = getIt<PressingService>();
+    pricingService = getIt<PricingService>();
     super.initState();
   }
 
   @override
-  void didChangeDependencies() {
+  Future<void> didChangeDependencies() async {
     super.didChangeDependencies();
     if (!_initialized) {
       _initialized = true;
-      initModel();
+      await initModel();
+      await RemoteConfigService.init();
     }
   }
 
   Future<void> createOrder(BuildContext context, ButtonItem item) async {}
+  Future<void> addToCart(BuildContext context, ButtonItem item) async {}
+  Future<void> callMovegui(BuildContext context, ButtonItem item) async {
+    pressingService.callNumber(model!.phone);
+  }
 
-  Future<void> callMovegui(BuildContext context, ButtonItem item) async {}
+  Future<void> getActuelServices(
+    PressingServiceTypeModel? selectedServiceType,
+  ) async {
+    if (mounted) {
+      selectedServices.clear();
+      selectedServices.addAll(
+        services
+            .where((service) => service.serviceType == selectedServiceType)
+            .toList(),
+      );
+      setState(() {});
+    }
+  }
 
   Future<void> initModel() async {
     final store = ref.watch(storeProviderState);
@@ -71,15 +93,34 @@ class PressingDetailScreenState extends ConsumerState<PressingDetailScreen> {
     if (mounted) {
       services = await pressingService.getAllServices(model!.id);
       if (services.isNotEmpty) {
-        print('jojojojoj');
         serviceType = services[0].serviceType;
       }
 
       for (PressingServiceModel serviceModel in services) {
         serviceTypes.add(serviceModel.serviceType);
+        await getActuelServices(serviceModel.serviceType);
+        orderedQtys[serviceModel.serviceType.id] = List<int>.filled(
+          selectedServices.length,
+          0,
+        );
+        orderedServices[serviceModel.serviceType.id] = [];
       }
       setState(() {});
     }
+  }
+
+  Future<double> CalculatePrice(
+    double distanceKm,
+    int items,
+    double orderAmount,
+    bool isExpress,
+  ) async {
+    return pricingService.calculate(
+      distanceKm: distanceKm,
+      items: items,
+      orderAmount: orderAmount,
+      isExpress: isExpress,
+    );
   }
 
   int totalQte(List<int> qtys) {
@@ -143,27 +184,61 @@ class PressingDetailScreenState extends ConsumerState<PressingDetailScreen> {
                   if (serviceTypes.isNotEmpty)
                     PressingServiceTypePicker(
                       serviceType: serviceType,
-                      onServiceTypeChanged: (PressingServiceTypeModel? value) {
-                        serviceType = value;
+                      onServiceTypeChanged: (
+                        PressingServiceTypeModel? value,
+                      ) async {
+                        setState(() {
+                          serviceType = value;
+                          selectedServices.clear();
+                        });
+                        await getActuelServices(value);
+                        final totalSelectedService = await pressingService
+                            .getTotal(
+                              selectedServices,
+                              orderedQtys[serviceType!.id]!,
+                            );
+                        setState(() {
+                          orderedServices[serviceType!.id] = selectedServices;
+                          totalPerService = totalSelectedService;
+                        });
                       },
                       model: model!,
-                      serviceTypes: serviceTypes,
+                      serviceTypes: serviceTypes.toList(),
                     ),
                   SizedBox(height: 6),
-                  if (serviceType != null)
-                    PressingPriceList(
-                      allServices: services,
-                      serviceType: serviceType!,
-                      onServicesChanged: (services, qtys) async {
-                        if (mounted) {
+                  serviceType != null
+                      ? PressingServiceListWidget(
+                        key: UniqueKey(),
+                        actuelServices: selectedServices,
+                        serviceType: serviceType!,
+                        addQuantities: (int index) async {
                           setState(() {
-                            selectedServices = services;
-                            selectedQtys = qtys;
-                            print(totalQte(selectedQtys));
+                            ++orderedQtys[serviceType!.id]![index];
+
+                            totalPerService +=
+                                selectedServices[index].basePrice!;
+                            totlaServices += selectedServices[index].basePrice!;
                           });
-                        }
-                      },
-                    ),
+                        },
+                        reduceQuantities: (int index) async {
+                          setState(() {
+                            if (orderedQtys[serviceType!.id]![index] > 0) {
+                              totalPerService -=
+                                  selectedServices[index].basePrice!;
+                              --orderedQtys[serviceType!.id]![index];
+                              totlaServices -=
+                                  selectedServices[index].basePrice!;
+                            }
+                          });
+                        },
+                        qtys: orderedQtys[serviceType!.id]!,
+                        currency: pressingService.getCureency(),
+                        total: totalPerService,
+                        backgroundColor: AppColors.backgroundColor,
+                        textColor: AppColors.textColor,
+                        selectionColor: AppColors.selectionColor,
+                      )
+                      : SizedBox(),
                   SizedBox(height: 10),
                   Text(
                     AppLocalizations.of(context)!.pressing_detail_text_1,
@@ -173,152 +248,77 @@ class PressingDetailScreenState extends ConsumerState<PressingDetailScreen> {
                     AppLocalizations.of(context)!.pressing_detail_text_2,
                     style: TextStyle(color: Colors.red),
                   ),
-
                   SizedBox(height: 6),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: ValidationButton(
-                          fn: (context, item) async {
-                            if (item.enabled) {
-                              await createOrder(context, item);
-                            } else {
-                              MessageWidget.errorMessage(
-                                context,
-                                AppLocalizations.of(
-                                  context,
-                                )!.error_order_minimum_title,
-                                AppLocalizations.of(
-                                  context,
-                                )!.error_order_minimum_message,
-                                Icon(Icons.error, color: AppColors.error),
-                                FlushbarPosition.BOTTOM,
-                              );
-                            }
-                          },
-                          buttonItem: ButtonItem(
-                            AppLocalizations.of(context)!.btn_order_label,
-                            AppLocalizations.of(context)!.tooltip_btn_order,
-                            totalQte(selectedQtys) > 0 ? true : false,
-                            routeName: '',
-                          ),
-                          padding: 12,
-                          fontSize: 14,
-                          icon: Icons.shopping_cart,
-                        ),
-                      ),
-                      SizedBox(width: 12),
-                      /*
-                      ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.all(12.0),
-                          backgroundColor: AppColors.backgroundColor,
-                          // backgroundColor: Colors.red,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                        ),
-                        icon: const Icon(
-                          IconlyLight.send,
-                          color: AppColors.textColor,
-                        ),
-                        label: const Text(
-                          "Valider",
-                          style: TextStyle(
-                            color: AppColors.textColor,
-                            fontSize: 22,
-                          ),
-                        ),
-                        onPressed: () async {},
-                      ),
-                      */
-
-                      /*
-                      ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.all(12.0),
-                          backgroundColor: AppColors.backgroundColor,
-                          // backgroundColor: Colors.red,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                        ),
-                        icon: const Icon(
-                          IconlyLight.call,
-                          color: AppColors.textColor,
-                        ),
-                        label: const Text(
-                          "Appeler",
-                          style: TextStyle(
-                            color: AppColors.textColor,
-                            fontSize: 22,
-                          ),
-                        ),
-                        onPressed: () async {},
-                      ),
-                      */
-                      Expanded(
-                        child: ValidationButton(
-                          fn: (context, item) async {
-                            await callMovegui(context, item);
-                          },
-                          buttonItem: ButtonItem(
-                            AppLocalizations.of(context)!.btn_call_label,
-                            AppLocalizations.of(context)!.tooltip_btn_call,
-                            true,
-                            routeName: '',
-                          ),
-                          padding: 12,
-                          fontSize: 14,
-                          icon: Icons.call,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  /*
-                  Container(
-                    height: 200,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(12),
-                      ),
-                      image: DecorationImage(
-                        image: NetworkImage(widget.model.imageUrl),
-                        fit: BoxFit.cover,
-                      ),
+                  Card(
+                    color: AppColors.backgroundColor,
+                    child: PriceTotalWidget(
+                      total: totlaServices,
+                      currency: pressingService.getCureency(),
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  */
-                  const SizedBox(height: 15),
-
-                  /*
-                Expanded(
-                  child: DynamicHeightGridView(
-                    itemCount: pressings.length,
-                    crossAxisCount: 1,
-                    mainAxisSpacing: 12,
-                    crossAxisSpacing: 12,
-                    builder: (context, index) {
-                      return StoreWidget(model: pressings[index], catgory: AppConstants.CATEGORY_PRESSING,);
-                    },
-                  ),
-                ),
-                */
+                  SizedBox(height: 6),
+                  serviceType != null
+                      ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: ValidationButton(
+                              fn: (context, item) async {
+                                if (item.enabled) {
+                                  await createOrder(context, item);
+                                } else {
+                                  MessageWidget.errorMessage(
+                                    context,
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.error_order_minimum_title,
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.error_order_minimum_message,
+                                    Icon(Icons.error, color: AppColors.error),
+                                    FlushbarPosition.BOTTOM,
+                                  );
+                                }
+                              },
+                              buttonItem: ButtonItem(
+                                AppLocalizations.of(context)!.btn_order_label,
+                                AppLocalizations.of(context)!.tooltip_btn_order,
+                                totlaServices > 0 ? true : false,
+                                routeName: '',
+                              ),
+                              padding: 12,
+                              fontSize: 14,
+                              icon: Icons.receipt_long,
+                            ),
+                          ),
+                          SizedBox(width: 12),
+                          Expanded(
+                            child: ValidationButton(
+                              fn: (context, item) async {
+                                await callMovegui(context, item);
+                              },
+                              buttonItem: ButtonItem(
+                                AppLocalizations.of(context)!.btn_add_cart,
+                                AppLocalizations.of(
+                                  context,
+                                )!.tooltip_btn_add_cart,
+                                totlaServices > 0 ? true : false,
+                                routeName: '',
+                              ),
+                              padding: 12,
+                              fontSize: 14,
+                              icon: Icons.add_shopping_cart,
+                            ),
+                          ),
+                        ],
+                      )
+                      : SizedBox(),
                 ],
               ),
             ),
           ),
-          /*
-        bottomNavigationBar:RootBottomNavigationBar(
-        currentIndex: 1,
-        onDestinationSelected: (index) {
-          Navigator.pop(context, index);
-        },
-      ),
-      */
         ),
       ),
     );

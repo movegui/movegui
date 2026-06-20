@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:movegui/models/user_model.dart';
 
 class UserProvider extends ChangeNotifier {

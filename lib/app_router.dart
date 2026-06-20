@@ -6,7 +6,6 @@ import 'package:movegui/consts/route_contants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/providers/auth_provider.dart';
 import 'package:movegui/providers/providers.dart';
-import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/responsive.dart';
 import 'package:movegui/screens/auth/login_screen.dart';
 import 'package:movegui/screens/auth/movegui_forgot_password_screen.dart';

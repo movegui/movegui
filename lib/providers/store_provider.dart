@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:movegui/models/store_model.dart';
 
 class StoreProvider extends ChangeNotifier {

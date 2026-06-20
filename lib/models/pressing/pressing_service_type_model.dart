@@ -1,5 +1,3 @@
-
-
 import 'package:movegui/models/model.dart';
 
 class PressingServiceTypeModel extends Model {
@@ -44,5 +42,7 @@ class PressingServiceTypeModel extends Model {
             : DateTime.now(),
       );
 }
+
+
 
 enum PricingType { perItem, perKg, fixed }

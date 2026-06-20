@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:movegui/models/pressing/pressing_model.dart';
 import 'package:movegui/models/pressing/pressing_service_model.dart';
 import 'package:movegui/services/interfaces/i_pressing_services.dart';
 import 'package:movegui/services/model_service.dart';
+import 'package:movegui/services/service_model.dart';
 
 class PressingService extends ModelService<PressingModel>
     implements IPressingServices {
@@ -80,5 +83,19 @@ class PressingService extends ModelService<PressingModel>
     return snapshot.docs
         .map((doc) => PressingServiceModel.fromJson(doc.data()))
         .toList();
+  }
+
+  Future<double> getOrderedServices(
+    Map<String, List<ServiceModel>> listServices,
+    List<int> qtys,
+  ) async {
+    double total = 0;
+
+    for (var entry in listServices.entries) {
+      double value = await getTotal(entry.value, qtys); // ✅ await
+      total += value; // ✅ now it's double
+    }
+
+    return total;
   }
 }

@@ -5,7 +5,6 @@ import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/platform_widget.dart';
 import 'package:movegui/providers/providers.dart';
-import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/responsive.dart';
 import 'package:movegui/widgets/app/appbar.dart';
 import 'package:movegui/widgets/app/separator_widget.dart';
