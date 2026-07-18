@@ -9,7 +9,6 @@ import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/button_item.dart';
 import 'package:movegui/models/user_model.dart';
-import 'package:movegui/providers/auth_provider.dart';
 import 'package:movegui/providers/providers.dart';
 import 'package:movegui/screens/auth/login_screen.dart';
 import 'package:movegui/services/form_services/adress_form_service.dart';
@@ -217,7 +216,10 @@ class AccountScreenState extends ConsumerState<AccountScreen> {
       );
     } else {
       if (adressesHasChanged) {
+        print('it  have changed');
         final newAdresses = await addAddressKey.currentState?.getAddresses();
+        print("default1: ${newAdresses?[0]?.isDefault}");
+         print("default2: ${newAdresses?[1]?.isDefault}");
         if (newAdresses != null && newAdresses.isNotEmpty) {
           if (currentUser != null) {
             currentUser?.personModel?.addresses = newAdresses;
@@ -466,7 +468,7 @@ class AccountScreenState extends ConsumerState<AccountScreen> {
                     });
                   }
                 },
-                onChange: (value) {
+                onChange: () {
                   setState(() {
                     adressesHasChanged = true;
                   });

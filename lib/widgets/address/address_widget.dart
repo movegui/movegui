@@ -15,7 +15,7 @@ class AddressWidget extends StatefulWidget {
   final AddressFormController addressForm;
   final ValueChanged<String?> onAdressTypeChange;
   final ValueChanged<String?> onCommuneChange;
-  final VoidCallback onDefaultAdressChange;
+  final ValueChanged<String?> onDefaultAdressChange;
   final VoidCallback onUpdateAdresse;
   final VoidCallback onRemoveAdress;
   final void Function(String) onChange;
@@ -112,7 +112,6 @@ class AddressWidgetState extends State<AddressWidget> {
                   return MyValidators.textNameValidator(vaule);
                 },
                 onChange: (value) {
-                  print('jojojo');
                   widget.onChange(value);
                 },
                 readOnly: _readOnly,
@@ -122,6 +121,7 @@ class AddressWidgetState extends State<AddressWidget> {
             ),
           ],
         ),
+        standardAdresseWidget(),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -210,7 +210,7 @@ class AddressWidgetState extends State<AddressWidget> {
     );
   }
 
-  Widget standardAdresseWidget(index) {
+  Widget standardAdresseWidget() {
     return Row(
       children: [
         Expanded(
@@ -222,11 +222,11 @@ class AddressWidgetState extends State<AddressWidget> {
         ),
         SizedBox(width: 8),
         Expanded(
-          child: Radio<bool>(
-            value: true,
-            groupValue: widget.addressForm.id == widget.defaultId,
-            onChanged: (_) {
-              widget.onDefaultAdressChange.call();
+          child: Radio<String>(
+            value: widget.addressForm.id!,
+            groupValue: widget.defaultId,
+            onChanged: (value) {
+              widget.onDefaultAdressChange.call(value);
             },
           ),
         ),

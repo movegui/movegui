@@ -23,7 +23,7 @@ class AddAdressWidget extends StatefulWidget {
   final List<AdressModel?>? adresses;
   final void Function(String, int) onAdressTypeChange;
   final void Function(String, int) onCommuneChange;
-  final void Function(String) onChange;
+  final VoidCallback onChange;
 
   const AddAdressWidget({
     super.key,
@@ -163,21 +163,24 @@ class AddAdressWidgetState extends State<AddAdressWidget> {
                       onChange: (String value) {
                         setState(() {
                           isValid = formControllers[index].isValid();
-                          widget.onChange.call(value);
+                          widget.onChange.call();
                         });
                       },
-                    //  readOnly: readOnlyAdresses[index],
+                      //  readOnly: readOnlyAdresses[index],
                       defaultId: _defaultAddressId,
-                      onDefaultAdressChange: () {
+                      onDefaultAdressChange: (value) {
                         setState(() {
-                          _defaultAddressId = adressId;
+                          for (final elem in formControllers) {
+                            elem.isDefault = elem.id == value;
+                          }
+                          _defaultAddressId = value!;
                         });
+                        widget.onChange.call();
                       },
                       onUpdateAdresse: () {
                         setState(() {
-                               widget.onChange.call('');
+                          widget.onChange.call();
                         });
-                       
                       },
                       onRemoveAdress: () {
                         remove(index);

@@ -76,6 +76,7 @@ class AddressFormController extends FormController<AdressModel> {
       latitude: double.parse(latitude.text),
     ),
     adressType: selectedType,
+    isDefault: isDefault
   );
 
   String getLabelCommune(String value) {

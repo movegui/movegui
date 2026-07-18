@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/adress_model.dart';
@@ -10,7 +9,6 @@ import 'package:movegui/services/register_services.dart';
 import 'package:movegui/services/seed_service.dart';
 import 'package:movegui/services/user_service.dart';
 import 'package:movegui/widgets/address/display_adress_widget.dart';
-import 'package:movegui/widgets/app/separator_widget.dart';
 import 'package:movegui/widgets/util/button_widget.dart';
 
 class DisplayAdressesWidget extends StatefulWidget {
