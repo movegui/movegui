@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:movegui/models/pressing/pressing_model.dart';
 import 'package:movegui/models/pressing/pressing_service_model.dart';
+import 'package:movegui/models/pressing/pressing_service_type_model.dart';
 import 'package:movegui/services/interfaces/i_pressing_services.dart';
 import 'package:movegui/services/model_service.dart';
-import 'package:movegui/services/service_model.dart';
 
 class PressingService extends ModelService<PressingModel>
     implements IPressingServices {
@@ -85,6 +85,7 @@ class PressingService extends ModelService<PressingModel>
         .toList();
   }
 
+  /*
   Future<double> getOrderedServices(
     Map<String, List<ServiceModel>> listServices,
     List<int> qtys,
@@ -98,4 +99,15 @@ class PressingService extends ModelService<PressingModel>
 
     return total;
   }
+  */
+
+  List<PressingServiceModel> getServicesByType(
+    List<PressingServiceModel> services,
+    PressingServiceTypeModel? selectedServiceType,
+  ) {
+    return services
+        .where((service) => service.serviceType.id == selectedServiceType?.id)
+        .toList();
+  }
+
 }

@@ -71,4 +71,48 @@ class MyValidators {
     }
     return null;
   }
+
+  
+      static String? numberValidator(String? value){
+    if(value!.isEmpty) {
+      return 'Vewuillez saisir le Nom svp';
+    }
+    return null;
+  }
+
+
+  static String? latitudeValidator(String? value) {
+  if (value == null || value.trim().isEmpty) {
+    return 'Veuillez saisir la latitude svp';
+  }
+
+  final lat = double.tryParse(value);
+
+  if (lat == null) {
+    return 'Entrez un nombre valid svp';
+  }
+
+  if (lat < -90 || lat > 90) {
+    return 'Latitude doit etre entre -90 and 90';
+  }
+
+  return null;
+}
+static String? longitudeValidator(String? value) {
+  if (value == null || value.trim().isEmpty) {
+    return 'Veuillez saisir la longitude svp';
+  }
+
+  final lng = double.tryParse(value);
+
+  if (lng == null) {
+    return 'Entrez un nombre valid svp';
+  }
+
+  if (lng < -180 || lng > 180) {
+    return 'Longitude doit etre  -180 and 180';
+  }
+
+  return null;
+}
 }

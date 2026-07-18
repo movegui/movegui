@@ -8,13 +8,13 @@ class TextWidget extends StatelessWidget {
     this.textSize = 16,
     this.maxLines = 10,
     this.isTitle = false,
-    required this.height
+    this.textAlign = TextAlign.center,
   }) : super(key: key);
   final String text;
   final Color color;
   final double textSize;
-  final double? height;
-  final TextAlign textAlign;
+  //  final double? height;
+  final TextAlign? textAlign;
   bool isTitle;
   int maxLines = 10;
   @override
@@ -23,12 +23,13 @@ class TextWidget extends StatelessWidget {
       text,
       maxLines: maxLines,
       style: TextStyle(
-          fontSize: textSize,
-          color: color,
-          overflow: TextOverflow.ellipsis,
-          fontWeight: isTitle ? FontWeight.w600 : FontWeight.w400),
-          height: this.height,
-          textAlign: this.textAlign
+        fontSize: textSize,
+        color: color,
+        overflow: TextOverflow.ellipsis,
+        fontWeight: isTitle ? FontWeight.w600 : FontWeight.w400,
+      ),
+
+      textAlign: this.textAlign,
     );
   }
 }

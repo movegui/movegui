@@ -9,6 +9,27 @@ class AppLocalizationsFr extends AppLocalizations {
   AppLocalizationsFr([String locale = 'fr']) : super(locale);
 
   @override
+  String get no_phone_number => 'Pas de Téléphone';
+
+  @override
+  String get no_email => 'Pas d\'Email';
+
+  @override
+  String get status_actf => 'Actif';
+
+  @override
+  String get status_non_actf => 'Inactif';
+
+  @override
+  String get commune_title => 'Commune';
+
+  @override
+  String get gender_masculin => 'Homme';
+
+  @override
+  String get gender_female => 'Femme';
+
+  @override
   String get max_delivery_time => '48h maximum';
 
   @override
@@ -54,6 +75,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get success_login_reset_password => 'Lien envoyé avec Succes';
 
   @override
+  String get success_username_updated => 'Nom Utilisateur modifié avec succès';
+
+  @override
   String get login_forget_password_txt => 'Saisissez votre adresse e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe ';
 
   @override
@@ -72,6 +96,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get error_login_message => 'Échec de la connexion';
 
   @override
+  String get error_login_user_not_found => 'Utilisateur non trouvé dans la base de données, veuillez vérifier votre email et mot de passe';
+
+  @override
   String get error_register_with_phone_title => 'Erreur d\'enregistrement';
 
   @override
@@ -82,6 +109,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get error_order_minimum_message => 'Veuillez ajouter des articles pour continuer votre commande.';
+
+  @override
+  String get error_user_not_found_title => 'Utilisateur non trouvé';
+
+  @override
+  String get error_user_not_found_message => 'L\'utilisateur spécifié n\'existe pas.';
 
   @override
   String get label_login_facebook => 'Facebook';
@@ -108,6 +141,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get btn_add_cart => 'Ajouter au Panier';
 
   @override
+  String get btn_cancel => 'Annuler';
+
+  @override
+  String get btn_delete => 'Supprimer';
+
+  @override
   String get verify_otp => 'Envoyer Code';
 
   @override
@@ -130,6 +169,18 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get input_hint_adress => 'Adresse';
+
+  @override
+  String get input_hint_middle_name => 'Surnom';
+
+  @override
+  String get input_hint_quartier => 'Quartier';
+
+  @override
+  String get input_hint_longitude => 'Longitude';
+
+  @override
+  String get input_hint_latitude => 'Latitude';
 
   @override
   String get movegui_info_title => 'MoveGui – Livraison & Transport à Moto en Guinée';
@@ -219,6 +270,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get pressing_title => 'Pressing';
 
   @override
+  String get pressing_order_title => 'Pressing Commande';
+
+  @override
+  String get pressing_service_title => 'Services';
+
+  @override
   String get pressing_service_washing => 'Lavage';
 
   @override
@@ -286,6 +343,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get pressing_service_article_price => 'Prix';
+
+  @override
+  String get pressing_detail_title => 'Pressing Detail';
 
   @override
   String get pressing_detail_text_1 => 'Attention: Prix confirmé par SMS avant lavage !!!';
@@ -366,6 +426,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tooltip_btn_add_cart => 'Cliquez ici pour ajouter au panier';
 
   @override
+  String get tooltip_btn_add_adress => 'Cliquez ici pou ajouter une Adresse';
+
+  @override
+  String get btn_add_adress => 'Ajouter une Adresse';
+
+  @override
+  String get btn_update_adress => 'Modifier l\'Adresse';
+
+  @override
+  String get btn_update => 'Modifier';
+
+  @override
   String get profile_menu_invite_people => 'Inviter un proche';
 
   @override
@@ -412,4 +484,76 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get order_after => 'Commader pour demain';
+
+  @override
+  String get user_info => 'Informations Utilisateur';
+
+  @override
+  String get address_office_title => 'Bureau';
+
+  @override
+  String get address_neighbor_title => 'Voisin';
+
+  @override
+  String get address_home_title => 'Domicile';
+
+  @override
+  String get address_other_title => 'Autre';
+
+  @override
+  String get detail_delivery_title => 'Détails de livraison';
+
+  @override
+  String get detail_delivery_pickup => 'Point de ramassage';
+
+  @override
+  String get detail_delivery_delivery => 'Point de livraison';
+
+  @override
+  String get detail_delivery_pickup_date => ' Choisir une Date de ramassage';
+
+  @override
+  String get detail_delivery_delivery_date => 'Choisir une Date de livraison';
+
+  @override
+  String get standard_address => 'Adresse Standard';
+
+  @override
+  String get account_title => 'Votre Compte';
+
+  @override
+  String get account_info => 'Informations du Compte';
+
+  @override
+  String get account_edit_name => 'Changer le Nom de Profil';
+
+  @override
+  String get account_edit_email => 'Changer l\'Adresse Email';
+
+  @override
+  String get account_edit_phone => 'Changer le Numéro de Téléphone';
+
+  @override
+  String get account_adresse => 'Gerer vos Adresses';
+
+  @override
+  String get account_password => 'Changer le Mot de Passe';
+
+  @override
+  String get account_edit_name_title => 'Modifier le Nom de Profil';
+
+  @override
+  String get account_edit_name_new_name => 'Nouveau Nom';
+
+  @override
+  String get account_edit_email_new_email => 'Nouvelle Adresse Email';
+
+  @override
+  String get account_edit_phone_new_phone => 'Nouveau Numéro de Téléphone';
+
+  @override
+  String get compte_delete_title => 'Supprimer le Compte';
+
+  @override
+  String get compte_delete_message => 'Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.';
 }

@@ -1,6 +1,5 @@
-import 'package:flutter/widgets.dart';
-import 'package:movegui/consts/app_colors.dart';
 
+import 'package:flutter/material.dart';
 
 class DisplayWidget extends StatelessWidget {
   final String? text;
@@ -15,18 +14,19 @@ class DisplayWidget extends StatelessWidget {
     this.textAlign = TextAlign.center,
     this.fontSize = 14,
     this.fontWeight = FontWeight.normal,
-    this.textColor = AppColors.backgroundColor,
+    this.textColor,
   });
+
   @override
   Widget build(BuildContext context) {
     return Text(
       text ?? '',
       textAlign: textAlign,
-      style: TextStyle(
-        color: textColor,
-        fontWeight: fontWeight,
-        fontSize: fontSize,
-      ),
+      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            color: textColor,
+            fontWeight: fontWeight,
+            fontSize: fontSize,
+          ),
     );
   }
 }

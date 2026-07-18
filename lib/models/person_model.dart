@@ -12,7 +12,7 @@ class PersonModel extends Model {
   final String? phone;
   final String gender;
   final DateTime? birthDate;
-  final List<AdressModel?> addresses;
+   List<AdressModel?>? addresses;
   final String? nationality;
 
   PersonModel({
@@ -43,7 +43,7 @@ class PersonModel extends Model {
     'gender': gender,
     'birthDate': birthDate?.toIso8601String() ?? '',
     'addresses': addresses
-        .where((e) => e != null)
+        ?.where((e) => e != null)
         .map((el) => el!.toJson())
         .toList(),
     'nationality': nationality,

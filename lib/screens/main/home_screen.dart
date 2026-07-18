@@ -1,15 +1,19 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movegui/consts/app_constants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
+import 'package:movegui/providers/providers.dart';
 import 'package:movegui/responsive.dart';
 import 'package:movegui/services/image_service.dart';
+import 'package:movegui/services/register_services.dart';
+import 'package:movegui/services/user_service.dart';
 import 'package:movegui/widgets/home/home_page_content_widget.dart';
 import 'package:movegui/widgets/shared/widget_with_image.dart';
 import 'package:movegui/widgets/util/category_image_banner.dart';
 import 'package:movegui/widgets/util/tab_button.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({
     super.key,
     this.selectedTabIndex,
@@ -22,14 +26,37 @@ class HomeScreen extends StatefulWidget {
   final Function(int index)? onTabChange;
 
   @override
-  State<StatefulWidget> createState() => HomescreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => HomescreenState();
 }
 
-class HomescreenState extends State<HomeScreen> with RouteAware {
+class HomescreenState extends ConsumerState<HomeScreen> with RouteAware {
+  late UserService userService;
+
   @override
   void initState() {
     super.initState();
+    userService = getIt<UserService>();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+    //  await _initialize();
+      await userService.initUser(ref);
+      ref.read(appbarTitleProviderState).setTitle(AppLocalizations.of(context)!.home_title);
+    });
   }
+
+/*
+  Future<void> _initialize() async {
+    final user = ref.watch(userProviderState).user;
+    if (user == null) {
+      final currentUser = await userService.getByEmail(
+        FirebaseAuth.instance.currentUser!.email!,
+      );
+      if (!mounted) return;
+      if (currentUser != null) {
+        ref.read(userProviderState).setUser(currentUser);
+      }
+    }
+  }
+  */
 
   @override
   Widget build(BuildContext context) {

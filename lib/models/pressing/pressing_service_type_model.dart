@@ -2,14 +2,12 @@ import 'package:movegui/models/model.dart';
 
 class PressingServiceTypeModel extends Model {
   final String description;
-  // final Duration? estimatedDuration;
   final String pricingType;
 
   PressingServiceTypeModel({
     required super.id,
     required super.name,
     required this.description,
-    //   this.estimatedDuration,
     required this.pricingType,
     required super.createdAt,
   });

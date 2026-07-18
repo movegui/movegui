@@ -1,26 +1,34 @@
-
 import 'package:flutter/widgets.dart';
+import 'package:movegui/models/order_model.dart';
 
-class ShoppingProvider with ChangeNotifier{
-int _itemCount = 0;
+class ShoppingProvider with ChangeNotifier {
+  int _itemCount = 0;
+  List<OrderModel> _orders = [];
 
-int get itemCount => _itemCount; 
+  int get itemCount => _itemCount;
+  List<OrderModel> get orders => _orders;
 
-void addItem(){
-  _itemCount++;
-  notifyListeners();
-}
 
-  void removeItem() {
+  void addItem(OrderModel order) {
+    _itemCount++;
+    _orders.add(order);
+    notifyListeners();
+  }
+
+  void removeItem(int index) {
     if (_itemCount > 0) {
       _itemCount--;
+      _orders.removeAt(index);
       notifyListeners();
     }
   }
 
   void clearCart() {
     _itemCount = 0;
+    _orders.clear();
     notifyListeners();
   }
-
+  int length(){
+    return _orders.length;
+  }
 }

@@ -1,11 +1,16 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/app_constants.dart';
+import 'package:movegui/consts/route_contants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/button_item.dart';
+import 'package:movegui/models/order_model.dart';
 import 'package:movegui/models/pressing/pressing_model.dart';
+import 'package:movegui/models/pressing/pressing_order_item.dart';
+import 'package:movegui/models/pressing/pressing_order_model.dart';
 import 'package:movegui/models/pressing/pressing_service_model.dart';
 import 'package:movegui/models/pressing/pressing_service_type_model.dart';
 import 'package:movegui/providers/providers.dart';
@@ -18,6 +23,7 @@ import 'package:movegui/widgets/error/message_widget.dart';
 import 'package:movegui/widgets/pressing/pressing_service_list_widget.dart';
 import 'package:movegui/widgets/pressing/pressing_service_type_picker.dart';
 import 'package:movegui/widgets/price_total_widget.dart';
+import 'package:uuid/uuid.dart';
 
 class PressingDetailScreen extends ConsumerStatefulWidget {
   final String pressingId;
@@ -49,37 +55,128 @@ class PressingDetailScreenState extends ConsumerState<PressingDetailScreen> {
   void initState() {
     pressingService = getIt<PressingService>();
     pricingService = getIt<PricingService>();
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          ref.read(appbarTitleProviderState).setTitle(AppLocalizations.of(context)!.pressing_detail_title);
+         await initModel();
+      await RemoteConfigService.init();
+    });
     super.initState();
   }
 
+/*
   @override
   Future<void> didChangeDependencies() async {
     super.didChangeDependencies();
     if (!_initialized) {
+
       _initialized = true;
       await initModel();
       await RemoteConfigService.init();
     }
   }
+  */
 
-  Future<void> createOrder(BuildContext context, ButtonItem item) async {}
-  Future<void> addToCart(BuildContext context, ButtonItem item) async {}
+  Future<void> createOrder(BuildContext context, ButtonItem item) async {
+    final shopProvider = ref.watch(shoppingProviderState);
+    final userProvider = ref.watch(userProviderState);
+    List<PressingOrderItem> items = await getOrderItems();
+    final order = await PressingOrderModel(
+      id: Uuid().v4(),
+      name: '${userProvider.user!}-${model!.name}',
+      createdAt: DateTime.now(),
+      user: userProvider.user!,
+      total: totlaServices,
+      items: items,
+      store: model!,
+      deliveryDate: null,
+      pickupDate: null,
+      pickupAdress: null,
+      deliveryAdress: null,
+      status: OrderStatus.Ordered.name,
+       currency: pressingService.getCureency(),
+    );
+    shopProvider.addItem(order);
+    if (!mounted) return;
+    context.push(
+      '${RouteConstants.HOME_ROUTE}${RouteConstants.PRESSING_ROUTE}${RouteConstants.PRESSING_DETAILS_ROUTE}/${model!.id}${RouteConstants.ORDER_DETAIL_ROUTE}/${order.id}',
+    );
+    // await initServices();
+  }
+
+  Future<void> addToCart(BuildContext context, ButtonItem item) async {
+    final shopProvider = ref.watch(shoppingProviderState);
+    final userProvider = ref.watch(userProviderState);
+    List<PressingOrderItem> items = await getOrderItems();
+    print('the items: ${items.length}');
+    final currency = pressingService.getCureency();
+    final order = await PressingOrderModel(
+      id: '',
+      name: Uuid().v4(),
+      createdAt: DateTime.now(),
+      user: userProvider.user!,
+      total: totlaServices,
+      items: items,
+      store: model!,
+      deliveryDate: null,
+      pickupDate: null,
+      pickupAdress: null,
+      deliveryAdress: null,
+      status: OrderStatus.Ordered.name, 
+      currency: 'GNF',
+    );
+    shopProvider.addItem(order);
+    await initServices();
+  }
+
+  Future<void> initServices() async {
+    serviceTypes = services.map((e) => e.serviceType).toSet();
+
+    for (final type in serviceTypes) {
+      final servicesForType = getServicesByType(type);
+
+      orderedQtys[type.id] = List<int>.filled(servicesForType.length, 0);
+      orderedServices[type.id] = [...servicesForType];
+    }
+
+    totlaServices = 0;
+    totalPerService = 0;
+    setState(() {});
+  }
+
+  Future<List<PressingOrderItem>> getOrderItems() async {
+    List<PressingOrderItem> orderItems = [];
+    for (final entry in orderedServices.entries) {
+      final key = entry.key;
+      final items = entry.value;
+
+      for (int i = 0; i < items.length; i++) {
+        if (orderedQtys[items[i].serviceType.id]![i] > 0) {
+          final orderItem = PressingOrderItem(
+            id: Uuid().v4(),
+            name: '$key-${items[i].name}',
+            createdAt: DateTime.now(),
+            service: items[i],
+            qty: orderedQtys[items[i].serviceType.id]![i],
+            total:
+                orderedQtys[items[i].serviceType.id]![i] * items[i].basePrice!,
+          );
+          orderItems.add(orderItem);
+        }
+      }
+    }
+    return orderItems;
+  }
+
   Future<void> callMovegui(BuildContext context, ButtonItem item) async {
     pressingService.callNumber(model!.phone);
   }
 
-  Future<void> getActuelServices(
+  List<PressingServiceModel> getServicesByType(
     PressingServiceTypeModel? selectedServiceType,
-  ) async {
-    if (mounted) {
-      selectedServices.clear();
-      selectedServices.addAll(
-        services
-            .where((service) => service.serviceType == selectedServiceType)
-            .toList(),
-      );
-      setState(() {});
-    }
+  ) {
+    return services
+        .where((service) => service.serviceType.id == selectedServiceType?.id)
+        .toList();
   }
 
   Future<void> initModel() async {
@@ -90,23 +187,20 @@ class PressingDetailScreenState extends ConsumerState<PressingDetailScreen> {
       store.setStore(model!);
     }
 
-    if (mounted) {
-      services = await pressingService.getAllServices(model!.id);
-      if (services.isNotEmpty) {
-        serviceType = services[0].serviceType;
-      }
+    if (!mounted) return;
 
-      for (PressingServiceModel serviceModel in services) {
-        serviceTypes.add(serviceModel.serviceType);
-        await getActuelServices(serviceModel.serviceType);
-        orderedQtys[serviceModel.serviceType.id] = List<int>.filled(
-          selectedServices.length,
-          0,
-        );
-        orderedServices[serviceModel.serviceType.id] = [];
-      }
-      setState(() {});
+    services = await pressingService.getAllServices(model!.id);
+    await initServices();
+
+    if (services.isNotEmpty) {
+      serviceType = services.first.serviceType;
+      selectedServices = getServicesByType(serviceType);
+      totalPerService = await pressingService.getTotal(
+        selectedServices,
+        orderedQtys[serviceType!.id]!,
+      );
     }
+    setState(() {});
   }
 
   Future<double> CalculatePrice(
@@ -187,19 +281,18 @@ class PressingDetailScreenState extends ConsumerState<PressingDetailScreen> {
                       onServiceTypeChanged: (
                         PressingServiceTypeModel? value,
                       ) async {
+                        if (value == null) return;
+
+                        final newSelectedServices = getServicesByType(value);
+                        final newTotal = await pressingService.getTotal(
+                          newSelectedServices,
+                          orderedQtys[value.id]!,
+                        );
+
                         setState(() {
                           serviceType = value;
-                          selectedServices.clear();
-                        });
-                        await getActuelServices(value);
-                        final totalSelectedService = await pressingService
-                            .getTotal(
-                              selectedServices,
-                              orderedQtys[serviceType!.id]!,
-                            );
-                        setState(() {
-                          orderedServices[serviceType!.id] = selectedServices;
-                          totalPerService = totalSelectedService;
+                          selectedServices = newSelectedServices;
+                          totalPerService = newTotal;
                         });
                       },
                       model: model!,
@@ -209,12 +302,11 @@ class PressingDetailScreenState extends ConsumerState<PressingDetailScreen> {
                   serviceType != null
                       ? PressingServiceListWidget(
                         key: UniqueKey(),
-                        actuelServices: selectedServices,
+                        actuelServices: [...selectedServices],
                         serviceType: serviceType!,
                         addQuantities: (int index) async {
                           setState(() {
                             ++orderedQtys[serviceType!.id]![index];
-
                             totalPerService +=
                                 selectedServices[index].basePrice!;
                             totlaServices += selectedServices[index].basePrice!;
@@ -283,10 +375,10 @@ class PressingDetailScreenState extends ConsumerState<PressingDetailScreen> {
                                 }
                               },
                               buttonItem: ButtonItem(
-                                AppLocalizations.of(context)!.btn_order_label,
-                                AppLocalizations.of(context)!.tooltip_btn_order,
-                                totlaServices > 0 ? true : false,
-                                routeName: '',
+                               title:  AppLocalizations.of(context)!.btn_order_label,
+                                tooltipText:  AppLocalizations.of(context)!.tooltip_btn_order,
+                                enabled:  totlaServices > 0 ? true : false,
+                                routeName: RouteConstants.ORDER_DETAIL_ROUTE,
                               ),
                               padding: 12,
                               fontSize: 14,
@@ -297,14 +389,14 @@ class PressingDetailScreenState extends ConsumerState<PressingDetailScreen> {
                           Expanded(
                             child: ValidationButton(
                               fn: (context, item) async {
-                                await callMovegui(context, item);
+                                await addToCart(context, item);
                               },
                               buttonItem: ButtonItem(
-                                AppLocalizations.of(context)!.btn_add_cart,
-                                AppLocalizations.of(
+                               title:  AppLocalizations.of(context)!.btn_add_cart,
+                               tooltipText:  AppLocalizations.of(
                                   context,
                                 )!.tooltip_btn_add_cart,
-                                totlaServices > 0 ? true : false,
+                               enabled:  totlaServices > 0 ? true : false,
                                 routeName: '',
                               ),
                               padding: 12,

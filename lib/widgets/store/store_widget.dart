@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movegui/models/store_model.dart';
+import 'package:movegui/models/store/store_model.dart';
 import 'package:movegui/widgets/store/store_item_widget.dart';
 
 class StoreWidget extends StatelessWidget {

@@ -481,6 +481,14 @@ class AppConstants {
         return '';
     }
   }
+
+    static String getGender(String value, BuildContext context) {
+      switch(value){
+        case 'm': return AppLocalizations.of(context)!.gender_masculin;
+        case 'f': return AppLocalizations.of(context)!.gender_female;
+        default: return '';
+      }
+  }
 }
 
 abstract class StoreConstants extends ImageConstatnt {

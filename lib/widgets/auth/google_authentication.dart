@@ -78,9 +78,10 @@ class GoogleAuthenticationState extends State<GoogleAuthentication> {
         ? const CircularProgressIndicator()
         : ButtonWidget(
           buttonItem: ButtonItem(
-            AppLocalizations.of(context)!.label_login_google,
-            AppLocalizations.of(context)!.tooltip_sign_in_with_google,
-            false,
+            title: AppLocalizations.of(context)!.label_login_google,
+            tooltipText:
+                AppLocalizations.of(context)!.tooltip_sign_in_with_google,
+            enabled: false,
             routeName: RouteConstants.HOME_ROUTE,
           ),
           onPressed: (context, buttonItem) async {

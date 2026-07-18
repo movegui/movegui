@@ -3,7 +3,7 @@ import 'package:movegui/models/widget_item.dart';
 
 class ButtonItem extends WidgetItem{
   final String tooltipText;
-  final double fontSize;
+   double fontSize;
   final bool enabled;
-  ButtonItem(super.title, this.tooltipText, this.enabled, {this.fontSize=WidgetConstants.buttonFonsize, required super.routeName});
+  ButtonItem({ required super.title, required  this.tooltipText, required this.enabled, this.fontSize=WidgetConstants.buttonFonsize, required super.routeName});
 }

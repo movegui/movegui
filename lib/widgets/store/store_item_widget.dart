@@ -6,7 +6,7 @@ import 'package:movegui/consts/app_constants.dart';
 import 'package:movegui/consts/route_contants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/button_item.dart';
-import 'package:movegui/models/store_model.dart';
+import 'package:movegui/models/store/store_model.dart';
 import 'package:movegui/providers/providers.dart';
 import 'package:movegui/screens/restos/resto_category_screnn.dart';
 import 'package:movegui/widgets/auth/validation_button.dart';
@@ -393,11 +393,13 @@ class StoreItemWidget extends ConsumerWidget {
                       _onPressedImage(context, ref, category, model.name);
                     },
                     buttonItem: ButtonItem(
-                      open
-                          ? AppLocalizations.of(context)!.order_now
-                          : AppLocalizations.of(context)!.order_after,
-                      AppLocalizations.of(context)!.tooltip_btn_order,
-                      true,
+                      title:
+                          open
+                              ? AppLocalizations.of(context)!.order_now
+                              : AppLocalizations.of(context)!.order_after,
+                      tooltipText:
+                          AppLocalizations.of(context)!.tooltip_btn_order,
+                      enabled: true,
                       routeName: RouteConstants.PRESSING_DETAILS_ROUTE,
                     ),
                     icon: Icons.shopping_cart,

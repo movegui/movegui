@@ -78,9 +78,10 @@ class FacebookAuthenticationState extends State<FacebookAuthentication> {
         ? const CircularProgressIndicator()
         : ButtonWidget(
           buttonItem: ButtonItem(
-            AppLocalizations.of(context)!.label_login_facebook,
-            AppLocalizations.of(context)!.tooltip_sign_in_with_facebook,
-            false,
+            title: AppLocalizations.of(context)!.label_login_facebook,
+            tooltipText:
+                AppLocalizations.of(context)!.tooltip_sign_in_with_facebook,
+            enabled: false,
             routeName: RouteConstants.HOME_ROUTE,
           ),
           onPressed: (context, buttonItem) async {
@@ -94,24 +95,6 @@ class FacebookAuthenticationState extends State<FacebookAuthentication> {
         );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*
 class FacebookAuthentication extends StatelessWidget {

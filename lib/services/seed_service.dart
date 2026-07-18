@@ -38,7 +38,7 @@ class SeedService {
       geoCordinates: GeoCordinatesModel(
         longitude: faker.geo.longitude(),
         latitude: faker.geo.latitude(),
-      ),
+      ), adressType: 'h',
     ),
     staff: [
       UserModel(
@@ -71,7 +71,7 @@ class SeedService {
               geoCordinates: GeoCordinatesModel(
                 longitude: faker.geo.longitude(),
                 latitude: faker.geo.latitude(),
-              ),
+              ), adressType: 'h',
             ),
           ],
         ),
@@ -91,17 +91,24 @@ class SeedService {
       id: Uuid().v4(),
       name: faker.company.name(),
       createdAt: DateTime.now(),
-    ), rating: 0.0, reviewCount: 0,
+    ),
+    rating: 0.0,
+    reviewCount: 0,
   );
 
   Future<PressingServiceModel> getGeneratedPressingService() async =>
       PressingServiceModel(
         id: Uuid().v4(),
-        article: PressingArticleModel(
+        product: PressingArticleModel(
           id: Uuid().v4(),
           name: faker.lorem.word(),
-          iconUrl: 'iconUrl',
+          imageUrl: '',
           createdAt: DateTime.now(),
+          price: faker.currency.random.decimal(),
+          supplier: null,
+          category: '',
+          isAvailable: true,
+          currency: '',
         ),
         serviceType: PressingServiceTypeModel(
           id: Uuid().v4(),
@@ -118,30 +125,45 @@ class SeedService {
         createdAt: DateTime.now(),
       );
 
-      Future<PersonModel> getGeneratedPerson() async => PersonModel(
-          id: Uuid().v4(),
-          name: faker.person.name(),
-          createdAt: DateTime.now(),
-          firstName: faker.person.firstName(),
-          lastName: faker.person.lastName(),
-          profileImageUrl: faker.image.toString(),
-          email: faker.internet.email(),
-          phone: faker.phoneNumber.de(),
-          gender: 'm',
-          birthDate: faker.date.dateTime(),
-          addresses: [
-            AdressModel(
-              address: faker.address.streetName(),
-              id: Uuid().v4(),
-              name: faker.address.streetAddress(),
-              createdAt: DateTime.now(),
-              district: faker.address.city(),
-              minucipality: faker.address.city(),
-              geoCordinates: GeoCordinatesModel(
-                longitude: faker.geo.longitude(),
-                latitude: faker.geo.latitude(),
-              ),
-            ),
-          ],
-        );
+  Future<PersonModel> getGeneratedPerson() async => PersonModel(
+    id: Uuid().v4(),
+    name: faker.person.name(),
+    createdAt: DateTime.now(),
+    firstName: faker.person.firstName(),
+    lastName: faker.person.lastName(),
+    profileImageUrl: faker.image.toString(),
+    email: faker.internet.email(),
+    phone: faker.phoneNumber.de(),
+    gender: 'm',
+    birthDate: faker.date.dateTime(),
+    addresses: [
+      AdressModel(
+        address: faker.address.streetName(),
+        id: Uuid().v4(),
+        name: faker.address.streetAddress(),
+        createdAt: DateTime.now(),
+        district: faker.address.city(),
+        minucipality: faker.address.city(),
+        geoCordinates: GeoCordinatesModel(
+          longitude: faker.geo.longitude(),
+          latitude: faker.geo.latitude(),
+        ),
+        adressType: 'h',
+      ),
+    ],
+  );
+
+  Future<AdressModel> getgeneratedAdress() async => AdressModel(
+    address: faker.address.streetName(),
+    id: Uuid().v4(),
+    name: faker.address.streetAddress(),
+    createdAt: DateTime.now(),
+    district: faker.address.city(),
+    minucipality: 'di',
+    geoCordinates: GeoCordinatesModel(
+      longitude: faker.geo.longitude(),
+      latitude: faker.geo.latitude(),
+    ),
+    adressType: 'h',
+  );
 }

@@ -139,9 +139,9 @@ class LoginPhoneNumberPageState extends State<LoginPhoneNumberPage> {
                   child: ValidationButton(
                     fn: _loginFct,
                     buttonItem: ButtonItem(
-                      AppLocalizations.of(context)!.label_login,
-                      AppLocalizations.of(context)!.tooltip_sign_in,
-                      true,
+                     title:  AppLocalizations.of(context)!.label_login,
+                     tooltipText:   AppLocalizations.of(context)!.tooltip_sign_in,
+                     enabled:  true,
                       routeName: RouteConstants.OTP_SCREEN_ROUTE,
                     ),
                     icon: IconlyLight.send,

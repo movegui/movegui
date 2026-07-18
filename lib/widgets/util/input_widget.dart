@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/widget_constants.dart';
 
@@ -12,8 +13,14 @@ class InputWidget extends StatelessWidget {
   final String? Function(String?)? validator;
   final double? fontSize;
   final String? fontFamily;
-  final Color? textColor;
+  // final Color? textColor;
   final FontWeight? fontweight;
+  final bool? isFullBorder;
+  final String? labelText;
+  final ValueChanged<String>? onChange;
+  final List<TextInputFormatter>? inputFormatters;
+  final bool? readOnly;
+  final int? maxLines;
 
   const InputWidget({
     super.key,
@@ -26,8 +33,14 @@ class InputWidget extends StatelessWidget {
     this.validator,
     this.fontSize = 14,
     this.fontFamily,
-    this.textColor = AppColors.textColor,
+    //   this.textColor = AppColors.textColor,
     this.fontweight = FontWeight.normal,
+    this.isFullBorder = false,
+    this.labelText = '',
+    required this.onChange,
+    this.inputFormatters,
+    this.readOnly = false,
+    this.maxLines = 1,
   });
 
   @override
@@ -39,17 +52,68 @@ class InputWidget extends StatelessWidget {
       ),
       child: TextFormField(
         controller: controller,
+        readOnly: readOnly ?? false,
         focusNode: focusNode,
+        maxLines: maxLines,
         textInputAction: TextInputAction.next,
         keyboardType: textInputType,
-        decoration: InputDecoration(
-          hintText: hinterText,
-          prefixIcon: Icon(icon, color: textColor),
-        ),
+        decoration:
+            isFullBorder == true
+                ? InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppColors.selectionColor,
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  prefixIcon: Icon(icon),
+                  labelText: labelText!.isEmpty ? hinterText : labelText,
+                  labelStyle: TextStyle(),
+                  errorStyle: TextStyle(
+                    color: AppColors.error,
+                  ), // change validator color
+                  errorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: AppColors.error),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: AppColors.error, width: 2),
+                  ),
+                  hintText: hinterText,
+                  hintStyle: TextStyle(color: AppColors.placeHolderText),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                )
+                : InputDecoration(
+                  hintText: hinterText,
+                  prefixIcon: Icon(icon),
+                  hintStyle: TextStyle(color: AppColors.placeHolderText),
+
+                  // Only show bottom border
+                  border: UnderlineInputBorder(
+                    borderSide: BorderSide(width: 1),
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(width: 1),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppColors.selectionColor,
+                      width: 2,
+                    ),
+                  ),
+                ),
+        onChanged: onChange,
+        inputFormatters: inputFormatters,
         style: TextStyle(
           fontSize: fontSize,
           fontFamily: fontFamily,
-          color: textColor,
           fontWeight: fontweight ?? FontWeight.normal,
         ),
         onFieldSubmitted: (value) {

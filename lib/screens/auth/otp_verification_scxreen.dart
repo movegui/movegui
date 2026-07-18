@@ -14,7 +14,6 @@ import 'package:movegui/services/user_service.dart';
 import 'package:movegui/widgets/auth/validation_button.dart';
 import 'package:pinput/pinput.dart';
 
-
 class OtpVerificationScreen extends StatefulWidget {
   final String verificationId;
   final UserModel currentUser;
@@ -71,10 +70,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
         widget.currentUser.username ?? '',
       );
       if (savedUser != null) {
-        if (savedUser.isVerified == false){
-            savedUser.isVerified = true;
-            await userService.update(savedUser);
-        } 
+        if (savedUser.isVerified == false) {
+          savedUser.isVerified = true;
+          await userService.update(savedUser);
+        }
         context.push(item.routeName!, extra: savedUser);
       } else {
         context.push(item.routeName!, extra: widget.currentUser);
@@ -153,9 +152,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   child: ValidationButton(
                     fn: isLoading ? (context, item) async {} : verifyOtp,
                     buttonItem: ButtonItem(
-                      AppLocalizations.of(context)!.btn_send_label,
-                      AppLocalizations.of(context)!.tooltip_btn_send,
-                      true,
+                      title: AppLocalizations.of(context)!.btn_send_label,
+                      tooltipText:
+                          AppLocalizations.of(context)!.tooltip_btn_send,
+                      enabled: true,
                       routeName: RouteConstants.PROFILE_ROUTE,
                     ),
                   ),

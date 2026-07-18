@@ -4,11 +4,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:movegui/consts/app_colors.dart';
+import 'package:movegui/consts/route_contants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/person_model.dart';
 import 'package:movegui/models/user_model.dart';
+import 'package:movegui/providers/providers.dart';
 import 'package:movegui/screens/auth/otp_verification_scxreen.dart';
 import 'package:movegui/services/interfaces/i_user_service.dart';
 import 'package:movegui/services/model_service.dart';
@@ -105,15 +110,17 @@ class UserService extends ModelService<UserModel> implements IUserService {
     return null;
   }
 
-  static const String _googleSignInClientId =
-      String.fromEnvironment('GOOGLE_SIGN_IN_CLIENT_ID');
+  static const String _googleSignInClientId = String.fromEnvironment(
+    'GOOGLE_SIGN_IN_CLIENT_ID',
+  );
 
   @override
   Future<UserModel?> registerWithGoogle(BuildContext context) async {
     try {
-      final GoogleSignIn googleSignIn = kIsWeb && _googleSignInClientId.isNotEmpty
-          ? GoogleSignIn(clientId: _googleSignInClientId)
-          : GoogleSignIn();
+      final GoogleSignIn googleSignIn =
+          kIsWeb && _googleSignInClientId.isNotEmpty
+              ? GoogleSignIn(clientId: _googleSignInClientId)
+              : GoogleSignIn();
 
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
       if (googleUser == null) {
@@ -144,7 +151,9 @@ class UserService extends ModelService<UserModel> implements IUserService {
       }
 
       // Create new user if doesn't exist
-      final UserModel newUser = await initializeUserWithAuthenticateUser(firebaseUser);
+      final UserModel newUser = await initializeUserWithAuthenticateUser(
+        firebaseUser,
+      );
       /*
        UserModel(
         updatedAt: DateTime.now(),
@@ -183,7 +192,6 @@ class UserService extends ModelService<UserModel> implements IUserService {
         FlushbarPosition.TOP,
       );
     } catch (e) {
-      print(e);
       MessageWidget.errorMessage(
         context,
         AppLocalizations.of(context)!.error_register_with_phone_title,
@@ -196,7 +204,7 @@ class UserService extends ModelService<UserModel> implements IUserService {
   }
 
   Future<UserModel?> registerWithFacebook(BuildContext context) async {
-final LoginResult result = await FacebookAuth.instance.login();
+    final LoginResult result = await FacebookAuth.instance.login();
 
     try {
       final LoginResult result = await FacebookAuth.instance.login(
@@ -235,8 +243,10 @@ final LoginResult result = await FacebookAuth.instance.login();
       }
 
       // Create new user if doesn't exist
-      final UserModel newUser = await initializeUserWithAuthenticateUser(firebaseUser);
-      
+      final UserModel newUser = await initializeUserWithAuthenticateUser(
+        firebaseUser,
+      );
+
       /*
        UserModel(
         updatedAt: DateTime.now(),
@@ -285,7 +295,6 @@ final LoginResult result = await FacebookAuth.instance.login();
       );
     }
     return null;
-    
   }
 
   @override
@@ -466,9 +475,181 @@ final LoginResult result = await FacebookAuth.instance.login();
       ),
     );
   }
-  
+
   @override
   Future<UserModel> getModelById(String id) {
     return getById(id);
+  }
+
+  Future<void> initUser(WidgetRef ref) async {
+    final user = ref.watch(userProviderState).user;
+    if (user == null) {
+      final currentUser = await getByEmail(
+        FirebaseAuth.instance.currentUser!.email!,
+      );
+      if (currentUser != null) {
+        ref.read(userProviderState).setUser(currentUser);
+      }
+    }
+  }
+
+  /*
+  @override
+  Future<AdressModel> addAdress(String id,  AdressModel adress) async  {
+     await FirebaseFirestore.instance
+        .collection(getCollectionName())
+        .doc(id)
+        .collection(AdressModel.getCollectionName())
+        .doc(adress.id)
+        .set(adress.toJson());
+
+        return adress;
+  }
+  */
+
+  Future<void> checkLoginState(String message) async {
+    final currentUser = await getByEmail(
+      FirebaseAuth.instance.currentUser?.email! ?? '',
+    );
+    if (currentUser == null) {
+      await signOut();
+      Fluttertoast.showToast(
+        msg:
+            message.isNotEmpty
+                ? message
+                : 'User not found in the database, please check your email and password',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 5,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      return;
+    }
+  }
+
+  @override
+  Future<UserModel?> updateUsername(
+    String value,
+    UserModel? currentUser,
+  ) async {
+    if (!value.isEmpty && currentUser != null) {
+      UserModel updatedUser = UserModel(
+        updatedAt: DateTime.now(),
+        id: currentUser.id,
+        name: value,
+        createdAt: currentUser.createdAt,
+        username: currentUser.username,
+        personModel: currentUser.personModel,
+        isVerified: currentUser.isVerified,
+        role: '',
+      );
+      await update(updatedUser);
+      return updatedUser;
+    }
+    return null;
+  }
+
+  @override
+  Future<UserModel?> updateUserEmail(
+    String value,
+    UserModel? currentUser,
+  ) async {
+    if (!value.isEmpty && currentUser != null) {
+      UserModel updatedUser = UserModel(
+        updatedAt: DateTime.now(),
+        id: currentUser.id,
+        name: currentUser.name,
+        createdAt: currentUser.createdAt,
+        username: currentUser.username,
+        personModel: PersonModel(
+          id: currentUser.personModel?.id ?? '',
+          name: currentUser.personModel?.name ?? '',
+          createdAt: currentUser.personModel?.createdAt ?? DateTime.now(),
+          firstName: currentUser.personModel?.firstName ?? '',
+          lastName: currentUser.personModel?.lastName ?? '',
+          profileImageUrl: currentUser.personModel?.profileImageUrl,
+          email: value,
+          phone: currentUser.personModel?.phone,
+          gender: currentUser.personModel?.gender ?? '',
+          birthDate: currentUser.personModel?.birthDate,
+          addresses: currentUser.personModel?.addresses ?? [],
+        ),
+        isVerified: currentUser.isVerified,
+        role: '',
+      );
+      await update(updatedUser);
+      return updatedUser;
+    }
+    return null;
+  }
+
+  @override
+  Future<UserModel?> updateUserPhone(
+    String value,
+    UserModel? currentUser,
+  ) async {
+    if (!value.isEmpty && currentUser != null) {
+      UserModel updatedUser = UserModel(
+        updatedAt: DateTime.now(),
+        id: currentUser.id,
+        name: currentUser.name,
+        createdAt: currentUser.createdAt,
+        username: currentUser.username,
+        personModel: PersonModel(
+          id: currentUser.personModel?.id ?? '',
+          name: currentUser.personModel?.name ?? '',
+          createdAt: currentUser.personModel?.createdAt ?? DateTime.now(),
+          firstName: currentUser.personModel?.firstName ?? '',
+          lastName: currentUser.personModel?.lastName ?? '',
+          profileImageUrl: currentUser.personModel?.profileImageUrl,
+          email: currentUser.personModel?.email ?? '',
+          phone: value,
+          gender: currentUser.personModel?.gender ?? '',
+          birthDate: currentUser.personModel?.birthDate,
+          addresses: currentUser.personModel?.addresses ?? [],
+        ),
+        isVerified: currentUser.isVerified,
+        role: '',
+      );
+      await update(updatedUser);
+      return updatedUser;
+    }
+    return null;
+  }
+
+  Future<void> deleteAccount(BuildContext context) async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+
+    final result = await showDialog<bool>(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: Text(AppLocalizations.of(context)!.compte_delete_title),
+            content: Text(AppLocalizations.of(context)!.compte_delete_message),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: Text(AppLocalizations.of(context)!.btn_cancel),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                onPressed: () => Navigator.pop(context, true),
+                child: Text(AppLocalizations.of(context)!.btn_delete),
+              ),
+            ],
+          ),
+    );
+    if (result != true) return;
+    try {
+      await FirebaseFirestore.instance.collection('users').doc(uid).delete();
+      await FirebaseAuth.instance.currentUser?.delete();
+      if (context.mounted) {
+        context.go(RouteConstants.LOGIN_ROUTE);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 }

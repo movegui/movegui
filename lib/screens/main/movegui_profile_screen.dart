@@ -48,19 +48,11 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
   late bool isEditing;
 
   Future<void> onNameUpdate(String? value) async {
-    nameController.text = value!;
-    if (!value.isEmpty && currentUser != null) {
-      UserModel updatedUser = UserModel(
-        updatedAt: DateTime.now(),
-        id: currentUser!.id,
-        name: nameController.text,
-        createdAt: currentUser!.createdAt,
-        username: currentUser!.username,
-        personModel: currentUser!.personModel,
-        isVerified: currentUser!.isVerified, 
-        role: '',
-      );
-      await userService.update(updatedUser);
+    final updatedUser = await userService.updateUsername(
+      value ?? '',
+      currentUser!,
+    );
+    if (updatedUser != null) {
       setState(() {
         currentUser = updatedUser;
         Fluttertoast.showToast(
@@ -149,7 +141,8 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
               gender: currentUser!.personModel!.gender,
               birthDate: currentUser!.personModel!.birthDate,
               addresses: currentUser!.personModel!.addresses,
-            ), role: '',
+            ),
+            role: '',
           );
           if (isNew)
             await userService.addModel(updatedUser);
@@ -185,19 +178,21 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
     isEditing = false;
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await userService.checkLoginState(
+        AppLocalizations.of(context)!.error_login_user_not_found,
+      );
       await _initialize();
     });
   }
 
   Future<void> _initialize() async {
-  //  loginMode = context.read<LoginModProvider>().loginMode;
     if (widget.currentUser != null) currentUser = widget.currentUser;
 
     if (auth?.currentUser != null) {
       if (auth?.currentUser?.email != null) {
         if (loginMode != AppConstants.LONGIN_EMAIL_MODE) {
           loginMode = AppConstants.LONGIN_EMAIL_MODE;
-     //     context.read<LoginModProvider>().setLoginMod(loginMode);
+          //     context.read<LoginModProvider>().setLoginMod(loginMode);
         }
         setState(() {
           WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -211,7 +206,7 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
       } else if (auth?.currentUser?.phoneNumber != null) {
         if (loginMode != AppConstants.LOGIN_PHONE_MODE) {
           loginMode = AppConstants.LOGIN_PHONE_MODE;
-      //    context.read<LoginModProvider>().setLoginMod(loginMode);
+          //    context.read<LoginModProvider>().setLoginMod(loginMode);
         }
         setState(() {
           WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -285,12 +280,17 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
                 gender: '',
                 birthDate: null,
                 addresses: [],
-              ), role: '',
+              ),
+              role: '',
             );
           });
         }
       }
     }
+  }
+
+  void navigateToRoute(String route) {
+    context.push(route);
   }
 
   void chekLoginMode() {
@@ -359,8 +359,7 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
           : ProfileMenuTitle(
             icon: Icons.login,
             title: AppLocalizations.of(context)!.profile_menu_login,
-            onTap:
-                () => context.push(RouteConstants.LOGIN_ROUTE),
+            onTap: () => context.push(RouteConstants.LOGIN_ROUTE),
             enabled: true,
           ),
 
@@ -399,11 +398,15 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
 
   Widget _buildSecondSection() {
     return _sectionCard([
+      //  Divider(height: 3, indent: 56, color: Colors.grey.shade300),
       ProfileMenuTitle(
         icon: Icons.key,
         title: AppLocalizations.of(context)!.profile_menu_account,
-        onTap: () => notImplemented(),
-        enabled: false,
+        onTap:
+            () => navigateToRoute(
+              '${RouteConstants.PROFILE_ROUTE}${RouteConstants.ACCOUNT_ROUTE}/${currentUser?.id}',
+            ),
+        enabled: true,
       ),
       ProfileMenuTitle(
         icon: Icons.lock_outline,

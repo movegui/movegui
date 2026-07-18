@@ -22,4 +22,5 @@ class RouteConstants {
   static const DELIVERY_DETAIL_ROUTE = '/deliveryDetail';
   static const NOTIFICATIONS_ROUTE = '/notifications';
   static const MOVEGUI_ROUTE = '/movegui';
+  static const ACCOUNT_ROUTE = '/account';
 }

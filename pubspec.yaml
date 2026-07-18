@@ -120,7 +120,7 @@ flutter:
     - assets/images/categories/
     - assets/images/resto/
     - assets/images/pressing/
-    - assets/config/footer_info.json
+    - assets/config/info.json
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

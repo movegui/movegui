@@ -27,7 +27,7 @@ class InputNameWidget extends StatelessWidget {
       hinterText: hinterText!,
       validator: (value) {
         return MyValidators.textNameValidator(value);
-      },
+      }, onChange: (String value) {  },
     );
   }
 }

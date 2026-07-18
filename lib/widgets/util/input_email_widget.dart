@@ -37,8 +37,8 @@ class InputEmailWidget extends StatelessWidget {
       },
       fontSize: fontSize,
       fontFamily: fontFamily,
-      textColor: textColor,
       fontweight: fontweight,
+      onChange: (String value) {},
     );
   }
 }

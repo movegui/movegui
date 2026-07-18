@@ -15,7 +15,9 @@ import 'package:movegui/screens/main/home_screen.dart';
 import 'package:movegui/screens/main/order_screen.dart';
 import 'package:movegui/screens/main/delivery_screen.dart';
 import 'package:movegui/screens/modules/pressing_screen.dart';
+import 'package:movegui/screens/order/pressing_order_details_screen.dart';
 import 'package:movegui/screens/pressing/pressing_detail_screen.dart';
+import 'package:movegui/screens/profile/account_screen.dart';
 import 'package:movegui/screens/search_screen.dart';
 import 'package:movegui/screens/shopping_cart_screen.dart';
 import 'package:movegui/widgets/app/appbar.dart';
@@ -78,10 +80,12 @@ class AppRouter {
           builder: (context, state, child) {
             return Consumer(
               builder: (context, ref, _) {
-                String title = getTitle(state.uri.toString(), context, ref);
+                String title = '';
+                 title = getTitle(state.uri.toString(), context, ref);
                 if (title.isEmpty) {
                   title = getTitleFromChild(child, context, ref);
                 }
+          //      ref.read(appbarTitleProviderState).setTitle(title);
                 final int currentIndex = getIndexFromLocation(
                   state.matchedLocation,
                 );
@@ -90,8 +94,8 @@ class AppRouter {
                       Responsive.isDesktop(context)
                           ? MenuBarWeb(title: title)
                           : MoveguiAppBar(
-                            title: title,
-                            itemCount: ref.watch(shoppingProviderState).itemCount,
+                            itemCount:
+                                ref.watch(shoppingProviderState).itemCount,
                           ),
                   drawer: Responsive.isMobile(context) ? MoveGuiMenu() : null,
                   body: child,
@@ -104,7 +108,7 @@ class AppRouter {
                             onTap: (index) => context.go(routeForIndex(index)),
                           ),
                 );
-              },
+              }
             );
           },
 
@@ -117,15 +121,24 @@ class AppRouter {
                   path: RouteConstants.PRESSING_ROUTE,
                   builder:
                       (context, state) => const Center(child: PressingScreen()),
-                  routes:[
+                  routes: [
                     GoRoute(
                       path: '${RouteConstants.PRESSING_DETAILS_ROUTE}/:id',
                       builder: (context, state) {
                         final id = state.pathParameters['id']!;
                         return PressingDetailScreen(pressingId: id);
                       },
-                    )
-                  ]
+                      routes: [
+                        GoRoute(
+                          path: '${RouteConstants.ORDER_DETAIL_ROUTE}/:orderId',
+                          builder: (context, state) {
+                            final orderId = state.pathParameters['orderId']!;
+                            return PressingOrderDetailsScreen(orderId: orderId ,);
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -157,6 +170,15 @@ class AppRouter {
               builder:
                   (context, state) =>
                       const Center(child: MoveguiProfileScreen()),
+              routes: [
+                GoRoute(
+                  path: '${RouteConstants.ACCOUNT_ROUTE}/:id',
+                  builder: (context, state) {
+                    final id = state.pathParameters['id']!;
+                    return AccountScreen(id: id);
+                  },
+                ),
+              ],
             ),
           ],
         ),
@@ -169,7 +191,6 @@ class AppRouter {
     BuildContext context,
     WidgetRef ref,
   ) {
-
     if (routeName.startsWith(
       '${RouteConstants.HOME_ROUTE}${RouteConstants.PRESSING_ROUTE}',
     )) {

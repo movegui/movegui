@@ -2,7 +2,7 @@
 
 import 'package:movegui/models/adress_model.dart';
 import 'package:movegui/models/open_hours_model.dart';
-import 'package:movegui/models/store_model.dart';
+import 'package:movegui/models/store/store_model.dart';
 import 'package:movegui/models/user_model.dart';
 
 class RestaurantModel extends StoreModel {

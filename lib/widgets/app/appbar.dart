@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/route_contants.dart';
 import 'package:movegui/l10n/app_localizations.dart';
+import 'package:movegui/providers/providers.dart';
 
 
-class MoveguiAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const MoveguiAppBar({super.key, required this.title, this.itemCount});
-  final String title;
+class MoveguiAppBar extends ConsumerWidget implements PreferredSizeWidget {
+  const MoveguiAppBar({super.key, this.itemCount});
   final int? itemCount;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final title = ref.watch(appbarTitleProviderState).title;
     return AppBar(
       title: Text(title),
       titleTextStyle: TextStyle(color: AppColors.textColor, fontSize: 20),

@@ -11,9 +11,6 @@ import 'package:movegui/consts/theme_data.dart';
 import 'package:movegui/firebase_options.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/user_model.dart';
-import 'package:movegui/providers/appbar_title_provider.dart';
-import 'package:movegui/providers/login_mod_provider.dart';
-import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/providers/theme_provider.dart';
 import 'package:movegui/services/register_services.dart';
 import 'package:flutter_riverpod/legacy.dart' show ChangeNotifierProvider;
@@ -24,17 +21,8 @@ void main() async {
   await Hive.openBox<UserModel>('user_box');
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   final env = EnvDev();
-  /*
-  FirebaseUIAuth.configureProviders([
-    EmailAuthProvider(),
-
-    // ... other providers
-    
-  ]);
-  */
   initServices(env);
   await FirebaseConfig.init(env);
- // await  createSuperUser();
   runApp(ProviderScope(child: MoveguiApp(env: env)));
 }
 
@@ -47,9 +35,11 @@ class MoveguiApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     
 final themeProvider = ChangeNotifierProvider<ThemeProvider>((ref) => ThemeProvider());
+/*
 final shoppingProvider = ChangeNotifierProvider((ref) => ShoppingProvider());
 final appbarTitleProvider = ChangeNotifierProvider((ref) => AppbarTitleProvider());
 final loginModProvider = ChangeNotifierProvider((ref) => LoginModProvider());
+*/
 
     final router = ref.watch(AppRouter.routerProvider);
 

@@ -78,9 +78,9 @@ class RegisterPhonePageState extends State<RegisterPhonePage> {
                   await _registerFCT(context, item);
                 },
                 buttonItem: ButtonItem(
-                  AppLocalizations.of(context)!.btn_register_label,
-                  AppLocalizations.of(context)!.tooltip_registration,
-                  true,
+                 title:  AppLocalizations.of(context)!.btn_register_label,
+                tooltipText:  AppLocalizations.of(context)!.tooltip_registration,
+                 enabled:  true,
                   routeName: RouteConstants.REGISTER_ROUTE,
                 ),
               ),

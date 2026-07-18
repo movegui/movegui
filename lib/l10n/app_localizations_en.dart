@@ -9,6 +9,27 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get no_phone_number => 'No Phonenumber';
+
+  @override
+  String get no_email => 'No Email';
+
+  @override
+  String get status_actf => 'Active';
+
+  @override
+  String get status_non_actf => 'Inactive';
+
+  @override
+  String get commune_title => 'City';
+
+  @override
+  String get gender_masculin => 'Male';
+
+  @override
+  String get gender_female => 'Female';
+
+  @override
   String get max_delivery_time => '48h maximum';
 
   @override
@@ -51,7 +72,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get success_login_message => 'Login successful';
 
   @override
-  String get success_login_reset_password => 'Lien envoyé avec Succes';
+  String get success_login_reset_password => 'Link sent successfully';
+
+  @override
+  String get success_username_updated => 'Username Updated successfully';
 
   @override
   String get login_forget_password_txt => 'Enter your email address and we will send you a link to reset your password ';
@@ -72,6 +96,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get error_login_message => 'Login failed';
 
   @override
+  String get error_login_user_not_found => 'User not found in the database, please check your email and password';
+
+  @override
   String get error_register_with_phone_title => 'Registration Error';
 
   @override
@@ -82,6 +109,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get error_order_minimum_message => 'Please add items to proceed with your order.';
+
+  @override
+  String get error_user_not_found_title => 'User not found';
+
+  @override
+  String get error_user_not_found_message => 'The specified user does not exist.';
 
   @override
   String get label_login_facebook => 'Facebook';
@@ -108,6 +141,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get btn_add_cart => 'Add to Cart';
 
   @override
+  String get btn_cancel => 'Cancel';
+
+  @override
+  String get btn_delete => 'Delete';
+
+  @override
   String get verify_otp => 'Send Code';
 
   @override
@@ -130,6 +169,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get input_hint_adress => 'Address';
+
+  @override
+  String get input_hint_middle_name => 'Nickname';
+
+  @override
+  String get input_hint_quartier => 'District';
+
+  @override
+  String get input_hint_longitude => 'Longitude';
+
+  @override
+  String get input_hint_latitude => 'Latitude';
 
   @override
   String get movegui_info_title => 'MoveGui – Motorcycle Delivery & Transport in Guinea';
@@ -219,6 +270,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pressing_title => 'Dry Cleaning';
 
   @override
+  String get pressing_order_title => 'Dry Cleaning Order';
+
+  @override
+  String get pressing_service_title => 'Services';
+
+  @override
   String get pressing_service_washing => 'Washing';
 
   @override
@@ -286,6 +343,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pressing_service_article_price => 'Prix';
+
+  @override
+  String get pressing_detail_title => 'Dry Cleaning Detail';
 
   @override
   String get pressing_detail_text_1 => 'Please note: Price to be confirmed by text message before washing!!!';
@@ -363,7 +423,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tooltip_btn_call => 'Click here to call';
 
   @override
-  String get tooltip_btn_add_cart => 'Cliquez ici pour ajouter au panier';
+  String get tooltip_btn_add_cart => 'Click here to add to cart';
+
+  @override
+  String get tooltip_btn_add_adress => 'Click here to add new Adress';
+
+  @override
+  String get btn_add_adress => 'Add Adress';
+
+  @override
+  String get btn_update_adress => 'Update Adress';
+
+  @override
+  String get btn_update => 'Update';
 
   @override
   String get profile_menu_invite_people => 'Invite a Friend';
@@ -412,4 +484,76 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get order_after => 'Order for tomorrow';
+
+  @override
+  String get user_info => 'User Infos';
+
+  @override
+  String get address_office_title => 'Office';
+
+  @override
+  String get address_neighbor_title => 'Neighbord';
+
+  @override
+  String get address_home_title => 'Home';
+
+  @override
+  String get address_other_title => 'Other';
+
+  @override
+  String get detail_delivery_title => 'Delivery Details';
+
+  @override
+  String get detail_delivery_pickup => 'Pickup Location';
+
+  @override
+  String get detail_delivery_delivery => 'Delivery Location ';
+
+  @override
+  String get detail_delivery_pickup_date => 'Select Pickup Date';
+
+  @override
+  String get detail_delivery_delivery_date => 'Select Delivery Date';
+
+  @override
+  String get standard_address => 'Standard Address';
+
+  @override
+  String get account_title => 'Your Account';
+
+  @override
+  String get account_info => 'Account Information';
+
+  @override
+  String get account_edit_name => 'Change Profile Name';
+
+  @override
+  String get account_edit_email => 'Change Email Address';
+
+  @override
+  String get account_edit_phone => 'Change Phone Number';
+
+  @override
+  String get account_adresse => 'Manage Addresses';
+
+  @override
+  String get account_password => 'Change Password';
+
+  @override
+  String get account_edit_name_title => 'Edit Profile Name';
+
+  @override
+  String get account_edit_name_new_name => 'New Name';
+
+  @override
+  String get account_edit_email_new_email => 'New Email Address';
+
+  @override
+  String get account_edit_phone_new_phone => 'New Phone Number';
+
+  @override
+  String get compte_delete_title => 'Delete Account';
+
+  @override
+  String get compte_delete_message => 'Are you sure you want to delete your account? This action is irreversible.';
 }

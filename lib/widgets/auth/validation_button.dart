@@ -45,9 +45,7 @@ class ValidationButton extends StatelessWidget {
                     Responsive.isMobile(context)
                         ? fontSize!  * 1.5
                         : fontSize! * 2,
-              padding: padding,
-              backgroundColor: buttonItem.enabled ? backgroundColor : AppColors.placeHolderText,
-              textColor: buttonItem.enabled ? textColor : AppColors.darkScaffoldColor,
+              padding: padding,         
               selectionColor: buttonItem.enabled ? selectionColor : AppColors.placeHolderText,
               ),
             ),

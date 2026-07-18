@@ -16,6 +16,13 @@ abstract class IUserService {
   Future<UserModel?> getByPhone(String phone);
   Future<void> signOut();
   Future<UserCredential> verifyOtp(String verificationId,String smsCode);
+  Future<void> checkLoginState(String message);
+  Future<UserModel?> updateUsername(String value, UserModel? currentUser);
+  Future<UserModel?> updateUserEmail(String value, UserModel? currentUser);
+  Future<UserModel?> updateUserPhone(String value, UserModel? currentUser);
+  Future<void> deleteAccount(BuildContext context);
+
+
 
 
 }

@@ -6,8 +6,6 @@ import 'package:movegui/models/button_item.dart';
 class ButtonWidget extends StatelessWidget {
   final ButtonItem buttonItem;
   final IconData? icon;
-  final Color? backgroundColor;
-  final Color? textColor;
   final Color? selectionColor;
   final FontStyle? fontStyle;
   final TextDecoration? textDecoration;
@@ -20,12 +18,10 @@ class ButtonWidget extends StatelessWidget {
     required this.onPressed,
     required this.buttonItem,
     required this.icon,
-    this.backgroundColor = AppColors.backgroundColor,
     this.fontStyle,
     this.textDecoration,
     this.fontSize = 14.0,
     this.padding = 3.0,
-    this.textColor = AppColors.textColor,
     this.selectionColor = AppColors.selectionColor,
   });
 
@@ -37,29 +33,36 @@ class ButtonWidget extends StatelessWidget {
         shape: WidgetStateProperty.all(
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
+        /*
         backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
           if (states.contains(WidgetState.hovered)) {
-            return selectionColor!; // hover color
+            return buttonItem.enabled ? selectionColor! : AppColors.placeHolderText; // hover color
           }
           if (states.contains(WidgetState.pressed)) {
             return selectionColor!;
           }
-          return backgroundColor!;
+      //    return buttonItem.enabled ?  AppColors.backgroundColor : AppColors.placeHolderText;
         }),
+        */
+        /*
         foregroundColor: WidgetStateProperty.resolveWith<Color>((states) {
           if (states.contains(WidgetState.hovered)) {
             return textColor!;
           }
           return textColor!;
         }),
+        */
       ),
       icon:
           icon != null
-              ? Icon(icon!, color: textColor!)
+              ? Icon(icon!,)
               : const SizedBox(),
       label: Text(buttonItem.title!, style: TextStyle(fontSize: fontSize)),
       onPressed: () async {
-          await onPressed!(context, buttonItem);
+          if(buttonItem.enabled){
+             await onPressed!(context, buttonItem);
+          }
+
       },
     
     );

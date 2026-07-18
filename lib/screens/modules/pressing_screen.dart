@@ -1,33 +1,47 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movegui/consts/app_constants.dart';
+import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/pressing/pressing_model.dart';
+import 'package:movegui/providers/providers.dart';
 import 'package:movegui/responsive.dart';
 import 'package:movegui/services/pressing_service.dart';
 import 'package:movegui/services/register_services.dart';
+import 'package:movegui/services/user_service.dart';
 import 'package:movegui/widgets/store/store_widget.dart';
 
 
-class PressingScreen extends StatefulWidget {
+class PressingScreen extends ConsumerStatefulWidget {
   const PressingScreen({super.key,});
-
+  
   @override
-  State<StatefulWidget> createState() => PressingScreenState();
-}
+  ConsumerState<ConsumerStatefulWidget> createState() => PressingScreenState();
+  }
 
-class PressingScreenState extends State<PressingScreen> {
+
+
+class PressingScreenState extends ConsumerState<PressingScreen> {
   late TextEditingController searchTextController;
   List<PressingModel> pressings = [];
   late PressingService pressingService;
+  late UserService userService;
   final pressingConstants = PressingConstants();
 
   @override
   void initState() {
     searchTextController = TextEditingController();
     pressingService = getIt<PressingService>();
-    initList();
+        userService = getIt<UserService>();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      ref.read(appbarTitleProviderState).setTitle(AppLocalizations.of(context)!.pressing_title);
+      await userService.initUser(ref);
+      await  initList();
+    });
+   
     super.initState();
   }
+
 
   Future<void> initList() async {
     final allPressings = await pressingService.allModels();

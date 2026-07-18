@@ -2,14 +2,12 @@ import 'package:movegui/models/pressing/pressing_article_model.dart';
 import 'package:movegui/models/pressing/pressing_service_type_model.dart';
 import 'package:movegui/services/service_model.dart';
 
-class PressingServiceModel extends ServiceModel {
-  final PressingArticleModel article;
+class PressingServiceModel extends ServiceModel<PressingArticleModel> {
   final PressingServiceTypeModel serviceType;
-
+  
 
   PressingServiceModel({
     required super.id,
-    required this.article,
     required this.serviceType,
     required super.minPrice,
     required super.maxPrice,
@@ -18,6 +16,7 @@ class PressingServiceModel extends ServiceModel {
     super.estimatedDuration,
     required super.name,
     required super.createdAt,
+    required super.product,
   });
 
   @override
@@ -25,20 +24,15 @@ class PressingServiceModel extends ServiceModel {
     return 'services';
   }
 
-  static String collectionName(){
+  static String collectionName() {
     return 'services';
   }
 
   @override
   Map<String, dynamic> toJson() => {
-    'article': article.toJson(),
+    ...super.toJson(),
     'serviceType': serviceType.toJson(),
-    'minPrice': minPrice,
-    'maxPrice': maxPrice,
-    'basePrice': basePrice,
-    'active': active,
-    'estimatedDuration':
-        estimatedDuration != null ? estimatedDuration!.inMicroseconds : 0,
+
   };
 
   factory PressingServiceModel.fromJson(
@@ -48,13 +42,11 @@ class PressingServiceModel extends ServiceModel {
     name: json['name'] ?? 'sev1',
     createdAt:
         json['createdAt'] != null ? json['createdAt'].toDate() : DateTime.now(),
-    article: PressingArticleModel.fromJson(json['article']),
+    product: PressingArticleModel.fromJson(json['article']),
     serviceType: PressingServiceTypeModel.fromJson(json['serviceType']),
     minPrice: json['minPrice'] ?? 0.0,
     maxPrice: json['maxPrice'] ?? 0.0,
     basePrice: json['basePrice'] ?? 0.0,
     estimatedDuration: json['estimatedDuration'] == 0 ? Duration() : Duration(),
   );
-
-
 }

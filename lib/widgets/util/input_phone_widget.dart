@@ -36,8 +36,7 @@ class InputPhoneWidget extends StatelessWidget {
       },
       fontSize: fontSize,
       fontFamily: fontFamily,
-      textColor: textColor,
-      fontweight: fontweight,
+      fontweight: fontweight, onChange: (String value) {  },
     );
   }
 }

@@ -41,103 +41,125 @@ class PressingServiceListWidget extends StatefulWidget {
 class PressingServiceListWidgetState extends State<PressingServiceListWidget> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _buildHeader(),
-        const Divider(),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: widget.actuelServices.length,
-          itemBuilder: (context, index) {
-            final item = widget.actuelServices[index];
-            final qty = index < widget.qtys.length ? widget.qtys[index] : 0;
+    return Card(
+      color: widget.backgroundColor,
+      child: ListTile(
+        title: _buildHeader(),
+        subtitle: Column(
+          children: [
+            const Divider(thickness: 1),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: widget.actuelServices.length,
+              itemBuilder: (context, index) {
+                final item = widget.actuelServices[index];
+                final qty = index < widget.qtys.length ? widget.qtys[index] : 0;
 
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              child: Row(
-                children: [
-                  Expanded(flex: 3, child: Text(item.article.name, style: TextStyle(color: widget.backgroundColor),)),
-                  Expanded(
-                    flex: 2,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Material(
-                          color:
-                              qty > 0
-                                  ? widget.backgroundColor
-                                  : AppColors.disabled,
-                          elevation: 2,
-                          borderRadius: BorderRadius.circular(8),
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.remove,
-                              size: 14,
-                              color:
-                                  qty > 0
-                                      ? widget.textColor
-                                      : AppColors.darkScaffoldColor,
+                return Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 1,
+                        vertical: 2,
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              item.product.name,
+                              style: TextStyle(color: widget.textColor),
                             ),
-                            onPressed:
-                                qty > 0
-                                    ? () => setState(() {
-                                      if (widget.qtys[index] > 0) {
-                                        widget.reduceQuantities(index);
-                                      }
-                                    })
-                                    : null,
                           ),
-                        ),
-                        SizedBox(width: 8),
-                        Text(qty.toString()),
-                        SizedBox(width: 8),
-                        Material(
-                          color: widget.backgroundColor,
-                          elevation: 3,
-                          borderRadius: BorderRadius.circular(8),
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.add,
-                              size: 14,
-                              color: widget.textColor,
+                          Expanded(
+                            flex: 3,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Material(
+                                  color:
+                                      qty > 0
+                                          ? widget.backgroundColor
+                                          : AppColors.disabled,
+                                  elevation: 5,
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.remove,
+                                      size: 14,
+                                      color:
+                                          qty > 0
+                                              ? widget.textColor
+                                              : AppColors.darkScaffoldColor,
+                                    ),
+                                    onPressed:
+                                        qty > 0
+                                            ? () => setState(() {
+                                              if (widget.qtys[index] > 0) {
+                                                widget.reduceQuantities(index);
+                                              }
+                                            })
+                                            : null,
+                                  ),
+                                ),
+                                SizedBox(width: 8),
+                                Text(
+                                  qty.toString(),
+                                  style: TextStyle(color: widget.textColor),
+                                ),
+                                SizedBox(width: 8),
+                                Material(
+                                  color: widget.backgroundColor,
+                                  elevation: 5,
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.add,
+                                      size: 14,
+                                      color: widget.textColor,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        widget.addQuantities(index);
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ],
                             ),
-                            onPressed: () {
-                              setState(() {
-                                widget.addQuantities(index);
-                              });
-                            },
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
 
-                  // Prix
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      '${((item.basePrice ?? 0) * qty).toInt()} ${widget.currency}',
-                      textAlign: TextAlign.end,
-                      style: TextStyle(color: widget.backgroundColor)
+                          // Prix
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              '${((item.basePrice ?? 0) * qty).toInt()} ${widget.currency}',
+                              textAlign: TextAlign.end,
+                              style: TextStyle(color: widget.textColor),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            );
-          },
+                    Divider(thickness: 0.3),
+                  ],
+                );
+              },
+            ),
+            //        const Divider(thickness: 0.5),
+            // _buildTotal(),
+            PriceTotalWidget(
+              total: widget.total,
+              currency: widget.currency,
+              title: 'SUB TOTAL',
+              backgroundColor: widget.backgroundColor,
+              textColor: widget.textColor,
+              fontWeight: FontWeight.normal,
+            ),
+          ],
         ),
-        const Divider(thickness: 0.5),
-        // _buildTotal(),
-        PriceTotalWidget(
-          total: widget.total,
-          currency: widget.currency,
-          title: 'SUB TOTAL',
-          backgroundColor: widget.textColor,
-          textColor: widget.backgroundColor,
-          fontWeight: FontWeight.normal,
-        ),
-      ],
+      ),
     );
   }
 
@@ -152,8 +174,8 @@ class PressingServiceListWidgetState extends State<PressingServiceListWidget> {
               text:
                   AppLocalizations.of(context)!.pressing_service_article_title,
               textAlign: TextAlign.start,
-              textColor: widget.backgroundColor,
-              backgroundColor: widget.textColor,
+              textColor: widget.textColor,
+              backgroundColor: widget.backgroundColor,
             ),
           ),
           Expanded(
@@ -162,8 +184,8 @@ class PressingServiceListWidgetState extends State<PressingServiceListWidget> {
               child: DisplayWidgetTitle(
                 text:
                     AppLocalizations.of(context)!.pressing_service_article_qty,
-                textColor: widget.backgroundColor,
-                backgroundColor: widget.textColor,
+                textColor: widget.textColor,
+                backgroundColor: widget.backgroundColor,
               ),
             ),
           ),
@@ -173,8 +195,8 @@ class PressingServiceListWidgetState extends State<PressingServiceListWidget> {
               text:
                   AppLocalizations.of(context)!.pressing_service_article_price,
               textAlign: TextAlign.end,
-              textColor: widget.backgroundColor,
-              backgroundColor: widget.textColor,
+              textColor: widget.textColor,
+              backgroundColor: widget.backgroundColor,
             ),
           ),
         ],

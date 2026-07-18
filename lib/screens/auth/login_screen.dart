@@ -32,6 +32,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   void initState() {
     super.initState();
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+         ref.read(appbarTitleProviderState).setTitle(AppLocalizations.of(context)!.login_title,);
+    });
   }
 
   void updateState(int state) {
@@ -42,6 +45,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -52,7 +56,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             Responsive.isDesktop(context)
                 ? MenuBarWeb(title: AppLocalizations.of(context)!.login_title)
                 : MoveguiAppBar(
-                  title: AppLocalizations.of(context)!.login_title,
+            //      title: AppLocalizations.of(context)!.login_title,
                   itemCount: ref.watch(shoppingProviderState).itemCount,
                 ),
         body: Responsive.isDesktop(context) ? buildDeskop() : buildMobil(),

@@ -1,7 +1,40 @@
-
-
+import 'package:movegui/models/company_model.dart';
 import 'package:movegui/models/model.dart';
-import 'package:movegui/models/recipe_model.dart';
+
+abstract class ProductModel extends Model {
+  final double price;
+  final CompanyModel? supplier;
+  final bool isAvailable;
+  final String? imageUrl;
+  final String? category;
+  final String currency;
+
+  ProductModel({
+    required super.id,
+    required super.name,
+    required super.createdAt,
+    required this.price,
+    required this.supplier,
+    required this.imageUrl,
+    required this.category,
+    required this.isAvailable,
+    required this.currency
+  });
+
+  @override
+  Map<String, dynamic> toJson() => {...super.toJson(),
+   'supplier': supplier != null ? supplier!.toJson() : null,
+   'price': price,
+   'isAvailable': isAvailable,
+   'imageUrl': imageUrl != null ? imageUrl : '',
+   'category': category != null? category : '',
+   'currency': currency
+
+  };
+}
+
+
+/*
 
 class ProductModel extends Model {
 final String imageUrl;
@@ -37,3 +70,4 @@ final List<RecipeModel> recipes;
 
   
 }
+*/

@@ -48,31 +48,42 @@ class AuthLinkWidgetState extends State<AuthLinkWidget> {
                 _onPressed(context, buttomItem);
               },
               buttonItem: ButtonItem(
-                AppLocalizations.of(context)!.label_login_forget_password,
-                AppLocalizations.of(context)!.tooltip_forget_password,
-                true,
+                title:
+                    AppLocalizations.of(context)!.label_login_forget_password,
+                tooltipText:
+                    AppLocalizations.of(context)!.tooltip_forget_password,
+                enabled: true,
                 routeName: RouteConstants.FORGET_PASSWORD_ROUTE,
               ),
               icon: Ionicons.key_outline,
-              fontSize: Responsive.isMobile(context) ? WidgetConstants.buttonFonsize * 1.4 : WidgetConstants.buttonFonsize * 2,
+              fontSize:
+                  Responsive.isMobile(context)
+                      ? WidgetConstants.buttonFonsize * 1.4
+                      : WidgetConstants.buttonFonsize * 2,
             ),
           ),
         ),
         Flexible(
           child: Padding(
-            padding: const EdgeInsets.only(left: WidgetConstants.sepWidgetHeight, right: WidgetConstants.sepWidgetHeight,),
+            padding: const EdgeInsets.only(
+              left: WidgetConstants.sepWidgetHeight,
+              right: WidgetConstants.sepWidgetHeight,
+            ),
             child: ButtonWidget(
               onPressed: (context, buttomItem) async {
                 _onPressed(context, buttomItem);
               },
               buttonItem: ButtonItem(
-                AppLocalizations.of(context)!.label_registration,
-                AppLocalizations.of(context)!.tooltip_registration,
-                true,
+                title: AppLocalizations.of(context)!.label_registration,
+                tooltipText: AppLocalizations.of(context)!.tooltip_registration,
+                enabled: true,
                 routeName: RouteConstants.REGISTER_ROUTE,
               ),
               icon: Ionicons.person,
-              fontSize: Responsive.isMobile(context) ? WidgetConstants.buttonFonsize * 1.4 : WidgetConstants.buttonFonsize * 2,
+              fontSize:
+                  Responsive.isMobile(context)
+                      ? WidgetConstants.buttonFonsize * 1.4
+                      : WidgetConstants.buttonFonsize * 2,
             ),
           ),
         ),

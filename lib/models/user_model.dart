@@ -43,6 +43,6 @@ class UserModel extends Model {
     personModel: PersonModel.fromJson(json['person']),
     isVerified: json['isVerified'] ?? false,
     role: json['role'] ?? '',
-    isActive: json['isActive'] ?? false
+    isActive: json['isActive'] ?? true
   );
 }

@@ -146,9 +146,9 @@ class LoginForgetPasswordPageState extends State<LoginForgetPasswordPage> {
                   fn: _resetFct,
 
                   buttonItem: ButtonItem(
-                    AppLocalizations.of(context)!.label_login,
-                    AppLocalizations.of(context)!.tooltip_sign_in,
-                    true,
+                   title:  AppLocalizations.of(context)!.label_login,
+                   tooltipText:   AppLocalizations.of(context)!.tooltip_sign_in,
+                   enabled:  true,
                     routeName: RouteConstants.LOGIN_ROUTE,
                   ),
                 ),

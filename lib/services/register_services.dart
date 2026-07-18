@@ -6,7 +6,8 @@ import 'package:faker/faker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:movegui/config/env.dart';
 import 'package:movegui/models/pricing_config_model.dart';
-import 'package:movegui/services/address_service.dart';
+import 'package:movegui/services/form_services/adress_form_service.dart';
+import 'package:movegui/services/adress_service.dart';
 import 'package:movegui/services/api_service.dart';
 import 'package:movegui/services/categories_service.dart';
 import 'package:movegui/services/image_service.dart';
@@ -38,11 +39,12 @@ void initServices(Env env){
   getIt.registerLazySingleton<ProfessionnelService>(() => ProfessionnelService(api: api));
   getIt.registerLazySingleton<UserService>(() => UserService(api: api));
   getIt.registerLazySingleton<ImageService>(() => ImageService());
-  getIt.registerLazySingleton<AddressService>(() => AddressService(api: api));
+  getIt.registerLazySingleton<AdressService>(() => AdressService(api: api));
  // getIt.registerLazySingleton<PressingFormService>(() => PressingFormService(api: api));
   getIt.registerLazySingleton<SeedService>(() =>  SeedService(api: api, faker: Faker()));
   getIt.registerLazySingleton<CategoriesService> (() => CategoriesService(api: api));
   getIt.registerLazySingleton<PricingService>(() => PricingService( api: api , config: PricingConfigModel.fromRemote(),));
+  getIt.registerLazySingleton<AdressFormService>(() => AdressFormService(api: api));
 
 
   //

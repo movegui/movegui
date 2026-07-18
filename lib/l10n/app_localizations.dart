@@ -95,6 +95,48 @@ abstract class AppLocalizations {
     Locale('fr')
   ];
 
+  /// No description provided for @no_phone_number.
+  ///
+  /// In en, this message translates to:
+  /// **'No Phonenumber'**
+  String get no_phone_number;
+
+  /// No description provided for @no_email.
+  ///
+  /// In en, this message translates to:
+  /// **'No Email'**
+  String get no_email;
+
+  /// No description provided for @status_actf.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get status_actf;
+
+  /// No description provided for @status_non_actf.
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive'**
+  String get status_non_actf;
+
+  /// No description provided for @commune_title.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get commune_title;
+
+  /// No description provided for @gender_masculin.
+  ///
+  /// In en, this message translates to:
+  /// **'Male'**
+  String get gender_masculin;
+
+  /// No description provided for @gender_female.
+  ///
+  /// In en, this message translates to:
+  /// **'Female'**
+  String get gender_female;
+
   /// No description provided for @max_delivery_time.
   ///
   /// In en, this message translates to:
@@ -182,8 +224,14 @@ abstract class AppLocalizations {
   /// No description provided for @success_login_reset_password.
   ///
   /// In en, this message translates to:
-  /// **'Lien envoyé avec Succes'**
+  /// **'Link sent successfully'**
   String get success_login_reset_password;
+
+  /// No description provided for @success_username_updated.
+  ///
+  /// In en, this message translates to:
+  /// **'Username Updated successfully'**
+  String get success_username_updated;
 
   /// No description provided for @login_forget_password_txt.
   ///
@@ -221,6 +269,12 @@ abstract class AppLocalizations {
   /// **'Login failed'**
   String get error_login_message;
 
+  /// No description provided for @error_login_user_not_found.
+  ///
+  /// In en, this message translates to:
+  /// **'User not found in the database, please check your email and password'**
+  String get error_login_user_not_found;
+
   /// No description provided for @error_register_with_phone_title.
   ///
   /// In en, this message translates to:
@@ -244,6 +298,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please add items to proceed with your order.'**
   String get error_order_minimum_message;
+
+  /// No description provided for @error_user_not_found_title.
+  ///
+  /// In en, this message translates to:
+  /// **'User not found'**
+  String get error_user_not_found_title;
+
+  /// No description provided for @error_user_not_found_message.
+  ///
+  /// In en, this message translates to:
+  /// **'The specified user does not exist.'**
+  String get error_user_not_found_message;
 
   /// No description provided for @label_login_facebook.
   ///
@@ -293,6 +359,18 @@ abstract class AppLocalizations {
   /// **'Add to Cart'**
   String get btn_add_cart;
 
+  /// No description provided for @btn_cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get btn_cancel;
+
+  /// No description provided for @btn_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get btn_delete;
+
   /// No description provided for @verify_otp.
   ///
   /// In en, this message translates to:
@@ -340,6 +418,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Address'**
   String get input_hint_adress;
+
+  /// No description provided for @input_hint_middle_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Nickname'**
+  String get input_hint_middle_name;
+
+  /// No description provided for @input_hint_quartier.
+  ///
+  /// In en, this message translates to:
+  /// **'District'**
+  String get input_hint_quartier;
+
+  /// No description provided for @input_hint_longitude.
+  ///
+  /// In en, this message translates to:
+  /// **'Longitude'**
+  String get input_hint_longitude;
+
+  /// No description provided for @input_hint_latitude.
+  ///
+  /// In en, this message translates to:
+  /// **'Latitude'**
+  String get input_hint_latitude;
 
   /// No description provided for @movegui_info_title.
   ///
@@ -515,6 +617,18 @@ abstract class AppLocalizations {
   /// **'Dry Cleaning'**
   String get pressing_title;
 
+  /// No description provided for @pressing_order_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Dry Cleaning Order'**
+  String get pressing_order_title;
+
+  /// No description provided for @pressing_service_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get pressing_service_title;
+
   /// No description provided for @pressing_service_washing.
   ///
   /// In en, this message translates to:
@@ -652,6 +766,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Prix'**
   String get pressing_service_article_price;
+
+  /// No description provided for @pressing_detail_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Dry Cleaning Detail'**
+  String get pressing_detail_title;
 
   /// No description provided for @pressing_detail_text_1.
   ///
@@ -806,8 +926,32 @@ abstract class AppLocalizations {
   /// No description provided for @tooltip_btn_add_cart.
   ///
   /// In en, this message translates to:
-  /// **'Cliquez ici pour ajouter au panier'**
+  /// **'Click here to add to cart'**
   String get tooltip_btn_add_cart;
+
+  /// No description provided for @tooltip_btn_add_adress.
+  ///
+  /// In en, this message translates to:
+  /// **'Click here to add new Adress'**
+  String get tooltip_btn_add_adress;
+
+  /// No description provided for @btn_add_adress.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Adress'**
+  String get btn_add_adress;
+
+  /// No description provided for @btn_update_adress.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Adress'**
+  String get btn_update_adress;
+
+  /// No description provided for @btn_update.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get btn_update;
 
   /// No description provided for @profile_menu_invite_people.
   ///
@@ -904,6 +1048,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Order for tomorrow'**
   String get order_after;
+
+  /// No description provided for @user_info.
+  ///
+  /// In en, this message translates to:
+  /// **'User Infos'**
+  String get user_info;
+
+  /// No description provided for @address_office_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Office'**
+  String get address_office_title;
+
+  /// No description provided for @address_neighbor_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Neighbord'**
+  String get address_neighbor_title;
+
+  /// No description provided for @address_home_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get address_home_title;
+
+  /// No description provided for @address_other_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get address_other_title;
+
+  /// No description provided for @detail_delivery_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery Details'**
+  String get detail_delivery_title;
+
+  /// No description provided for @detail_delivery_pickup.
+  ///
+  /// In en, this message translates to:
+  /// **'Pickup Location'**
+  String get detail_delivery_pickup;
+
+  /// No description provided for @detail_delivery_delivery.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery Location '**
+  String get detail_delivery_delivery;
+
+  /// No description provided for @detail_delivery_pickup_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Pickup Date'**
+  String get detail_delivery_pickup_date;
+
+  /// No description provided for @detail_delivery_delivery_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Delivery Date'**
+  String get detail_delivery_delivery_date;
+
+  /// No description provided for @standard_address.
+  ///
+  /// In en, this message translates to:
+  /// **'Standard Address'**
+  String get standard_address;
+
+  /// No description provided for @account_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Account'**
+  String get account_title;
+
+  /// No description provided for @account_info.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Information'**
+  String get account_info;
+
+  /// No description provided for @account_edit_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Profile Name'**
+  String get account_edit_name;
+
+  /// No description provided for @account_edit_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Email Address'**
+  String get account_edit_email;
+
+  /// No description provided for @account_edit_phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Phone Number'**
+  String get account_edit_phone;
+
+  /// No description provided for @account_adresse.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Addresses'**
+  String get account_adresse;
+
+  /// No description provided for @account_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Password'**
+  String get account_password;
+
+  /// No description provided for @account_edit_name_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Profile Name'**
+  String get account_edit_name_title;
+
+  /// No description provided for @account_edit_name_new_name.
+  ///
+  /// In en, this message translates to:
+  /// **'New Name'**
+  String get account_edit_name_new_name;
+
+  /// No description provided for @account_edit_email_new_email.
+  ///
+  /// In en, this message translates to:
+  /// **'New Email Address'**
+  String get account_edit_email_new_email;
+
+  /// No description provided for @account_edit_phone_new_phone.
+  ///
+  /// In en, this message translates to:
+  /// **'New Phone Number'**
+  String get account_edit_phone_new_phone;
+
+  /// No description provided for @compte_delete_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get compte_delete_title;
+
+  /// No description provided for @compte_delete_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete your account? This action is irreversible.'**
+  String get compte_delete_message;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
