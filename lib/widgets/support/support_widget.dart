@@ -7,7 +7,8 @@ import 'package:movegui/services/user_service.dart';
 import 'package:movegui/widgets/util/display_widget.dart';
 
 class SupportWidget extends StatefulWidget {
-  const SupportWidget({super.key});
+  final String? title;
+  const SupportWidget({super.key ,  this.title});
 
   @override
   State<StatefulWidget> createState() => SupportWidgetState();
@@ -51,12 +52,11 @@ class SupportWidgetState extends State<SupportWidget> {
           radius: 30,
           backgroundImage: NetworkImage(
             user?.personModel?.profileImageUrl ??
-               // 'assets/images/profile/default_avatar.jpg',
                'assets/icons/movegui.jpg',
           ),
         ),
         title: DisplayWidget(
-          text: name,
+          text: widget.title ?? name,
           textAlign: TextAlign.left,
           fontSize: 22,
           fontWeight: FontWeight.bold,

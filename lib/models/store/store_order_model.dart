@@ -11,10 +11,12 @@ abstract class StoreOrderModel<
 >
     extends OrderModel<U, T> {
   final S store;
-   DateTime? pickupDate;
-   DateTime? deliveryDate;
-   AdressModel? pickupAdress;
-   AdressModel? deliveryAdress;
+  DateTime? pickupDate;
+  DateTime? deliveryDate;
+  AdressModel? pickupAdress;
+  AdressModel? deliveryAdress;
+  bool? pickupOnStore = false;
+  bool? deliveryOnStore = false;
   StoreOrderModel({
     required super.id,
     required super.name,
@@ -26,9 +28,10 @@ abstract class StoreOrderModel<
     required this.deliveryDate,
     required this.pickupDate,
     required this.pickupAdress,
-    required this.deliveryAdress, 
-    required super.status, required super.currency,
-    
+    required this.deliveryAdress,
+    required super.status,
+    required super.currency,
+    required super.orderId
   });
 
   @override
@@ -36,7 +39,8 @@ abstract class StoreOrderModel<
     ...super.toJson(),
     'store': store.toJson(),
     'pickupDate': pickupDate != null ? pickupDate!.toIso8601String() : null,
-    'deliveryDate': deliveryDate != null ? deliveryDate!.toIso8601String() : null,
+    'deliveryDate':
+        deliveryDate != null ? deliveryDate!.toIso8601String() : null,
     'pickupAdress': pickupAdress != null ? pickupAdress!.toJson() : null,
     'deliveryAdress': deliveryAdress != null ? deliveryAdress!.toJson() : null,
     'status': status,

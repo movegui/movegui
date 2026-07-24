@@ -216,14 +216,12 @@ class AccountScreenState extends ConsumerState<AccountScreen> {
       );
     } else {
       if (adressesHasChanged) {
-        print('it  have changed');
         final newAdresses = await addAddressKey.currentState?.getAddresses();
-        print("default1: ${newAdresses?[0]?.isDefault}");
-         print("default2: ${newAdresses?[1]?.isDefault}");
         if (newAdresses != null && newAdresses.isNotEmpty) {
           if (currentUser != null) {
             currentUser?.personModel?.addresses = newAdresses;
             await userService.update(currentUser!);
+            ref.read(userProviderState).setUser(currentUser!);
             _cancelFct(context, item);
           }
         }
@@ -365,7 +363,7 @@ class AccountScreenState extends ConsumerState<AccountScreen> {
             ),
             actions: [
               BtnRegisterCancelWidget(
-                registerFCT: _registerNameFCT,
+                actionFCT: _registerNameFCT,
                 cancelFCT: _cancelFct,
               ),
             ],
@@ -389,7 +387,7 @@ class AccountScreenState extends ConsumerState<AccountScreen> {
             ),
             actions: [
               BtnRegisterCancelWidget(
-                registerFCT: _registerEmailFCT,
+                actionFCT: _registerEmailFCT,
                 cancelFCT: _cancelFct,
               ),
             ],
@@ -413,7 +411,7 @@ class AccountScreenState extends ConsumerState<AccountScreen> {
             ),
             actions: [
               BtnRegisterCancelWidget(
-                registerFCT: _registerPhoneFCT,
+                actionFCT: _registerPhoneFCT,
                 cancelFCT: _cancelFct,
               ),
             ],
@@ -479,7 +477,7 @@ class AccountScreenState extends ConsumerState<AccountScreen> {
 
           actions: [
             BtnRegisterCancelWidget(
-              registerFCT: _registerAdressesFct,
+              actionFCT: _registerAdressesFct,
               cancelFCT: _cancelFct,
             ),
           ],

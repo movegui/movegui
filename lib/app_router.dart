@@ -10,6 +10,7 @@ import 'package:movegui/responsive.dart';
 import 'package:movegui/screens/auth/login_screen.dart';
 import 'package:movegui/screens/auth/movegui_forgot_password_screen.dart';
 import 'package:movegui/screens/auth/movegui_register_screen.dart';
+import 'package:movegui/screens/checkout/pressing_checkout_screen.dart';
 import 'package:movegui/screens/main/movegui_profile_screen.dart';
 import 'package:movegui/screens/main/home_screen.dart';
 import 'package:movegui/screens/main/order_screen.dart';
@@ -81,11 +82,11 @@ class AppRouter {
             return Consumer(
               builder: (context, ref, _) {
                 String title = '';
-                 title = getTitle(state.uri.toString(), context, ref);
+                title = getTitle(state.uri.toString(), context, ref);
                 if (title.isEmpty) {
                   title = getTitleFromChild(child, context, ref);
                 }
-          //      ref.read(appbarTitleProviderState).setTitle(title);
+                //      ref.read(appbarTitleProviderState).setTitle(title);
                 final int currentIndex = getIndexFromLocation(
                   state.matchedLocation,
                 );
@@ -108,7 +109,7 @@ class AppRouter {
                             onTap: (index) => context.go(routeForIndex(index)),
                           ),
                 );
-              }
+              },
             );
           },
 
@@ -133,7 +134,7 @@ class AppRouter {
                           path: '${RouteConstants.ORDER_DETAIL_ROUTE}/:orderId',
                           builder: (context, state) {
                             final orderId = state.pathParameters['orderId']!;
-                            return PressingOrderDetailsScreen(orderId: orderId ,);
+                            return PressingOrderDetailsScreen(orderId: orderId);
                           },
                         ),
                       ],
@@ -157,6 +158,13 @@ class AppRouter {
             GoRoute(
               path: RouteConstants.DELIVERIES_ROUTE,
               builder: (context, state) => const DeliveryScreen(),
+            ),
+            GoRoute(
+              path: '${RouteConstants.CHECKOUT_ROUTE}/:orderId',
+              builder: (context, state) {
+                final orderId = state.pathParameters['orderId']!;
+                return PressingCheckoutScreen(orderId: orderId);
+              },
             ),
 
             /*

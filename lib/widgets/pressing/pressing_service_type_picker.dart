@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/consts/validator.dart';
 import 'package:movegui/consts/widget_constants.dart';
 import 'package:movegui/models/pressing/pressing_model.dart';
@@ -46,11 +45,9 @@ class _GenderAndBirthdatePickerState
     super.didChangeDependencies();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: AppColors.backgroundColor,
       margin: const EdgeInsets.all(2),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       elevation: 1,
@@ -62,20 +59,15 @@ class _GenderAndBirthdatePickerState
             DropdownButtonFormField<PressingServiceTypeModel>(
               decoration: const InputDecoration(
                 filled: true,
-                fillColor: AppColors.backgroundColor,
                 labelText: 'Services',
                 labelStyle: TextStyle(
-                  color: AppColors.textColor,
                   fontSize: WidgetConstants.subTitleFontSize,
                 ),
                 border: InputBorder.none,
               ),
               style: TextStyle(
-                color: AppColors.textColor,
                 fontSize: WidgetConstants.subTitleFontSize * 0.8,
               ),
-              dropdownColor: AppColors.backgroundColor,
-              iconEnabledColor: AppColors.textColor,
               value: _selectedServiceType,
               items:
                   pressingServices

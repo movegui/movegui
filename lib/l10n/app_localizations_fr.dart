@@ -147,6 +147,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get btn_delete => 'Supprimer';
 
   @override
+  String get btn_payment_title => 'Payer';
+
+  @override
+  String get btn_checkout_title => 'Passer à la Caisse';
+
+  @override
   String get verify_otp => 'Envoyer Code';
 
   @override
@@ -501,6 +507,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get address_other_title => 'Autre';
 
   @override
+  String get add_new_adress_title => 'Ajouter une nouvelle Adresse';
+
+  @override
   String get detail_delivery_title => 'Détails de livraison';
 
   @override
@@ -556,4 +565,46 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get compte_delete_message => 'Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.';
+
+  @override
+  String get max_adress_title => 'Maximum Adresse';
+
+  @override
+  String get max_adress_message => 'Le nombre Maximal d\'adresse est de 5 par Utilisateur, Veuillez supprimer d\'autres';
+
+  @override
+  String get dialog_confirm_title => 'Confirmation';
+
+  @override
+  String get dialog_confirm_message => 'Voulez-vous enregistrer les Modification ?';
+
+  @override
+  String get dialog_btn_yes => 'Oui';
+
+  @override
+  String get dialog_btn_no => 'Non';
+
+  @override
+  String get payment_title => 'Payement';
+
+  @override
+  String get address_pickup => 'Ramasage ';
+
+  @override
+  String get address_delivery => 'Livraison ';
+
+  @override
+  String get address_default_title => 'Par défaut';
+
+  @override
+  String get pickup_pressing => 'Dépôt au pressing';
+
+  @override
+  String get delivery_pressing => 'Retrait au pressing';
+
+  @override
+  String get current_position => 'Actuelle Position';
+
+  @override
+  String get my_position => 'Ma Position';
 }

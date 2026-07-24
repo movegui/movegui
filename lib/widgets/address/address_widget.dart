@@ -16,11 +16,12 @@ class AddressWidget extends StatefulWidget {
   final ValueChanged<String?> onAdressTypeChange;
   final ValueChanged<String?> onCommuneChange;
   final ValueChanged<String?> onDefaultAdressChange;
-  final VoidCallback onUpdateAdresse;
-  final VoidCallback onRemoveAdress;
+  final VoidCallback? onUpdateAdresse;
+  final VoidCallback? onRemoveAdress;
   final void Function(String) onChange;
   final bool? isFullBorder;
   final String defaultId;
+  final bool? toEdit;
 
   const AddressWidget({
     super.key,
@@ -31,8 +32,9 @@ class AddressWidget extends StatefulWidget {
     required this.onChange,
     required this.defaultId,
     required this.onDefaultAdressChange,
-    required this.onUpdateAdresse,
-    required this.onRemoveAdress,
+    this.onUpdateAdresse,
+    this.onRemoveAdress,
+    this.toEdit = false
   });
 
   @override
@@ -40,7 +42,7 @@ class AddressWidget extends StatefulWidget {
 }
 
 class AddressWidgetState extends State<AddressWidget> {
-  bool _readOnly = true;
+  late bool _readOnly = widget.addressForm.isValid() ? widget.toEdit! ? false : true : false;
 
   @override
   Widget build(BuildContext context) {
@@ -122,14 +124,16 @@ class AddressWidgetState extends State<AddressWidget> {
           ],
         ),
         standardAdresseWidget(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(child: updateButtonWidget()),
-            SizedBox(width: WidgetConstants.sepWidgetHeight),
-            Expanded(child: removeButtonWidget()),
-          ],
-        ),
+        widget.addressForm.isValid() && !widget.toEdit!
+            ? Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(child: updateButtonWidget()),
+                SizedBox(width: WidgetConstants.sepWidgetHeight),
+                Expanded(child: removeButtonWidget()),
+              ],
+            )
+            : SizedBox(),
         /*
         MoveguiPlatform.getCurrentPlatform() == MoveGuiPlatformEnum.WEB
             ? Row(
@@ -198,7 +202,7 @@ class AddressWidgetState extends State<AddressWidget> {
         setState(() {
           _readOnly = false;
         });
-        widget.onUpdateAdresse.call();
+        widget.onUpdateAdresse?.call();
       },
       buttonItem: ButtonItem(
         title: AppLocalizations.of(context)!.btn_update_adress,
@@ -237,7 +241,7 @@ class AddressWidgetState extends State<AddressWidget> {
   Widget removeButtonWidget() {
     return ButtonWidget(
       onPressed: (context, item) async {
-        widget.onRemoveAdress.call();
+        widget.onRemoveAdress?.call();
       },
       buttonItem: ButtonItem(
         title: AppLocalizations.of(context)!.btn_delete,

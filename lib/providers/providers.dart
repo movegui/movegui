@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/legacy.dart';
+import 'package:movegui/providers/address_provider.dart';
 import 'package:movegui/providers/appbar_title_provider.dart';
 import 'package:movegui/providers/shopping_provider.dart';
 import 'package:movegui/providers/store_provider.dart';
@@ -18,6 +19,10 @@ final userProviderState = ChangeNotifierProvider<UserProvider>((ref) {
 
 final appbarTitleProviderState = ChangeNotifierProvider<AppbarTitleProvider>((ref) {
   return AppbarTitleProvider();
+});
+
+final addressProviderState = ChangeNotifierProvider<AddressProvider>((ref) {
+  return AddressProvider();
 });
 
  

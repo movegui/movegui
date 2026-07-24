@@ -1,13 +1,18 @@
 import 'dart:convert';
 
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
+import 'package:movegui/models/adress_model.dart';
 import 'package:movegui/models/geo_cordinates_model.dart';
 import 'package:movegui/services/api_service.dart';
+import 'package:movegui/services/localisation_service.dart';
+import 'package:movegui/services/register_services.dart';
 
 class AdressService {
   final ApiService api;
 
   AdressService({required this.api});
+  final locationService = getIt<LocalisationService>();
 
   Future<GeoCordinatesModel?> getCoordinates(String address) async {
     final url =
@@ -27,4 +32,45 @@ class AdressService {
 
     return null;
   }
+
+  Future<AdressModel?> getCurrentAddress(AdressModel? currentAddress) async {
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+
+    if (!serviceEnabled) {
+      await Geolocator.openLocationSettings();
+      return null;
+    }
+
+    LocationPermission permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    }
+
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever) {
+      return null;
+    }
+
+    const settings = LocationSettings(accuracy: LocationAccuracy.high);
+
+    final position = await locationService.getCurrentPosition();
+
+    /*
+    await Geolocator.getCurrentPosition(
+      locationSettings: settings,
+    );
+    */
+
+    final place = await locationService.getAddressFromPosition(
+      position?.latitude,
+      position?.longitude,
+      currentAddress
+    );
+    print('the place is: ${place}');
+    return place;
+
+  }
+
+
 }

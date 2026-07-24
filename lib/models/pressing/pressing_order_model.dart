@@ -20,6 +20,7 @@ class PressingOrderModel
     required super.deliveryAdress,
     required super.status,
     required super.currency,
+    required super.orderId
   });
 
   @override
@@ -48,6 +49,7 @@ class PressingOrderModel
     pickupAdress: AdressModel.fromJson(json['pickupAdress']),
     deliveryAdress: AdressModel.fromJson(json['deliveryAdress']),
     status: json['status'], 
-    currency: 'GNF',
+    currency: json['currency'],
+    orderId: json['orderId']
   );
 }

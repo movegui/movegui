@@ -18,7 +18,7 @@ class PricingConfigModel {
   });
 
   factory PricingConfigModel.fromRemote() {
-    final rc = FirebaseRemoteConfig.instance;
+    final rc =  FirebaseRemoteConfig.instance;
     return PricingConfigModel(
       baseFee: rc.getDouble("base_fee"),
       pricePerKm: rc.getDouble("price_per_km"),

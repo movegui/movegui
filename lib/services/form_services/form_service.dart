@@ -55,7 +55,7 @@ abstract class FormService<M extends Model, F extends FormController<M>> impleme
                 district: elem.addressesForms[0].district.text.trim(),
                 minucipality: elem.addressesForms[0].selectedMunicipality,
                 zoneId:
-                    '${elem.addressesForms[0].selectedMunicipality} _ ${elem.addressesForms[0].district.text.trim()} _ ${elem.addressesForms[0].address.text.trim()}',
+                    '${elem.addressesForms[0].selectedMunicipality}_${elem.addressesForms[0].district.text.trim()}_${elem.addressesForms[0].address.text.trim()}',
                 geoCordinates: GeoCordinatesModel(
                   longitude: double.parse(
                     elem.addressesForms[0].longitude.text.trim(),

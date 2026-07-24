@@ -12,6 +12,7 @@ import 'package:movegui/services/api_service.dart';
 import 'package:movegui/services/categories_service.dart';
 import 'package:movegui/services/image_service.dart';
 import 'package:movegui/services/ingredients_service.dart';
+import 'package:movegui/services/localisation_service.dart';
 import 'package:movegui/services/patisseries_service.dart';
 import 'package:movegui/services/pressing_service.dart';
 import 'package:movegui/services/pricing_service.dart';
@@ -45,6 +46,10 @@ void initServices(Env env){
   getIt.registerLazySingleton<CategoriesService> (() => CategoriesService(api: api));
   getIt.registerLazySingleton<PricingService>(() => PricingService( api: api , config: PricingConfigModel.fromRemote(),));
   getIt.registerLazySingleton<AdressFormService>(() => AdressFormService(api: api));
+  getIt.registerLazySingleton<LocalisationService>(() => LocalisationService(api: api));
+
+
+  //
 
 
   //

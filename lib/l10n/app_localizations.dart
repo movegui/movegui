@@ -371,6 +371,18 @@ abstract class AppLocalizations {
   /// **'Delete'**
   String get btn_delete;
 
+  /// No description provided for @btn_payment_title.
+  ///
+  /// In en, this message translates to:
+  /// **'To Pay'**
+  String get btn_payment_title;
+
+  /// No description provided for @btn_checkout_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Checkout'**
+  String get btn_checkout_title;
+
   /// No description provided for @verify_otp.
   ///
   /// In en, this message translates to:
@@ -1079,6 +1091,12 @@ abstract class AppLocalizations {
   /// **'Other'**
   String get address_other_title;
 
+  /// No description provided for @add_new_adress_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Add new Address'**
+  String get add_new_adress_title;
+
   /// No description provided for @detail_delivery_title.
   ///
   /// In en, this message translates to:
@@ -1192,6 +1210,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Are you sure you want to delete your account? This action is irreversible.'**
   String get compte_delete_message;
+
+  /// No description provided for @max_adress_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum Adresses'**
+  String get max_adress_title;
+
+  /// No description provided for @max_adress_message.
+  ///
+  /// In en, this message translates to:
+  /// **'The maximum number of addresses is 5 per user. Please delete any others.'**
+  String get max_adress_message;
+
+  /// No description provided for @dialog_confirm_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmation'**
+  String get dialog_confirm_title;
+
+  /// No description provided for @dialog_confirm_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Would you like to save the changes ?'**
+  String get dialog_confirm_message;
+
+  /// No description provided for @dialog_btn_yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get dialog_btn_yes;
+
+  /// No description provided for @dialog_btn_no.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get dialog_btn_no;
+
+  /// No description provided for @payment_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment'**
+  String get payment_title;
+
+  /// No description provided for @address_pickup.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick-up'**
+  String get address_pickup;
+
+  /// No description provided for @address_delivery.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery'**
+  String get address_delivery;
+
+  /// No description provided for @address_default_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Default'**
+  String get address_default_title;
+
+  /// No description provided for @pickup_pressing.
+  ///
+  /// In en, this message translates to:
+  /// **'Dry cleaning drop-off'**
+  String get pickup_pressing;
+
+  /// No description provided for @delivery_pressing.
+  ///
+  /// In en, this message translates to:
+  /// **'Dry cleaning pickup'**
+  String get delivery_pressing;
+
+  /// No description provided for @current_position.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Position'**
+  String get current_position;
+
+  /// No description provided for @my_position.
+  ///
+  /// In en, this message translates to:
+  /// **'My Position'**
+  String get my_position;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

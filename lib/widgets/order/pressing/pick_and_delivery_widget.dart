@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:movegui/l10n/app_localizations.dart';
+import 'package:movegui/models/adress_model.dart';
 
 class PickAndDeliveryWidget extends StatelessWidget {
-  final String? pickupLocation;
-  final String? deliveryLocation;
+  final AdressModel pickupLocation;
+  final AdressModel deliveryLocation;
   final DateTime? pickupDate;
   final DateTime? deliveryDate;
-
   final VoidCallback onSelectPickup;
   final VoidCallback onSelectDelivery;
   final VoidCallback onSelectPickupDate;
@@ -101,7 +101,7 @@ class PickAndDeliveryWidget extends StatelessWidget {
               label: "pickup",
               placeholder:
                   " ${AppLocalizations.of(context)?.detail_delivery_pickup ?? 'Select Pickup Location'}",
-              value: pickupLocation,
+              value: pickupLocation.address,
               onTap: onSelectPickup,
             ),
 
@@ -127,7 +127,7 @@ class PickAndDeliveryWidget extends StatelessWidget {
               label: "delivery",
               placeholder:
                   " ${AppLocalizations.of(context)?.detail_delivery_delivery ?? 'Select Delivery Location'}",
-              value: deliveryLocation,
+              value: deliveryLocation.address,
               onTap: onSelectDelivery,
             ),
 

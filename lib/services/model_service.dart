@@ -87,9 +87,9 @@ abstract class ModelService<T extends Model> {
   return json.decode(jsonString);
 }
 
-Future<String> generateOrderNumber() async {
+Future<String> generateOrderNumber(String name) async {
   final firestore = FirebaseFirestore.instance;
-
+/*
   return firestore.runTransaction((transaction) async {
     final counterRef =
         firestore.collection('counters').doc('pressing_orders');
@@ -107,12 +107,19 @@ Future<String> generateOrderNumber() async {
 
     final now = DateTime.now();
 
-    return 'PRS-'
+    return 'PRS-''${name}'
         '${now.year}'
         '${now.month.toString().padLeft(2, '0')}'
         '${now.day.toString().padLeft(2, '0')}-'
         '${current.toString().padLeft(4, '0')}';
   });
+  */
+    final now = DateTime.now();
+      return 'PRS-''${name}'
+        '${now.year}'
+        '${now.month.toString().padLeft(2, '0')}'
+        '${now.day.toString().padLeft(2, '0')}-'
+        '${0.toString().padLeft(4, '0')}';
 }
 
 }

@@ -8,6 +8,7 @@ abstract class OrderModel<M extends UserModel , T extends OrderItemModel> extend
    double total;
    String status;
   final String currency;
+  String orderId;
   OrderModel({
     required super.id,
     required super.name,
@@ -16,7 +17,8 @@ abstract class OrderModel<M extends UserModel , T extends OrderItemModel> extend
     required this.total,
     required this.items,
     required this.status,
-    required this.currency
+    required this.currency,
+    required this.orderId
   });
 
   @override

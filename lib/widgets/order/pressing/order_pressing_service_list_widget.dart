@@ -10,21 +10,19 @@ import 'package:movegui/widgets/price_total_widget.dart';
 import 'package:movegui/widgets/util/display_widget_title.dart';
 
 class OrderPressingServiceListWidget extends StatefulWidget {
-  final Color? backgroundColor;
-  final Color? textColor;
   final PressingOrderModel order;
   final void Function(int index) addQuantities;
   final void Function(int index) reduceQuantities;
   final void Function(int index) removeService;
+  final String? totalTitle;
 
   const OrderPressingServiceListWidget({
     super.key,
-    required this.backgroundColor,
-    required this.textColor,
     required this.order,
     required this.addQuantities,
     required this.reduceQuantities,
     required this.removeService,
+    this.totalTitle = null
   });
 
   @override
@@ -130,7 +128,6 @@ class OrderPressingServiceListWidgetState
                   final serviceType = serviceTypes.toList()[index1];
                   final services = orderedServices[serviceType.id]!;
                   return Card(
-                    color: widget.backgroundColor,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
@@ -139,8 +136,6 @@ class OrderPressingServiceListWidgetState
                           DisplayWidgetTitle(
                             text: serviceType.name,
                             textAlign: TextAlign.start,
-                            textColor: widget.textColor,
-                            backgroundColor: widget.backgroundColor,
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -180,9 +175,7 @@ class OrderPressingServiceListWidgetState
                               qtys: orderedQtys[serviceType.id]!,
                               currency: widget.order.currency,
                               total: servicesSubTotal[serviceType.id]!,
-                              backgroundColor: AppColors.backgroundColor,
-                              textColor: AppColors.textColor,
-                              selectionColor: AppColors.selectionColor,
+                              selectionColor: AppColors.selectionColor, 
                             ),
                           ),
                           //     const Divider(thickness: 0.5),
@@ -192,15 +185,17 @@ class OrderPressingServiceListWidgetState
                   );
                 },
               ),
-              const Divider(),
-              PriceTotalWidget(
-                total: widget.order.total,
-                currency: widget.order.currency,
-                backgroundColor: widget.backgroundColor,
-                textColor: widget.textColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 24,
+              const Divider(),             
+              Card(
+                child: PriceTotalWidget(
+                  total: widget.order.total,
+                  currency: widget.order.currency,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                  title: widget.totalTitle ?? 'SUB TOTAL',
+                ),
               ),
+              
             ],
           ),
         )

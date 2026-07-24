@@ -86,7 +86,7 @@ class AdressModel extends Model {
 
 class AddressType {
   static String HOME = 'h';
-  static String OFFICE = '0';
+  static String OFFICE = 'o';
   static String NEIGHBOR = 'n';
   static String OTHER = 'ot';
 }

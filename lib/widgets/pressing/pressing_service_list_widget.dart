@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 
-import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/pressing/pressing_service_model.dart';
 import 'package:movegui/models/pressing/pressing_service_type_model.dart';
-import 'package:movegui/widgets/price_total_widget.dart';
 import 'package:movegui/widgets/util/display_widget_title.dart';
 
 class PressingServiceListWidget extends StatefulWidget {
   final List<PressingServiceModel> actuelServices;
   final PressingServiceTypeModel serviceType;
   final String currency;
-  final Color? backgroundColor;
-  final Color? textColor;
+//  final Color? backgroundColor;
+//  final Color? textColor;
   final Color? selectionColor;
   final List<int> qtys;
   final double total;
@@ -28,8 +26,8 @@ class PressingServiceListWidget extends StatefulWidget {
     required this.reduceQuantities,
     required this.qtys,
     required this.total,
-    required this.backgroundColor,
-    required this.textColor,
+ //   required this.backgroundColor,
+//  required this.textColor,
     required this.selectionColor,
   });
 
@@ -42,7 +40,7 @@ class PressingServiceListWidgetState extends State<PressingServiceListWidget> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: widget.backgroundColor,
+  //    color: widget.backgroundColor,
       child: ListTile(
         title: _buildHeader(),
         subtitle: Column(
@@ -69,7 +67,7 @@ class PressingServiceListWidgetState extends State<PressingServiceListWidget> {
                             flex: 2,
                             child: Text(
                               item.product.name,
-                              style: TextStyle(color: widget.textColor),
+                         //     style: TextStyle(color: widget.textColor),
                             ),
                           ),
                           Expanded(
@@ -78,20 +76,25 @@ class PressingServiceListWidgetState extends State<PressingServiceListWidget> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Material(
+                                  /*
                                   color:
+                                  
                                       qty > 0
                                           ? widget.backgroundColor
                                           : AppColors.disabled,
+                                          */
                                   elevation: 5,
                                   borderRadius: BorderRadius.circular(8),
                                   child: IconButton(
                                     icon: Icon(
                                       Icons.remove,
                                       size: 14,
+                                      /*
                                       color:
                                           qty > 0
                                               ? widget.textColor
                                               : AppColors.darkScaffoldColor,
+                                              */
                                     ),
                                     onPressed:
                                         qty > 0
@@ -106,18 +109,18 @@ class PressingServiceListWidgetState extends State<PressingServiceListWidget> {
                                 SizedBox(width: 8),
                                 Text(
                                   qty.toString(),
-                                  style: TextStyle(color: widget.textColor),
+                             //     style: TextStyle(color: widget.textColor),
                                 ),
                                 SizedBox(width: 8),
                                 Material(
-                                  color: widget.backgroundColor,
+                              //    color: widget.backgroundColor,
                                   elevation: 5,
                                   borderRadius: BorderRadius.circular(8),
                                   child: IconButton(
                                     icon: Icon(
                                       Icons.add,
                                       size: 14,
-                                      color: widget.textColor,
+                              //        color: widget.textColor,
                                     ),
                                     onPressed: () {
                                       setState(() {
@@ -136,7 +139,7 @@ class PressingServiceListWidgetState extends State<PressingServiceListWidget> {
                             child: Text(
                               '${((item.basePrice ?? 0) * qty).toInt()} ${widget.currency}',
                               textAlign: TextAlign.end,
-                              style: TextStyle(color: widget.textColor),
+                          //    style: TextStyle(color: widget.textColor),
                             ),
                           ),
                         ],
@@ -149,6 +152,7 @@ class PressingServiceListWidgetState extends State<PressingServiceListWidget> {
             ),
             //        const Divider(thickness: 0.5),
             // _buildTotal(),
+            /*
             PriceTotalWidget(
               total: widget.total,
               currency: widget.currency,
@@ -157,6 +161,7 @@ class PressingServiceListWidgetState extends State<PressingServiceListWidget> {
               textColor: widget.textColor,
               fontWeight: FontWeight.normal,
             ),
+            */
           ],
         ),
       ),
@@ -174,8 +179,8 @@ class PressingServiceListWidgetState extends State<PressingServiceListWidget> {
               text:
                   AppLocalizations.of(context)!.pressing_service_article_title,
               textAlign: TextAlign.start,
-              textColor: widget.textColor,
-              backgroundColor: widget.backgroundColor,
+            //  textColor: widget.textColor,
+            //  backgroundColor: widget.backgroundColor,
             ),
           ),
           Expanded(
@@ -184,8 +189,8 @@ class PressingServiceListWidgetState extends State<PressingServiceListWidget> {
               child: DisplayWidgetTitle(
                 text:
                     AppLocalizations.of(context)!.pressing_service_article_qty,
-                textColor: widget.textColor,
-                backgroundColor: widget.backgroundColor,
+           //     textColor: widget.textColor,
+            //    backgroundColor: widget.backgroundColor,
               ),
             ),
           ),
@@ -195,8 +200,8 @@ class PressingServiceListWidgetState extends State<PressingServiceListWidget> {
               text:
                   AppLocalizations.of(context)!.pressing_service_article_price,
               textAlign: TextAlign.end,
-              textColor: widget.textColor,
-              backgroundColor: widget.backgroundColor,
+        //      textColor: widget.textColor,
+         //     backgroundColor: widget.backgroundColor,
             ),
           ),
         ],

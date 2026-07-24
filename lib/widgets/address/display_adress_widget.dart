@@ -1,26 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/adress_model.dart';
+import 'package:movegui/services/form_services/adress_form_service.dart';
+import 'package:movegui/services/register_services.dart';
+import 'package:movegui/widgets/address/default_address_widget.dart';
+import 'package:movegui/widgets/address/default_selection_widget.dart';
+import 'package:movegui/widgets/formsControllers/address_form_controller.dart';
 
 class DisplayAdressWidget extends StatefulWidget {
   const DisplayAdressWidget({
     super.key,
     required this.onEdit,
     required this.onRemove,
-    required this.adress,
+    required this.formController,
     required this.onDefaultChange,
+    required this.defaultId,
   });
 
   final VoidCallback? onEdit;
   final VoidCallback? onRemove;
-  final AdressModel? adress;
-  final VoidCallback onDefaultChange;
+  final AddressFormController? formController;
+  final ValueChanged<String?> onDefaultChange;
+  final String? defaultId;
 
   @override
   State<StatefulWidget> createState() => DisplayAdressWidgetState();
 }
 
 class DisplayAdressWidgetState extends State<DisplayAdressWidget> {
+  late AdressFormService addressFormService;
+
+  void initState() {
+    addressFormService = getIt<AdressFormService>();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -39,9 +53,10 @@ class DisplayAdressWidgetState extends State<DisplayAdressWidget> {
                 CircleAvatar(
                   radius: 20,
                   child: Icon(
-                    widget.adress?.adressType == AddressType.HOME
+                    widget.formController?.selectedType == AddressType.HOME
                         ? Icons.home
-                        : widget.adress?.adressType == AddressType.OFFICE
+                        : widget.formController?.selectedType ==
+                            AddressType.OFFICE
                         ? Icons.work
                         : Icons.location_on,
                   ),
@@ -50,37 +65,17 @@ class DisplayAdressWidgetState extends State<DisplayAdressWidget> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    getAdressType(widget.adress?.adressType ?? ''),
+                    addressFormService.getAdressType(
+                      widget.formController?.selectedType ?? '',
+                      context,
+                    ),
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-                if (widget.adress?.isDefault ?? false)
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.green.withOpacity(0.15),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.check_circle, color: Colors.green, size: 16),
-                        SizedBox(width: 4),
-                        Text(
-                          'Par défaut',
-                          style: TextStyle(
-                            color: Colors.green,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                if (widget.formController?.id == widget.defaultId)
+                  DefaultAddressWidget(),
               ],
             ),
             const SizedBox(height: 4),
@@ -89,20 +84,26 @@ class DisplayAdressWidgetState extends State<DisplayAdressWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.adress?.address ?? '',
+                  widget.formController?.address.text ?? '',
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  widget.adress?.district ?? '',
+                  widget.formController?.district.text ?? '',
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: Colors.grey,
                   ),
                 ),
-                 const SizedBox(height: 4),
-                 standardAdresseWidget(),
+                const SizedBox(height: 4),
+                DefaultSelectionWidget(
+                  defaultId: widget.defaultId,
+                  onDefaultChange: (String? value) {
+                    widget.onDefaultChange.call(value);
+                  },
+                  selectedId: widget.formController?.id ?? '',
+                ),
               ],
             ),
             const SizedBox(height: 4),
@@ -113,7 +114,7 @@ class DisplayAdressWidgetState extends State<DisplayAdressWidget> {
                   child: OutlinedButton.icon(
                     onPressed: widget.onEdit,
                     icon: const Icon(Icons.edit),
-                    label:  Text(AppLocalizations.of(context)!.btn_update),
+                    label: Text(AppLocalizations.of(context)!.btn_update),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -121,7 +122,7 @@ class DisplayAdressWidgetState extends State<DisplayAdressWidget> {
                   child: OutlinedButton.icon(
                     onPressed: widget.onRemove,
                     icon: const Icon(Icons.delete, color: Colors.red),
-                    label:  Text(
+                    label: Text(
                       AppLocalizations.of(context)!.btn_delete,
                       style: TextStyle(color: Colors.red),
                     ),
@@ -135,6 +136,7 @@ class DisplayAdressWidgetState extends State<DisplayAdressWidget> {
     );
   }
 
+  /*
   Widget standardAdresseWidget() {
     return Row(
       children: [
@@ -147,30 +149,16 @@ class DisplayAdressWidgetState extends State<DisplayAdressWidget> {
         ),
         SizedBox(width: 8),
         Expanded(
-          child: Radio<bool>(
-            value: true,
-            groupValue: widget.adress?.isDefault ?? false,
-            onChanged: (_) {
-              widget.onDefaultChange();
+          child: Radio<String>(
+            value: widget.formController?.id ?? '',
+            groupValue: widget.defaultId,
+            onChanged: (value) {
+              widget.onDefaultChange.call(value);
             },
           ),
         ),
       ],
     );
   }
-
-  String getAdressType(String value) {
-    switch (value) {
-      case 'h':
-        return AppLocalizations.of(context)!.address_home_title;
-      case 'o':
-        return AppLocalizations.of(context)!.address_office_title;
-      case 'n':
-        return AppLocalizations.of(context)!.address_neighbor_title;
-      case 'ot':
-        return AppLocalizations.of(context)!.address_other_title;
-      default:
-        return 'No Type';
-    }
-  }
+  */
 }

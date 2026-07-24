@@ -20,6 +20,7 @@ class AppConstants {
   static const Adresse = "Ratoma";
   static const LOGIN_PHONE_MODE = 1;
   static const LONGIN_EMAIL_MODE = 2;
+  static const MAX_ADRESSES = 5;
 
   /*
   static const search = "Rechercher";

@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:movegui/config/env_dev.dart';
+import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/models/adress_model.dart';
 import 'package:movegui/services/form_services/form_service.dart';
 import 'package:movegui/services/register_services.dart';
@@ -57,5 +59,20 @@ class AdressFormService  extends FormService<AdressModel,AddressFormController> 
       }
     } 
     return adresses;
+  }
+
+      String getAdressType(String value, BuildContext context) {
+    switch (value) {
+      case 'h':
+        return AppLocalizations.of(context)!.address_home_title;
+      case 'o':
+        return AppLocalizations.of(context)!.address_office_title;
+      case 'n':
+        return AppLocalizations.of(context)!.address_neighbor_title;
+      case 'ot':
+        return AppLocalizations.of(context)!.address_other_title;
+      default:
+        return 'No Type';
+    }
   }
 }

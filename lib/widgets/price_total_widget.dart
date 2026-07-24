@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/widgets/util/display_widget_title.dart';
 
 class PriceTotalWidget extends StatelessWidget {
@@ -8,19 +7,15 @@ class PriceTotalWidget extends StatelessWidget {
   final double? total;
   final double? fontSize;
   final FontWeight? fontWeight;
-  final Color? textColor;
-  final Color? backgroundColor;
 
 
   const PriceTotalWidget({
     super.key,
     required this.currency,
-    this.title = 'TOTAL',
+    this.title = 'SUB TOTAL',
     required this.total,
     this.fontSize = 20,
     this.fontWeight = FontWeight.normal,
-    this.textColor = AppColors.textColor,
-    this.backgroundColor = AppColors.backgroundColor,
   });
 
 
@@ -35,9 +30,7 @@ class PriceTotalWidget extends StatelessWidget {
             child: DisplayWidgetTitle(
               text: title,
               textAlign: TextAlign.left,
-              textColor: textColor,
               fontSize: fontSize,
-              backgroundColor: backgroundColor,
               fontWeight: fontWeight,
             ),
           ),
@@ -46,9 +39,7 @@ class PriceTotalWidget extends StatelessWidget {
             child: DisplayWidgetTitle(
               text: '$total $currency',
               textAlign: TextAlign.end,
-              textColor: textColor,
               fontSize: fontSize,
-              backgroundColor: backgroundColor,
               fontWeight: fontWeight,
             ),
           ),

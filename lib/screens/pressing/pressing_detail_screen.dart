@@ -79,6 +79,7 @@ class PressingDetailScreenState extends ConsumerState<PressingDetailScreen> {
   Future<void> createOrder(BuildContext context, ButtonItem item) async {
     final shopProvider = ref.watch(shoppingProviderState);
     final userProvider = ref.watch(userProviderState);
+    final orderId = await pressingService.generateOrderNumber(model!.name);
     List<PressingOrderItem> items = await getOrderItems();
     final order = await PressingOrderModel(
       id: Uuid().v4(),
@@ -94,6 +95,7 @@ class PressingDetailScreenState extends ConsumerState<PressingDetailScreen> {
       deliveryAdress: null,
       status: OrderStatus.Ordered.name,
        currency: pressingService.getCureency(),
+       orderId: orderId
     );
     shopProvider.addItem(order);
     if (!mounted) return;
@@ -107,11 +109,11 @@ class PressingDetailScreenState extends ConsumerState<PressingDetailScreen> {
     final shopProvider = ref.watch(shoppingProviderState);
     final userProvider = ref.watch(userProviderState);
     List<PressingOrderItem> items = await getOrderItems();
-    print('the items: ${items.length}');
+    final orderId = await pressingService.generateOrderNumber(model!.name);
     final currency = pressingService.getCureency();
     final order = await PressingOrderModel(
-      id: '',
-      name: Uuid().v4(),
+      id: Uuid().v4(),
+      name: '',
       createdAt: DateTime.now(),
       user: userProvider.user!,
       total: totlaServices,
@@ -122,7 +124,8 @@ class PressingDetailScreenState extends ConsumerState<PressingDetailScreen> {
       pickupAdress: null,
       deliveryAdress: null,
       status: OrderStatus.Ordered.name, 
-      currency: 'GNF',
+      currency: currency,
+      orderId: orderId
     );
     shopProvider.addItem(order);
     await initServices();
@@ -263,7 +266,7 @@ class PressingDetailScreenState extends ConsumerState<PressingDetailScreen> {
                     style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 145, 8, 10),
+                  //    color: Color.fromARGB(255, 145, 8, 10),
                     ),
                   ),
                   Text(
@@ -326,8 +329,6 @@ class PressingDetailScreenState extends ConsumerState<PressingDetailScreen> {
                         qtys: orderedQtys[serviceType!.id]!,
                         currency: pressingService.getCureency(),
                         total: totalPerService,
-                        backgroundColor: AppColors.backgroundColor,
-                        textColor: AppColors.textColor,
                         selectionColor: AppColors.selectionColor,
                       )
                       : SizedBox(),
@@ -342,7 +343,7 @@ class PressingDetailScreenState extends ConsumerState<PressingDetailScreen> {
                   ),
                   SizedBox(height: 6),
                   Card(
-                    color: AppColors.backgroundColor,
+                 //   color: AppColors.backgroundColor,
                     child: PriceTotalWidget(
                       total: totlaServices,
                       currency: pressingService.getCureency(),

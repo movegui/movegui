@@ -147,6 +147,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get btn_delete => 'Delete';
 
   @override
+  String get btn_payment_title => 'To Pay';
+
+  @override
+  String get btn_checkout_title => 'Checkout';
+
+  @override
   String get verify_otp => 'Send Code';
 
   @override
@@ -501,6 +507,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get address_other_title => 'Other';
 
   @override
+  String get add_new_adress_title => 'Add new Address';
+
+  @override
   String get detail_delivery_title => 'Delivery Details';
 
   @override
@@ -556,4 +565,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get compte_delete_message => 'Are you sure you want to delete your account? This action is irreversible.';
+
+  @override
+  String get max_adress_title => 'Maximum Adresses';
+
+  @override
+  String get max_adress_message => 'The maximum number of addresses is 5 per user. Please delete any others.';
+
+  @override
+  String get dialog_confirm_title => 'Confirmation';
+
+  @override
+  String get dialog_confirm_message => 'Would you like to save the changes ?';
+
+  @override
+  String get dialog_btn_yes => 'Yes';
+
+  @override
+  String get dialog_btn_no => 'No';
+
+  @override
+  String get payment_title => 'Payment';
+
+  @override
+  String get address_pickup => 'Pick-up';
+
+  @override
+  String get address_delivery => 'Delivery';
+
+  @override
+  String get address_default_title => 'Default';
+
+  @override
+  String get pickup_pressing => 'Dry cleaning drop-off';
+
+  @override
+  String get delivery_pressing => 'Dry cleaning pickup';
+
+  @override
+  String get current_position => 'Current Position';
+
+  @override
+  String get my_position => 'My Position';
 }

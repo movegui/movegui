@@ -14,7 +14,7 @@ class AddressFormController extends FormController<AdressModel> {
   final districtFocus = FocusNode();
   final longitudeFocusNode = FocusNode();
   final latitudeFocusNode = FocusNode();
-  String? id;
+  String? id = Uuid().v4();
   DateTime? createdAt;
   String selectedType = 'h';
   String selectedMunicipality = 'di';
@@ -37,8 +37,8 @@ class AddressFormController extends FormController<AdressModel> {
 
   @override
   Future<void> setData(AdressModel model) async {
-    longitude.text = model.geoCordinates!.longitude.toString();
-    latitude.text = model.geoCordinates!.latitude.toString();
+    longitude.text = model.geoCordinates?.longitude?.toString() ?? '';
+    latitude.text = model.geoCordinates?.latitude?.toString() ?? '';
     district.text = model.district!;
     address.text = model.address;
     selectedType = model.adressType;
@@ -72,8 +72,8 @@ class AddressFormController extends FormController<AdressModel> {
     district: district.text,
     minucipality: selectedMunicipality,
     geoCordinates: GeoCordinatesModel(
-      longitude: double.parse(longitude.text),
-      latitude: double.parse(latitude.text),
+      longitude: longitude.text.isNotEmpty ?  double.parse(longitude.text) : null,
+      latitude: latitude.text.isNotEmpty ?  double.parse(latitude.text) :null,
     ),
     adressType: selectedType,
     isDefault: isDefault
