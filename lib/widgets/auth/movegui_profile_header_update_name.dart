@@ -36,13 +36,13 @@ class MoveguiProfileHeaderUpdateName extends StatelessWidget{
                       onTap: (){
                         onNameUpdate(nameController.text);
                       },
-                      child: const CircleAvatar(
+                      child:  CircleAvatar(
                         radius: 16,
-                        backgroundColor: AppColors.backgroundColor,
+                        backgroundColor: Theme.of(context).colorScheme.primary,
                         child: Icon(
                           IconlyLight.send,
                           size: 12,
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.onPrimary,
                         ),
                       ),
                     ),
@@ -53,13 +53,13 @@ class MoveguiProfileHeaderUpdateName extends StatelessWidget{
                       onTap: () {
                         nameController.clear();
                       },
-                      child: const CircleAvatar(
+                      child:  CircleAvatar(
                         radius: 16,
-                        backgroundColor: AppColors.backgroundColor,
+                        backgroundColor: Theme.of(context).colorScheme.primary,
                         child: Icon(
                           Icons.cancel,
                           size: 16,
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.onPrimary,
                         ),
                       ),
                     ),

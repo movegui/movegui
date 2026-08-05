@@ -15,14 +15,10 @@ import 'package:movegui/widgets/shared/payement_widget.dart';
 class StoreItemWidget extends ConsumerWidget {
   final StoreModel model;
   final int category;
-  final Color? textColor;
-  final Color? backgroundColor;
   const StoreItemWidget({
     super.key,
     required this.model,
     required this.category,
-    this.textColor = AppColors.textColor,
-    this.backgroundColor = AppColors.backgroundColor,
   });
   void _onPressedImage(
     BuildContext context,
@@ -84,7 +80,6 @@ class StoreItemWidget extends ConsumerWidget {
             borderRadius: BorderRadius.circular(12),
           ),
           padding: EdgeInsets.zero,
-          backgroundColor: backgroundColor,
           elevation: 4,
         ),
         child: Column(
@@ -123,7 +118,6 @@ class StoreItemWidget extends ConsumerWidget {
                           style: TextStyle(
                             fontSize: 28,
                             fontWeight: FontWeight.bold,
-                            color: textColor,
                           ),
                         ),
                       ),
@@ -148,7 +142,7 @@ class StoreItemWidget extends ConsumerWidget {
                     children: [
                       Text(
                         model.description ?? "No description available.",
-                        style: TextStyle(fontSize: 16, color: textColor),
+                        style: TextStyle(fontSize: 16),
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -230,15 +224,12 @@ class StoreItemWidget extends ConsumerWidget {
                           children: [
                             Row(
                               children: [
-                                Icon(Icons.person, size: 18, color: textColor),
+                                Icon(Icons.person, size: 18),
                                 SizedBox(width: 6),
                                 Text(
                                   model.staff[0].personModel?.name ??
                                       "Contact not available",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: textColor,
-                                  ),
+                                  style: TextStyle(fontSize: 14),
                                 ),
                               ],
                             ),
@@ -252,11 +243,7 @@ class StoreItemWidget extends ConsumerWidget {
                           children: [
                             Row(
                               children: [
-                                Icon(
-                                  Icons.car_crash_rounded,
-                                  size: 18,
-                                  color: textColor,
-                                ),
+                                Icon(Icons.car_crash_rounded, size: 18),
                                 SizedBox(width: 6),
                                 Text(
                                   isPressing()
@@ -264,10 +251,7 @@ class StoreItemWidget extends ConsumerWidget {
                                         context,
                                       )!.collect_delivery
                                       : AppLocalizations.of(context)!.delivery,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: textColor,
-                                  ),
+                                  style: TextStyle(fontSize: 14),
                                 ),
                               ],
                             ),
@@ -286,20 +270,13 @@ class StoreItemWidget extends ConsumerWidget {
                           children: [
                             Row(
                               children: [
-                                Icon(
-                                  Icons.location_on,
-                                  size: 18,
-                                  color: textColor,
-                                ),
+                                Icon(Icons.location_on, size: 18),
                                 SizedBox(width: 6),
                                 Expanded(
                                   child: Text(
                                     model.address.address ??
                                         "Address not available",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: textColor,
-                                    ),
+                                    style: TextStyle(fontSize: 14),
                                   ),
                                 ),
                               ],
@@ -314,7 +291,7 @@ class StoreItemWidget extends ConsumerWidget {
                           children: [
                             Row(
                               children: [
-                                Icon(Icons.timer, size: 18, color: textColor),
+                                Icon(Icons.timer, size: 18),
                                 SizedBox(width: 6),
                                 Expanded(
                                   child: Text(
@@ -325,10 +302,7 @@ class StoreItemWidget extends ConsumerWidget {
                                         : AppLocalizations.of(
                                           context,
                                         )!.fast_and_efficient,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: textColor,
-                                    ),
+                                    style: TextStyle(fontSize: 14),
                                   ),
                                 ),
                               ],
@@ -349,16 +323,13 @@ class StoreItemWidget extends ConsumerWidget {
                           children: [
                             Row(
                               children: [
-                                Icon(Icons.phone, size: 18, color: textColor),
+                                Icon(Icons.phone, size: 18),
                                 SizedBox(width: 6),
                                 Expanded(
                                   child: Text(
                                     model.staff[0].personModel?.phone ??
                                         "phone not available",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: textColor,
-                                    ),
+                                    style: TextStyle(fontSize: 14),
                                   ),
                                 ),
                               ],
@@ -376,10 +347,7 @@ class StoreItemWidget extends ConsumerWidget {
                                         context,
                                       )!.payement_from
                                       : "",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: textColor,
-                                  ),
+                                  style: TextStyle(fontSize: 14),
                                 )
                                 : SizedBox(height: 8),
                       ),

@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:movegui/consts/app_colors.dart';
 
 class MoveguiProfileDefaultImage extends StatelessWidget {
   final File? pickedImage;
@@ -36,10 +35,10 @@ class MoveguiProfileDefaultImage extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(
               onTap: onPickImage,
-              child: const CircleAvatar(
+              child:  CircleAvatar(
                 radius: 16,
-                backgroundColor: AppColors.backgroundColor,
-                child: Icon(Icons.camera_alt, size: 16, color: Colors.white),
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                child: Icon(Icons.camera_alt, size: 16, color: Theme.of(context).colorScheme.onPrimary),
               ),
             ),
           ),

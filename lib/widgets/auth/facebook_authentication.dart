@@ -88,45 +88,8 @@ class FacebookAuthenticationState extends State<FacebookAuthentication> {
             await _onPressed(context, buttonItem);
           },
           icon: Ionicons.logo_facebook,
-          fontSize:
-              Responsive.isMobile(context)
-                  ? WidgetConstants.buttonFonsize * 1.8
-                  : WidgetConstants.buttonFonsize * 2.3,
+
         );
   }
 }
 
-/*
-class FacebookAuthentication extends StatelessWidget {
-  FacebookAuthentication({super.key});
-
-  void _onPressed(BuildContext context, ButtonItem item) {
-    if (!item.enabled)
-      MessageWidget.errorMessage(
-        context,
-        AppLocalizations.of(context)!.deactivate_button_title,
-        AppLocalizations.of(context)!.deactivate_button_message,
-        Icon(Icons.error, color: AppColors.error),
-        FlushbarPosition.TOP,
-      );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ButtonWidget(
-      buttonItem: ButtonItem(
-        AppLocalizations.of(context)!.label_login_facebook,
-        AppLocalizations.of(context)!.tooltip_sign_in_with_facebook,
-        false,
-        routeName: RouteConstants.FACEBOOK_ROUTE,
-      ),
-      onPressed: (context, buttonItem) async {
-        _onPressed(context, buttonItem);
-      },
-      icon: Ionicons.logo_facebook,
-        fontSize: Responsive.isMobile(context) ? WidgetConstants.buttonFonsize * 1.8 : WidgetConstants.buttonFonsize * 2.3,
-    );
-  }
-}
-
-*/

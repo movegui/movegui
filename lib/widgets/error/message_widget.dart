@@ -17,7 +17,7 @@ class MessageWidget {
       icon: icon,
       duration: Duration(seconds: 3),
       flushbarPosition: flushbarPosition, //.TOP,
-      messageColor: AppColors.textColor,
+      messageColor: Theme.of(context).colorScheme.onPrimary,
       backgroundColor: AppColors.error,
     ).show(context);
   }

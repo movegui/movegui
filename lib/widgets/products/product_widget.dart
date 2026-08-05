@@ -1,7 +1,6 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:movegui/consts/app_colors.dart';
 import 'package:movegui/screens/inner_screen/product_details.dart';
 import 'package:movegui/widgets/subtitle_text.dart';
 import 'package:movegui/widgets/title_text.dart';
@@ -68,18 +67,18 @@ class _ProductWidgetState extends State<ProductWidget> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Flexible(
+                   Flexible(
                     flex: 1,
                     child: SubtitleTextWidget(
                       label: "1550.00\$",
                       fontWeight: FontWeight.w600,
-                      color: AppColors.backgroundColor,
+                      color:Theme.of(context).colorScheme.primary,
                     ),
                   ),
                   Flexible(
                     child: Material(
                       borderRadius: BorderRadius.circular(12.0),
-                      color: AppColors.backgroundColor,
+                      color: Theme.of(context).colorScheme.primary,
                       child: InkWell(
                         borderRadius: BorderRadius.circular(12.0),
                         onTap: () {
@@ -87,12 +86,12 @@ class _ProductWidgetState extends State<ProductWidget> {
                        //     shoppingProvider.addItem();
                           });
                         },
-                        splashColor: AppColors.selectionColor,
-                        child: const Padding(
+                        splashColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                        child:  Padding(
                           padding: EdgeInsets.all(6.0),
                           child: Icon(
                             Icons.add_shopping_cart_outlined,
-                            color: AppColors.textColor,
+                            color: Theme.of(context).colorScheme.onPrimary,
                             size: 20,
                           ),
                         ),

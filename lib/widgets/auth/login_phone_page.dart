@@ -130,7 +130,6 @@ class LoginPhoneNumberPageState extends State<LoginPhoneNumberPage> {
                       Responsive.isDesktop(context)
                           ? WidgetConstants.subTitleFontSize
                           : 16,
-                textColor: AppColors.backgroundColor,
                 fontweight: FontWeight.bold,
                 ),
                 AuthLinkWidget(),

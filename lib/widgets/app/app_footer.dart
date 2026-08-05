@@ -18,17 +18,17 @@ class AppFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       currentIndex: currentIndex,
       onTap: onTap,
-      backgroundColor: AppColors.backgroundColor,
-      selectedItemColor: AppColors.selectionColor,
-      unselectedItemColor: AppColors.textColor,
+      selectedItemColor: theme.colorScheme.secondary,
+      unselectedItemColor: AppColors.placeHolderText,
       items: [
         BottomNavigationBarItem(
           label: AppLocalizations.of(context)!.home_title,
-          icon:Icon(Icons.home, color: AppColors.textColor, size: iconSize,),
+          icon:Icon(Icons.home, size: iconSize,),
         ),
         BottomNavigationBarItem(
           label: AppLocalizations.of(context)!.command_title,

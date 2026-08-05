@@ -317,7 +317,6 @@ class MoveguiProfileScreenState extends State<MoveguiProfileScreen> {
         if (snapshot.hasData) {
           //     chekLoginMode();
           return Scaffold(
-            backgroundColor: AppColors.textColor,
             body: SafeArea(
               child: ListView(
                 padding: const EdgeInsets.all(

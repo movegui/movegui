@@ -382,7 +382,7 @@ class PressingDetailScreenState extends ConsumerState<PressingDetailScreen> {
                                 routeName: RouteConstants.ORDER_DETAIL_ROUTE,
                               ),
                               padding: 12,
-                              fontSize: 14,
+                      
                               icon: Icons.receipt_long,
                             ),
                           ),
@@ -401,7 +401,7 @@ class PressingDetailScreenState extends ConsumerState<PressingDetailScreen> {
                                 routeName: '',
                               ),
                               padding: 12,
-                              fontSize: 14,
+                         
                               icon: Icons.add_shopping_cart,
                             ),
                           ),

@@ -26,7 +26,7 @@ class WidgetWithImage extends ImageWidget {
           minimumSize: Size.zero,
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           shape: const RoundedRectangleBorder(),
-          backgroundColor: AppColors.textColor,
+          backgroundColor: Theme.of(context).colorScheme.primary,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -46,15 +46,15 @@ class WidgetWithImage extends ImageWidget {
               child: Text(
                 title,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
+                style:  TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.textColor,
+                  color: Theme.of(context).colorScheme.onPrimary,
                 ),
               ),
             ),
             Container(
-              color: AppColors.textColor,
+              color: Theme.of(context).colorScheme.primary,
               padding: const EdgeInsets.symmetric(
                 vertical: WidgetConstants.sepWidget,
               ),

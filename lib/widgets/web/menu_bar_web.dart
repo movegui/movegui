@@ -21,7 +21,6 @@ class MenuBarWeb extends ConsumerWidget implements PreferredSizeWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
-        color: AppColors.backgroundColor,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -30,7 +29,6 @@ class MenuBarWeb extends ConsumerWidget implements PreferredSizeWidget {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.all(6.0),
-                  backgroundColor: AppColors.backgroundColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
                   ),
@@ -40,7 +38,6 @@ class MenuBarWeb extends ConsumerWidget implements PreferredSizeWidget {
                   style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.textColor,
                   ),
                 ),
                 onPressed: () async {
@@ -50,10 +47,9 @@ class MenuBarWeb extends ConsumerWidget implements PreferredSizeWidget {
             ),
 
             const SizedBox(width: 50),
-            const Icon(Icons.location_on, color: AppColors.textColor),
+            const Icon(Icons.location_on,),
             const Text(
               AppConstants.Adresse,
-              style: TextStyle(color: AppColors.textColor),
             ),
             const SizedBox(width: 80),
             Expanded(
@@ -82,14 +78,13 @@ class MenuBarWeb extends ConsumerWidget implements PreferredSizeWidget {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.all(6.0),
-                  backgroundColor: AppColors.backgroundColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                 ),
                 child: Text(
                   loginConstatnts.getLoginTitle(),
-                  style: TextStyle(color: AppColors.textColor, fontSize: 14),
+                  style: TextStyle(fontSize: 14),
                 ),
                 onPressed: () async {
                   context.push(RouteConstants.LOGIN_ROUTE);
@@ -101,14 +96,13 @@ class MenuBarWeb extends ConsumerWidget implements PreferredSizeWidget {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.all(6.0),
-                  backgroundColor: AppColors.backgroundColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                 ),
                 child: Text(
                   loginConstatnts.getRegisterTitle(),
-                  style: TextStyle(color: AppColors.textColor, fontSize: 14),
+                  style: TextStyle( fontSize: 14),
                 ),
                 onPressed: () async {
                  context.push(RouteConstants.REGISTER_ROUTE);

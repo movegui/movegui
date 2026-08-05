@@ -88,10 +88,6 @@ class GoogleAuthenticationState extends State<GoogleAuthentication> {
             await _onPressed(context, buttonItem);
           },
           icon: Ionicons.logo_google,
-          fontSize:
-              Responsive.isMobile(context)
-                  ? WidgetConstants.buttonFonsize * 1.8
-                  : WidgetConstants.buttonFonsize * 2.3,
         );
   }
 }

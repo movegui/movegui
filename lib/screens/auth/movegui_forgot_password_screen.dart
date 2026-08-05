@@ -6,14 +6,12 @@ import 'package:movegui/widgets/app/app_image.dart';
 import 'package:movegui/widgets/app/separator_widget.dart';
 import 'package:movegui/widgets/auth/login_forget_password_page.dart';
 
-
-
 class MoveguiForgotPasswordScreen extends StatefulWidget {
-
-  const MoveguiForgotPasswordScreen({super.key,});
+  const MoveguiForgotPasswordScreen({super.key});
 
   @override
-  State<MoveguiForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
+  State<MoveguiForgotPasswordScreen> createState() =>
+      _ForgotPasswordScreenState();
 }
 
 class _ForgotPasswordScreenState extends State<MoveguiForgotPasswordScreen> {
@@ -25,18 +23,6 @@ class _ForgotPasswordScreenState extends State<MoveguiForgotPasswordScreen> {
     _emailController = TextEditingController();
     super.initState();
   }
-
-  /*
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<AppbarTitleProvider>().setTitle(
-        AppLocalizations.of(context)!.forget_password_title,
-      );
-    });
-  }
-  */
 
   @override
   void dispose() {
@@ -52,14 +38,12 @@ class _ForgotPasswordScreenState extends State<MoveguiForgotPasswordScreen> {
     if (isValid) {}
   }
 
-
-    @override
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
-        setState(() {
-        });
+        setState(() {});
       },
       child: Scaffold(
         body: Responsive.isDesktop(context) ? buildDeskop() : buildMobil(),
@@ -77,10 +61,9 @@ class _ForgotPasswordScreenState extends State<MoveguiForgotPasswordScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              AppImage(heightScale: 0.20,),
-              SeparatorWidget(height: WidgetConstants.sepWidgetHeight,),
+              AppImage(heightScale: 0.20),
+              SeparatorWidget(height: WidgetConstants.sepWidgetHeight),
               LoginForgetPasswordPage(),
-           
             ],
           ),
         ),
@@ -94,125 +77,15 @@ class _ForgotPasswordScreenState extends State<MoveguiForgotPasswordScreen> {
         width: 500,
         height: 500,
         decoration: BoxDecoration(
-          color: AppColors.textColor,
-          border: Border.all(color: AppColors.backgroundColor, width: 10),
+          border: Border.all(width: 10),
           borderRadius: BorderRadius.circular(15),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-
-          ],
+          children: [],
         ),
       ),
     );
   }
-
-
-
-
-/*
-  @override
-  Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    return Scaffold(
-      
-
-      
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: SafeArea(
-          child: ListView(
-            // shrinkWrap: true,
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            physics: const BouncingScrollPhysics(),
-            children: [
-              // Section 1 - Header
-              const SizedBox(
-                height: 10,
-              ),
-              Image.asset(
-                AssetsManager.forgotPassword,
-                width: size.width * 0.6,
-                height: size.width * 0.6,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const TitlesTextWidget(
-                label: 'Forgot password',
-                fontSize: 22,
-              ),
-              const SubtitleTextWidget(
-                label:
-                    'Please enter the email address you\'d like your password reset information sent to',
-                fontSize: 14,
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-
-              Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    TextFormField(
-                      controller: _emailController,
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                        hintText: 'youremail@email.com',
-                        prefixIcon: Container(
-                          padding: const EdgeInsets.all(12),
-                          child: const Icon(IconlyLight.message),
-                        ),
-                        filled: true,
-                      ),
-                      validator: (value) {
-                        return MyValidators.emailValidator(value);
-                      },
-                    ),
-                    const SizedBox(height: 16),
-                  ],
-                ),
-              ),
-
-              const SizedBox(
-                height: 20,
-              ),
-
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.all(12),
-                    // backgroundColor: Colors.red,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                        10,
-                      ),
-                    ),
-                  ),
-                  icon: const Icon(IconlyBold.send),
-                  label: const Text(
-                    "Request link",
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                  onPressed: () async {
-                    _forgetPassFCT();
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-  */
 }

@@ -4,9 +4,8 @@ import 'package:movegui/l10n/app_localizations.dart';
 import 'package:movegui/services/assets_manager.dart';
 
 class PayementWidget extends StatelessWidget {
-  final Color? textColor;
 
-  const PayementWidget({super.key, this.textColor = AppColors.textColor});
+  const PayementWidget({super.key, });
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -19,7 +18,7 @@ class PayementWidget extends StatelessWidget {
             const SizedBox(width: 6),
             Text(
               AppLocalizations.of(context)!.payement_cash,
-              style: TextStyle(fontSize: 14, color: textColor),
+              style: TextStyle(fontSize: 14,),
             ),
           ],
         ),
@@ -29,7 +28,7 @@ class PayementWidget extends StatelessWidget {
           children: [
             Image.asset(AssetsManager.orangeIcon, width: 18, height: 18),
             const SizedBox(width: 6),
-            Text("Orange", style: TextStyle(fontSize: 14, color: textColor)),
+            Text("Orange", style: TextStyle(fontSize: 14,)),
           ],
         ),
 
@@ -40,7 +39,7 @@ class PayementWidget extends StatelessWidget {
           children: [
             Image.asset(AssetsManager.ymoIcon, width: 18, height: 18),
             const SizedBox(width: 6),
-            Text("YMO", style: TextStyle(fontSize: 14, color: textColor)),
+            Text("YMO", style: TextStyle(fontSize: 14,)),
           ],
         ),
         SizedBox(width: 12,),

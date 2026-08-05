@@ -56,10 +56,6 @@ class AuthLinkWidgetState extends State<AuthLinkWidget> {
                 routeName: RouteConstants.FORGET_PASSWORD_ROUTE,
               ),
               icon: Ionicons.key_outline,
-              fontSize:
-                  Responsive.isMobile(context)
-                      ? WidgetConstants.buttonFonsize * 1.4
-                      : WidgetConstants.buttonFonsize * 2,
             ),
           ),
         ),
@@ -80,10 +76,6 @@ class AuthLinkWidgetState extends State<AuthLinkWidget> {
                 routeName: RouteConstants.REGISTER_ROUTE,
               ),
               icon: Ionicons.person,
-              fontSize:
-                  Responsive.isMobile(context)
-                      ? WidgetConstants.buttonFonsize * 1.4
-                      : WidgetConstants.buttonFonsize * 2,
             ),
           ),
         ),

@@ -104,8 +104,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         width: 700,
         height: 700,
         decoration: BoxDecoration(
-          color: AppColors.textColor,
-          border: Border.all(color: AppColors.backgroundColor, width: 10),
+          border: Border.all( width: 10),
           borderRadius: BorderRadius.circular(15),
         ),
         child: Padding(
@@ -117,14 +116,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               children: [
                 Container(
                   width: double.infinity,
-                  color: AppColors.backgroundColor,
                   margin: EdgeInsets.only(left: 100, right: 100),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 90, right: 80),
                     child: SubtitleTextWidget(
                       label: AppLocalizations.of(context)!.login_title,
                       fontSize: WidgetConstants.subTitleFontSize * 3,
-                      color: AppColors.textColor,
                     ),
                   ),
                 ),

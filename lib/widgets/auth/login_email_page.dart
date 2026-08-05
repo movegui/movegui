@@ -171,65 +171,6 @@ Future<void> _loginFct(BuildContext context, ButtonItem item) async {
   }
 }
 
-/*
-  Future<void> _loginFct(BuildContext context, ButtonItem item) async {
-    final isValid = _formkey.currentState!.validate();
-    FocusScope.of(context).unfocus();
-
-    if (isValid && item.enabled) {
-      try {
-        setState(() {
-          isloading = true;
-        });
-
-        final userCredential = await auth?.signInWithEmailAndPassword(
-          email: _emailController.text.trim(),
-          password: _passwordController.text.trim(),
-        );
-
-        if (userCredential?.user != null) {
-                      WidgetsBinding.instance.addPostFrameCallback((_) async {
-             final currentUser =
-                  await userService.initializeUserWithEmail(
-                        auth!.currentUser!.email!,
-                      )
-                      as UserModel?;
-              ref.read(userProviderState).setUser(currentUser!);
-            });
-          Fluttertoast.showToast(
-            msg: AppLocalizations.of(context)!.success_login_message,
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0,
-          );
-          context.go(item.routeName!);
-
-        } else {
-          Fluttertoast.showToast(
-            msg: AppLocalizations.of(context)!.error_login_message,
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0,
-          );
-        }
-      } on FirebaseAuthException {
-        MyAppFunctions.showErrorOrWarningDialog(
-          context: context,
-          subtitle: AppLocalizations.of(context)!.exception_login_message,
-          fct: () {},
-        );
-      } finally {
-        isloading = false;
-      }
-    }
-  }
-  */
 
   @override
   Widget build(BuildContext context) {
@@ -252,7 +193,7 @@ Future<void> _loginFct(BuildContext context, ButtonItem item) async {
                       Responsive.isDesktop(context)
                           ? WidgetConstants.subTitleFontSize
                           : 16,
-                  textColor: AppColors.backgroundColor,
+      
                   fontweight: FontWeight.bold,
                 ),
                 PasswordWidget(
@@ -264,12 +205,6 @@ Future<void> _loginFct(BuildContext context, ButtonItem item) async {
                       obscureText = !obscureText;
                     });
                   },
-                  fontSize:
-                      Responsive.isDesktop(context)
-                          ? WidgetConstants.subTitleFontSize
-                          : 16,
-                  textColor: AppColors.backgroundColor,
-                  fontweight: FontWeight.bold,
                 ),
                 Responsive.isDesktop(context)
                     ? SeparatorWidget(height: 20)

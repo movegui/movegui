@@ -29,10 +29,11 @@ class _ToggleButtonExampleState extends State<ToggleButtonExample> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Center(
       child: ToggleButtons(
         borderRadius: BorderRadius.circular(24),
-        fillColor: AppColors.backgroundColor, // 👈 selected background
+        fillColor: theme.colorScheme.primary, // 👈 selected background
         selectedColor: AppColors.selectionColor, // text/icon when selected
         color: AppColors.placeHolderText,
         isSelected: [_selectedIndex == 0, _selectedIndex == 1],

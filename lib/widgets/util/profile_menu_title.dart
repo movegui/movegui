@@ -15,13 +15,13 @@ class ProfileMenuTitle extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: enabled ? Icon(icon, color: AppColors.backgroundColor) : Icon(icon, color: AppColors.placeHolderText),
+      leading: enabled ? Icon(icon, color: Theme.of(context).colorScheme.primary) : Icon(icon, color: AppColors.placeHolderText),
       title: Text(
         title,
         style:  TextStyle(
           fontSize: WidgetConstants.sepWidgetHeight * 2,
           fontWeight: FontWeight.bold,
-          color: enabled? AppColors.backgroundColor : AppColors.placeHolderText
+          color: enabled? Theme.of(context).colorScheme.onPrimary : AppColors.placeHolderText
         ),
       ),
       onTap: onTap,

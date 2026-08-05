@@ -117,7 +117,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
             width: double.infinity,
             constraints: const BoxConstraints(maxWidth: 380),
             decoration: BoxDecoration(
-              color: AppColors.textColor,
+              color: Theme.of(context).colorScheme.primary,
               borderRadius: BorderRadius.circular(
                 WidgetConstants.sepWidgetHeight * 2,
               ),
@@ -125,11 +125,11 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const CircleAvatar(
+                 CircleAvatar(
                   radius: 28,
                   backgroundColor:
-                      AppColors.backgroundColor, //Color(0xFF4A73F3),
-                  child: Icon(Icons.verified, color: AppColors.textColor),
+                      Theme.of(context).colorScheme.primary, //Color(0xFF4A73F3),
+                  child: Icon(Icons.verified, color: Theme.of(context).colorScheme.onPrimary),
                 ),
                 const SizedBox(height: WidgetConstants.sepWidgetHeight * 2),
                 Text(
